@@ -88,7 +88,7 @@ class AI_Search_Schema_Type_FAQPage {
 			'schema_type'         => 'auto',
 			'breadcrumbs_enabled' => $global_breadcrumbs,
 			'faq_enabled'         => true,
-			'schema_priority'     => isset( $options['ai_search_schema_priority'] ) ? $options['ai_search_schema_priority'] : 'avc',
+			'schema_priority'     => $options['ai_search_schema_priority'] ?? 'avc',
 		);
 
 		$settings = isset( $options['content_type_settings'] ) && is_array( $options['content_type_settings'] )

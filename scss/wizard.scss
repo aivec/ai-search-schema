@@ -29,7 +29,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Wizard Container
 // ----------------------------------------
-.avc-wizard {
+.ais-wizard {
   min-height: 100vh;
   background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
   padding: 40px 20px;
@@ -198,9 +198,9 @@ $wizard-max-width: 800px;
 }
 
 // ----------------------------------------
-// Progress Bar (BEM style - .avc-wizard__progress)
+// Progress Bar (BEM style - .ais-wizard__progress)
 // ----------------------------------------
-.avc-wizard__progress {
+.ais-wizard__progress {
   display: flex;
   justify-content: center;
   padding: 24px 32px;
@@ -209,7 +209,7 @@ $wizard-max-width: 800px;
   overflow-x: auto;
 }
 
-.avc-wizard__steps {
+.ais-wizard__steps {
   display: flex;
   list-style: none;
   margin: 0;
@@ -217,7 +217,7 @@ $wizard-max-width: 800px;
   gap: 0;
 }
 
-.avc-wizard__step {
+.ais-wizard__step {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -267,13 +267,13 @@ $wizard-max-width: 800px;
   }
 
   // 完了＋現在のステップ
-  &--current.avc-wizard__step--complete &-num {
+  &--current.ais-wizard__step--complete &-num {
     background: $color-success;
     box-shadow: 0 0 0 4px $color-success-light;
   }
 }
 
-.avc-wizard__step-num {
+.ais-wizard__step-num {
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -294,7 +294,7 @@ $wizard-max-width: 800px;
   }
 }
 
-.avc-wizard__step-label {
+.ais-wizard__step-label {
   margin-top: 8px;
   font-size: 12px;
   color: $color-muted;
@@ -303,9 +303,9 @@ $wizard-max-width: 800px;
 }
 
 // ----------------------------------------
-// Progress Bar (Legacy style - .avc-wizard-progress)
+// Progress Bar (Legacy style - .ais-wizard-progress)
 // ----------------------------------------
-.avc-wizard-progress {
+.ais-wizard-progress {
   display: flex;
   justify-content: space-between;
   padding: 24px 32px;
@@ -359,12 +359,12 @@ $wizard-max-width: 800px;
     z-index: 1;
     transition: all 0.3s;
 
-    .avc-wizard-progress__step--completed & {
+    .ais-wizard-progress__step--completed & {
       background: $color-success;
       color: #fff;
     }
 
-    .avc-wizard-progress__step--active & {
+    .ais-wizard-progress__step--active & {
       background: $color-primary;
       color: #fff;
       box-shadow: 0 0 0 4px $color-primary-light;
@@ -378,12 +378,12 @@ $wizard-max-width: 800px;
     text-align: center;
     white-space: nowrap;
 
-    .avc-wizard-progress__step--active & {
+    .ais-wizard-progress__step--active & {
       color: $color-primary;
       font-weight: 500;
     }
 
-    .avc-wizard-progress__step--completed & {
+    .ais-wizard-progress__step--completed & {
       color: $color-success;
     }
   }
@@ -392,7 +392,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Step Content
 // ----------------------------------------
-.avc-wizard-step {
+.ais-wizard-step {
   padding: 40px 32px;
 
   &__header {
@@ -454,7 +454,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Welcome Step
 // ----------------------------------------
-.avc-wizard-welcome {
+.ais-wizard-welcome {
   text-align: center;
   padding: 20px 0;
 
@@ -504,7 +504,7 @@ $wizard-max-width: 800px;
 }
 
 // Preview Card
-.avc-wizard-preview-card {
+.ais-wizard-preview-card {
   max-width: 400px;
   margin: 0 auto;
   background: $color-surface;
@@ -566,7 +566,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Buttons
 // ----------------------------------------
-.avc-wizard-btn {
+.ais-wizard-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -642,7 +642,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Form Elements
 // ----------------------------------------
-.avc-wizard-form {
+.ais-wizard-form {
   max-width: 500px;
   margin: 0 auto;
 
@@ -758,7 +758,7 @@ $wizard-max-width: 800px;
 }
 
 // Logo Upload
-.avc-wizard-logo-upload {
+.ais-wizard-logo-upload {
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -801,13 +801,13 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Type Selection Grid
 // ----------------------------------------
-.avc-wizard-type-grid {
+.ais-wizard-type-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 16px;
 }
 
-.avc-wizard-type-card {
+.ais-wizard-type-card {
   display: flex;
   align-items: flex-start;
   gap: 16px;
@@ -845,7 +845,7 @@ $wizard-max-width: 800px;
     flex-shrink: 0;
     color: $color-primary;
 
-    .avc-wizard-type-card--selected & {
+    .ais-wizard-type-card--selected & {
       background: $color-primary;
       color: #fff;
     }
@@ -885,7 +885,7 @@ $wizard-max-width: 800px;
     flex-shrink: 0;
     color: transparent;
 
-    .avc-wizard-type-card--selected & {
+    .ais-wizard-type-card--selected & {
       background: $color-primary;
       border-color: $color-primary;
       color: #fff;
@@ -896,7 +896,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Info Box
 // ----------------------------------------
-.avc-wizard-info-box {
+.ais-wizard-info-box {
   display: flex;
   gap: 12px;
   padding: 16px;
@@ -944,7 +944,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Instructions
 // ----------------------------------------
-.avc-wizard-instructions {
+.ais-wizard-instructions {
   background: $color-soft;
   border-radius: $radius-field;
   padding: 20px;
@@ -976,7 +976,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Geocoding
 // ----------------------------------------
-.avc-wizard-geocoding {
+.ais-wizard-geocoding {
   margin-top: 16px;
   padding-top: 16px;
   border-top: 1px solid $color-border;
@@ -989,7 +989,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Business Hours
 // ----------------------------------------
-.avc-wizard-hours-quick {
+.ais-wizard-hours-quick {
   background: $color-soft;
   border-radius: $radius-card;
   padding: 20px;
@@ -1016,7 +1016,7 @@ $wizard-max-width: 800px;
   }
 }
 
-.avc-wizard-hours-table {
+.ais-wizard-hours-table {
   border: 1px solid $color-border;
   border-radius: $radius-card;
   overflow: visible;
@@ -1088,7 +1088,7 @@ $wizard-max-width: 800px;
 }
 
 // Toggle Switch
-.avc-wizard-toggle {
+.ais-wizard-toggle {
   position: relative;
   display: inline-block;
   width: 44px;
@@ -1135,7 +1135,7 @@ $wizard-max-width: 800px;
 }
 
 // Hours Preview
-.avc-wizard-hours-preview {
+.ais-wizard-hours-preview {
   margin-top: 24px;
   padding: 20px;
   background: $color-soft;
@@ -1165,7 +1165,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Complete Step
 // ----------------------------------------
-.avc-wizard-complete {
+.ais-wizard-complete {
   text-align: center;
   padding: 20px 0;
 
@@ -1199,7 +1199,7 @@ $wizard-max-width: 800px;
 }
 
 // Summary Card
-.avc-wizard-summary {
+.ais-wizard-summary {
   max-width: 500px;
   margin: 0 auto 24px;
   background: $color-soft;
@@ -1265,7 +1265,7 @@ $wizard-max-width: 800px;
 }
 
 // Schema Preview
-.avc-wizard-schema-preview {
+.ais-wizard-schema-preview {
   max-width: 500px;
   margin: 0 auto 24px;
   background: #1e293b;
@@ -1308,7 +1308,7 @@ $wizard-max-width: 800px;
 }
 
 // Next Steps
-.avc-wizard-next-steps {
+.ais-wizard-next-steps {
   max-width: 500px;
   margin: 0 auto;
   text-align: left;
@@ -1353,7 +1353,7 @@ $wizard-max-width: 800px;
 // ----------------------------------------
 // Modal
 // ----------------------------------------
-.avc-wizard-modal {
+.ais-wizard-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -1438,13 +1438,13 @@ $wizard-max-width: 800px;
 }
 
 // Import Sources
-.avc-wizard-import-sources {
+.ais-wizard-import-sources {
   display: flex;
   flex-direction: column;
   gap: 12px;
 }
 
-.avc-wizard-import-source {
+.ais-wizard-import-source {
   border: 1px solid $color-border;
   border-radius: $radius-card;
   padding: 16px;
@@ -1522,7 +1522,7 @@ $wizard-max-width: 800px;
 // Responsive
 // ----------------------------------------
 @media (max-width: 640px) {
-  .avc-wizard {
+  .ais-wizard {
     padding: 20px 16px;
 
     &__header {
@@ -1531,7 +1531,7 @@ $wizard-max-width: 800px;
     }
   }
 
-  .avc-wizard-step {
+  .ais-wizard-step {
     padding: 24px 20px;
 
     &__title {
@@ -1542,14 +1542,14 @@ $wizard-max-width: 800px;
       flex-direction: column;
       gap: 12px;
 
-      .avc-wizard-btn {
+      .ais-wizard-btn {
         width: 100%;
         justify-content: center;
       }
     }
   }
 
-  .avc-wizard-welcome {
+  .ais-wizard-welcome {
     &__title {
       font-size: 26px;
     }
@@ -1559,7 +1559,7 @@ $wizard-max-width: 800px;
     }
   }
 
-  .avc-wizard-progress {
+  .ais-wizard-progress {
     padding: 16px;
     gap: 4px;
 
@@ -1568,11 +1568,11 @@ $wizard-max-width: 800px;
     }
   }
 
-  .avc-wizard-type-grid {
+  .ais-wizard-type-grid {
     grid-template-columns: 1fr;
   }
 
-  .avc-wizard-hours-table {
+  .ais-wizard-hours-table {
     &__col--day {
       width: 80px;
     }
@@ -1582,7 +1582,7 @@ $wizard-max-width: 800px;
     }
   }
 
-  .avc-wizard-form {
+  .ais-wizard-form {
     &__row {
       flex-direction: column;
     }

@@ -28,10 +28,10 @@
      */
     bindEvents: function () {
       // Next button click
-      $(document).on('click', '.avc-wizard-next-btn', this.handleNextClick.bind(this));
+      $(document).on('click', '.ais-wizard-next-btn', this.handleNextClick.bind(this));
 
       // Language switcher
-      $(document).on('click', '.avc-wizard-lang-btn', this.handleLanguageSwitch.bind(this));
+      $(document).on('click', '.ais-wizard-lang-btn', this.handleLanguageSwitch.bind(this));
     },
 
     /**
@@ -68,26 +68,26 @@
      */
     validateCurrentStep: function () {
       let isValid = true;
-      const $step = $('.avc-wizard-step');
+      const $step = $('.ais-wizard-step');
 
       // Check required fields
       $step.find('input[required], select[required], textarea[required]').each(function () {
         const $field = $(this);
         if (!$field.val()) {
           isValid = false;
-          $field.addClass('avc-wizard-form__input--error');
+          $field.addClass('ais-wizard-form__input--error');
           $field.one('input change', function () {
-            $(this).removeClass('avc-wizard-form__input--error');
+            $(this).removeClass('ais-wizard-form__input--error');
           });
         }
       });
 
       // Check type selection (step 2)
-      if ($step.hasClass('avc-wizard-step--type')) {
+      if ($step.hasClass('ais-wizard-step--type')) {
         const selectedType = $('input[name="entity_type"]:checked').val();
         if (!selectedType) {
           isValid = false;
-          $('.avc-wizard-type-grid').addClass('avc-wizard-type-grid--error');
+          $('.ais-wizard-type-grid').addClass('ais-wizard-type-grid--error');
         }
       }
 
@@ -102,7 +102,7 @@
     collectFormData: function () {
       const data = {};
 
-      $('.avc-wizard-step').find('input, select, textarea').each(function () {
+      $('.ais-wizard-step').find('input, select, textarea').each(function () {
         const $field = $(this);
         const name = $field.attr('name');
 
@@ -131,7 +131,7 @@
      * @param {string} nextStep Next step slug.
      */
     saveProgress: function (formData, nextStep) {
-      const $btn = $('.avc-wizard-next-btn');
+      const $btn = $('.ais-wizard-next-btn');
       $btn.prop('disabled', true);
 
       $.ajax({
@@ -184,21 +184,21 @@
      * Initialize type selection (step 2).
      */
     initTypeSelection: function () {
-      const $typeGrid = $('.avc-wizard-type-grid');
+      const $typeGrid = $('.ais-wizard-type-grid');
       if (!$typeGrid.length) {
         return;
       }
 
-      const $nextBtn = $('#avc-wizard-type-next');
+      const $nextBtn = $('#ais-wizard-type-next');
 
       // Type card click
-      $typeGrid.on('click', '.avc-wizard-type-card', function () {
+      $typeGrid.on('click', '.ais-wizard-type-card', function () {
         const $card = $(this);
         const $radio = $card.find('input[type="radio"]');
 
         // Update selection
-        $('.avc-wizard-type-card').removeClass('avc-wizard-type-card--selected');
-        $card.addClass('avc-wizard-type-card--selected');
+        $('.ais-wizard-type-card').removeClass('ais-wizard-type-card--selected');
+        $card.addClass('ais-wizard-type-card--selected');
         $radio.prop('checked', true);
 
         // Enable next button
@@ -222,9 +222,9 @@
      * @param {string} type Selected type.
      */
     updateTypeInfo: function (type) {
-      const $infoBox = $('#avc-wizard-type-info');
-      const $title = $('#avc-wizard-type-info-title');
-      const $text = $('#avc-wizard-type-info-text');
+      const $infoBox = $('#ais-wizard-type-info');
+      const $title = $('#ais-wizard-type-info-title');
+      const $text = $('#ais-wizard-type-info-text');
 
       const typeInfo = {
         LocalBusiness: {
@@ -259,16 +259,16 @@
      * Initialize hours table (step 4).
      */
     initHoursTable: function () {
-      const $hoursTable = $('.avc-wizard-hours-table');
+      const $hoursTable = $('.ais-wizard-hours-table');
       if (!$hoursTable.length) {
         return;
       }
 
       // Toggle day open/closed
-      $hoursTable.on('change', '.avc-wizard-hours-toggle', function () {
+      $hoursTable.on('change', '.ais-wizard-hours-toggle', function () {
         const $toggle = $(this);
-        const $row = $toggle.closest('.avc-wizard-hours-table__row');
-        const $selects = $row.find('.avc-wizard-hours-select');
+        const $row = $toggle.closest('.ais-wizard-hours-table__row');
+        const $selects = $row.find('.ais-wizard-hours-select');
 
         if ($toggle.is(':checked')) {
           $selects.prop('disabled', false);
@@ -292,26 +292,26 @@
       });
 
       // Time select change
-      $hoursTable.on('change', '.avc-wizard-hours-select', function () {
+      $hoursTable.on('change', '.ais-wizard-hours-select', function () {
         Wizard.updateHoursPreview();
       });
 
       // Quick setup: Same hours every weekday
-      $('#avc-wizard-hours-weekdays').on('click', function () {
+      $('#ais-wizard-hours-weekdays').on('click', function () {
         Wizard.setHoursForDays(['monday', 'tuesday', 'wednesday', 'thursday', 'friday'], '09:00', '18:00');
       });
 
       // Quick setup: Same hours every day
-      $('#avc-wizard-hours-everyday').on('click', function () {
+      $('#ais-wizard-hours-everyday').on('click', function () {
         Wizard.setHoursForDays(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'], '09:00', '18:00');
       });
 
       // Quick setup: Clear all
-      $('#avc-wizard-hours-clear').on('click', function () {
-        $('.avc-wizard-hours-table__row').each(function () {
+      $('#ais-wizard-hours-clear').on('click', function () {
+        $('.ais-wizard-hours-table__row').each(function () {
           const $row = $(this);
-          $row.find('.avc-wizard-hours-toggle').prop('checked', false);
-          $row.find('.avc-wizard-hours-select').prop('disabled', true).val('');
+          $row.find('.ais-wizard-hours-toggle').prop('checked', false);
+          $row.find('.ais-wizard-hours-select').prop('disabled', true).val('');
         });
         Wizard.updateHoursPreview();
       });
@@ -329,10 +329,10 @@
      */
     setHoursForDays: function (days, opens, closes) {
       days.forEach(function (day) {
-        const $row = $(`.avc-wizard-hours-table__row[data-day="${day}"]`);
+        const $row = $(`.ais-wizard-hours-table__row[data-day="${day}"]`);
         if ($row.length) {
-          $row.find('.avc-wizard-hours-toggle').prop('checked', true);
-          $row.find('.avc-wizard-hours-select').prop('disabled', false);
+          $row.find('.ais-wizard-hours-toggle').prop('checked', true);
+          $row.find('.ais-wizard-hours-select').prop('disabled', false);
           $row.find(`select[name="hours_${day}_opens"]`).val(opens);
           $row.find(`select[name="hours_${day}_closes"]`).val(closes);
         }
@@ -344,7 +344,7 @@
      * Update hours preview.
      */
     updateHoursPreview: function () {
-      const $preview = $('#avc-wizard-hours-preview');
+      const $preview = $('#ais-wizard-hours-preview');
       const days = [];
       const dayNames = {
         monday: aisWizardData.strings.monday || 'Monday',
@@ -356,10 +356,10 @@
         sunday: aisWizardData.strings.sunday || 'Sunday'
       };
 
-      $('.avc-wizard-hours-table__row').each(function () {
+      $('.ais-wizard-hours-table__row').each(function () {
         const $row = $(this);
         const day = $row.data('day');
-        const isOpen = $row.find('.avc-wizard-hours-toggle').is(':checked');
+        const isOpen = $row.find('.ais-wizard-hours-toggle').is(':checked');
 
         if (isOpen) {
           const opens = $row.find(`select[name="hours_${day}_opens"]`).val();
@@ -374,9 +374,9 @@
       });
 
       if (days.length === 0) {
-        $preview.html('<p class="avc-wizard-hours-preview__empty">' + (aisWizardData.strings.noHoursSet || 'Set your business hours above to see a preview.') + '</p>');
+        $preview.html('<p class="ais-wizard-hours-preview__empty">' + (aisWizardData.strings.noHoursSet || 'Set your business hours above to see a preview.') + '</p>');
       } else {
-        let html = '<ul class="avc-wizard-hours-preview__list">';
+        let html = '<ul class="ais-wizard-hours-preview__list">';
         days.forEach(function (day) {
           html += `<li><strong>${day.name}:</strong> ${day.hours}</li>`;
         });
@@ -389,23 +389,23 @@
      * Initialize import modal.
      */
     initImportModal: function () {
-      const $modal = $('#avc-wizard-import-modal');
+      const $modal = $('#ais-wizard-import-modal');
       if (!$modal.length) {
         return;
       }
 
       // Show modal
-      $('#avc-wizard-show-import').on('click', function () {
+      $('#ais-wizard-show-import').on('click', function () {
         $modal.fadeIn(200);
       });
 
       // Close modal
-      $modal.on('click', '.avc-wizard-modal__close, .avc-wizard-modal__backdrop', function () {
+      $modal.on('click', '.ais-wizard-modal__close, .ais-wizard-modal__backdrop', function () {
         $modal.fadeOut(200);
       });
 
       // Import button
-      $modal.on('click', '.avc-wizard-import-btn', function () {
+      $modal.on('click', '.ais-wizard-import-btn', function () {
         const $btn = $(this);
         const source = $btn.data('source');
 
@@ -446,10 +446,10 @@
      * Initialize logo upload.
      */
     initLogoUpload: function () {
-      const $uploadBtn = $('#avc-wizard-upload-logo');
-      const $removeBtn = $('#avc-wizard-remove-logo');
-      const $preview = $('#avc-wizard-logo-preview');
-      const $input = $('#avc-wizard-logo-url');
+      const $uploadBtn = $('#ais-wizard-upload-logo');
+      const $removeBtn = $('#ais-wizard-remove-logo');
+      const $preview = $('#ais-wizard-logo-preview');
+      const $input = $('#ais-wizard-logo-url');
 
       if (!$uploadBtn.length) {
         return;
@@ -486,7 +486,7 @@
       // Remove button click
       $removeBtn.on('click', function () {
         $input.val('');
-        $preview.html('<div class="avc-wizard-logo-upload__placeholder"><svg viewBox="0 0 24 24" width="48" height="48" fill="#9ca3af"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span>' + (aisWizardData.strings.noLogo || 'No logo selected') + '</span></div>');
+        $preview.html('<div class="ais-wizard-logo-upload__placeholder"><svg viewBox="0 0 24 24" width="48" height="48" fill="#9ca3af"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span>' + (aisWizardData.strings.noLogo || 'No logo selected') + '</span></div>');
         $removeBtn.hide();
       });
     },
@@ -495,17 +495,17 @@
      * Initialize geocoding.
      */
     initGeocoding: function () {
-      const $geocodeBtn = $('#avc-wizard-geocode-btn');
+      const $geocodeBtn = $('#ais-wizard-geocode-btn');
       if (!$geocodeBtn.length) {
         return;
       }
 
       $geocodeBtn.on('click', function () {
         const address = [
-          $('#avc-wizard-postal-code').val(),
-          $('#avc-wizard-region').val(),
-          $('#avc-wizard-locality').val(),
-          $('#avc-wizard-street').val()
+          $('#ais-wizard-postal-code').val(),
+          $('#ais-wizard-region').val(),
+          $('#ais-wizard-locality').val(),
+          $('#ais-wizard-street').val()
         ].filter(Boolean).join(' ');
 
         if (!address) {
@@ -525,8 +525,8 @@
           },
           success: function (response) {
             if (response.success && response.data) {
-              $('#avc-wizard-lat').val(response.data.lat);
-              $('#avc-wizard-lng').val(response.data.lng);
+              $('#ais-wizard-lat').val(response.data.lat);
+              $('#ais-wizard-lng').val(response.data.lng);
             } else {
               alert(response.data.message || aisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
             }
@@ -544,8 +544,8 @@
      * Initialize schema preview (complete step).
      */
     initSchemaPreview: function () {
-      const $showBtn = $('#avc-wizard-show-schema');
-      const $code = $('#avc-wizard-schema-code');
+      const $showBtn = $('#ais-wizard-show-schema');
+      const $code = $('#ais-wizard-schema-code');
 
       if (!$showBtn.length) {
         return;

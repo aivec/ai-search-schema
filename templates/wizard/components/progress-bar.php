@@ -3,7 +3,7 @@
 /**
  * Progress bar component.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  * @var array  $step_keys   Array of step keys.
  * @var int    $step_index  Current step index.
  * @var int    $total_steps Total number of steps.

@@ -3,7 +3,7 @@
 /**
  * Step 2: Site Type Selection template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -39,7 +39,7 @@ $site_types = array(
 	),
 );
 ?>
-<div class="ais-wizard-step avc-wizard-step--type">
+<div class="ais-wizard-step ais-wizard-step--type">
 	<div class="ais-wizard-step__header">
 		<h1 class="ais-wizard-step__title">
 			<?php esc_html_e( 'What type of site is this?', 'ai-search-schema' ); ?>
@@ -52,7 +52,7 @@ $site_types = array(
 	<div class="ais-wizard-step__content">
 		<div class="ais-wizard-type-grid">
 			<?php foreach ( $site_types as $type_key => $type_data ) : ?>
-				<label class="ais-wizard-type-card <?php echo $entity_type === $type_key ? 'avc-wizard-type-card--selected' : ''; ?>">
+				<label class="ais-wizard-type-card <?php echo $entity_type === $type_key ? 'ais-wizard-type-card--selected' : ''; ?>">
 					<input type="radio" name="entity_type" value="<?php echo esc_attr( $type_key ); ?>" <?php checked( $entity_type, $type_key ); ?>>
 					<div class="ais-wizard-type-card__icon">
 						<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
@@ -87,13 +87,13 @@ $site_types = array(
 	</div>
 
 	<div class="ais-wizard-step__footer">
-		<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn avc-wizard-btn--text">
+		<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--text">
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 			</svg>
 			<?php esc_html_e( 'Back', 'ai-search-schema' ); ?>
 		</a>
-		<button type="button" class="ais-wizard-btn avc-wizard-btn--primary avc-wizard-next-btn" data-next="api-key" id="ais-wizard-type-next" disabled>
+		<button type="button" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-next-btn" data-next="api-key" id="ais-wizard-type-next" disabled>
 			<?php esc_html_e( 'Continue', 'ai-search-schema' ); ?>
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>

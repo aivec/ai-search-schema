@@ -73,13 +73,15 @@ class Plugin {
 			$wizard = new Wizard();
 			$wizard->register();
 
-			// cptm-client ベースの更新チェッカーを初期化.
-			$update_client = new Client(
-				AI_SEARCH_SCHEMA_FILE,
-				'ai-search-schema',
-				AI_SEARCH_SCHEMA_VERSION
-			);
-			$update_client->initUpdateChecker();
+			// cptm-client ベースの更新チェッカーを初期化（依存パッケージが存在する場合のみ）.
+			if ( \class_exists( \Aivec\Welcart\CptmClient\Client::class ) ) {
+				$update_client = new Client(
+					AI_SEARCH_SCHEMA_FILE,
+					'ai-search-schema',
+					AI_SEARCH_SCHEMA_VERSION
+				);
+				$update_client->initUpdateChecker();
+			}
 		}
 	}
 

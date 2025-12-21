@@ -3,14 +3,14 @@
 /**
  * Step 5: Complete template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  */
 
 defined( 'ABSPATH' ) || exit;
 
 $options = get_option( 'ai_search_schema_settings', array() );
 ?>
-<div class="ais-wizard-step avc-wizard-step--complete">
+<div class="ais-wizard-step ais-wizard-step--complete">
 	<div class="ais-wizard-complete">
 		<div class="ais-wizard-complete__icon">
 			<svg viewBox="0 0 80 80" width="80" height="80">
@@ -105,7 +105,7 @@ $options = get_option( 'ai_search_schema_settings', array() );
 				<?php esc_html_e( 'Generated Schema', 'ai-search-schema' ); ?>
 			</h3>
 			<div class="ais-wizard-schema-preview__content">
-				<button type="button" class="ais-wizard-btn avc-wizard-btn--outline avc-wizard-btn--small" id="ais-wizard-show-schema">
+				<button type="button" class="ais-wizard-btn ais-wizard-btn--outline ais-wizard-btn--small" id="ais-wizard-show-schema">
 					<?php esc_html_e( 'View JSON-LD Schema', 'ai-search-schema' ); ?>
 				</button>
 				<pre class="ais-wizard-schema-preview__code" id="ais-wizard-schema-code" style="display: none;"></pre>
@@ -151,7 +151,7 @@ $options = get_option( 'ai_search_schema_settings', array() );
 				</svg>
 				<?php esc_html_e( 'Go to Settings', 'ai-search-schema' ); ?>
 			</a>
-			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ais-wizard-btn avc-wizard-btn--secondary avc-wizard-btn--large" target="_blank">
+			<a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--secondary ais-wizard-btn--large" target="_blank">
 				<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 					<path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
 				</svg>

@@ -2,7 +2,7 @@
   'use strict';
 
   function updateRowNames($container) {
-    $container.find('.avc-social-row').each(function (index) {
+    $container.find('.ais-social-row').each(function (index) {
       const $row = $(this);
       $row.attr('data-index', index);
       $row.find('[data-name]').each(function () {
@@ -15,40 +15,40 @@
   }
 
   function toggleOtherLabel($row) {
-    const isOther = $row.find('.avc-social-network-select').val() === 'other';
-    $row.find('.avc-social-other-label').toggleClass('hidden', !isOther);
+    const isOther = $row.find('.ais-social-network-select').val() === 'other';
+    $row.find('.ais-social-other-label').toggleClass('hidden', !isOther);
   }
 
   function createSocialRowTemplate() {
-    const template = document.getElementById('tmpl-avc-social-row');
+    const template = document.getElementById('tmpl-ais-social-row');
     if (!template) return null;
     const html = template.innerHTML.trim();
     return $(html);
   }
 
   function initSocialRows() {
-    const $container = $('#avc-social-rows');
+    const $container = $('#ais-social-rows');
     if (!$container.length) {
       return;
     }
 
-    $container.on('click', '.avc-remove-social', function (event) {
+    $container.on('click', '.ais-remove-social', function (event) {
       event.preventDefault();
-      const $rows = $container.find('.avc-social-row');
+      const $rows = $container.find('.ais-social-row');
       if ($rows.length <= 1) {
         $rows.find('input[type="text"]').val('');
         $rows.find('select').val('facebook').trigger('change');
         return;
       }
-      $(this).closest('.avc-social-row').remove();
+      $(this).closest('.ais-social-row').remove();
       updateRowNames($container);
     });
 
-    $container.on('change', '.avc-social-network-select', function () {
-      toggleOtherLabel($(this).closest('.avc-social-row'));
+    $container.on('change', '.ais-social-network-select', function () {
+      toggleOtherLabel($(this).closest('.ais-social-row'));
     });
 
-    $('#avc-add-social').on('click', function (event) {
+    $('#ais-add-social').on('click', function (event) {
       event.preventDefault();
       const $row = createSocialRowTemplate();
       if (!$row) return;
@@ -57,7 +57,7 @@
       toggleOtherLabel($row);
     });
 
-    $container.find('.avc-social-row').each(function () {
+    $container.find('.ais-social-row').each(function () {
       toggleOtherLabel($(this));
     });
 
@@ -67,16 +67,16 @@
   function initLanguageTags() {
     const map = (window.aisSettings && aisSettings.languageOptions) || {};
     const removeTemplate = (window.aisSettings && aisSettings.i18nLanguageRemove) || '%s';
-    const $container = $('#avc-language-tags');
+    const $container = $('#ais-language-tags');
     if (!$container.length) {
       return;
     }
 
     const nameTemplate = $container.data('name');
-    const $select = $('#avc-language-select');
+    const $select = $('#ais-language-select');
 
     function languageSelected(code) {
-      return $container.find('.avc-language-tag[data-code="' + code + '"]').length > 0;
+      return $container.find('.ais-language-tag[data-code="' + code + '"]').length > 0;
     }
 
     function addTag(code) {
@@ -85,16 +85,16 @@
       const removeLabel = removeTemplate.replace('%s', label);
 
       const $tag = $(
-        '<span class="avc-language-tag" data-code="' + code + '">' +
-          '<span class="avc-language-label"></span>' +
-          '<button type="button" class="button-link-delete avc-language-remove" aria-label="' + removeLabel + '">' +
+        '<span class="ais-language-tag" data-code="' + code + '">' +
+          '<span class="ais-language-label"></span>' +
+          '<button type="button" class="button-link-delete ais-language-remove" aria-label="' + removeLabel + '">' +
             '<span aria-hidden="true">&times;</span>' +
             '<span class="screen-reader-text">' + removeLabel + '</span>' +
           '</button>' +
         '</span>'
       );
 
-      $tag.find('.avc-language-label').text(label);
+      $tag.find('.ais-language-label').text(label);
       const $hidden = $('<input>', {
         type: 'hidden',
         name: nameTemplate,
@@ -114,9 +114,9 @@
       });
     }
 
-    $container.on('click', '.avc-language-remove', function (event) {
+    $container.on('click', '.ais-language-remove', function (event) {
       event.preventDefault();
-      const $tag = $(this).closest('.avc-language-tag');
+      const $tag = $(this).closest('.ais-language-tag');
       $tag.remove();
       refreshSelect();
     });
@@ -132,7 +132,7 @@
     }
 
     // Ensure pre-rendered tags are registered.
-    $container.find('.avc-language-tag').each(function () {
+    $container.find('.ais-language-tag').each(function () {
       const code = $(this).data('code');
       if (!map[code]) {
         $(this).remove();
@@ -143,14 +143,14 @@
   }
 
   function createOpeningHoursRowTemplate() {
-    const template = document.getElementById('tmpl-avc-opening-hours-row');
+    const template = document.getElementById('tmpl-ais-opening-hours-row');
     if (!template) return null;
     const html = template.innerHTML.trim();
     return $(html);
   }
 
   function updateOpeningHoursNames($container) {
-    $container.find('.avc-opening-hours-row').each(function (index) {
+    $container.find('.ais-opening-hours-row').each(function (index) {
       const $row = $(this);
       $row.attr('data-index', index);
       $row.find('[data-name]').each(function () {
@@ -168,7 +168,7 @@
 
   function getDayToggles() {
     const toggles = {};
-    $('.avc-opening-hours-toggles input[type="checkbox"]').each(function () {
+    $('.ais-opening-hours-toggles input[type="checkbox"]').each(function () {
       const dayKey = $(this).data('day-key');
       if (dayKey) {
         toggles[dayKey] = $(this).is(':checked');
@@ -187,7 +187,7 @@
 
   function applyDayToggleToSelects() {
     const toggles = getDayToggles();
-    $('.avc-opening-hours-day').each(function () {
+    $('.ais-opening-hours-day').each(function () {
       const $select = $(this);
       const value = $select.val();
       $select.find('option').each(function () {
@@ -197,22 +197,22 @@
         $option.prop('disabled', !enabled);
       });
       if (toggles.hasOwnProperty(value) && !toggles[value]) {
-        $select.closest('.avc-opening-hours-row').remove();
+        $select.closest('.ais-opening-hours-row').remove();
       }
     });
-    updateOpeningHoursNames($('#avc-opening-hours-rows'));
+    updateOpeningHoursNames($('#ais-opening-hours-rows'));
   }
 
   function addOpeningRow(dayKey, opens, closes) {
     if (!dayEnabled(dayKey)) {
       return;
     }
-    const $container = $('#avc-opening-hours-rows');
+    const $container = $('#ais-opening-hours-rows');
     const $row = createOpeningHoursRowTemplate();
     if (!$row) return;
-    $row.find('.avc-opening-hours-day').val(dayKey || 'Monday');
-    $row.find('.avc-opening-hours-opens').val(opens || '');
-    $row.find('.avc-opening-hours-closes').val(closes || '');
+    $row.find('.ais-opening-hours-day').val(dayKey || 'Monday');
+    $row.find('.ais-opening-hours-opens').val(opens || '');
+    $row.find('.ais-opening-hours-closes').val(closes || '');
     $row.attr('draggable', true);
     $container.append($row);
     applyDayToggleToSelects();
@@ -220,7 +220,7 @@
   }
 
   function resetOpeningRows(rows) {
-    const $container = $('#avc-opening-hours-rows');
+    const $container = $('#ais-opening-hours-rows');
     if (!$container.length) return;
     $container.empty();
     const toggles = getDayToggles();
@@ -242,12 +242,12 @@
 
   function getCurrentOpeningRows() {
     const rows = [];
-    $('#avc-opening-hours-rows .avc-opening-hours-row').each(function () {
+    $('#ais-opening-hours-rows .ais-opening-hours-row').each(function () {
       const $row = $(this);
       rows.push({
-        day_key: normalizeDay($row.find('.avc-opening-hours-day').val()),
-        opens: ($row.find('.avc-opening-hours-opens').val() || '').trim(),
-        closes: ($row.find('.avc-opening-hours-closes').val() || '').trim(),
+        day_key: normalizeDay($row.find('.ais-opening-hours-day').val()),
+        opens: ($row.find('.ais-opening-hours-opens').val() || '').trim(),
+        closes: ($row.find('.ais-opening-hours-closes').val() || '').trim(),
       });
     });
     return rows;
@@ -279,24 +279,24 @@
       ],
     };
 
-    $('#avc-oh-template-weekday').on('click', function (e) {
+    $('#ais-oh-template-weekday').on('click', function (e) {
       e.preventDefault();
       resetOpeningRows(templates.weekday);
     });
 
-    $('#avc-oh-template-weekend').on('click', function (e) {
+    $('#ais-oh-template-weekend').on('click', function (e) {
       e.preventDefault();
-      $('#avc-include-saturday, #avc-include-sunday, #avc-include-holiday').prop('checked', true);
+      $('#ais-include-saturday, #ais-include-sunday, #ais-include-holiday').prop('checked', true);
       resetOpeningRows(templates.weekend);
     });
 
-    $('#avc-oh-template-24h').on('click', function (e) {
+    $('#ais-oh-template-24h').on('click', function (e) {
       e.preventDefault();
-      $('.avc-opening-hours-toggles input[type="checkbox"]').prop('checked', true);
+      $('.ais-opening-hours-toggles input[type="checkbox"]').prop('checked', true);
       resetOpeningRows(templates.allDay);
     });
 
-    $('#avc-oh-template-clear').on('click', function (e) {
+    $('#ais-oh-template-clear').on('click', function (e) {
       e.preventDefault();
       resetOpeningRows([]);
     });
@@ -313,25 +313,25 @@
   }
 
   function initDayToggles() {
-    const $container = $('#avc-opening-hours-rows');
+    const $container = $('#ais-opening-hours-rows');
     if (!$container.length) return;
-    $('.avc-opening-hours-toggles input[type="checkbox"]').on('change', function () {
+    $('.ais-opening-hours-toggles input[type="checkbox"]').on('change', function () {
       const dayKey = $(this).data('day-key');
       if (!dayKey) {
         return;
       }
       if (dayKey === 'PublicHoliday') {
-        $('#avc-holiday-enabled').prop('checked', $(this).is(':checked'));
-      } else if (this.id === 'avc-holiday-enabled') {
-        $('#avc-include-holiday').prop('checked', $(this).is(':checked'));
+        $('#ais-holiday-enabled').prop('checked', $(this).is(':checked'));
+      } else if (this.id === 'ais-holiday-enabled') {
+        $('#ais-include-holiday').prop('checked', $(this).is(':checked'));
       }
       if ($(this).is(':checked')) {
         ensureDayHasSlot(dayKey);
       } else {
-        $container.find('.avc-opening-hours-day').each(function () {
+        $container.find('.ais-opening-hours-day').each(function () {
           const $select = $(this);
           if ($select.val() === dayKey) {
-            $select.closest('.avc-opening-hours-row').remove();
+            $select.closest('.ais-opening-hours-row').remove();
           }
         });
       }
@@ -341,13 +341,13 @@
     applyDayToggleToSelects();
   }
   function applyHolidayMode() {
-    const enabled = $('#avc-holiday-enabled').is(':checked');
+    const enabled = $('#ais-holiday-enabled').is(':checked');
     const mode = $('input[name="ai_search_schema_options[holiday_mode]"]:checked').val() || 'custom';
     if (!enabled) {
-      $('#avc-include-holiday').prop('checked', false).trigger('change');
+      $('#ais-include-holiday').prop('checked', false).trigger('change');
       return;
     }
-    $('#avc-include-holiday').prop('checked', true);
+    $('#ais-include-holiday').prop('checked', true);
     if (mode === 'weekday') {
       const rows = getCurrentOpeningRows().filter(function (row) {
         return ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].includes(row.day_key);
@@ -356,16 +356,16 @@
         return { day_key: 'PublicHoliday', opens: row.opens, closes: row.closes, slots: [{ opens: row.opens, closes: row.closes }] };
       });
       // Remove existing holiday rows and inject weekday copies.
-      $('#avc-opening-hours-rows .avc-opening-hours-day').each(function () {
+      $('#ais-opening-hours-rows .ais-opening-hours-day').each(function () {
         if ($(this).val() === 'PublicHoliday') {
-          $(this).closest('.avc-opening-hours-row').remove();
+          $(this).closest('.ais-opening-hours-row').remove();
         }
       });
       resetOpeningRows(holidayRows.concat(getCurrentOpeningRows().filter(function (row) { return row.day_key !== 'PublicHoliday'; })));
     } else if (mode === 'weekend') {
-      $('#avc-opening-hours-rows .avc-opening-hours-day').each(function () {
+      $('#ais-opening-hours-rows .ais-opening-hours-day').each(function () {
         if ($(this).val() === 'PublicHoliday') {
-          $(this).closest('.avc-opening-hours-row').remove();
+          $(this).closest('.ais-opening-hours-row').remove();
         }
       });
       addOpeningRow('PublicHoliday', '10:00', '17:00');
@@ -373,25 +373,25 @@
   }
 
   function initOpeningHours() {
-    const $container = $('#avc-opening-hours-rows');
+    const $container = $('#ais-opening-hours-rows');
     if (!$container.length) {
       return;
     }
 
-    $('#avc-add-opening-hour').on('click', function (event) {
+    $('#ais-add-opening-hour').on('click', function (event) {
       event.preventDefault();
       addOpeningRow('Monday', '', '');
     });
 
-    $container.on('click', '.avc-remove-opening-hour', function (event) {
+    $container.on('click', '.ais-remove-opening-hour', function (event) {
       event.preventDefault();
-      $(this).closest('.avc-opening-hours-row').remove();
+      $(this).closest('.ais-opening-hours-row').remove();
       updateOpeningHoursNames($container);
     });
 
     addTemplateButtons();
     initDayToggles();
-    $('#avc-holiday-enabled').on('change', applyHolidayMode);
+    $('#ais-holiday-enabled').on('change', applyHolidayMode);
     $('input[name="ai_search_schema_options[holiday_mode]"]').on('change', applyHolidayMode);
     initOpeningHoursDrag();
     updateOpeningHoursNames($container);
@@ -399,35 +399,35 @@
   }
 
   function initOpeningHoursDrag() {
-    const $container = $('#avc-opening-hours-rows');
+    const $container = $('#ais-opening-hours-rows');
     if (!$container.length) return;
     let dragSrc = null;
 
-    $container.on('dragstart', '.avc-opening-hours-row', function (e) {
+    $container.on('dragstart', '.ais-opening-hours-row', function (e) {
       dragSrc = this;
       $(this).addClass('is-dragging');
       e.originalEvent.dataTransfer.effectAllowed = 'move';
       e.originalEvent.dataTransfer.setData('text/plain', 'drag');
     });
 
-    $container.on('dragend', '.avc-opening-hours-row', function () {
+    $container.on('dragend', '.ais-opening-hours-row', function () {
       dragSrc = null;
-      $container.find('.avc-opening-hours-row').removeClass('is-dragging drag-over');
+      $container.find('.ais-opening-hours-row').removeClass('is-dragging drag-over');
       updateOpeningHoursNames($container);
     });
 
-    $container.on('dragover', '.avc-opening-hours-row', function (e) {
+    $container.on('dragover', '.ais-opening-hours-row', function (e) {
       if (!dragSrc || dragSrc === this) return;
       e.preventDefault();
       e.originalEvent.dataTransfer.dropEffect = 'move';
       $(this).addClass('drag-over');
     });
 
-    $container.on('dragleave', '.avc-opening-hours-row', function () {
+    $container.on('dragleave', '.ais-opening-hours-row', function () {
       $(this).removeClass('drag-over');
     });
 
-    $container.on('drop', '.avc-opening-hours-row', function (e) {
+    $container.on('drop', '.ais-opening-hours-row', function (e) {
       if (!dragSrc || dragSrc === this) return;
       e.preventDefault();
       $(this).removeClass('drag-over');
@@ -443,7 +443,7 @@
   }
 
   function initGeocodeLookup() {
-    const $button = $('#avc-geocode-button');
+    const $button = $('#ais-geocode-button');
     if (!$button.length || !window.aisSettings) {
       return;
     }
@@ -451,7 +451,7 @@
     const settings = window.aisSettings;
     const ajaxUrl = settings.ajaxUrl || window.ajaxurl;
     const hasApiKey = !!settings.hasGeocodeApiKey;
-    const $status = $('#avc-geocode-status');
+    const $status = $('#ais-geocode-status');
     const defaultLabel = $button.text().trim() || settings.i18nGeocodeReady || $button.text();
 
     if (!$button.text().trim() && settings.i18nGeocodeReady) {
@@ -480,21 +480,21 @@
         }
 
         if (components.address_locality) {
-          $('#avc-address-locality').val(components.address_locality);
+          $('#ais-address-locality').val(components.address_locality);
         }
         if (components.street_address) {
-          $('#avc-address-street').val(components.street_address);
+          $('#ais-address-street').val(components.street_address);
         }
         if (components.postal_code) {
-          $('#avc-address-postal').val(components.postal_code);
+          $('#ais-address-postal').val(components.postal_code);
         }
         if (components.country) {
-          $('#avc-address-country').val(components.country);
+          $('#ais-address-country').val(components.country);
         }
 
         if (components.address_region) {
-          const $prefecture = $('#avc-address-prefecture');
-          const $hiddenRegion = $('#avc-address-region-hidden');
+          const $prefecture = $('#ais-address-prefecture');
+          const $hiddenRegion = $('#ais-address-region-hidden');
           const optionExists = $prefecture.find('option[value="' + components.address_region + '"]').length > 0;
 
           if (optionExists) {
@@ -506,24 +506,24 @@
             if ($hiddenRegion.length) {
               $hiddenRegion.val(components.address_region);
             }
-            $('#avc-prefecture-iso').text('—');
+            $('#ais-prefecture-iso').text('—');
           }
         }
       }
 
-      const $prefecture = $('#avc-address-prefecture');
-      const $regionHidden = $('#avc-address-region-hidden');
+      const $prefecture = $('#ais-address-prefecture');
+      const $regionHidden = $('#ais-address-region-hidden');
       const prefectureValue = $prefecture.length ? ($prefecture.val() || '') : '';
       if ($regionHidden.length) {
         $regionHidden.val(prefectureValue);
       }
 
       const address = {
-        postal_code: $('#avc-address-postal').val(),
+        postal_code: $('#ais-address-postal').val(),
         region: $regionHidden.length ? $regionHidden.val() : prefectureValue,
-        locality: $('#avc-address-locality').val(),
-        street_address: $('#avc-address-street').val(),
-        country: $('#avc-address-country').val(),
+        locality: $('#ais-address-locality').val(),
+        street_address: $('#ais-address-street').val(),
+        country: $('#ais-address-country').val(),
       };
 
       let hasAddress = false;
@@ -559,10 +559,10 @@
         .done(function (response) {
           if (response && response.success && response.data) {
             if (response.data.latitude) {
-              $('#avc-geo-latitude').val(response.data.latitude);
+              $('#ais-geo-latitude').val(response.data.latitude);
             }
             if (response.data.longitude) {
-              $('#avc-geo-longitude').val(response.data.longitude);
+              $('#ais-geo-longitude').val(response.data.longitude);
             }
             if (response.data.components) {
               applyComponents(response.data.components);
@@ -588,7 +588,7 @@
   }
 
   function initGeocodeKeyControls() {
-    const $clearButton = $('#avc-gmaps-api-key-clear');
+    const $clearButton = $('#ais-gmaps-api-key-clear');
     if ($clearButton.length) {
       $clearButton.on('click', function (event) {
         const message = $(this).data('confirm');
@@ -678,24 +678,24 @@
   }
 
   function relocateNotices() {
-    const $hero = $('.avc-settings-hero');
+    const $hero = $('.ais-settings-hero');
     if (!$hero.length) {
       return;
     }
     $hero.find('.notice').each(function () {
       const $notice = $(this);
-      $notice.addClass('avc-elevated-notice');
+      $notice.addClass('ais-elevated-notice');
       $notice.insertBefore($hero);
     });
   }
 
   function initPrefectureSelector() {
-    const $prefecture = $('#avc-address-prefecture');
+    const $prefecture = $('#ais-address-prefecture');
     if (!$prefecture.length) {
       return;
     }
-    const $regionHidden = $('#avc-address-region-hidden');
-    const $isoOutput = $('#avc-prefecture-iso');
+    const $regionHidden = $('#ais-address-region-hidden');
+    const $isoOutput = $('#ais-prefecture-iso');
 
     function syncPrefectureMeta() {
       const $selected = $prefecture.find('option:selected');
@@ -713,7 +713,7 @@
   }
 
   function initZipAutofill() {
-    const $postal = $('#avc-address-postal');
+    const $postal = $('#ais-address-postal');
     if (!$postal.length) {
       return;
     }
@@ -725,14 +725,14 @@
       const line = result.address3 || '';
 
       if (prefecture) {
-        const $pref = $('#avc-address-prefecture');
+        const $pref = $('#ais-address-prefecture');
         $pref.val(prefecture).trigger('change');
       }
       if (city) {
-        $('#avc-address-city').val(city);
+        $('#ais-address-city').val(city);
       }
       if (line) {
-        $('#avc-address-line').val(line);
+        $('#ais-address-line').val(line);
       }
       // Update LocalBusiness guide after autofill
       updateLocalBusinessGuide();
@@ -758,7 +758,7 @@
       }
     });
 
-    $('#avc-zip-autofill').on('click', function (e) {
+    $('#ais-zip-autofill').on('click', function (e) {
       e.preventDefault();
       const digits = ($postal.val() || '').replace(/[^0-9]/g, '');
       lookup(digits);
@@ -769,7 +769,7 @@
    * LocalBusiness Google 推奨項目ガイドのリアルタイムチェック
    */
   function updateLocalBusinessGuide() {
-    const $guide = $('#avc-lb-guide');
+    const $guide = $('#ais-lb-guide');
     if (!$guide.length) {
       return;
     }
@@ -777,41 +777,41 @@
     // チェック条件の定義
     const checks = {
       name: function() {
-        return $.trim($('#avc-company-name').val() || '') !== '';
+        return $.trim($('#ais-company-name').val() || '') !== '';
       },
       address: function() {
-        const prefecture = $.trim($('#avc-address-prefecture').val() || '');
-        const city = $.trim($('#avc-address-city').val() || '');
+        const prefecture = $.trim($('#ais-address-prefecture').val() || '');
+        const city = $.trim($('#ais-address-city').val() || '');
         return prefecture !== '' && city !== '';
       },
       phone: function() {
-        return $.trim($('#avc-phone').val() || '') !== '';
+        return $.trim($('#ais-phone').val() || '') !== '';
       },
       geo: function() {
-        const lat = $.trim($('#avc-geo-latitude').val() || '');
-        const lng = $.trim($('#avc-geo-longitude').val() || '');
+        const lat = $.trim($('#ais-geo-latitude').val() || '');
+        const lng = $.trim($('#ais-geo-longitude').val() || '');
         return lat !== '' && lng !== '';
       },
       hours: function() {
-        return $('#avc-opening-hours-rows .avc-opening-hours-row').length > 0;
+        return $('#ais-opening-hours-rows .ais-opening-hours-row').length > 0;
       },
       image: function() {
-        const storeImage = $.trim($('#avc-store-image-url').val() || '');
-        const lbImage = $.trim($('#avc-lb-image-url').val() || '');
+        const storeImage = $.trim($('#ais-store-image-url').val() || '');
+        const lbImage = $.trim($('#ais-lb-image-url').val() || '');
         return storeImage !== '' || lbImage !== '';
       },
       url: function() {
-        return $.trim($('#avc-site-url').val() || '') !== '';
+        return $.trim($('#ais-site-url').val() || '') !== '';
       },
       price: function() {
-        return $.trim($('#avc-price-range').val() || '') !== '';
+        return $.trim($('#ais-price-range').val() || '') !== '';
       }
     };
 
     // 各チェック項目を更新
     $.each(checks, function(key, checkFn) {
-      const $item = $('#avc-lb-check-' + key).closest('.avc-lb-guide__item');
-      const $check = $('#avc-lb-check-' + key);
+      const $item = $('#ais-lb-check-' + key).closest('.ais-lb-guide__item');
+      const $check = $('#ais-lb-check-' + key);
       const isComplete = checkFn();
 
       if (isComplete) {
@@ -829,8 +829,8 @@
    * Guides users on how Organization and LocalBusiness can work together.
    */
   function initEntityTypeHelp() {
-    const $entityType = $('#avc-entity-type');
-    const $tooltipText = $('#avc-entity-type-tooltip .avc-field__tooltip-text');
+    const $entityType = $('#ais-entity-type');
+    const $tooltipText = $('#ais-entity-type-tooltip .ais-field__tooltip-text');
 
     if (!$entityType.length || !$tooltipText.length) {
       return;
@@ -853,24 +853,24 @@
   }
 
   function initLocalBusinessGuide() {
-    const $guide = $('#avc-lb-guide');
+    const $guide = $('#ais-lb-guide');
     if (!$guide.length) {
       return;
     }
 
     // 関連フィールドの変更を監視
     const watchFields = [
-      '#avc-company-name',
-      '#avc-address-prefecture',
-      '#avc-address-city',
-      '#avc-address-line',
-      '#avc-phone',
-      '#avc-geo-latitude',
-      '#avc-geo-longitude',
-      '#avc-store-image-url',
-      '#avc-lb-image-url',
-      '#avc-site-url',
-      '#avc-price-range'
+      '#ais-company-name',
+      '#ais-address-prefecture',
+      '#ais-address-city',
+      '#ais-address-line',
+      '#ais-phone',
+      '#ais-geo-latitude',
+      '#ais-geo-longitude',
+      '#ais-store-image-url',
+      '#ais-lb-image-url',
+      '#ais-site-url',
+      '#ais-price-range'
     ];
 
     $(watchFields.join(', ')).on('input change', function() {
@@ -878,7 +878,7 @@
     });
 
     // 営業時間行の追加・削除を監視
-    const $hoursContainer = $('#avc-opening-hours-rows');
+    const $hoursContainer = $('#ais-opening-hours-rows');
     if ($hoursContainer.length) {
       const observer = new MutationObserver(function() {
         updateLocalBusinessGuide();
@@ -892,25 +892,25 @@
 
   $(document).ready(function () {
     initImageSelector({
-      selectButton: '#avc-logo-select',
-      removeButton: '#avc-logo-remove',
-      urlInput: '#avc-logo-url',
-      idInput: '#avc-logo-id',
-      preview: '#avc-logo-preview',
+      selectButton: '#ais-logo-select',
+      removeButton: '#ais-logo-remove',
+      urlInput: '#ais-logo-url',
+      idInput: '#ais-logo-id',
+      preview: '#ais-logo-preview',
     });
     initImageSelector({
-      selectButton: '#avc-lb-image-select',
-      removeButton: '#avc-lb-image-remove',
-      urlInput: '#avc-lb-image-url',
-      idInput: '#avc-lb-image-id',
-      preview: '#avc-lb-image-preview',
+      selectButton: '#ais-lb-image-select',
+      removeButton: '#ais-lb-image-remove',
+      urlInput: '#ais-lb-image-url',
+      idInput: '#ais-lb-image-id',
+      preview: '#ais-lb-image-preview',
     });
     initImageSelector({
-      selectButton: '#avc-store-image-select',
-      removeButton: '#avc-store-image-remove',
-      urlInput: '#avc-store-image-url',
-      idInput: '#avc-store-image-id',
-      preview: '#avc-store-image-preview',
+      selectButton: '#ais-store-image-select',
+      removeButton: '#ais-store-image-remove',
+      urlInput: '#ais-store-image-url',
+      idInput: '#ais-store-image-id',
+      preview: '#ais-store-image-preview',
     });
     initSocialRows();
     initLanguageTags();
@@ -929,18 +929,18 @@
    * バリデーションサマリーパネルの折りたたみ機能を初期化
    */
   function initValidationSummary() {
-    const $summary = $('.avc-validation-summary');
+    const $summary = $('.ais-validation-summary');
     if (!$summary.length) {
       return;
     }
 
-    const $toggle = $summary.find('.avc-validation-summary__toggle');
-    const $details = $summary.find('.avc-validation-summary__details');
+    const $toggle = $summary.find('.ais-validation-summary__toggle');
+    const $details = $summary.find('.ais-validation-summary__details');
 
     // ヘッダークリックでもトグル
-    $summary.find('.avc-validation-summary__header').on('click', function (e) {
+    $summary.find('.ais-validation-summary__header').on('click', function (e) {
       // ボタン自体のクリックは二重処理を避ける
-      if ($(e.target).closest('.avc-validation-summary__toggle').length) {
+      if ($(e.target).closest('.ais-validation-summary__toggle').length) {
         return;
       }
       toggleDetails();
@@ -961,4 +961,50 @@
       }
     }
   }
+
+  // llms.txt regenerate button handler
+  function initLlmsTxtRegenerate() {
+    const $button = $('#ais-regenerate-llms-txt');
+    const $spinner = $button.siblings('.spinner');
+    const $textarea = $('#ais-llms-txt-content');
+
+    if (!$button.length || !$textarea.length) {
+      return;
+    }
+
+    $button.on('click', function (e) {
+      e.preventDefault();
+
+      const originalText = $button.text();
+      $button.prop('disabled', true).text(aisSettings.i18nLlmsTxtRegenerating || 'Regenerating...');
+      $spinner.addClass('is-active');
+
+      $.ajax({
+        url: aisSettings.ajaxUrl,
+        type: 'POST',
+        data: {
+          action: 'ai_search_schema_regenerate_llms_txt',
+          nonce: aisSettings.llmsTxtNonce
+        },
+        success: function (response) {
+          if (response.success && response.data && response.data.content) {
+            $textarea.val(response.data.content);
+          } else {
+            alert(response.data?.message || 'Failed to regenerate llms.txt');
+          }
+        },
+        error: function () {
+          alert('Failed to regenerate llms.txt');
+        },
+        complete: function () {
+          $button.prop('disabled', false).text(aisSettings.i18nLlmsTxtRegenerate || originalText);
+          $spinner.removeClass('is-active');
+        }
+      });
+    });
+  }
+
+  $(document).ready(function () {
+    initLlmsTxtRegenerate();
+  });
 })(jQuery);

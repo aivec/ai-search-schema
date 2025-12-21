@@ -3,13 +3,13 @@
 /**
  * Welcome step template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  */
 
 defined( 'ABSPATH' ) || exit;
 
 // Get import sources.
-$importer = new \Avc\Aeo\Schema\Wizard\Wizard_Importer();
+$importer = new \Aivec\AiSearchSchema\Wizard\Wizard_Importer();
 $sources  = $importer->get_available_sources();
 
 $has_importable = false;
@@ -20,7 +20,7 @@ foreach ( $sources as $source ) {
 	}
 }
 ?>
-<div class="ais-wizard-step avc-wizard-step--welcome">
+<div class="ais-wizard-step ais-wizard-step--welcome">
 	<div class="ais-wizard-welcome">
 		<div class="ais-wizard-welcome__icon">
 			<svg viewBox="0 0 80 80" width="80" height="80">
@@ -73,7 +73,7 @@ foreach ( $sources as $source ) {
 		</div>
 
 		<div class="ais-wizard-welcome__actions">
-			<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn avc-wizard-btn--primary avc-wizard-btn--large">
+			<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-btn--large">
 				<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 					<path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
 				</svg>
@@ -81,7 +81,7 @@ foreach ( $sources as $source ) {
 			</a>
 
 			<?php if ( $has_importable ) : ?>
-				<button type="button" class="ais-wizard-btn avc-wizard-btn--secondary avc-wizard-btn--large" id="ais-wizard-show-import">
+				<button type="button" class="ais-wizard-btn ais-wizard-btn--secondary ais-wizard-btn--large" id="ais-wizard-show-import">
 					<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 						<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
 					</svg>
@@ -121,7 +121,7 @@ foreach ( $sources as $source ) {
 
 				<div class="ais-wizard-import-sources">
 					<?php foreach ( $sources as $source_key => $source ) : ?>
-						<div class="ais-wizard-import-source <?php echo $source['detected'] ? 'avc-wizard-import-source--detected' : 'avc-wizard-import-source--not-found'; ?>">
+						<div class="ais-wizard-import-source <?php echo $source['detected'] ? 'ais-wizard-import-source--detected' : 'ais-wizard-import-source--not-found'; ?>">
 							<div class="ais-wizard-import-source__header">
 								<span class="ais-wizard-import-source__icon">
 									<?php if ( $source['detected'] ) : ?>
@@ -149,7 +149,7 @@ foreach ( $sources as $source ) {
 									</ul>
 								</div>
 								<div class="ais-wizard-import-source__actions">
-									<button type="button" class="ais-wizard-btn avc-wizard-btn--primary avc-wizard-btn--small avc-wizard-import-btn" data-source="<?php echo esc_attr( $source_key ); ?>">
+									<button type="button" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-btn--small ais-wizard-import-btn" data-source="<?php echo esc_attr( $source_key ); ?>">
 										<?php esc_html_e( 'Import', 'ai-search-schema' ); ?>
 									</button>
 								</div>
@@ -163,7 +163,7 @@ foreach ( $sources as $source ) {
 				</div>
 
 				<div class="ais-wizard-modal__footer">
-					<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn avc-wizard-btn--text">
+					<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--text">
 						<?php esc_html_e( 'Continue without importing', 'ai-search-schema' ); ?> →
 					</a>
 				</div>

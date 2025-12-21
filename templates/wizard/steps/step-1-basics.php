@@ -3,7 +3,7 @@
 /**
  * Step 1: Basic Information template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  */
 
 defined( 'ABSPATH' ) || exit;

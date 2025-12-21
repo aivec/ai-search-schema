@@ -97,7 +97,7 @@ $diag_warning_count = count( $diag_warnings );
 $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 ?>
 
-<div class="wrap avc-modern-settings">
+<div class="wrap ais-modern-settings">
 	
 
 	<?php if ( ! empty( $settings_notices ) ) : ?>
@@ -107,7 +107,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 	<?php endif; ?>
 
 	<div class="ais-modern-settings__content">
-		<h1 class="screen-reader-text avc-settings-page-title"><?php esc_html_e( 'AEO Schema Settings', 'ai-search-schema' ); ?></h1>
+		<h1 class="screen-reader-text ais-settings-page-title"><?php esc_html_e( 'AEO Schema Settings', 'ai-search-schema' ); ?></h1>
 
 		<div class="ais-settings-hero">
 			<div class="ais-hero__content">
@@ -132,7 +132,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		</div>
 
 		<?php if ( $diag_has_issues ) : ?>
-		<div class="ais-validation-summary<?php echo $diag_error_count > 0 ? ' avc-validation-summary--has-errors' : ''; ?>">
+		<div class="ais-validation-summary<?php echo $diag_error_count > 0 ? ' ais-validation-summary--has-errors' : ''; ?>">
 			<div class="ais-validation-summary__header">
 				<div class="ais-validation-summary__icon">
 					<?php if ( $diag_error_count > 0 ) : ?>
@@ -145,7 +145,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					<strong><?php esc_html_e( 'Schema Validation Summary', 'ai-search-schema' ); ?></strong>
 					<span class="ais-validation-summary__counts">
 						<?php if ( $diag_error_count > 0 ) : ?>
-							<span class="ais-validation-summary__count avc-validation-summary__count--error">
+							<span class="ais-validation-summary__count ais-validation-summary__count--error">
 								<?php
 								/* translators: %d: number of errors */
 								printf( esc_html( _n( '%d error', '%d errors', $diag_error_count, 'ai-search-schema' ) ), absint( $diag_error_count ) );
@@ -153,7 +153,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</span>
 						<?php endif; ?>
 						<?php if ( $diag_warning_count > 0 ) : ?>
-							<span class="ais-validation-summary__count avc-validation-summary__count--warning">
+							<span class="ais-validation-summary__count ais-validation-summary__count--warning">
 								<?php
 								/* translators: %d: number of warnings */
 								printf( esc_html( _n( '%d warning', '%d warnings', $diag_warning_count, 'ai-search-schema' ) ), absint( $diag_warning_count ) );
@@ -162,14 +162,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<?php endif; ?>
 					</span>
 				</div>
-				<button type="button" class="ais-validation-summary__toggle" aria-expanded="false" aria-controls="avc-validation-details">
+				<button type="button" class="ais-validation-summary__toggle" aria-expanded="false" aria-controls="ais-validation-details">
 					<span class="screen-reader-text"><?php esc_html_e( 'Toggle details', 'ai-search-schema' ); ?></span>
 					<span class="dashicons dashicons-arrow-down-alt2"></span>
 				</button>
 			</div>
 			<div id="ais-validation-details" class="ais-validation-summary__details" hidden>
 				<?php if ( $diag_error_count > 0 ) : ?>
-				<div class="ais-validation-summary__section avc-validation-summary__section--errors">
+				<div class="ais-validation-summary__section ais-validation-summary__section--errors">
 					<h4><?php esc_html_e( 'Errors', 'ai-search-schema' ); ?></h4>
 					<ul>
 						<?php foreach ( $diag_errors as $err ) : ?>
@@ -182,7 +182,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<?php endif; ?>
 				<?php if ( $diag_warning_count > 0 ) : ?>
-				<div class="ais-validation-summary__section avc-validation-summary__section--warnings">
+				<div class="ais-validation-summary__section ais-validation-summary__section--warnings">
 					<h4><?php esc_html_e( 'Warnings', 'ai-search-schema' ); ?></h4>
 					<ul>
 						<?php foreach ( $diag_warnings as $warn ) : ?>
@@ -201,7 +201,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		<form method="post" action="options.php" class="ais-settings-form">
 		<?php settings_fields( $option_name ); ?>
 
-		<div class="ais-card-grid avc-card-grid--top">
+		<div class="ais-card-grid ais-card-grid--top">
 			<section class="ais-card">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Brand & Site', 'ai-search-schema' ); ?></h2>
@@ -252,7 +252,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								?>
 								<span class="ais-language-tag" data-code="<?php echo esc_attr( $lang_code ); ?>">
 									<span class="ais-language-label"><?php echo esc_html( $label ); ?></span>
-									<button type="button" class="button-link-delete avc-language-remove" aria-label="<?php echo esc_attr( $remove_label ); ?>">
+									<button type="button" class="button-link-delete ais-language-remove" aria-label="<?php echo esc_attr( $remove_label ); ?>">
 										<span aria-hidden="true">&times;</span>
 										<span class="screen-reader-text"><?php echo esc_html( $remove_label ); ?></span>
 									</button>
@@ -292,7 +292,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-logo-url" name="<?php echo esc_attr( $option_name ); ?>[logo_url]" value="<?php echo esc_attr( $logo_url ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-logo-select" data-title="<?php esc_attr_e( 'Select logo', 'ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert logo', 'ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'ai-search-schema' ); ?></button>
-										<button type="button" class="button-link avc-inline-link <?php echo $logo_url ? '' : 'hidden'; ?>" id="ais-logo-remove"><?php esc_html_e( 'Clear logo', 'ai-search-schema' ); ?></button>
+										<button type="button" class="button-link ais-inline-link <?php echo $logo_url ? '' : 'hidden'; ?>" id="ais-logo-remove"><?php esc_html_e( 'Clear logo', 'ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -306,7 +306,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-lb-image-url" name="<?php echo esc_attr( $option_name ); ?>[lb_image_url]" value="<?php echo esc_attr( $lb_image_url ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-lb-image-select" data-title="<?php esc_attr_e( 'Select storefront image', 'ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert image', 'ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'ai-search-schema' ); ?></button>
-										<button type="button" class="button-link avc-inline-link <?php echo $lb_image_url ? '' : 'hidden'; ?>" id="ais-lb-image-remove"><?php esc_html_e( 'Clear image', 'ai-search-schema' ); ?></button>
+										<button type="button" class="button-link ais-inline-link <?php echo $lb_image_url ? '' : 'hidden'; ?>" id="ais-lb-image-remove"><?php esc_html_e( 'Clear image', 'ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -320,7 +320,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-store-image-url" name="<?php echo esc_attr( $option_name ); ?>[store_image_url]" value="<?php echo esc_attr( $options['store_image_url'] ?? '' ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-store-image-select" data-title="<?php esc_attr_e( 'Select store photo', 'ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert image', 'ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'ai-search-schema' ); ?></button>
-										<button type="button" class="button-link avc-inline-link <?php echo ! empty( $options['store_image_url'] ) ? '' : 'hidden'; ?>" id="ais-store-image-remove"><?php esc_html_e( 'Clear image', 'ai-search-schema' ); ?></button>
+										<button type="button" class="button-link ais-inline-link <?php echo ! empty( $options['store_image_url'] ) ? '' : 'hidden'; ?>" id="ais-store-image-remove"><?php esc_html_e( 'Clear image', 'ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -343,7 +343,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									</select>
 									<input type="text" name="<?php echo esc_attr( $option_name ); ?>[social_links][<?php echo esc_attr( $index ); ?>][account]" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][account]" value="<?php echo esc_attr( $account ); ?>" placeholder="<?php esc_attr_e( 'Account name or profile URL', 'ai-search-schema' ); ?>" />
 									<input type="text" class="ais-social-other-label <?php echo 'other' === $network ? '' : 'hidden'; ?>" name="<?php echo esc_attr( $option_name ); ?>[social_links][<?php echo esc_attr( $index ); ?>][label]" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][label]" value="<?php echo esc_attr( $label ); ?>" placeholder="<?php esc_attr_e( 'Other service label', 'ai-search-schema' ); ?>" />
-									<button type="button" class="button-link-delete avc-remove-social"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
+									<button type="button" class="button-link-delete ais-remove-social"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
 								</div>
 							<?php endforeach; ?>
 						</div>
@@ -374,7 +374,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<?php endforeach; ?>
 							</select>
 						</div>
-						<div class="ais-field avc-field--radios">
+						<div class="ais-field ais-field--radios">
 							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'ai-search-schema' ) ); ?></span>
 							<label class="ais-radio">
 								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="avc" <?php checked( $options['ai_search_schema_priority'], 'avc' ); ?> />
@@ -401,13 +401,13 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							<input id="ais-lb-label" type="text" name="<?php echo esc_attr( $option_name ); ?>[local_business_label]" value="<?php echo esc_attr( $options['local_business_label'] ); ?>" placeholder="<?php esc_attr_e( 'Example: HQ / Shinjuku', 'ai-search-schema' ); ?>" />
 						</div>
 					</div>
-					<div class="ais-field avc-field--toggle">
+					<div class="ais-field ais-field--toggle">
 						<span class="ais-field__label"><?php esc_html_e( 'Breadcrumbs', 'ai-search-schema' ); ?></span>
 						<label class="ais-toggle" for="ais-breadcrumbs-schema">
 							<input id="ais-breadcrumbs-schema" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_breadcrumbs_schema_enabled]" value="1" <?php checked( true, ! empty( $options['ai_search_schema_breadcrumbs_schema_enabled'] ) ); ?> />
 							<span><?php esc_html_e( 'Include BreadcrumbList in JSON-LD output', 'ai-search-schema' ); ?></span>
 						</label>
-						<p class="ais-field__description avc-field__description--inline"><?php esc_html_e( 'ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO.', 'ai-search-schema' ); ?></p>
+						<p class="ais-field__description ais-field__description--inline"><?php esc_html_e( 'ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO.', 'ai-search-schema' ); ?></p>
 						<label class="ais-toggle" for="ais-breadcrumbs-html">
 							<input id="ais-breadcrumbs-html" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_breadcrumbs_html_enabled]" value="1" <?php checked( true, ! empty( $options['ai_search_schema_breadcrumbs_html_enabled'] ) ); ?> />
 							<span><?php esc_html_e( 'Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()', 'ai-search-schema' ); ?></span>
@@ -419,8 +419,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 
 		</div>
 
-		<div class="ais-card-grid avc-card-grid--stack">
-			<section class="ais-card avc-card--full">
+		<div class="ais-card-grid ais-card-grid--stack">
+			<section class="ais-card ais-card--full">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Page-type schema controls', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type.', 'ai-search-schema' ) ); ?></h2>
 					<p><?php esc_html_e( 'Adjust schema types, breadcrumb output, FAQ extraction, and priority per content area.', 'ai-search-schema' ); ?></p>
@@ -430,7 +430,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<div class="ais-content-schema__section">
 							<h3><?php esc_html_e( 'Post type overrides', 'ai-search-schema' ); ?></h3>
 							<div class="ais-content-schema-table">
-								<div class="ais-content-schema-row avc-content-schema-row--head">
+								<div class="ais-content-schema-row ais-content-schema-row--head">
 									<span class="ais-content-schema-column"><?php esc_html_e( 'Content', 'ai-search-schema' ); ?></span>
 									<span class="ais-content-schema-column"><?php esc_html_e( 'Schema type', 'ai-search-schema' ); ?></span>
 									<span class="ais-content-schema-column"><?php esc_html_e( 'Breadcrumbs', 'ai-search-schema' ); ?></span>
@@ -451,7 +451,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									$label = ! empty( $type_obj->labels->singular_name ) ? $type_obj->labels->singular_name : ( ! empty( $type_obj->label ) ? $type_obj->label : $slug );
 									?>
 									<div class="ais-content-schema-row">
-										<span class="ais-content-schema-column avc-content-schema-column--title">
+										<span class="ais-content-schema-column ais-content-schema-column--title">
 											<strong><?php echo esc_html( $label ); ?></strong>
 											<span class="ais-content-schema-column__slug"><?php echo esc_html( $slug ); ?></span>
 										</span>
@@ -464,14 +464,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 										</span>
 										<span class="ais-content-schema-column">
 											<input type="hidden" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][post_types][<?php echo esc_attr( $slug ); ?>][breadcrumbs_enabled]" value="0" />
-											<label class="ais-toggle avc-toggle--inline">
+											<label class="ais-toggle ais-toggle--inline">
 												<input type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][post_types][<?php echo esc_attr( $slug ); ?>][breadcrumbs_enabled]" value="1" <?php checked( $entry['breadcrumbs_enabled'], true ); ?> />
 												<span><?php esc_html_e( 'Enabled', 'ai-search-schema' ); ?></span>
 											</label>
 										</span>
 										<span class="ais-content-schema-column">
 											<input type="hidden" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][post_types][<?php echo esc_attr( $slug ); ?>][faq_enabled]" value="0" />
-											<label class="ais-toggle avc-toggle--inline">
+											<label class="ais-toggle ais-toggle--inline">
 												<input type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][post_types][<?php echo esc_attr( $slug ); ?>][faq_enabled]" value="1" <?php checked( $entry['faq_enabled'], true ); ?> />
 												<span><?php esc_html_e( 'Enabled', 'ai-search-schema' ); ?></span>
 											</label>
@@ -494,7 +494,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<p class="ais-field__description"><?php esc_html_e( 'No public taxonomies were detected on this site.', 'ai-search-schema' ); ?></p>
 							<?php else : ?>
 								<div class="ais-content-schema-table">
-									<div class="ais-content-schema-row avc-content-schema-row--head">
+									<div class="ais-content-schema-row ais-content-schema-row--head">
 										<span class="ais-content-schema-column"><?php esc_html_e( 'Content', 'ai-search-schema' ); ?></span>
 										<span class="ais-content-schema-column"><?php esc_html_e( 'Schema type', 'ai-search-schema' ); ?></span>
 										<span class="ais-content-schema-column"><?php esc_html_e( 'Breadcrumbs', 'ai-search-schema' ); ?></span>
@@ -515,7 +515,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 										$label = ! empty( $taxonomy_object->labels->singular_name ) ? $taxonomy_object->labels->singular_name : ( ! empty( $taxonomy_object->label ) ? $taxonomy_object->label : $slug );
 										?>
 										<div class="ais-content-schema-row">
-											<span class="ais-content-schema-column avc-content-schema-column--title">
+											<span class="ais-content-schema-column ais-content-schema-column--title">
 												<strong><?php echo esc_html( $label ); ?></strong>
 												<span class="ais-content-schema-column__slug"><?php echo esc_html( $slug ); ?></span>
 											</span>
@@ -528,14 +528,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 											</span>
 											<span class="ais-content-schema-column">
 												<input type="hidden" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][taxonomies][<?php echo esc_attr( $slug ); ?>][breadcrumbs_enabled]" value="0" />
-												<label class="ais-toggle avc-toggle--inline">
+												<label class="ais-toggle ais-toggle--inline">
 													<input type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][taxonomies][<?php echo esc_attr( $slug ); ?>][breadcrumbs_enabled]" value="1" <?php checked( $entry['breadcrumbs_enabled'], true ); ?> />
 													<span><?php esc_html_e( 'Enabled', 'ai-search-schema' ); ?></span>
 												</label>
 											</span>
 											<span class="ais-content-schema-column">
 												<input type="hidden" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][taxonomies][<?php echo esc_attr( $slug ); ?>][faq_enabled]" value="0" />
-												<label class="ais-toggle avc-toggle--inline">
+												<label class="ais-toggle ais-toggle--inline">
 													<input type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[content_type_settings][taxonomies][<?php echo esc_attr( $slug ); ?>][faq_enabled]" value="1" <?php checked( $entry['faq_enabled'], true ); ?> />
 													<span><?php esc_html_e( 'Enabled', 'ai-search-schema' ); ?></span>
 												</label>
@@ -556,7 +556,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					</div>
 				</div>
 			</section>
-			<section class="ais-card avc-card--full" id="ais-local-business-section">
+			<section class="ais-card ais-card--full" id="ais-local-business-section">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Local details & hours', 'ai-search-schema' ); ?></h2>
 					<p><?php esc_html_e( 'Capture address, coordinates, and hours to enrich the LocalBusiness schema.', 'ai-search-schema' ); ?></p>
@@ -652,7 +652,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							<label for="ais-payment-accepted"><?php esc_html_e( 'Accepted payment methods', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'List payment methods separated by commas. Examples: Cash, Credit Card, PayPay, Suica', 'ai-search-schema' ) ); ?></label>
 							<input id="ais-payment-accepted" type="text" name="<?php echo esc_attr( $option_name ); ?>[payment_accepted]" value="<?php echo esc_attr( $options['payment_accepted'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Cash, Credit Card', 'ai-search-schema' ); ?>" />
 						</div>
-						<div class="ais-field avc-field--toggle">
+						<div class="ais-field ais-field--toggle">
 							<span class="ais-field__label"><?php esc_html_e( 'Reservations', 'ai-search-schema' ); ?></span>
 							<label class="ais-toggle" for="ais-reservations">
 								<input id="ais-reservations" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[accepts_reservations]" value="1" <?php checked( true, ! empty( $options['accepts_reservations'] ) ); ?> />
@@ -661,7 +661,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							<p class="ais-field__description"><?php esc_html_e( 'ON: Adds acceptsReservations property to LocalBusiness schema. Enable for restaurants, salons, or any business that takes bookings.', 'ai-search-schema' ); ?></p>
 						</div>
 					</div>
-					<div class="ais-field avc-field--api-key <?php echo $gmaps_api_key_set ? 'is-locked' : ''; ?>">
+					<div class="ais-field ais-field--api-key <?php echo $gmaps_api_key_set ? 'is-locked' : ''; ?>">
 						<label for="ais-gmaps-api-key"><?php esc_html_e( 'Google Maps API Key', 'ai-search-schema' ); ?></label>
 						<div class="ais-api-key-control">
 							<input
@@ -674,7 +674,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<?php disabled( $gmaps_api_key_set ); ?>
 							/>
 							<?php if ( ! $gmaps_api_key_set ) : ?>
-								<button type="submit" class="button button-secondary avc-api-key-save">
+								<button type="submit" class="button button-secondary ais-api-key-save">
 									<?php esc_html_e( 'Save key', 'ai-search-schema' ); ?>
 								</button>
 							<?php endif; ?>
@@ -684,7 +684,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<?php esc_html_e( 'An API key is already stored. Delete it first if you need to change it.', 'ai-search-schema' ); ?>
 								<button
 									type="submit"
-									class="button-link avc-inline-link avc-api-key-clear"
+									class="button-link ais-inline-link ais-api-key-clear"
 									name="<?php echo esc_attr( $option_name ); ?>[gmaps_api_key_action]"
 									value="clear"
 									id="ais-gmaps-api-key-clear"
@@ -739,7 +739,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<div class="ais-country-field__primary">
 										<label for="ais-address-country"><?php esc_html_e( 'Country code', 'ai-search-schema' ); ?></label>
 										<input type="text" id="ais-address-country" name="<?php echo esc_attr( $option_name ); ?>[address][country]" value="<?php echo esc_attr( $options['address']['country'] ); ?>" placeholder="<?php esc_attr_e( 'Country (e.g. JP)', 'ai-search-schema' ); ?>" />
-										<p class="ais-field__description avc-country-field__note">
+										<p class="ais-field__description ais-country-field__note">
 											<?php esc_html_e( 'ISO 3166-2 updates automatically from the prefecture selection.', 'ai-search-schema' ); ?>
 										</p>
 									</div>
@@ -770,7 +770,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<span class="ais-geocode-status" id="ais-geocode-status"></span>
 							</div>
 						</div>
-						<div class="ais-field avc-field--toggle avc-field--hasmap">
+						<div class="ais-field ais-field--toggle ais-field--hasmap">
 							<span class="ais-field__label"><?php esc_html_e( 'Google Map link', 'ai-search-schema' ); ?></span>
 							<label class="ais-toggle" for="ais-has-map-enabled">
 								<input
@@ -787,7 +787,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</p>
 							</div>
 						</div>
-						<div class="ais-field avc-field--toggle">
+						<div class="ais-field ais-field--toggle">
 							<span class="ais-field__label"><?php esc_html_e( 'LocalBusiness output control', 'ai-search-schema' ); ?></span>
 							<label class="ais-toggle" for="ais-lb-skip-incomplete">
 								<input
@@ -811,36 +811,36 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								<button type="button" class="button" id="ais-oh-template-24h"><?php esc_html_e( '24時間営業（毎日 00:00–23:59）', 'ai-search-schema' ); ?></button>
 								<button type="button" class="button button-link-delete" id="ais-oh-template-clear"><?php esc_html_e( 'クリア', 'ai-search-schema' ); ?></button>
 							</div>
-							<div class="ais-day-toggle-list avc-opening-hours-toggles">
-								<label class="ais-toggle avc-day-toggle" for="ais-include-monday">
+							<div class="ais-day-toggle-list ais-opening-hours-toggles">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-monday">
 									<input type="checkbox" id="ais-include-monday" data-day-key="Monday" checked />
 									<span><?php esc_html_e( '月曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-tuesday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-tuesday">
 									<input type="checkbox" id="ais-include-tuesday" data-day-key="Tuesday" checked />
 									<span><?php esc_html_e( '火曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-wednesday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-wednesday">
 									<input type="checkbox" id="ais-include-wednesday" data-day-key="Wednesday" checked />
 									<span><?php esc_html_e( '水曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-thursday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-thursday">
 									<input type="checkbox" id="ais-include-thursday" data-day-key="Thursday" checked />
 									<span><?php esc_html_e( '木曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-friday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-friday">
 									<input type="checkbox" id="ais-include-friday" data-day-key="Friday" checked />
 									<span><?php esc_html_e( '金曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-saturday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-saturday">
 									<input type="checkbox" id="ais-include-saturday" data-day-key="Saturday" checked />
 									<span><?php esc_html_e( '土曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-sunday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-sunday">
 									<input type="checkbox" id="ais-include-sunday" data-day-key="Sunday" checked />
 									<span><?php esc_html_e( '日曜を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<label class="ais-toggle avc-day-toggle" for="ais-include-holiday">
+								<label class="ais-toggle ais-day-toggle" for="ais-include-holiday">
 									<input type="checkbox" id="ais-include-holiday" data-day-key="PublicHoliday" checked />
 									<span><?php esc_html_e( '祝日を含める', 'ai-search-schema' ); ?></span>
 								</label>
@@ -850,7 +850,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="checkbox" id="ais-holiday-enabled" name="<?php echo esc_attr( $option_name ); ?>[holiday_enabled]" value="1" <?php checked( ! empty( $options['holiday_enabled'] ) ); ?> />
 									<span><?php esc_html_e( '祝日を含める', 'ai-search-schema' ); ?></span>
 								</label>
-								<div class="ais-holiday-modes" aria-labelledby="avc-holiday-mode-label">
+								<div class="ais-holiday-modes" aria-labelledby="ais-holiday-mode-label">
 									<span class="ais-field__label" id="ais-holiday-mode-label"><?php esc_html_e( '祝日の営業時間', 'ai-search-schema' ); ?></span>
 									<label class="ais-radio">
 										<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[holiday_mode]" value="weekday" <?php checked( $options['holiday_mode'] ?? 'custom', 'weekday' ); ?> />
@@ -866,14 +866,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									</label>
 								</div>
 							</div>
-							<div id="ais-opening-hours-rows" aria-labelledby="avc-opening-hours-label">
+							<div id="ais-opening-hours-rows" aria-labelledby="ais-opening-hours-label">
 							<?php
 							foreach ( $opening_hours_rows as $index => $slot ) :
 								$day_key = isset( $slot['day_key'] ) ? $slot['day_key'] : 'Monday';
 								$opens   = isset( $slot['opens'] ) ? $slot['opens'] : '';
 								$closes  = isset( $slot['closes'] ) ? $slot['closes'] : '';
 								?>
-								<div class="ais-opening-hours-row avc-opening-hours-slot" data-index="<?php echo esc_attr( $index ); ?>" draggable="true">
+								<div class="ais-opening-hours-row ais-opening-hours-slot" data-index="<?php echo esc_attr( $index ); ?>" draggable="true">
 									<span class="ais-slot-handle" aria-hidden="true">☰</span>
 									<select class="ais-opening-hours-day" style="min-width: 160px;" name="<?php echo esc_attr( $option_name ); ?>[opening_hours][<?php echo esc_attr( $index ); ?>][day_key]" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][day_key]">
 										<?php foreach ( $weekday_choices as $weekday_code => $weekday_label ) : ?>
@@ -883,7 +883,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="time" class="ais-opening-hours-opens" name="<?php echo esc_attr( $option_name ); ?>[opening_hours][<?php echo esc_attr( $index ); ?>][opens]" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][opens]" value="<?php echo esc_attr( $opens ); ?>" />
 									<span class="ais-opening-hours-separator"><?php esc_html_e( 'to', 'ai-search-schema' ); ?></span>
 									<input type="time" class="ais-opening-hours-closes" name="<?php echo esc_attr( $option_name ); ?>[opening_hours][<?php echo esc_attr( $index ); ?>][closes]" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][closes]" value="<?php echo esc_attr( $closes ); ?>" />
-									<button type="button" class="button-link-delete avc-remove-opening-hour"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
+									<button type="button" class="button-link-delete ais-remove-opening-hour"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
 								</div>
 							<?php endforeach; ?>
 						</div>
@@ -899,14 +899,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<div class="ais-card__body">
 					<style>
-						.avc-diagnostic-list{display:grid;gap:12px}
-						.avc-diagnostic-group{border:1px solid #e4e7eb;border-radius:12px;padding:12px}
-						.avc-diagnostic-title{margin:0 0 8px;font-weight:600;font-size:14px}
-						.avc-diagnostic-item{display:flex;align-items:center;gap:8px;margin:6px 0}
-						.avc-status-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
-						.avc-status-ok{background:#e6f4ea;color:#1a7f37}
-						.avc-status-warning{background:#fff4e5;color:#b06100}
-						.avc-status-error{background:#fdecea;color:#b3261e}
+						.ais-diagnostic-list{display:grid;gap:12px}
+						.ais-diagnostic-group{border:1px solid #e4e7eb;border-radius:12px;padding:12px}
+						.ais-diagnostic-title{margin:0 0 8px;font-weight:600;font-size:14px}
+						.ais-diagnostic-item{display:flex;align-items:center;gap:8px;margin:6px 0}
+						.ais-status-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
+						.ais-status-ok{background:#e6f4ea;color:#1a7f37}
+						.ais-status-warning{background:#fff4e5;color:#b06100}
+						.ais-status-error{background:#fdecea;color:#b3261e}
 					</style>
 					<div class="ais-diagnostic-list">
 						<?php if ( ! empty( $diagnostics['groups'] ) ) : ?>
@@ -920,7 +920,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 											$label       = 'ok' === $diag_status ? __( 'OK', 'ai-search-schema' ) : ( 'error' === $diag_status ? __( 'Error', 'ai-search-schema' ) : __( 'Warning', 'ai-search-schema' ) );
 											?>
 											<div class="ais-diagnostic-item">
-												<span class="ais-status-badge avc-status-<?php echo esc_attr( $diag_status ); ?>"><?php echo esc_html( $label ); ?></span>
+												<span class="ais-status-badge ais-status-<?php echo esc_attr( $diag_status ); ?>"><?php echo esc_html( $label ); ?></span>
 												<span><?php echo esc_html( $item['message'] ?? '' ); ?></span>
 											</div>
 										<?php endforeach; ?>
@@ -944,6 +944,48 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					<?php endif; ?>
 				</div>
 			</section>
+
+			<section class="ais-card">
+				<div class="ais-card__header">
+					<h2><?php esc_html_e( 'llms.txt', 'ai-search-schema' ); ?></h2>
+					<p><?php esc_html_e( 'Generate llms.txt to help AI systems understand your site structure.', 'ai-search-schema' ); ?></p>
+				</div>
+				<div class="ais-card__body">
+					<?php
+					require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+					$llms_txt_instance = AI_Search_Schema_Llms_Txt::init();
+					$llms_txt_enabled  = $llms_txt_instance->is_enabled();
+					$llms_txt_content  = $llms_txt_instance->get_content();
+					$llms_txt_url      = home_url( '/llms.txt' );
+					?>
+
+					<div class="ais-field">
+						<label for="ais-llms-txt-enabled">
+							<input type="checkbox" id="ais-llms-txt-enabled" name="<?php echo esc_attr( $option_name ); ?>[llms_txt_enabled]" value="1" <?php checked( $llms_txt_enabled ); ?> />
+							<?php esc_html_e( 'Enable llms.txt', 'ai-search-schema' ); ?>
+						</label>
+						<p class="ais-field__description">
+							<?php esc_html_e( 'When enabled, the file is served at:', 'ai-search-schema' ); ?>
+							<a href="<?php echo esc_url( $llms_txt_url ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_url( $llms_txt_url ); ?></a>
+						</p>
+					</div>
+
+					<div class="ais-field">
+						<label for="ais-llms-txt-content"><?php esc_html_e( 'Content (Markdown)', 'ai-search-schema' ); ?></label>
+						<textarea id="ais-llms-txt-content" name="<?php echo esc_attr( $option_name ); ?>[llms_txt_content]" rows="15" class="large-text code" style="font-family: monospace;"><?php echo esc_textarea( $llms_txt_content ); ?></textarea>
+						<p class="ais-field__description">
+							<?php esc_html_e( 'Edit the llms.txt content. Leave empty to auto-generate from site data.', 'ai-search-schema' ); ?>
+						</p>
+					</div>
+
+					<p>
+						<button type="button" class="button" id="ais-regenerate-llms-txt">
+							<?php esc_html_e( 'Regenerate from site data', 'ai-search-schema' ); ?>
+						</button>
+						<span class="spinner" style="float: none; margin-top: 0;"></span>
+					</p>
+				</div>
+			</section>
 		</div>
 
 		<div class="ais-settings__actions">
@@ -953,7 +995,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 	</div>
 </div>
 
-<script type="text/html" id="tmpl-avc-social-row">
+<script type="text/html" id="tmpl-ais-social-row">
 	<div class="ais-social-row" data-index="__index__">
 		<select class="ais-social-network-select" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][network]">
 			<?php foreach ( $social_choices as $choice_key => $choice_label ) : ?>
@@ -962,12 +1004,12 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		</select>
 		<input type="text" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][account]" placeholder="<?php esc_attr_e( 'Account name or profile URL', 'ai-search-schema' ); ?>" />
 		<input type="text" class="ais-social-other-label hidden" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][label]" placeholder="<?php esc_attr_e( 'Other service label', 'ai-search-schema' ); ?>" />
-		<button type="button" class="button-link-delete avc-remove-social"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
+		<button type="button" class="button-link-delete ais-remove-social"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
 	</div>
 	</script>
 
-	<script type="text/html" id="tmpl-avc-opening-hours-row">
-		<div class="ais-opening-hours-row avc-opening-hours-slot" data-index="__index__" draggable="true">
+	<script type="text/html" id="tmpl-ais-opening-hours-row">
+		<div class="ais-opening-hours-row ais-opening-hours-slot" data-index="__index__" draggable="true">
 			<span class="ais-slot-handle" aria-hidden="true">☰</span>
 			<select class="ais-opening-hours-day" style="min-width: 160px;" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][day_key]">
 			<?php foreach ( $weekday_choices as $weekday_code => $weekday_label ) : ?>
@@ -977,7 +1019,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		<input type="time" class="ais-opening-hours-opens" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][opens]" />
 		<span class="ais-opening-hours-separator"><?php esc_html_e( '〜', 'ai-search-schema' ); ?></span>
 			<input type="time" class="ais-opening-hours-closes" data-name="<?php echo esc_attr( $option_name ); ?>[opening_hours][__index__][closes]" />
-			<button type="button" class="button-link-delete avc-remove-opening-hour"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
+			<button type="button" class="button-link-delete ais-remove-opening-hour"><?php esc_html_e( 'Remove', 'ai-search-schema' ); ?></button>
 		</div>
 	</script>
 

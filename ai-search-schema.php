@@ -3,7 +3,7 @@
  * Plugin Name: AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: WordPress plugin for AEO schema markup, local SEO (MEO), structured breadcrumbs, and FAQ extraction.
- * Version: 0.1.0
+ * Version: 0.2.0
  * Author: AIVEC LLC.
  * Author URI: https://aivec.co.jp/apps
  * Text Domain: ai-search-schema
@@ -13,7 +13,7 @@
  */
 
 // Plugin constants.
-define( 'AI_SEARCH_SCHEMA_VERSION', '0.1.0' );
+define( 'AI_SEARCH_SCHEMA_VERSION', '0.2.0' );
 define( 'AI_SEARCH_SCHEMA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_URL', plugin_dir_url( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );
@@ -97,7 +97,17 @@ if ( file_exists( $ais_autoloader ) ) {
 $ais_plugin = new \Aivec\AiSearchSchema\Plugin();
 $ais_plugin->register();
 
-// Activation hook - set redirect transient for wizard.
+// Initialize llms.txt generator.
+add_action(
+	'init',
+	static function () {
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		AI_Search_Schema_Llms_Txt::init();
+	},
+	5
+);
+
+// Activation hook - set redirect transient for wizard and flush rewrite rules.
 register_activation_hook(
 	__FILE__,
 	static function () {
@@ -105,6 +115,19 @@ register_activation_hook(
 		if ( ! get_option( 'ai_search_schema_wizard_completed', false ) ) {
 			set_transient( 'ai_search_schema_wizard_redirect', true, 30 );
 		}
+
+		// Flush rewrite rules for llms.txt.
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		AI_Search_Schema_Llms_Txt::activate();
+	}
+);
+
+// Deactivation hook - flush rewrite rules.
+register_deactivation_hook(
+	__FILE__,
+	static function () {
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		AI_Search_Schema_Llms_Txt::deactivate();
 	}
 );
 

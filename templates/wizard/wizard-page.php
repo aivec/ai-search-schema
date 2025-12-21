@@ -3,7 +3,7 @@
 /**
  * Setup Wizard main page template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  * @var string $current_step Current step slug.
  * @var array  $progress     Wizard progress data.
  * @var array  $wizard_data  Saved wizard data.

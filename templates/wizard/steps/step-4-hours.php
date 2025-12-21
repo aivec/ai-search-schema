@@ -3,7 +3,7 @@
 /**
  * Step 4: Business Hours template.
  *
- * @package Avc\Aeo\Schema
+ * @package Aivec\AiSearchSchema
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -30,7 +30,7 @@ for ( $h = 0; $h < 24; $h++ ) {
 	}
 }
 ?>
-<div class="ais-wizard-step avc-wizard-step--hours">
+<div class="ais-wizard-step ais-wizard-step--hours">
 	<div class="ais-wizard-step__header">
 		<h1 class="ais-wizard-step__title">
 			<?php esc_html_e( 'Business Hours', 'ai-search-schema' ); ?>
@@ -59,13 +59,13 @@ for ( $h = 0; $h < 24; $h++ ) {
 				<?php esc_html_e( 'Quick Setup', 'ai-search-schema' ); ?>
 			</h3>
 			<div class="ais-wizard-hours-quick__buttons">
-				<button type="button" class="ais-wizard-btn avc-wizard-btn--outline avc-wizard-btn--small" id="ais-wizard-hours-weekdays">
+				<button type="button" class="ais-wizard-btn ais-wizard-btn--outline ais-wizard-btn--small" id="ais-wizard-hours-weekdays">
 					<?php esc_html_e( 'Same hours every weekday', 'ai-search-schema' ); ?>
 				</button>
-				<button type="button" class="ais-wizard-btn avc-wizard-btn--outline avc-wizard-btn--small" id="ais-wizard-hours-everyday">
+				<button type="button" class="ais-wizard-btn ais-wizard-btn--outline ais-wizard-btn--small" id="ais-wizard-hours-everyday">
 					<?php esc_html_e( 'Same hours every day', 'ai-search-schema' ); ?>
 				</button>
-				<button type="button" class="ais-wizard-btn avc-wizard-btn--outline avc-wizard-btn--small" id="ais-wizard-hours-clear">
+				<button type="button" class="ais-wizard-btn ais-wizard-btn--outline ais-wizard-btn--small" id="ais-wizard-hours-clear">
 					<?php esc_html_e( 'Clear all', 'ai-search-schema' ); ?>
 				</button>
 			</div>
@@ -74,16 +74,16 @@ for ( $h = 0; $h < 24; $h++ ) {
 		<!-- Hours Table -->
 		<div class="ais-wizard-hours-table">
 			<div class="ais-wizard-hours-table__header">
-				<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--day">
+				<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--day">
 					<?php esc_html_e( 'Day', 'ai-search-schema' ); ?>
 				</div>
-				<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--status">
+				<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--status">
 					<?php esc_html_e( 'Open', 'ai-search-schema' ); ?>
 				</div>
-				<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--time">
+				<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
 					<?php esc_html_e( 'Opening Time', 'ai-search-schema' ); ?>
 				</div>
-				<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--time">
+				<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
 					<?php esc_html_e( 'Closing Time', 'ai-search-schema' ); ?>
 				</div>
 			</div>
@@ -95,17 +95,17 @@ for ( $h = 0; $h < 24; $h++ ) {
 				$is_open = ! empty( $opens ) && ! empty( $closes );
 				?>
 				<div class="ais-wizard-hours-table__row" data-day="<?php echo esc_attr( $day_key ); ?>">
-					<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--day">
+					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--day">
 						<span class="ais-wizard-hours-table__day-name"><?php echo esc_html( $day_label ); ?></span>
 					</div>
-					<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--status">
+					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--status">
 						<label class="ais-wizard-toggle">
 							<input type="checkbox" name="hours_<?php echo esc_attr( $day_key ); ?>_open" class="ais-wizard-hours-toggle" <?php checked( $is_open ); ?>>
 							<span class="ais-wizard-toggle__slider"></span>
 						</label>
 					</div>
-					<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--time">
-						<select name="hours_<?php echo esc_attr( $day_key ); ?>_opens" class="ais-wizard-form__select avc-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
+					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
+						<select name="hours_<?php echo esc_attr( $day_key ); ?>_opens" class="ais-wizard-form__select ais-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
 							<option value=""><?php esc_html_e( 'Select', 'ai-search-schema' ); ?></option>
 							<?php foreach ( $time_options as $time_value => $time_label ) : ?>
 								<option value="<?php echo esc_attr( $time_value ); ?>" <?php selected( $opens, $time_value ); ?>>
@@ -114,8 +114,8 @@ for ( $h = 0; $h < 24; $h++ ) {
 							<?php endforeach; ?>
 						</select>
 					</div>
-					<div class="ais-wizard-hours-table__col avc-wizard-hours-table__col--time">
-						<select name="hours_<?php echo esc_attr( $day_key ); ?>_closes" class="ais-wizard-form__select avc-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
+					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
+						<select name="hours_<?php echo esc_attr( $day_key ); ?>_closes" class="ais-wizard-form__select ais-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
 							<option value=""><?php esc_html_e( 'Select', 'ai-search-schema' ); ?></option>
 							<?php foreach ( $time_options as $time_value => $time_label ) : ?>
 								<option value="<?php echo esc_attr( $time_value ); ?>" <?php selected( $closes, $time_value ); ?>>
@@ -145,13 +145,13 @@ for ( $h = 0; $h < 24; $h++ ) {
 	</div>
 
 	<div class="ais-wizard-step__footer">
-		<a href="<?php echo esc_url( add_query_arg( 'step', 'location' ) ); ?>" class="ais-wizard-btn avc-wizard-btn--text">
+		<a href="<?php echo esc_url( add_query_arg( 'step', 'location' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--text">
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 			</svg>
 			<?php esc_html_e( 'Back', 'ai-search-schema' ); ?>
 		</a>
-		<button type="button" class="ais-wizard-btn avc-wizard-btn--primary avc-wizard-next-btn" data-next="complete">
+		<button type="button" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-next-btn" data-next="complete">
 			<?php esc_html_e( 'Continue', 'ai-search-schema' ); ?>
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>

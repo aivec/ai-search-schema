@@ -35,6 +35,8 @@ Search is evolving from "10 blue links" to AI-powered answer engines (Google SGE
   **自己診断**：Google推奨プロパティを自動検証し、不足項目を管理画面で警告
 - **Multilingual admin** – 全 UI と翻訳リソースを英語ベースで整備し、日本語翻訳を同梱
   **多言語UI**：英語ベースの翻訳ファイル＆日本語翻訳を標準同梱
+- **llms.txt Generation** – Auto-generate llms.txt to help AI systems understand your site structure. Editable in the settings.
+  **llms.txt生成**：AI検索エンジンがサイト構造を理解しやすいllms.txtを自動生成。設定画面で編集可能
 
 ## Comparison with Other SEO Plugins / 他SEOプラグインとの比較
 

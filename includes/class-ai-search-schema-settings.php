@@ -38,6 +38,7 @@ class AI_Search_Schema_Settings {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_ajax_ai_search_schema_geocode', array( $this, 'handle_geocode_request' ) );
+		add_action( 'wp_ajax_ai_search_schema_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
 	}
 
 	/**
@@ -131,6 +132,9 @@ class AI_Search_Schema_Settings {
 				'i18nEntityHelpOrg'         => __( 'The primary role of this site is defined as an "Organization". You can also enter headquarters or branch office information in the "Local details & hours" section below to associate your organization with a physical location and enhance visibility in local search results.', 'ai-search-schema' ),
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
 				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'ai-search-schema' ),
+				'llmsTxtNonce'              => wp_create_nonce( 'ai_search_schema_regenerate_llms_txt' ),
+				'i18nLlmsTxtRegenerating'   => __( 'Regenerating...', 'ai-search-schema' ),
+				'i18nLlmsTxtRegenerate'     => __( 'Regenerate from site data', 'ai-search-schema' ),
 			)
 		);
 	}
@@ -225,6 +229,35 @@ class AI_Search_Schema_Settings {
 		}
 
 		$this->respond_json( true, $response );
+	}
+
+	/**
+	 * AJAX handler for regenerating llms.txt content.
+	 */
+	public function handle_regenerate_llms_txt() {
+		check_ajax_referer( 'ai_search_schema_regenerate_llms_txt', 'nonce' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->respond_json(
+				false,
+				array(
+					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+				),
+				403
+			);
+		}
+
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+		$content  = $llms_txt->reset_content();
+
+		$this->respond_json(
+			true,
+			array(
+				'content' => $content,
+				'message' => __( 'llms.txt content has been regenerated from site data.', 'ai-search-schema' ),
+			)
+		);
 	}
 
 	/**
@@ -756,6 +789,28 @@ class AI_Search_Schema_Settings {
 			$content_type_defaults,
 			$this->should_translate_labels()
 		);
+
+		// llms.txt settings.
+		$llms_txt_enabled = ! empty( $input['llms_txt_enabled'] );
+		$llms_txt_content = isset( $input['llms_txt_content'] )
+			? sanitize_textarea_field( $input['llms_txt_content'] )
+			: '';
+
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+		$llms_txt->set_enabled( $llms_txt_enabled );
+		if ( ! empty( $llms_txt_content ) ) {
+			$llms_txt->save_content( $llms_txt_content );
+		} else {
+			// If content is empty, reset to auto-generate.
+			$llms_txt->reset_content();
+		}
+
+		// Flush rewrite rules if llms.txt enabled status changed.
+		$previous_enabled = $llms_txt->is_enabled();
+		if ( $llms_txt_enabled !== $previous_enabled ) {
+			flush_rewrite_rules();
+		}
 
 		return $output;
 	}
