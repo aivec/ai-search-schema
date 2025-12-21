@@ -1,0 +1,24 @@
+{
+  "name": "ai-search-schema",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "clean": "rimraf dist",
+    "scss": "gulp scss",
+    "copy": "gulp copy",
+    "build": "npm run clean && gulp build",
+    "dev": "gulp watch",
+    "zip": "gulp zip",
+    "release": "npm install && composer install && composer changelog:generate && composer run i18n:update-pos && composer run i18n:make-mo && npm run build && composer run lint && composer test && composer run zip",
+    "bundle": "php bundle"
+  },
+  "devDependencies": {
+    "del": "^8.0.1",
+    "gulp": "^5.0.0",
+    "gulp-plumber": "^1.2.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-zip": "^6.0.0",
+    "rimraf": "^6.1.2",
+    "sass": "^1.94.2"
+  }
+}

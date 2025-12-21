@@ -1,0 +1,217 @@
+# =============================================================================
+# AVC AEO Schema - Release Build Workflow
+# =============================================================================
+# mainブランチへのpush時に製品ZIPをビルドしてS3にアップロード
+#
+# 必要なGitHub Secrets:
+#   AWS_ACCESS_KEY_ID     - AWSアクセスキーID
+#   AWS_SECRET_ACCESS_KEY - AWSシークレットアクセスキー
+#   AWS_S3_BUCKET         - S3バケット名（例: your-bucket-name）
+#   AWS_REGION            - AWSリージョン（例: ap-northeast-1）
+# =============================================================================
+
+name: Build Release (Production)
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types:
+      - completed
+    branches:
+      - main
+  push:
+    tags:
+      - 'v*'  # v0.17.10 等のタグでもトリガー
+  workflow_dispatch:  # 手動実行も可能
+
+env:
+  PLUGIN_SLUG: avc-aeo-schema
+  PHP_VERSION: '8.2'
+  NODE_VERSION: '20'
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    # CI が成功し main ブランチの場合、タグpush時、または手動実行時のみ実行
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      # -----------------------------------------------------------------------
+      # 1. チェックアウト
+      # -----------------------------------------------------------------------
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+
+      # -----------------------------------------------------------------------
+      # 2. PHP セットアップ
+      # -----------------------------------------------------------------------
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, xml, zip
+          tools: composer:v2
+
+      # -----------------------------------------------------------------------
+      # 3. Node.js セットアップ
+      # -----------------------------------------------------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      # -----------------------------------------------------------------------
+      # 4. Composer依存インストール（本番用）
+      # -----------------------------------------------------------------------
+      - name: Install Composer dependencies (production)
+        run: composer install --no-dev --optimize-autoloader --no-interaction
+
+      # -----------------------------------------------------------------------
+      # 5. npm依存インストール
+      # -----------------------------------------------------------------------
+      - name: Install npm dependencies
+        run: npm ci
+
+      # -----------------------------------------------------------------------
+      # 6. アセットビルド
+      # -----------------------------------------------------------------------
+      - name: Build assets
+        run: npm run build
+
+      # -----------------------------------------------------------------------
+      # 7. バージョン取得
+      # -----------------------------------------------------------------------
+      - name: Get plugin version
+        id: version
+        run: |
+          VERSION=$(grep -oP "Version:\s*\K[0-9.]+" ${{ env.PLUGIN_SLUG }}.php || echo "0.0.0")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Plugin version: $VERSION"
+
+      # -----------------------------------------------------------------------
+      # 8. Release ZIP作成（tools/除外）
+      # -----------------------------------------------------------------------
+      - name: Create release ZIP package
+        run: |
+          mkdir -p dist/${{ env.PLUGIN_SLUG }}
+          
+          # 必要なファイルをコピー（tools/を除外）
+          rsync -av --progress \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.gitignore' \
+            --exclude='.gitattributes' \
+            --exclude='node_modules' \
+            --exclude='vendor' \
+            --exclude='tests' \
+            --exclude='phpunit.xml*' \
+            --exclude='phpcs.xml*' \
+            --exclude='.phpcs.xml*' \
+            --exclude='composer.lock' \
+            --exclude='package-lock.json' \
+            --exclude='.editorconfig' \
+            --exclude='.eslintrc*' \
+            --exclude='.stylelintrc*' \
+            --exclude='*.map' \
+            --exclude='*.scss' \
+            --exclude='gulpfile.js' \
+            --exclude='webpack.config.js' \
+            --exclude='bin/' \
+            --exclude='/dist/' \
+            --exclude='.claude/' \
+            --exclude='ARCHITECTURE.md' \
+            --exclude='CLAUDE.md' \
+            --exclude='docs/' \
+            --exclude='tools/' \
+            ./ dist/${{ env.PLUGIN_SLUG }}/
+          
+          # ZIP作成
+          cd dist
+          zip -r ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip ${{ env.PLUGIN_SLUG }}
+          
+          echo "Created: ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip"
+          ls -lh *.zip
+
+      # -----------------------------------------------------------------------
+      # 9. AWS認証
+      # -----------------------------------------------------------------------
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      # -----------------------------------------------------------------------
+      # 10. S3アップロード
+      # -----------------------------------------------------------------------
+      - name: Upload to S3 (release)
+        run: |
+          aws s3 cp \
+            dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
+            s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip
+          
+          aws s3 cp \
+            dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
+            s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-latest.zip
+
+      # -----------------------------------------------------------------------
+      # 11. GitHub Releaseアーティファクト（オプション）
+      # -----------------------------------------------------------------------
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}
+          path: dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip
+          retention-days: 30
+
+      # -----------------------------------------------------------------------
+      # 12. サマリー出力
+      # -----------------------------------------------------------------------
+      - name: Output summary
+        run: |
+          echo "## 🎉 Release Build Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Item | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Version | ${{ steps.version.outputs.version }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| S3 Path | \`s3://${{ secrets.AWS_S3_BUCKET }}/${{ env.PLUGIN_SLUG }}/release/\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| File | ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Production build (excludes \`tools/\` directory)" >> $GITHUB_STEP_SUMMARY
+
+  # ---------------------------------------------------------------------------
+  # GitHub Release作成（タグpush時のみ）
+  # ---------------------------------------------------------------------------
+  create-release:
+    needs: build-and-upload
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get plugin version
+        id: version
+        run: |
+          VERSION=$(grep -oP "Version:\s*\K[0-9.]+" ${{ env.PLUGIN_SLUG }}.php || echo "0.0.0")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="AI Search Schema">
+    <description>WordPress coding standards for the AI Search Schema plugin.</description>
+
+    <arg name="extensions" value="php"/>
+
+    <exclude-pattern>*/.git/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+    <exclude-pattern>*/dist/*</exclude-pattern>
+    <exclude-pattern>*/assets/dist/*</exclude-pattern>
+    <exclude-pattern>*/bundled/*</exclude-pattern>
+    <exclude-pattern>*/languages/*.mo</exclude-pattern>
+    <exclude-pattern>*/languages/*.json</exclude-pattern>
+    <exclude-pattern>*/tests/*</exclude-pattern>
+
+    <config name="ignore_warnings_on_exit" value="1"/>
+
+    <rule ref="WordPress-Core"/>
+    <rule ref="WordPress-Extra"/>
+
+    <rule ref="Generic.Files.LineLength">
+        <exclude-pattern>templates/admin-settings.php</exclude-pattern>
+        <exclude-pattern>tools/test-manager.php</exclude-pattern>
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+</ruleset>

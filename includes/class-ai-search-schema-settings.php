@@ -1,0 +1,2155 @@
+<?php
+/**
+ * AI_Search_Schema_Settings クラス
+ *
+ * プラグインの一般設定を管理するクラスです。
+ * 設定項目の保存や表示を行います。
+ */
+class AI_Search_Schema_Settings {
+	private const OPTION_NAME                = 'ai_search_schema_options';
+	private const OPTION_GMAPS_KEY           = 'ai_search_schema_gmaps_api_key';
+	private const GEOCODE_RATE_LIMIT_SECONDS = 10;
+
+	/**
+	 * @var AI_Search_Schema_Settings|null
+	 */
+	private static $instance = null;
+
+	/**
+	 * 初期化
+	 *
+	 * @return AI_Search_Schema_Settings
+	 */
+	public static function init() {
+		if ( null === self::$instance ) {
+			self::$instance = new self();
+		}
+		return self::$instance;
+	}
+
+	/**
+	 * コンストラクタ
+	 */
+	public function __construct() {
+		// Filter null values from options at the earliest point to prevent PHP 8 deprecation warnings.
+		add_filter( 'option_' . self::OPTION_NAME, array( $this, 'filter_option_on_get' ), 1 );
+
+		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
+		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'wp_ajax_ai_search_schema_geocode', array( $this, 'handle_geocode_request' ) );
+	}
+
+	/**
+	 * Filter null values when option is retrieved from database.
+	 *
+	 * This prevents PHP 8 deprecation warnings when WordPress internal
+	 * functions process the option values.
+	 *
+	 * @param mixed $value Option value from database.
+	 * @return mixed Filtered value with nulls removed.
+	 */
+	public function filter_option_on_get( $value ) {
+		if ( is_array( $value ) ) {
+			return $this->filter_null_values( $value );
+		}
+		return $value;
+	}
+
+	/**
+	 * 設定ページを追加
+	 */
+	public function add_settings_page() {
+		add_options_page(
+			__( 'AEO Schema Settings', 'ai-search-schema' ),
+			__( 'AEO Schema', 'ai-search-schema' ),
+			'manage_options',
+			'ai-search-schema',
+			array( $this, 'render_settings_page' )
+		);
+	}
+
+	/**
+	 * 設定を登録
+	 */
+	public function register_settings() {
+		register_setting( self::OPTION_NAME, self::OPTION_NAME, array( $this, 'sanitize_options' ) );
+	}
+
+	/**
+	 * 管理画面用のスクリプトを読み込み
+	 *
+	 * @param string $hook 現在の管理画面フック名
+	 */
+	public function enqueue_assets( $hook ) {
+		if ( 'settings_page_ais-schema' !== $hook ) {
+			return;
+		}
+
+		wp_enqueue_media();
+
+		$style_path    = AI_SEARCH_SCHEMA_DIR . 'assets/dist/css/admin.min.css';
+		$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : AI_SEARCH_SCHEMA_VERSION;
+		wp_enqueue_style(
+			'ais-admin',
+			AI_SEARCH_SCHEMA_URL . 'assets/dist/css/admin.min.css',
+			array(),
+			$style_version
+		);
+
+		$script_path    = AI_SEARCH_SCHEMA_DIR . 'assets/js/admin-settings.js';
+		$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : AI_SEARCH_SCHEMA_VERSION;
+
+		wp_enqueue_script(
+			'ais-settings',
+			AI_SEARCH_SCHEMA_URL . 'assets/js/admin-settings.js',
+			array( 'jquery' ),
+			$script_version,
+			true
+		);
+
+		$gmaps_api_key = $this->get_google_maps_api_key();
+
+		wp_localize_script(
+			'ais-settings',
+			'aisSettings',
+			array(
+				'socialOptions'             => $this->get_social_network_choices(),
+				'languageOptions'           => $this->get_language_choices(),
+				/* translators: %s is the language label. */
+				'i18nLanguageRemove'        => __( 'Remove "%s"', 'ai-search-schema' ),
+				'ajaxUrl'                   => admin_url( 'admin-ajax.php' ),
+				'geocodeNonce'              => wp_create_nonce( 'ai_search_schema_geocode' ),
+				'i18nGeocodeReady'          => __( 'Fetch coordinates from address', 'ai-search-schema' ),
+				'i18nGeocodeWorking'        => __( 'Fetching...', 'ai-search-schema' ),
+				'i18nGeocodeSuccess'        => __( 'Latitude and longitude updated.', 'ai-search-schema' ),
+				'i18nGeocodeFailure'        => __( 'Unable to fetch latitude and longitude.', 'ai-search-schema' ),
+				'i18nGeocodeMissingAddress' => __( 'Enter the address information.', 'ai-search-schema' ),
+				'i18nGeocodeMissingKey'     => __( 'Please configure a Google Maps API key.', 'ai-search-schema' ),
+				'hasGeocodeApiKey'          => ! empty( $gmaps_api_key ),
+				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
+				'i18nEntityHelpOrg'         => __( 'The primary role of this site is defined as an "Organization". You can also enter headquarters or branch office information in the "Local details & hours" section below to associate your organization with a physical location and enhance visibility in local search results.', 'ai-search-schema' ),
+				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
+				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'ai-search-schema' ),
+			)
+		);
+	}
+
+	/**
+	 * Geocode住所から緯度経度を取得するAJAXハンドラ
+	 */
+	public function handle_geocode_request() {
+		// セキュリティ: nonceバイパスはテスト環境（PHPUnit実行中）かつWP_DEBUGが有効な場合のみ許可
+		$bypass_nonce = false;
+		$is_test_env  = defined( 'WP_TESTS_DIR' ) || defined( 'PHPUNIT_COMPOSER_INSTALL' );
+		if ( $is_test_env && defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			/**
+			 * テスト環境でのみ有効なnonceバイパスフィルター。
+			 * 本番環境（WP_DEBUG=false または テスト環境外）では常に無効。
+			 *
+			 * @since 0.14.4
+			 * @since 0.16.4 テスト環境かつWP_DEBUG有効時のみに制限
+			 *
+			 * @param bool $bypass_nonce nonceチェックをスキップするかどうか。デフォルトfalse。
+			 */
+			$bypass_nonce = apply_filters( 'ai_search_schema_bypass_geocode_nonce', false );
+		}
+		if ( ! $bypass_nonce ) {
+			check_ajax_referer( 'ai_search_schema_geocode', 'nonce' );
+		}
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->respond_json(
+				false,
+				array(
+					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+				),
+				403
+			);
+		}
+
+		$wait_seconds = $this->claim_geocode_slot();
+		if ( $wait_seconds > 0 ) {
+			/* translators: %d: number of seconds an admin must wait before requesting new coordinates. */
+			$message_format = __( 'Please wait %d seconds before requesting new coordinates.', 'ai-search-schema' );
+			$this->respond_json(
+				false,
+				array(
+					'message' => sprintf(
+						$message_format,
+						$wait_seconds
+					),
+				),
+				429
+			);
+		}
+
+		$address_data   = isset( $_POST['address'] ) ? (array) wp_unslash( $_POST['address'] ) : array();
+		$postal_code    = sanitize_text_field( $address_data['postal_code'] ?? '' );
+		$region         = sanitize_text_field( $address_data['region'] ?? '' );
+		$locality       = sanitize_text_field( $address_data['locality'] ?? '' );
+		$street_address = sanitize_text_field( $address_data['street_address'] ?? ( $address_data['street'] ?? '' ) );
+		$country        = sanitize_text_field( $address_data['country'] ?? '' );
+		$parts          = array_filter(
+			array(
+				$postal_code,
+				$region,
+				$locality,
+				$street_address,
+				$country,
+			)
+		);
+
+		if ( empty( $parts ) ) {
+			$this->respond_json(
+				false,
+				array( 'message' => __( 'Enter the address information.', 'ai-search-schema' ) )
+			);
+		}
+
+		$query = implode( ', ', $parts );
+
+		$api_key = $this->get_google_maps_api_key();
+		if ( empty( $api_key ) ) {
+			$fallback = $this->geocode_with_nominatim( $query );
+			if ( is_wp_error( $fallback ) ) {
+				$this->respond_json( false, array( 'message' => $fallback->get_error_message() ) );
+			}
+			$this->respond_json( true, $fallback );
+		}
+
+		$response = $this->geocode_with_google_maps( $query, $api_key );
+
+		if ( is_wp_error( $response ) ) {
+			$this->respond_json( false, array( 'message' => $response->get_error_message() ), 500 );
+		}
+
+		$this->respond_json( true, $response );
+	}
+
+	/**
+	 * Google Maps APIキーを取得
+	 *
+	 * @return string
+	 */
+	private function get_google_maps_api_key() {
+		$key = get_option( self::OPTION_GMAPS_KEY, '' );
+		if ( empty( $key ) ) {
+			$options = get_option( self::OPTION_NAME, array() );
+			if ( is_array( $options ) && ! empty( $options['gmaps_api_key'] ) ) {
+				$key = sanitize_text_field( $options['gmaps_api_key'] );
+				unset( $options['gmaps_api_key'] );
+				update_option( self::OPTION_NAME, $options );
+				update_option( self::OPTION_GMAPS_KEY, $key, false );
+			}
+		}
+		/**
+		 * フィルター: ai_search_schema_google_maps_api_key
+		 *
+		 * @param string $key 現在のAPIキー
+		 */
+		return (string) apply_filters( 'ai_search_schema_google_maps_api_key', sanitize_text_field( (string) $key ) );
+	}
+
+	/**
+	 * Google Maps Geocoding APIで住所を検索
+	 *
+	 * @param string $query
+	 * @param string $api_key
+	 * @return array|\WP_Error
+	 */
+	private function geocode_with_google_maps( $query, $api_key ) {
+		$endpoint = add_query_arg(
+			array(
+				'address'  => $query,
+				'key'      => $api_key,
+				'language' => get_locale(),
+			),
+			'https://maps.googleapis.com/maps/api/geocode/json'
+		);
+
+		$response = wp_remote_get(
+			$endpoint,
+			array(
+				'timeout'     => 12,
+				'redirection' => 2,
+				'headers'     => array(
+					'User-Agent' => 'AI-Search-Schema/' . AI_SEARCH_SCHEMA_VERSION . ' (' . home_url( '/' ) . ')',
+				),
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		$body = json_decode( wp_remote_retrieve_body( $response ), true );
+
+		if ( 200 !== $code || empty( $body ) ) {
+			return new \WP_Error(
+				'ai_search_schema_geocode_http_error',
+				__( 'The geocoding API returned an error.', 'ai-search-schema' )
+			);
+		}
+
+		if ( isset( $body['error_message'] ) ) {
+			return new \WP_Error( 'ai_search_schema_geocode_api_error', $body['error_message'] );
+		}
+
+		if ( empty( $body['results'][0]['geometry']['location'] ) ) {
+			return new \WP_Error(
+				'ai_search_schema_geocode_not_found',
+				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
+			);
+		}
+
+		$location   = $body['results'][0]['geometry']['location'];
+		$lat        = round( (float) $location['lat'], 6 );
+		$lng        = round( (float) $location['lng'], 6 );
+		$components = $this->extract_google_address_components( $body['results'][0]['address_components'] ?? array() );
+
+		return array(
+			'latitude'   => (string) $lat,
+			'longitude'  => (string) $lng,
+			'query'      => $body['results'][0]['formatted_address'] ?? $query,
+			'provider'   => 'google',
+			'components' => $components,
+		);
+	}
+
+	/**
+	 * Google Maps の address_components から住所要素を抽出する.
+	 *
+	 * @param array $components
+	 * @return array<string,string>
+	 */
+	private function extract_google_address_components( $components ) {
+		if ( empty( $components ) || ! is_array( $components ) ) {
+			return array();
+		}
+
+		$route         = '';
+		$street_number = '';
+		$premise       = '';
+		$subpremise    = '';
+		$result        = array(
+			'address_locality' => '',
+			'street_address'   => '',
+			'address_region'   => '',
+			'postal_code'      => '',
+			'country'          => '',
+		);
+
+		foreach ( $components as $component ) {
+			$types = isset( $component['types'] ) ? (array) $component['types'] : array();
+			$long  = isset( $component['long_name'] ) ? (string) $component['long_name'] : '';
+			$short = isset( $component['short_name'] ) ? (string) $component['short_name'] : $long;
+
+			if ( in_array( 'locality', $types, true ) ) {
+				$result['address_locality'] = $long;
+			} elseif (
+					in_array( 'administrative_area_level_2', $types, true )
+					&& empty( $result['address_locality'] )
+				) {
+				// 一部の市区町村は administrative_area_level_2 に入るためフォールバック.
+				$result['address_locality'] = $long;
+			}
+
+			if ( in_array( 'administrative_area_level_1', $types, true ) ) {
+				$result['address_region'] = $long;
+			}
+
+			if ( in_array( 'postal_code', $types, true ) ) {
+				$result['postal_code'] = $long;
+			}
+
+			if ( in_array( 'country', $types, true ) ) {
+				$result['country'] = $short ? $short : $long;
+			}
+
+			if ( in_array( 'route', $types, true ) ) {
+				$route = $long;
+			}
+
+			if ( in_array( 'street_number', $types, true ) ) {
+				$street_number = $long;
+			}
+
+			if ( in_array( 'premise', $types, true ) ) {
+				$premise = $long;
+			}
+
+			if ( in_array( 'subpremise', $types, true ) ) {
+				$subpremise = $long;
+			}
+		}
+
+		$building     = trim( implode( ' ', array_filter( array( $premise, $subpremise ) ) ) );
+		$street_parts = array_filter(
+			array(
+				$route,
+				$street_number,
+				$building,
+			)
+		);
+
+		if ( ! empty( $street_parts ) ) {
+			$result['street_address'] = trim( implode( ' ', $street_parts ) );
+		}
+
+		foreach ( $result as $key => $value ) {
+			$result[ $key ] = sanitize_text_field( $value );
+		}
+
+		return array_filter(
+			$result,
+			function ( $value ) {
+				return '' !== $value;
+			}
+		);
+	}
+
+	/**
+	 * Nominatimによるフォールバック
+	 *
+	 * @param string $query
+	 * @return array|\WP_Error
+	 */
+	private function geocode_with_nominatim( $query ) {
+		$args = array(
+			'format'         => 'json',
+			'limit'          => 1,
+			'addressdetails' => 0,
+			'q'              => $query,
+		);
+
+		$admin_email = get_bloginfo( 'admin_email' );
+		if ( $admin_email ) {
+			$args['email'] = sanitize_email( $admin_email );
+		}
+
+		$endpoint = add_query_arg( $args, 'https://nominatim.openstreetmap.org/search' );
+
+		$response = wp_remote_get(
+			$endpoint,
+			array(
+				'timeout' => 15,
+				'headers' => array(
+					'User-Agent' => 'AI-Search-Schema/' . AI_SEARCH_SCHEMA_VERSION . ' (' . home_url( '/' ) . ')',
+				),
+			)
+		);
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$code = wp_remote_retrieve_response_code( $response );
+		if ( $code < 200 || $code >= 300 ) {
+			return new \WP_Error(
+				'ai_search_schema_geocode_http_error',
+				__( 'The geocoding API returned an error.', 'ai-search-schema' )
+			);
+		}
+
+		$body = wp_remote_retrieve_body( $response );
+		$data = json_decode( $body, true );
+
+		if ( empty( $data ) || empty( $data[0]['lat'] ) || empty( $data[0]['lon'] ) ) {
+			return new \WP_Error(
+				'ai_search_schema_geocode_not_found',
+				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
+			);
+		}
+
+		return array(
+			'latitude'  => (string) $data[0]['lat'],
+			'longitude' => (string) $data[0]['lon'],
+			'query'     => $query,
+			'provider'  => 'nominatim',
+			'notice'    => __(
+				'No Google Maps API key was found, so OpenStreetMap (for development) was used instead.',
+				'ai-search-schema'
+			),
+		);
+	}
+
+	/**
+	 * 設定ページの表示
+	 */
+	public function render_settings_page() {
+		$options                 = $this->get_options();
+		$option_name             = self::OPTION_NAME;
+		$social_choices          = $this->get_social_network_choices();
+		$content_models          = $this->get_content_model_choices();
+		$language_choices        = $this->get_language_choices();
+		$country_choices         = $this->get_country_choices();
+		$weekday_choices         = $this->get_weekday_choices();
+		$prefecture_choices      = AI_Search_Schema_Prefectures::get_prefecture_choices();
+		$gmaps_api_key_set       = ! empty( $this->get_google_maps_api_key() );
+		$content_type_settings   = $options['content_type_settings'] ?? array();
+		$content_type_post_types = $this->get_configurable_post_types();
+		$content_type_taxonomies = $this->get_configurable_taxonomies();
+		$content_type_defaults   = $this->get_content_type_settings_defaults();
+		$schema_type_choices     = $this->get_schema_type_choices();
+		$schema_priority_choices = $this->get_schema_priority_choices();
+		$diagnostics             = $this->get_diagnostics_report( $options );
+		$template                = AI_SEARCH_SCHEMA_DIR . 'templates/admin-settings.php';
+
+		if ( file_exists( $template ) ) {
+			include $template;
+		} else {
+			printf(
+				'<div class="notice notice-error"><p>%s</p></div>',
+				esc_html__( 'Settings template could not be located.', 'ai-search-schema' )
+			);
+		}
+	}
+
+	/**
+	 * オプションをサニタイズ
+	 *
+	 * @param array $input 入力されたオプション
+	 * @return array サニタイズされたオプション
+	 */
+	public function sanitize_options( $input ) {
+		if ( ! is_array( $input ) ) {
+			$input = array();
+		} else {
+			// Filter null values before wp_unslash to prevent PHP 8 deprecation warnings.
+			$input = $this->filter_null_values( $input );
+			$input = wp_unslash( $input );
+		}
+
+		$output = $this->get_options();
+
+		$output['company_name'] = sanitize_text_field( $input['company_name'] ?? '' );
+
+		$logo_id            = isset( $input['logo_id'] ) ? absint( $input['logo_id'] ) : 0;
+		$logo_url           = $logo_id ? wp_get_attachment_image_url( $logo_id, 'full' ) : '';
+		$output['logo_id']  = $logo_id;
+		$output['logo_url'] = $logo_url ? $logo_url : esc_url_raw( $input['logo_url'] ?? '' );
+
+		$lb_image_id            = isset( $input['lb_image_id'] ) ? absint( $input['lb_image_id'] ) : 0;
+		$lb_image_url           = $lb_image_id ? wp_get_attachment_image_url( $lb_image_id, 'full' ) : '';
+		$output['lb_image_id']  = $lb_image_id;
+		$output['lb_image_url'] = $lb_image_url ? $lb_image_url : esc_url_raw( $input['lb_image_url'] ?? '' );
+
+			$store_image_id            = isset( $input['store_image_id'] ) ? absint( $input['store_image_id'] ) : 0;
+			$store_image_url           = $store_image_id ? wp_get_attachment_image_url( $store_image_id, 'full' ) : '';
+			$output['store_image_id']  = $store_image_id;
+			$output['store_image_url'] = $store_image_url
+				? $store_image_url
+				: esc_url_raw( $input['store_image_url'] ?? '' );
+		if ( empty( $output['store_image_url'] ) && ! empty( $output['lb_image_url'] ) ) {
+			$output['store_image_id']  = $output['lb_image_id'];
+			$output['store_image_url'] = $output['lb_image_url'];
+		}
+
+		$output['phone'] = sanitize_text_field( $input['phone'] ?? '' );
+
+		$country = sanitize_text_field( $input['country_code'] ?? '' );
+		if ( ! array_key_exists( $country, $this->get_country_choices() ) ) {
+			$country = $this->get_default_country();
+		}
+		$output['country_code'] = $country;
+
+		$languages_input = $input['languages'] ?? $input['language'] ?? array();
+		if ( ! is_array( $languages_input ) ) {
+			$languages_input = array( $languages_input );
+		}
+		$language_choices    = $this->get_language_choices();
+		$languages_sanitized = array();
+		foreach ( $languages_input as $lang ) {
+			$lang = sanitize_text_field( $lang );
+			if ( $lang && array_key_exists( $lang, $language_choices ) ) {
+				$languages_sanitized[] = $lang;
+			}
+		}
+		if ( empty( $languages_sanitized ) ) {
+			$languages_sanitized[] = $this->get_default_language();
+		}
+		$languages_sanitized = array_values( array_unique( $languages_sanitized ) );
+		$output['languages'] = $languages_sanitized;
+		$output['language']  = $languages_sanitized[0];
+		$output['site_name'] = sanitize_text_field( $input['site_name'] ?? '' );
+		$output['site_url']  = esc_url_raw( $input['site_url'] ?? '' );
+
+		$entity_type           = sanitize_text_field( $input['entity_type'] ?? 'Organization' );
+		$output['entity_type'] = in_array( $entity_type, array( 'Organization', 'LocalBusiness' ), true )
+			? $entity_type
+			: 'Organization';
+
+		$publisher_entity           = sanitize_text_field( $input['publisher_entity'] ?? 'Organization' );
+		$output['publisher_entity'] = in_array( $publisher_entity, array( 'Organization' ), true )
+			? $publisher_entity
+			: 'Organization';
+
+		$lb_subtype_raw          = $input['lb_subtype'] ?? $input['business_type'] ?? 'LocalBusiness';
+		$lb_subtype              = sanitize_text_field( $lb_subtype_raw );
+		$lb_subtype              = $lb_subtype ? $lb_subtype : 'LocalBusiness';
+		$output['lb_subtype']    = $lb_subtype;
+		$output['business_type'] = $lb_subtype;
+
+		$output['local_business_label'] = sanitize_text_field( $input['local_business_label'] ?? '' );
+
+		$address             = $input['address'] ?? array();
+		$prefecture_choices  = AI_Search_Schema_Prefectures::get_prefecture_choices();
+		$prefecture          = sanitize_text_field( $address['prefecture'] ?? '' );
+		$legacy_region_value = sanitize_text_field( $address['region'] ?? '' );
+		if ( '' === $prefecture && isset( $prefecture_choices[ $legacy_region_value ] ) ) {
+			$prefecture = $legacy_region_value;
+		}
+		if ( '' !== $prefecture && ! isset( $prefecture_choices[ $prefecture ] ) ) {
+			$prefecture = '';
+		}
+		$prefecture_iso = AI_Search_Schema_Prefectures::get_iso_code( $prefecture );
+		$country        = strtoupper( sanitize_text_field( $address['country'] ?? 'JP' ) );
+		if ( '' === $country ) {
+			$country = 'JP';
+		}
+		// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+		$address_locality = sanitize_text_field( $address['city'] ?? $address['locality'] ?? '' );
+		$street_address   = sanitize_text_field( $address['address_line'] ?? $address['street_address'] ?? '' );
+		$output['address'] = array(
+			'postal_code'    => sanitize_text_field( $address['postal_code'] ?? '' ),
+			'prefecture'     => $prefecture,
+			'prefecture_iso' => $prefecture_iso,
+			'region'         => ( '' !== $prefecture ) ? $prefecture : $legacy_region_value,
+			'locality'       => $address_locality,
+			'city'           => $address_locality,
+			'street_address' => $street_address,
+			'address_line'   => $street_address,
+			'country'        => $country,
+		);
+		// phpcs:enable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+			$output['localbusiness_address_locality'] = sanitize_text_field(
+				$input['localbusiness_address_locality'] ?? $address_locality
+			);
+			$output['localbusiness_street_address']   = sanitize_text_field(
+				$input['localbusiness_street_address'] ?? $street_address
+			);
+
+		$geo           = $input['geo'] ?? array();
+		$output['geo'] = array(
+			'latitude'  => $this->format_geo_value( $geo['latitude'] ?? '' ),
+			'longitude' => $this->format_geo_value( $geo['longitude'] ?? '' ),
+		);
+
+		$output['holiday_enabled'] = ! empty( $input['holiday_enabled'] );
+		$holiday_mode              = isset( $input['holiday_mode'] )
+			? sanitize_text_field( $input['holiday_mode'] )
+			: 'custom';
+		if ( ! in_array( $holiday_mode, array( 'weekday', 'weekend', 'custom' ), true ) ) {
+			$holiday_mode = 'custom';
+		}
+		$output['holiday_mode']  = $holiday_mode;
+		$output['holiday_slots'] = array();
+
+		$map_enabled_flag = null;
+		if ( array_key_exists( 'has_map_enabled', $input ) ) {
+			$map_enabled_flag = ! empty( $input['has_map_enabled'] );
+		}
+
+		$map_enabled_legacy = null;
+		if ( array_key_exists( 'has_map', $input ) ) {
+			$legacy_input = trim( sanitize_text_field( $input['has_map'] ) );
+			$legacy_bool  = filter_var( $legacy_input, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+			if ( null !== $legacy_bool ) {
+				$map_enabled_legacy = $legacy_bool;
+			}
+		}
+
+		if ( null === $map_enabled_flag && null !== $map_enabled_legacy ) {
+			$map_enabled_flag = $map_enabled_legacy;
+		}
+
+		$output['has_map_enabled'] = (bool) ( $map_enabled_flag ?? false );
+		$gmaps_key_input           = isset( $input['gmaps_api_key'] ) ? trim( (string) $input['gmaps_api_key'] ) : null;
+		$gmaps_key_action          = isset( $input['gmaps_api_key_action'] )
+			? sanitize_text_field( $input['gmaps_api_key_action'] )
+			: '';
+		if ( 'clear' === $gmaps_key_action ) {
+			delete_option( self::OPTION_GMAPS_KEY );
+		} elseif ( '' !== $gmaps_key_input && null !== $gmaps_key_input ) {
+			update_option( self::OPTION_GMAPS_KEY, sanitize_text_field( $gmaps_key_input ) );
+		}
+		$output['price_range']                       = sanitize_text_field( $input['price_range'] ?? '' );
+		$output['payment_accepted']                  = sanitize_text_field( $input['payment_accepted'] ?? '' );
+		$output['accepts_reservations']              = ! empty( $input['accepts_reservations'] );
+		$output['skip_local_business_if_incomplete'] = ! empty( $input['skip_local_business_if_incomplete'] );
+
+			$priority_value = isset( $input['ai_search_schema_priority'] ) ?
+				sanitize_text_field( $input['ai_search_schema_priority'] ) :
+				'ais';
+		if ( ! in_array( $priority_value, array( 'ais', 'external' ), true ) ) {
+			$priority_value = 'ais';
+		}
+		$output['ai_search_schema_priority'] = $priority_value;
+
+		if ( array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $input ) ) {
+			$breadcrumbs_schema_enabled = ! empty( $input['ai_search_schema_breadcrumbs_schema_enabled'] );
+		} else {
+			$breadcrumbs_schema_enabled = ! empty( $input['enable_breadcrumbs'] );
+		}
+
+		if ( array_key_exists( 'ai_search_schema_breadcrumbs_html_enabled', $input ) ) {
+			$breadcrumbs_html_enabled = ! empty( $input['ai_search_schema_breadcrumbs_html_enabled'] );
+		} else {
+			$breadcrumbs_html_enabled = ! empty( $input['enable_breadcrumbs'] );
+		}
+
+		$output['ai_search_schema_breadcrumbs_schema_enabled'] = $breadcrumbs_schema_enabled;
+		$output['ai_search_schema_breadcrumbs_html_enabled']   = $breadcrumbs_html_enabled;
+		$output['enable_breadcrumbs']                          = $breadcrumbs_schema_enabled;
+
+		$social_links = array();
+		if ( ! empty( $input['social_links'] ) && is_array( $input['social_links'] ) ) {
+			$allowed_networks = array_keys( $this->get_social_network_choices() );
+			foreach ( $input['social_links'] as $row ) {
+				if ( empty( $row['account'] ) ) {
+					continue;
+				}
+				$network = sanitize_text_field( $row['network'] ?? '' );
+				if ( ! in_array( $network, $allowed_networks, true ) ) {
+					$network = 'other';
+				}
+				$account        = sanitize_text_field( $row['account'] ?? '' );
+				$label          = sanitize_text_field( $row['label'] ?? '' );
+				$social_links[] = array(
+					'network' => $network,
+					'account' => $account,
+					'label'   => $label,
+				);
+			}
+		}
+		$output['social_links'] = $social_links;
+
+		$content_model           = sanitize_text_field( $input['content_model'] ?? 'WebPage' );
+		$output['content_model'] = array_key_exists( $content_model, $this->get_content_model_choices() )
+			? $content_model
+			: 'WebPage';
+
+		$opening_hours_entries = array();
+		if ( ! empty( $input['opening_hours'] ) && is_array( $input['opening_hours'] ) ) {
+			$opening_hours_entries = $this->normalize_opening_hours( $input['opening_hours'] );
+		}
+
+		$output['opening_hours_raw'] = sanitize_textarea_field( $input['opening_hours_raw'] ?? '' );
+		if ( empty( $opening_hours_entries ) && $output['opening_hours_raw'] ) {
+			$opening_hours_entries = $this->normalize_opening_hours(
+				$this->parse_opening_hours( $output['opening_hours_raw'] )
+			);
+		}
+
+		$output['opening_hours'] = $opening_hours_entries;
+
+			$content_type_defaults       = $this->get_content_type_settings_defaults();
+			$has_content_type_input      = ! empty( $input['content_type_settings'] )
+				&& is_array( $input['content_type_settings'] );
+		$content_type_input              = $has_content_type_input
+			? $input['content_type_settings']
+			: array();
+		$output['content_type_settings'] = $this->sanitize_content_type_settings(
+			$content_type_input,
+			$content_type_defaults,
+			$this->should_translate_labels()
+		);
+
+		return $output;
+	}
+
+	/**
+	 * 翻訳を実行しても早すぎないかを判定する.
+	 *
+	 * @return bool
+	 */
+	private function should_translate_labels() {
+		return did_action( 'init' ) || doing_action( 'init' );
+	}
+
+	/**
+	 * 保存済みオプションを取得し不足分を埋める
+	 *
+	 * @return array
+	 */
+	public function get_options() {
+		$translate_labels = $this->should_translate_labels();
+
+		$defaults = array(
+			'company_name'                                => '',
+			'logo_id'                                     => 0,
+			'logo_url'                                    => '',
+			'lb_image_id'                                 => 0,
+			'lb_image_url'                                => '',
+			'store_image_id'                              => 0,
+			'store_image_url'                             => '',
+			'phone'                                       => '',
+			'country_code'                                => $this->get_default_country( $translate_labels ),
+			'languages'                                   => array( $this->get_default_language( $translate_labels ) ),
+			'language'                                    => $this->get_default_language( $translate_labels ),
+			'site_name'                                   => get_bloginfo( 'name' ),
+			'site_url'                                    => get_site_url(),
+			'entity_type'                                 => 'Organization',
+			'publisher_entity'                            => 'Organization',
+			'business_type'                               => 'LocalBusiness',
+			'lb_subtype'                                  => 'LocalBusiness',
+			'ai_search_schema_priority'                   => 'ais',
+			'ai_search_schema_breadcrumbs_schema_enabled' => true,
+			'ai_search_schema_breadcrumbs_html_enabled'   => false,
+			'enable_breadcrumbs'                          => false,
+			'local_business_label'                        => '',
+			'localbusiness_address_locality'              => '',
+			'localbusiness_street_address'                => '',
+			'address'                                     => array(
+				'postal_code'    => '',
+				'prefecture'     => '',
+				'prefecture_iso' => '',
+				'region'         => '',
+				'locality'       => '',
+				'city'           => '',
+				'street_address' => '',
+				'address_line'   => '',
+				'country'        => 'JP',
+			),
+			'geo'                                         => array(
+				'latitude'  => '',
+				'longitude' => '',
+			),
+			'has_map_enabled'                             => false,
+			'skip_local_business_if_incomplete'           => false,
+			'holiday_enabled'                             => true,
+			'holiday_mode'                                => 'custom',
+			'holiday_slots'                               => array(),
+			'price_range'                                 => '',
+			'payment_accepted'                            => '',
+			'accepts_reservations'                        => false,
+			'social_links'                                => array(),
+			'content_model'                               => 'WebPage',
+			'opening_hours_raw'                           => '',
+			'opening_hours'                               => array(),
+			'content_type_settings'                       => array(),
+		);
+
+		$options = get_option( self::OPTION_NAME, array() );
+
+		if ( ! is_array( $options ) ) {
+			$options = array();
+		}
+
+		// Filter out null values before wp_parse_args to ensure defaults are applied.
+		// wp_parse_args does not replace null values with defaults.
+		$options = $this->filter_null_values( $options );
+
+		$content_model_choices = $this->get_content_model_choices( $translate_labels );
+		if (
+			! empty( $options['content_model'] )
+			&& ! array_key_exists( $options['content_model'], $content_model_choices )
+		) {
+			$options['content_model'] = 'WebPage';
+		}
+
+		$merged = wp_parse_args( $options, $defaults );
+		if ( isset( $merged['gmaps_api_key'] ) ) {
+			unset( $merged['gmaps_api_key'] );
+		}
+
+		if ( ! is_array( $merged['social_links'] ) ) {
+			$merged['social_links'] = array();
+		}
+
+		if ( ! array_key_exists( 'ai_search_schema_priority', $merged ) ) {
+			$merged['ai_search_schema_priority'] = 'ais';
+		}
+
+		if ( ! array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $merged ) ) {
+			$merged['ai_search_schema_breadcrumbs_schema_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
+		}
+
+		if ( ! array_key_exists( 'ai_search_schema_breadcrumbs_html_enabled', $merged ) ) {
+			$merged['ai_search_schema_breadcrumbs_html_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
+		}
+
+		$merged['enable_breadcrumbs'] = (bool) $merged['ai_search_schema_breadcrumbs_schema_enabled'];
+		if ( ! is_array( $merged['address'] ) ) {
+			$merged['address'] = $defaults['address'];
+		}
+		$merged['address'] = wp_parse_args( $merged['address'], $defaults['address'] );
+		if ( ! is_array( $merged['geo'] ) ) {
+			$merged['geo'] = $defaults['geo'];
+		}
+		$merged['geo'] = wp_parse_args( $merged['geo'], $defaults['geo'] );
+		if ( ! is_array( $merged['opening_hours'] ) ) {
+			$merged['opening_hours'] = array();
+		}
+		$merged['opening_hours'] = $this->normalize_opening_hours(
+			$merged['opening_hours'],
+			$translate_labels
+		);
+		if (
+				empty( $merged['opening_hours'] )
+				&& ! empty( $merged['opening_hours_raw'] )
+			) {
+			$merged['opening_hours'] = $this->normalize_opening_hours(
+				$this->parse_opening_hours( $merged['opening_hours_raw'] ),
+				$translate_labels
+			);
+		}
+		if ( ! is_array( $merged['languages'] ) ) {
+			if ( ! empty( $merged['language'] ) ) {
+				$merged['languages'] = array( $merged['language'] );
+			} else {
+				$merged['languages'] = array( $this->get_default_language( $translate_labels ) );
+			}
+		}
+		$language_choices    = $this->get_language_choices( $translate_labels );
+		$merged['languages'] = array_values(
+			array_filter(
+				array_map(
+					function ( $lang ) use ( $language_choices ) {
+						return array_key_exists( $lang, $language_choices ) ? $lang : null;
+					},
+					$merged['languages']
+				)
+			)
+		);
+		if ( empty( $merged['languages'] ) ) {
+			$merged['languages'][] = $this->get_default_language( $translate_labels );
+		}
+		$merged['language'] = $merged['languages'][0];
+
+		if (
+			! array_key_exists( $merged['country_code'], $this->get_country_choices( $translate_labels ) )
+		) {
+			$merged['country_code'] = $this->get_default_country( $translate_labels );
+		}
+
+		if (
+			! empty( $merged['address']['region'] )
+			&& empty( $merged['address']['prefecture'] )
+		) {
+			$choices = AI_Search_Schema_Prefectures::get_prefecture_choices();
+			if ( isset( $choices[ $merged['address']['region'] ] ) ) {
+				$merged['address']['prefecture'] = $merged['address']['region'];
+			}
+		}
+		if ( empty( $merged['address']['country'] ) ) {
+			$merged['address']['country'] = 'JP';
+		}
+		if (
+			empty( $merged['localbusiness_address_locality'] )
+			&& ! empty( $merged['address']['locality'] )
+		) {
+			$merged['localbusiness_address_locality'] = $merged['address']['locality'];
+		}
+		if (
+			empty( $merged['address']['locality'] )
+			&& ! empty( $merged['localbusiness_address_locality'] )
+		) {
+			$merged['address']['locality'] = $merged['localbusiness_address_locality'];
+		}
+		if (
+			empty( $merged['localbusiness_street_address'] )
+			&& ! empty( $merged['address']['street_address'] )
+		) {
+			$merged['localbusiness_street_address'] = $merged['address']['street_address'];
+		}
+		if (
+			empty( $merged['address']['street_address'] )
+			&& ! empty( $merged['localbusiness_street_address'] )
+		) {
+			$merged['address']['street_address'] = $merged['localbusiness_street_address'];
+		}
+		if (
+				! empty( $merged['address']['prefecture'] )
+				&& empty( $merged['address']['prefecture_iso'] )
+			) {
+			$merged['address']['prefecture_iso'] = AI_Search_Schema_Prefectures::get_iso_code(
+				$merged['address']['prefecture']
+			);
+		}
+		$merged['has_map_enabled'] = ! empty( $merged['has_map_enabled'] );
+
+		if ( 'Organization' !== $merged['publisher_entity'] ) {
+				$merged['publisher_entity'] = 'Organization';
+		}
+
+		if ( empty( $merged['lb_subtype'] ) ) {
+			$merged['lb_subtype'] = $merged['business_type'];
+		}
+		$merged['business_type'] = $merged['lb_subtype'];
+
+		if ( ! isset( $merged['local_business_label'] ) ) {
+			$merged['local_business_label'] = '';
+		}
+
+		if ( ! isset( $merged['store_image_id'] ) ) {
+			$merged['store_image_id'] = isset( $merged['lb_image_id'] ) ? $merged['lb_image_id'] : 0;
+		}
+		if ( ! isset( $merged['store_image_url'] ) ) {
+			$merged['store_image_url'] = isset( $merged['lb_image_url'] ) ? $merged['lb_image_url'] : '';
+		}
+
+		$content_defaults                = $this->get_content_type_settings_defaults();
+		$has_content_type_settings       = isset( $merged['content_type_settings'] )
+			&& is_array( $merged['content_type_settings'] );
+		$stored_content_settings         = $has_content_type_settings
+			? $merged['content_type_settings']
+			: array();
+		$merged['content_type_settings'] = $this->sanitize_content_type_settings(
+			$stored_content_settings,
+			$content_defaults,
+			$translate_labels
+		);
+
+		// Replace null values with empty strings to avoid PHP 8 deprecation warnings.
+		return $this->replace_null_values( $merged );
+	}
+
+	/**
+	 * Recursively replace null values with empty strings.
+	 *
+	 * @param array $data The array to process.
+	 * @return array The array with null values replaced.
+	 */
+	private function replace_null_values( array $data ) {
+		foreach ( $data as $key => $value ) {
+			if ( is_null( $value ) ) {
+				$data[ $key ] = '';
+			} elseif ( is_array( $value ) ) {
+				$data[ $key ] = $this->replace_null_values( $value );
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * Recursively filter out null values from an array.
+	 *
+	 * This is used before wp_parse_args() to ensure defaults are applied
+	 * for keys with null values, since wp_parse_args() does not treat
+	 * null as "not set".
+	 *
+	 * @param array $data The array to process.
+	 * @return array The array with null values removed.
+	 */
+	private function filter_null_values( array $data ) {
+		$result = array();
+		foreach ( $data as $key => $value ) {
+			if ( is_null( $value ) ) {
+				continue;
+			}
+			if ( is_array( $value ) ) {
+				$result[ $key ] = $this->filter_null_values( $value );
+			} else {
+				$result[ $key ] = $value;
+			}
+		}
+		return $result;
+	}
+
+	/**
+	 * SNS選択肢を取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_social_network_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'facebook'    => 'Facebook',
+				'instagram'   => 'Instagram',
+				'x'           => 'X',
+				'youtube'     => 'YouTube',
+				'google_plus' => 'Google+',
+				'line'        => 'LINE',
+				'tiktok'      => 'TikTok',
+				'threads'     => 'Threads',
+				'pinterest'   => 'Pinterest',
+				'mixi'        => 'mixi',
+				'other'       => 'Other',
+			);
+		}
+
+		return array(
+			'facebook'    => __( 'Facebook', 'ai-search-schema' ),
+			'instagram'   => __( 'Instagram', 'ai-search-schema' ),
+			'x'           => __( 'X', 'ai-search-schema' ),
+			'youtube'     => __( 'YouTube', 'ai-search-schema' ),
+			'google_plus' => __( 'Google+', 'ai-search-schema' ),
+			'line'        => __( 'LINE', 'ai-search-schema' ),
+			'tiktok'      => __( 'TikTok', 'ai-search-schema' ),
+			'threads'     => __( 'Threads', 'ai-search-schema' ),
+			'pinterest'   => __( 'Pinterest', 'ai-search-schema' ),
+			'mixi'        => __( 'mixi', 'ai-search-schema' ),
+			'other'       => __( 'Other', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * コンテンツモデル選択肢を取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_content_model_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'WebPage'     => 'WebPage (default)',
+				'Article'     => 'Article',
+				'FAQPage'     => 'FAQPage',
+				'QAPage'      => 'QAPage',
+				'NewsArticle' => 'NewsArticle',
+				'BlogPosting' => 'BlogPosting',
+				'Product'     => 'Product',
+			);
+		}
+
+		return array(
+			'WebPage'     => __( 'WebPage (default)', 'ai-search-schema' ),
+			'Article'     => __( 'Article', 'ai-search-schema' ),
+			'FAQPage'     => __( 'FAQPage', 'ai-search-schema' ),
+			'QAPage'      => __( 'QAPage', 'ai-search-schema' ),
+			'NewsArticle' => __( 'NewsArticle', 'ai-search-schema' ),
+			'BlogPosting' => __( 'BlogPosting', 'ai-search-schema' ),
+			'Product'     => __( 'Product', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * 言語選択肢を取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_language_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'ja'    => 'Japanese',
+				'en'    => 'English',
+				'zh-CN' => 'Chinese (Simplified)',
+				'zh-TW' => 'Chinese (Traditional)',
+				'ko'    => 'Korean',
+				'fr'    => 'French',
+				'de'    => 'German',
+				'es'    => 'Spanish',
+				'pt'    => 'Portuguese',
+				'it'    => 'Italian',
+				'th'    => 'Thai',
+			);
+		}
+
+		return array(
+			'ja'    => __( 'Japanese', 'ai-search-schema' ),
+			'en'    => __( 'English', 'ai-search-schema' ),
+			'zh-CN' => __( 'Chinese (Simplified)', 'ai-search-schema' ),
+			'zh-TW' => __( 'Chinese (Traditional)', 'ai-search-schema' ),
+			'ko'    => __( 'Korean', 'ai-search-schema' ),
+			'fr'    => __( 'French', 'ai-search-schema' ),
+			'de'    => __( 'German', 'ai-search-schema' ),
+			'es'    => __( 'Spanish', 'ai-search-schema' ),
+			'pt'    => __( 'Portuguese', 'ai-search-schema' ),
+			'it'    => __( 'Italian', 'ai-search-schema' ),
+			'th'    => __( 'Thai', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * 曜日選択肢を取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_weekday_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'Monday'        => 'Monday',
+				'Tuesday'       => 'Tuesday',
+				'Wednesday'     => 'Wednesday',
+				'Thursday'      => 'Thursday',
+				'Friday'        => 'Friday',
+				'Saturday'      => 'Saturday',
+				'Sunday'        => 'Sunday',
+				'PublicHoliday' => 'Public holiday',
+			);
+		}
+
+		return array(
+			'Monday'        => __( 'Monday', 'ai-search-schema' ),
+			'Tuesday'       => __( 'Tuesday', 'ai-search-schema' ),
+			'Wednesday'     => __( 'Wednesday', 'ai-search-schema' ),
+			'Thursday'      => __( 'Thursday', 'ai-search-schema' ),
+			'Friday'        => __( 'Friday', 'ai-search-schema' ),
+			'Saturday'      => __( 'Saturday', 'ai-search-schema' ),
+			'Sunday'        => __( 'Sunday', 'ai-search-schema' ),
+			'PublicHoliday' => __( 'Public holiday', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * コンテンツタイプごとのデフォルト設定を取得
+	 *
+	 * @return array
+	 */
+	private function get_content_type_settings_defaults() {
+		$post_types    = $this->get_configurable_post_types();
+		$taxonomies    = $this->get_configurable_taxonomies();
+		$post_defaults = array();
+
+		foreach ( $post_types as $slug => $object ) {
+			$post_defaults[ $slug ] = array(
+				'schema_type'         => 'auto',
+				'breadcrumbs_enabled' => true,
+				'faq_enabled'         => 'post' === $slug,
+				'schema_priority'     => 'ais',
+			);
+		}
+
+		if ( ! isset( $post_defaults['post'] ) ) {
+			$post_defaults['post'] = array(
+				'schema_type'         => 'auto',
+				'breadcrumbs_enabled' => true,
+				'faq_enabled'         => true,
+				'schema_priority'     => 'ais',
+			);
+		}
+
+		if ( ! isset( $post_defaults['page'] ) ) {
+			$post_defaults['page'] = array(
+				'schema_type'         => 'auto',
+				'breadcrumbs_enabled' => true,
+				'faq_enabled'         => false,
+				'schema_priority'     => 'ais',
+			);
+		}
+
+		$taxonomy_defaults = array();
+		foreach ( $taxonomies as $slug => $object ) {
+			$taxonomy_defaults[ $slug ] = array(
+				'schema_type'         => 'auto',
+				'breadcrumbs_enabled' => true,
+				'faq_enabled'         => false,
+				'schema_priority'     => 'ais',
+			);
+		}
+
+		return array(
+			'post_types' => $post_defaults,
+			'taxonomies' => $taxonomy_defaults,
+		);
+	}
+
+	/**
+	 * コンテンツタイプ設定をサニタイズ
+	 *
+	 * @param array $input
+	 * @param array $defaults
+	 * @return array
+	 */
+	private function sanitize_content_type_settings( $input, $defaults, $translate_labels = true ) {
+		$post_types_input = ! empty( $input['post_types'] ) && is_array( $input['post_types'] )
+			? $input['post_types']
+			: array();
+		$taxonomies_input = ! empty( $input['taxonomies'] ) && is_array( $input['taxonomies'] )
+			? $input['taxonomies']
+			: array();
+
+		return array(
+			'post_types' => $this->sanitize_content_type_entries(
+				$post_types_input,
+				$defaults['post_types'] ?? array(),
+				$translate_labels
+			),
+			'taxonomies' => $this->sanitize_content_type_entries(
+				$taxonomies_input,
+				$defaults['taxonomies'] ?? array(),
+				$translate_labels
+			),
+		);
+	}
+
+	/**
+	 * コンテンツタイプのエントリをサニタイズ
+	 *
+	 * @param array $input
+	 * @param array $defaults
+	 * @param bool  $translate_labels ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function sanitize_content_type_entries( $input, $defaults, $translate_labels = true ) {
+		$choices         = $this->get_schema_type_choices( $translate_labels );
+		$priority_values = array_keys( $this->get_schema_priority_choices( $translate_labels ) );
+		$result          = array();
+
+		foreach ( $defaults as $key => $values ) {
+			$entry       = ! empty( $input[ $key ] ) && is_array( $input[ $key ] ) ? $input[ $key ] : array();
+			$schema_type = isset( $entry['schema_type'] )
+				? sanitize_text_field( $entry['schema_type'] )
+				: $values['schema_type'];
+			if ( ! isset( $choices[ $schema_type ] ) ) {
+				$schema_type = $values['schema_type'];
+			}
+			$priority = isset( $entry['schema_priority'] )
+				? sanitize_text_field( $entry['schema_priority'] )
+				: $values['schema_priority'];
+			if ( ! in_array( $priority, $priority_values, true ) ) {
+				$priority = $values['schema_priority'];
+			}
+			$breadcrumbs_enabled = array_key_exists( 'breadcrumbs_enabled', $entry )
+				? (bool) $entry['breadcrumbs_enabled']
+				: (bool) $values['breadcrumbs_enabled'];
+			$faq_enabled         = array_key_exists( 'faq_enabled', $entry )
+				? (bool) $entry['faq_enabled']
+				: (bool) $values['faq_enabled'];
+
+			$result[ $key ] = array(
+				'schema_type'         => $schema_type,
+				'breadcrumbs_enabled' => $breadcrumbs_enabled,
+				'faq_enabled'         => $faq_enabled,
+				'schema_priority'     => $priority,
+			);
+		}
+
+		return $result;
+	}
+
+	/**
+	 * 公開 post type を取得
+	 *
+	 * @return array<string, WP_Post_Type>
+	 */
+	private function get_configurable_post_types() {
+		if ( ! function_exists( 'get_post_types' ) ) {
+			return $this->get_default_post_types();
+		}
+
+		$types   = get_post_types(
+			array(
+				'public' => true,
+			),
+			'objects'
+		);
+		$exclude = array(
+			'attachment',
+			'revision',
+			'nav_menu_item',
+			'custom_css',
+			'customize_changeset',
+			'oembed_cache',
+			'user_request',
+			'wp_block',
+		);
+		$result  = array();
+		foreach ( $types as $type ) {
+			if ( in_array( $type->name, $exclude, true ) ) {
+				continue;
+			}
+			$result[ $type->name ] = $type;
+		}
+		return $result;
+	}
+
+	/**
+	 * 公開 taxonomy を取得
+	 *
+	 * @return array<string, WP_Taxonomy>
+	 */
+	private function get_configurable_taxonomies() {
+		if ( ! function_exists( 'get_taxonomies' ) ) {
+			return $this->get_default_taxonomies();
+		}
+
+		$taxonomies = get_taxonomies(
+			array(
+				'public'  => true,
+				'show_ui' => true,
+			),
+			'objects'
+		);
+		$exclude    = array(
+			'nav_menu',
+			'link_category',
+			'post_format',
+		);
+		$result     = array();
+		foreach ( $taxonomies as $tax ) {
+			if ( in_array( $tax->name, $exclude, true ) ) {
+				continue;
+			}
+			$result[ $tax->name ] = $tax;
+		}
+		return $result;
+	}
+
+	private function get_default_post_types() {
+		$default               = new stdClass();
+		$default->name         = 'post';
+		$default->label        = 'Post';
+		$labels                = new stdClass();
+		$labels->singular_name = 'Post';
+		$default->labels       = $labels;
+		return array( 'post' => $default );
+	}
+
+	private function get_default_taxonomies() {
+		$default               = new stdClass();
+		$default->name         = 'category';
+		$default->label        = 'Category';
+		$labels                = new stdClass();
+		$labels->singular_name = 'Category';
+		$default->labels       = $labels;
+		return array( 'category' => $default );
+	}
+
+	/**
+	 * カスタム schema type 選択肢
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_schema_type_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'auto'           => 'Use global default content model',
+				'WebPage'        => 'WebPage',
+				'Article'        => 'Article',
+				'BlogPosting'    => 'BlogPosting',
+				'NewsArticle'    => 'NewsArticle',
+				'FAQPage'        => 'FAQPage',
+				'QAPage'         => 'QAPage',
+				'Product'        => 'Product',
+				'CollectionPage' => 'CollectionPage',
+				'ItemList'       => 'ItemList',
+			);
+		}
+
+		return array(
+			'auto'           => __( 'Use global default content model', 'ai-search-schema' ),
+			'WebPage'        => __( 'WebPage', 'ai-search-schema' ),
+			'Article'        => __( 'Article', 'ai-search-schema' ),
+			'BlogPosting'    => __( 'BlogPosting', 'ai-search-schema' ),
+			'NewsArticle'    => __( 'NewsArticle', 'ai-search-schema' ),
+			'FAQPage'        => __( 'FAQPage', 'ai-search-schema' ),
+			'QAPage'         => __( 'QAPage', 'ai-search-schema' ),
+			'Product'        => __( 'Product', 'ai-search-schema' ),
+			'CollectionPage' => __( 'CollectionPage', 'ai-search-schema' ),
+			'ItemList'       => __( 'ItemList', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * スキーマ優先度選択肢
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_schema_priority_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'ais'      => 'AVC schema priority (suppress other plugins)',
+				'external' => 'Let other SEO plugins output schema',
+			);
+		}
+
+		return array(
+			'ais'      => __( 'AVC schema priority (suppress other plugins)', 'ai-search-schema' ),
+			'external' => __( 'Let other SEO plugins output schema', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * デフォルト言語コードを取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return string
+	 */
+	private function get_default_language( $translate = true ) {
+		$locale = get_locale();
+		if ( ! is_string( $locale ) || '' === $locale ) {
+			return 'ja';
+		}
+
+		$normalized = str_replace( '_', '-', $locale );
+		$choices    = $this->get_language_choices( $translate );
+
+		if ( array_key_exists( $normalized, $choices ) ) {
+			return $normalized;
+		}
+
+		$short = substr( $normalized, 0, 2 );
+		if ( $short && array_key_exists( $short, $choices ) ) {
+			return $short;
+		}
+
+		return 'ja';
+	}
+
+	/**
+	 * 国コード選択肢を取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function get_country_choices( $translate = true ) {
+		if ( ! $translate ) {
+			return array(
+				'JP' => 'Japan',
+				'US' => 'United States',
+				'CN' => 'China',
+				'TW' => 'Taiwan',
+				'HK' => 'Hong Kong',
+				'KR' => 'South Korea',
+				'SG' => 'Singapore',
+				'TH' => 'Thailand',
+				'VN' => 'Vietnam',
+				'PH' => 'Philippines',
+				'MY' => 'Malaysia',
+				'ID' => 'Indonesia',
+				'FR' => 'France',
+				'DE' => 'Germany',
+				'ES' => 'Spain',
+				'IT' => 'Italy',
+				'GB' => 'United Kingdom',
+				'CA' => 'Canada',
+				'AU' => 'Australia',
+				'NZ' => 'New Zealand',
+			);
+		}
+
+		return array(
+			'JP' => __( 'Japan', 'ai-search-schema' ),
+			'US' => __( 'United States', 'ai-search-schema' ),
+			'CN' => __( 'China', 'ai-search-schema' ),
+			'TW' => __( 'Taiwan', 'ai-search-schema' ),
+			'HK' => __( 'Hong Kong', 'ai-search-schema' ),
+			'KR' => __( 'South Korea', 'ai-search-schema' ),
+			'SG' => __( 'Singapore', 'ai-search-schema' ),
+			'TH' => __( 'Thailand', 'ai-search-schema' ),
+			'VN' => __( 'Vietnam', 'ai-search-schema' ),
+			'PH' => __( 'Philippines', 'ai-search-schema' ),
+			'MY' => __( 'Malaysia', 'ai-search-schema' ),
+			'ID' => __( 'Indonesia', 'ai-search-schema' ),
+			'FR' => __( 'France', 'ai-search-schema' ),
+			'DE' => __( 'Germany', 'ai-search-schema' ),
+			'ES' => __( 'Spain', 'ai-search-schema' ),
+			'IT' => __( 'Italy', 'ai-search-schema' ),
+			'GB' => __( 'United Kingdom', 'ai-search-schema' ),
+			'CA' => __( 'Canada', 'ai-search-schema' ),
+			'AU' => __( 'Australia', 'ai-search-schema' ),
+			'NZ' => __( 'New Zealand', 'ai-search-schema' ),
+		);
+	}
+
+	/**
+	 * デフォルトの国コードを取得
+	 *
+	 * @param bool $translate ラベルを翻訳するかどうか。
+	 * @return string
+	 */
+	private function get_default_country( $translate = true ) {
+		$locale = get_locale();
+		if ( is_string( $locale ) && strpos( $locale, '_' ) !== false ) {
+			$country = substr( strrchr( $locale, '_' ), 1 );
+			if ( $country && array_key_exists( $country, $this->get_country_choices( $translate ) ) ) {
+				return $country;
+			}
+		}
+
+		return 'JP';
+	}
+
+	/**
+	 * AEO/GEO 診断結果を返す（transient でキャッシュ）
+	 *
+	 * @param array $options
+	 * @return array
+	 */
+	public function get_diagnostics_report( array $options ) {
+		$cache_key = 'ai_search_schema_diag_' . md5( wp_json_encode( $options ) );
+		$cached    = get_transient( $cache_key );
+		if ( $cached && is_array( $cached ) ) {
+			return $cached;
+		}
+
+		$report = array(
+			'generated_at' => time(),
+			'groups'       => array(
+				$this->diagnose_organization( $options ),
+				$this->diagnose_local_business( $options ),
+				$this->diagnose_website( $options ),
+				$this->diagnose_webpage( $options ),
+				$this->diagnose_article( $options ),
+				$this->diagnose_faq( $options ),
+				$this->diagnose_breadcrumb( $options ),
+			),
+		);
+
+		set_transient( $cache_key, $report, MINUTE_IN_SECONDS * 10 );
+
+		return $report;
+	}
+
+	private function make_item( $status, $message ) {
+		return array(
+			'status'  => $status,
+			'message' => $message,
+		);
+	}
+
+	private function diagnose_organization( array $options ) {
+		$items = array();
+
+		$has_name = ! empty( $options['company_name'] );
+		$has_url  = ! empty( $options['site_url'] );
+		$has_logo = ! empty( $options['logo_url'] ) || ! empty( $options['logo_id'] );
+		$has_same = ! empty( $options['social_links'] ) && is_array( $options['social_links'] );
+
+		$items[] = $this->make_item(
+			$has_name ? 'ok' : 'error',
+			$has_name
+				? __( 'Organization name is set.', 'ai-search-schema' )
+				: __( 'Organization name is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			$has_url ? 'ok' : 'error',
+			$has_url
+				? __( 'Organization URL is set.', 'ai-search-schema' )
+				: __( 'Organization URL is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			$has_logo ? 'ok' : 'warning',
+			$has_logo
+				? __( 'Logo is set.', 'ai-search-schema' )
+				: __( 'Logo is not set. Set a square logo image.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			$has_same ? 'ok' : 'warning',
+			$has_same
+				? __( 'SameAs / social profiles are present.', 'ai-search-schema' )
+				: __( 'SameAs profiles are missing. Add social links.', 'ai-search-schema' )
+		);
+
+		return array(
+			'title' => __( 'Organization', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+	private function diagnose_local_business( array $options ) {
+		$items      = array();
+		$address    = $options['address'] ?? array();
+		$locality   = $options['localbusiness_address_locality'] ?? ( $address['locality'] ?? '' );
+		$street     = $options['localbusiness_street_address'] ?? ( $address['street_address'] ?? '' );
+		$region     = $address['region'] ?? '';
+		$postal     = $address['postal_code'] ?? '';
+		$country    = $address['country'] ?? 'JP';
+		$has_geo    = ! empty( $options['geo']['latitude'] ) && ! empty( $options['geo']['longitude'] );
+		$oh_entries = ! empty( $options['opening_hours'] ) && is_array( $options['opening_hours'] );
+
+		$items[] = $this->make_item(
+			! empty( $options['company_name'] ) ? 'ok' : 'error',
+			! empty( $options['company_name'] )
+				? __( 'LocalBusiness name is set.', 'ai-search-schema' )
+				: __( 'LocalBusiness name is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			! empty( $options['phone'] ) ? 'ok' : 'error',
+			! empty( $options['phone'] )
+				? __( 'Telephone is set.', 'ai-search-schema' )
+				: __( 'Telephone is missing.', 'ai-search-schema' )
+		);
+
+		$addr_status = ( $street && $locality && $region && $postal ) ? 'ok' : 'error';
+		$items[]     = $this->make_item(
+			$addr_status,
+			'ok' === $addr_status
+				? __( 'Address fields are set.', 'ai-search-schema' )
+				: __( 'Address is incomplete. Set prefecture, city, street, and postal code.', 'ai-search-schema' )
+		);
+
+		$geo_status  = $has_geo ? 'ok' : 'warning';
+		$lat_decimal = $this->count_decimals( $options['geo']['latitude'] ?? '' );
+		$lng_decimal = $this->count_decimals( $options['geo']['longitude'] ?? '' );
+		if ( $has_geo && ( $lat_decimal > 6 || $lng_decimal > 6 ) ) {
+			$geo_status = 'warning';
+		}
+		$items[] = $this->make_item(
+			$geo_status,
+			$has_geo
+				? sprintf(
+					/* translators: %s decimal places */
+					__( 'Geo coordinates set (lat/long, %s decimals).', 'ai-search-schema' ),
+					max( $lat_decimal, $lng_decimal )
+				)
+				: __( 'Geo coordinates are missing. Fetch via address or enter lat/long.', 'ai-search-schema' )
+		);
+
+		$items[] = $this->make_item(
+			$oh_entries ? 'ok' : 'warning',
+			$oh_entries
+				? __( 'Opening hours are configured.', 'ai-search-schema' )
+				: __( 'Opening hours are empty. Add at least one slot.', 'ai-search-schema' )
+		);
+
+		$items[] = $this->make_item(
+			! empty( $country ) ? 'ok' : 'warning',
+			! empty( $country )
+				? __( 'addressCountry is set.', 'ai-search-schema' )
+				: __( 'addressCountry is missing.', 'ai-search-schema' )
+		);
+
+		return array(
+			'title' => __( 'LocalBusiness', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+		// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+	private function diagnose_website( array $options ) {
+		$items = array();
+		$items[] = $this->make_item(
+			! empty( $options['site_name'] ) ? 'ok' : 'error',
+			! empty( $options['site_name'] )
+				? __( 'WebSite name is set.', 'ai-search-schema' )
+				: __( 'WebSite name is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			! empty( $options['site_url'] ) ? 'ok' : 'error',
+			! empty( $options['site_url'] )
+				? __( 'WebSite URL is set.', 'ai-search-schema' )
+				: __( 'WebSite URL is missing.', 'ai-search-schema' )
+		);
+		$langs = $options['languages'] ?? array();
+		$items[] = $this->make_item(
+			! empty( $langs ) ? 'ok' : 'warning',
+			! empty( $langs )
+				? __( 'Language (inLanguage) is set.', 'ai-search-schema' )
+				: __( 'Language is missing. Add at least one language.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			! empty( $options['company_name'] ) ? 'ok' : 'warning',
+			! empty( $options['company_name'] )
+				? __( 'Publisher is set.', 'ai-search-schema' )
+				: __( 'Publisher is missing. Set Organization first.', 'ai-search-schema' )
+		);
+
+		return array(
+			'title' => __( 'WebSite', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+	private function diagnose_webpage( array $options ) {
+		$items = array();
+		$items[] = $this->make_item(
+			! empty( $options['site_url'] ) ? 'ok' : 'warning',
+			! empty( $options['site_url'] )
+				? __( 'WebPage @id/url base is set.', 'ai-search-schema' )
+				: __( 'WebPage base URL is missing.', 'ai-search-schema' )
+		);
+		$langs = $options['languages'] ?? array();
+		$items[] = $this->make_item(
+			! empty( $langs ) ? 'ok' : 'warning',
+			! empty( $langs )
+				? __( 'WebPage inLanguage ready.', 'ai-search-schema' )
+				: __( 'WebPage inLanguage will fallback. Consider setting languages.', 'ai-search-schema' )
+		);
+
+		return array(
+			'title' => __( 'WebPage', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+	private function diagnose_article( array $options ) {
+			$items = array();
+			$article_preference = $options['content_model'] ?? 'WebPage';
+			$items[] = $this->make_item(
+				'Article' === $article_preference ? 'ok' : 'warning',
+				'Article' === $article_preference
+					? __( 'Article schema is preferred for content.', 'ai-search-schema' )
+					: __( 'Content model is not set to Article by default.', 'ai-search-schema' )
+			);
+		$posts = get_posts(
+			array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			)
+		);
+		$post     = ! empty( $posts ) ? $posts[0] : null;
+		$has_post = (bool) $post;
+
+		if ( ! $has_post ) {
+			$items[] = $this->make_item(
+				'warning',
+				__( 'No published posts found. Article schema cannot be checked.', 'ai-search-schema' )
+			);
+			return array(
+				'title' => __( 'Article (sample post)', 'ai-search-schema' ),
+				'items' => $items,
+			);
+		}
+
+		$items[] = $this->make_item(
+			! empty( $post->post_title ) ? 'ok' : 'error',
+			! empty( $post->post_title )
+				? __( 'Headline is present.', 'ai-search-schema' )
+				: __( 'Headline is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			! empty( $post->post_date ) ? 'ok' : 'error',
+			! empty( $post->post_date )
+				? __( 'datePublished is present.', 'ai-search-schema' )
+				: __( 'datePublished is missing.', 'ai-search-schema' )
+		);
+		$items[] = $this->make_item(
+			! empty( $post->post_modified ) ? 'ok' : 'warning',
+			! empty( $post->post_modified )
+				? __( 'dateModified is present.', 'ai-search-schema' )
+				: __( 'dateModified is missing.', 'ai-search-schema' )
+		);
+
+		$author = get_user_by( 'id', $post->post_author );
+		$items[] = $this->make_item(
+			$author ? 'ok' : 'warning',
+			$author
+				? __( 'Author is set.', 'ai-search-schema' )
+				: __( 'Author information is missing.', 'ai-search-schema' )
+		);
+
+			$post_id = $post->ID ?? 0;
+			$has_image = ( $post_id && has_post_thumbnail( $post_id ) )
+				|| ( $post_id && get_post_thumbnail_id( $post_id ) );
+			$items[] = $this->make_item(
+				$has_image ? 'ok' : 'warning',
+				$has_image
+					? __( 'Featured image found for the sample post.', 'ai-search-schema' )
+					: __( 'Featured image missing on the sample post.', 'ai-search-schema' )
+			);
+
+		return array(
+			'title' => __( 'Article (sample post)', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+		// phpcs:enable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+
+	private function diagnose_faq( array $options ) {
+		$items = array();
+
+		$faq_enabled_any = false;
+		$content_types   = $options['content_type_settings']['post_types'] ?? array();
+		foreach ( $content_types as $entry ) {
+			if ( ! empty( $entry['faq_enabled'] ) ) {
+				$faq_enabled_any = true;
+				break;
+			}
+		}
+
+		if ( $faq_enabled_any ) {
+			$items[] = $this->make_item(
+				'ok',
+				__( 'FAQPage schema is enabled for at least one post type.', 'ai-search-schema' )
+			);
+			$items[] = $this->make_item(
+				'warning',
+				__( 'Ensure each FAQ has both question and answer in the page content.', 'ai-search-schema' )
+			);
+		} else {
+			$items[] = $this->make_item(
+				'warning',
+				__( 'FAQPage schema is disabled. Enable it on relevant post types if needed.', 'ai-search-schema' )
+			);
+		}
+
+		return array(
+			'title' => __( 'FAQPage', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+	private function diagnose_breadcrumb( array $options ) {
+		$items      = array();
+		$sample_url = ! empty( $options['site_url'] ) ? $options['site_url'] : home_url( '/' );
+		$posts      = get_posts(
+			array(
+				'post_type'      => 'post',
+				'post_status'    => 'publish',
+				'posts_per_page' => 1,
+				'orderby'        => 'date',
+				'order'          => 'DESC',
+			)
+		);
+		$post       = ! empty( $posts ) ? $posts[0] : null;
+
+		$context = $post
+			? array(
+				'post_id'   => $post->ID,
+				'title'     => get_the_title( $post ),
+				'url'       => get_permalink( $post ),
+				'type'      => 'page',
+				'post_type' => get_post_type( $post ),
+			)
+			: array(
+				'title' => get_bloginfo( 'name' ),
+				'url'   => $sample_url,
+				'type'  => 'page',
+			);
+
+		$breadcrumbs = class_exists( 'AI_Search_Schema_Breadcrumbs' )
+			? AI_Search_Schema_Breadcrumbs::init()->get_items( $context )
+			: array();
+
+		$items[] = $this->make_item(
+			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1 ? 'ok' : 'warning',
+			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1
+				? __( 'BreadcrumbList can be generated.', 'ai-search-schema' )
+				: __( 'Breadcrumb trail is empty. Check HTML output or enable breadcrumbs.', 'ai-search-schema' )
+		);
+
+		return array(
+			'title' => __( 'BreadcrumbList', 'ai-search-schema' ),
+			'items' => $items,
+		);
+	}
+
+	private function count_decimals( $value ) {
+		if ( '' === $value || null === $value ) {
+			return 0;
+		}
+		$parts = explode( '.', (string) $value );
+		if ( count( $parts ) < 2 ) {
+			return 0;
+		}
+		return strlen( rtrim( $parts[1], '0' ) );
+	}
+
+	/**
+	 * GEO値を最大6桁に丸め、元の小数桁数を尊重して文字列化する。
+	 *
+	 * @param mixed $value 入力値
+	 * @return string
+	 */
+	private function format_geo_value( $value ) {
+		if ( ! isset( $value ) || '' === $value ) {
+			return '';
+		}
+
+		$raw = trim( sanitize_text_field( (string) $value ) );
+		if ( ! preg_match( '/^-?\d+(?:\.\d+)?/', $raw, $matches ) ) {
+			return '';
+		}
+		$raw = $matches[0];
+
+		$precision = 0;
+		if ( strpos( $raw, '.' ) !== false ) {
+			$decimals  = substr( $raw, strpos( $raw, '.' ) + 1 );
+			$precision = strlen( $decimals );
+		}
+		$precision = min( max( $precision, 0 ), 6 );
+
+		$rounded = round( (float) $raw, 6 );
+		if ( 0 === $precision ) {
+			return (string) $rounded;
+		}
+
+		return number_format( $rounded, $precision, '.', '' );
+	}
+
+	/**
+	 * 営業時間を解析して配列化
+	 *
+	 * @param string $raw 1行1レコードの営業時間テキスト
+	 * @return array
+	 */
+	private function parse_opening_hours( $raw ) {
+		$lines       = preg_split( "/\r\n|\r|\n/", (string) $raw );
+		$parsed      = array();
+		$day_aliases = array(
+			'Mon'  => 'Monday',
+			'Tue'  => 'Tuesday',
+			'Tues' => 'Tuesday',
+			'Wed'  => 'Wednesday',
+			'Thu'  => 'Thursday',
+			'Thur' => 'Thursday',
+			'Fri'  => 'Friday',
+			'Sat'  => 'Saturday',
+			'Sun'  => 'Sunday',
+		);
+
+		foreach ( $lines as $line ) {
+			$line = trim( $line );
+			if ( '' === $line ) {
+				continue;
+			}
+
+			if ( preg_match( '/^([A-Za-z]{2,9})\s+(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})$/', $line, $matches ) ) {
+				$day_key  = isset( $day_aliases[ $matches[1] ] ) ? $day_aliases[ $matches[1] ] : $matches[1];
+				$parsed[] = array(
+					'day_key' => $day_key,
+					'opens'   => $matches[2],
+					'closes'  => $matches[3],
+				);
+			}
+		}
+
+		return $parsed;
+	}
+
+	/**
+	 * 営業時間エントリを正規化
+	 *
+	 * @param array $entries 入力エントリ
+	 * @param bool  $translate_labels ラベルを翻訳するかどうか。
+	 * @return array
+	 */
+	private function normalize_opening_hours( $entries, $translate_labels = true ) {
+		$normalized      = array();
+		$weekday_choices = $this->get_weekday_choices( $translate_labels );
+		$allowed_days    = array_keys( $weekday_choices );
+		$day_aliases     = array(
+			'Mon'  => 'Monday',
+			'Tue'  => 'Tuesday',
+			'Tues' => 'Tuesday',
+			'Wed'  => 'Wednesday',
+			'Thu'  => 'Thursday',
+			'Thur' => 'Thursday',
+			'Fri'  => 'Friday',
+			'Sat'  => 'Saturday',
+			'Sun'  => 'Sunday',
+			'月曜日'  => 'Monday',
+			'火曜日'  => 'Tuesday',
+			'水曜日'  => 'Wednesday',
+			'木曜日'  => 'Thursday',
+			'金曜日'  => 'Friday',
+			'土曜日'  => 'Saturday',
+			'日曜日'  => 'Sunday',
+			'祝日'   => 'PublicHoliday',
+		);
+		$results_by_day  = array();
+
+		foreach ( (array) $entries as $entry ) {
+			if ( ! is_array( $entry ) ) {
+				continue;
+			}
+
+			$day_key = sanitize_text_field( $entry['day_key'] ?? $entry['day'] ?? '' );
+			if ( ! in_array( $day_key, $allowed_days, true ) ) {
+				if ( isset( $day_aliases[ $day_key ] ) ) {
+					$day_key = $day_aliases[ $day_key ];
+				} else {
+					continue;
+				}
+			}
+
+			$slots = array();
+
+			if ( ! empty( $entry['slots'] ) && is_array( $entry['slots'] ) ) {
+				foreach ( $entry['slots'] as $slot ) {
+					$opens  = sanitize_text_field( $slot['opens'] ?? '' );
+					$closes = sanitize_text_field( $slot['closes'] ?? '' );
+					if ( $this->is_valid_time( $opens ) && $this->is_valid_time( $closes ) ) {
+						$slots[] = array(
+							'opens'  => $opens,
+							'closes' => $closes,
+						);
+					}
+				}
+			} else {
+				$opens  = sanitize_text_field( $entry['opens'] ?? '' );
+				$closes = sanitize_text_field( $entry['closes'] ?? '' );
+				if ( $this->is_valid_time( $opens ) && $this->is_valid_time( $closes ) ) {
+					$slots[] = array(
+						'opens'  => $opens,
+						'closes' => $closes,
+					);
+				}
+			}
+
+			if ( empty( $slots ) ) {
+				continue;
+			}
+
+			if ( ! isset( $results_by_day[ $day_key ] ) ) {
+				$results_by_day[ $day_key ] = array(
+					'day'     => $weekday_choices[ $day_key ] ?? $day_key,
+					'day_key' => $day_key,
+					'slots'   => array(),
+				);
+			}
+
+			$results_by_day[ $day_key ]['slots'] = array_merge( $results_by_day[ $day_key ]['slots'], $slots );
+		}
+
+		return array_values( $results_by_day );
+	}
+
+	/**
+	 * 時刻フォーマット検証 (HH:MM)
+	 *
+	 * @param string $time 入力時刻
+	 * @return bool
+	 */
+	private function is_valid_time( $time ) {
+		return is_string( $time ) && 1 === preg_match( '/^(?:[01]\d|2[0-3]):[0-5]\d$/', $time );
+	}
+
+	/**
+	 * Claim a slot for geocoding to enforce basic rate limiting.
+	 *
+	 * @return int Remaining seconds to wait, or 0 when allowed.
+	 */
+	private function claim_geocode_slot() {
+			$user_id    = get_current_user_id();
+			$identifier = $user_id
+				? 'user_' . $user_id
+				: 'ip_' . (
+					isset( $_SERVER['REMOTE_ADDR'] )
+						? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+						: 'anon'
+				);
+		$cache_key      = 'ai_search_schema_geocode_' . md5( $identifier );
+		$now            = time();
+		$last           = (int) get_transient( $cache_key );
+
+		if ( $last && ( $now - $last ) < self::GEOCODE_RATE_LIMIT_SECONDS ) {
+			return self::GEOCODE_RATE_LIMIT_SECONDS - ( $now - $last );
+		}
+
+		set_transient( $cache_key, $now, self::GEOCODE_RATE_LIMIT_SECONDS );
+		return 0;
+	}
+
+	/**
+	 * JSON レスポンスを出力する。テスト用にフックで挙動を差し替え可能。
+	 *
+	 * @param bool  $success 成否。
+	 * @param array $data    レスポンスデータ。
+	 * @param int   $status  ステータスコード。
+	 * @return void
+	 */
+	private function respond_json( bool $success, array $data, int $status = 200 ): void {
+		if ( has_action( 'ai_search_schema_json_responder' ) ) {
+			/**
+			 * テスト等で wp_send_json_* を差し替えたい場合に使用する。
+			 *
+			 * @param bool  $success 成否。
+			 * @param array $data    レスポンスデータ。
+			 * @param int   $status  ステータスコード。
+			 */
+			do_action( 'ai_search_schema_json_responder', $success, $data, $status );
+			return;
+		}
+
+		if ( $success ) {
+			wp_send_json_success( $data, $status );
+		}
+
+		wp_send_json_error( $data, $status );
+	}
+}

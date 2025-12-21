@@ -1,0 +1,61 @@
+{
+  "name": "aivec/ai-search-schema",
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:aivec/cptm-client.git"
+    }
+  ],
+  "require": {
+    "php": "^8.0",
+    "aivec/cptm-client": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aivec\\AiSearchSchema\\": "src/"
+    },
+    "classmap": [
+      "src/Schema",
+      "src/Adapter",
+      "src/Type"
+    ]
+  },
+  "require-dev": {
+    "wp-cli/i18n-command": "^2.2",
+    "aivec/pt-bundler": "^1.1",
+    "aivec/phpcs-wp": "^2.0",
+    "wp-coding-standards/wpcs": "^3.1",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+    "phpunit/phpunit": "^9.6",
+    "yoast/phpunit-polyfills": "^4.0",
+    "doctrine/instantiator": "^1.5",
+    "symfony/finder": "^5.4"
+  },
+  "scripts": {
+    "lint": "./vendor/bin/phpcs -ps .",
+    "lint:fix": "./vendor/bin/phpcbf -ps .",
+    "i18n:update-pos": [
+      "./vendor/bin/wp i18n make-pot . languages/messages.pot",
+      "bash bin/update-pos.sh"
+    ],
+    "i18n:make-mo": "./vendor/bin/wp i18n make-mo languages",
+    "i18n:make-json": "./vendor/bin/wp i18n make-json languages --no-purge --pretty-print",
+    "build:dev": "@composer install",
+    "build:prod": "@composer install --no-dev",
+    "test": "vendor/bin/phpunit --configuration phpunit.xml.dist",
+    "test:coverage": "vendor/bin/phpunit --configuration phpunit.xml.dist --coverage-clover build/coverage/clover.xml --coverage-html build/coverage/html --log-junit build/coverage/junit.xml",
+    "zip": "npm run zip",
+    "release": "npm run release",
+    "release:env": "bin/release-with-env.sh",
+    "changelog:generate": "php bin/generate-changelog.php",
+    "readme:sync": "php bin/sync-readmes.php"
+  },
+  "config": {
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    },
+    "platform": {
+      "php": "8.0.0"
+    }
+  }
+}

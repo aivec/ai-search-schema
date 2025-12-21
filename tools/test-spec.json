@@ -1,0 +1,1830 @@
+{
+  "version": "0.17.10",
+  "createdAt": "2024-12-09",
+  "categories": [
+    {
+      "id": "ui",
+      "name": "管理画面UI",
+      "tests": [
+        {
+          "id": "UI-001",
+          "category": "基本表示",
+          "item": "設定メニューにAEO Schemaが表示される",
+          "expected": "サイドバーに「設定 → AEO Schema」が表示される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "管理画面のサイドバーから「設定 > AEO Schema」を開く。",
+            "画面を保存または再読み込みし、サイドバーに「設定 → AEO Schema」が表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-002",
+          "category": "基本表示",
+          "item": "設定ページが正常に表示される",
+          "expected": "エラーなくページが読み込まれる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "「設定 > AEO Schema」ページの読み込み完了まで待機する。",
+            "画面を保存または再読み込みし、エラーなくページが読み込まれることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-003",
+          "category": "基本表示",
+          "item": "バリデーションサマリーパネルが表示される",
+          "expected": "ページ上部にエラー/警告カウントが表示される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "設定ページ上部にあるバリデーションサマリーパネルを確認する。",
+            "画面を保存または再読み込みし、ページ上部にエラー/警告カウントが表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-004",
+          "category": "基本表示",
+          "item": "必須フィールドに赤アスタリスクが表示される",
+          "expected": "Company name, Site URL, Phone, Addressに*マーク",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Company name/Site URL/Phone/Addressのラベルを目視確認する。",
+            "画面を保存または再読み込みし、Company name, Site URL, Phone, Addressに*マークことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-010",
+          "category": "Brand & Site",
+          "item": "会社名フィールドの入力と保存",
+          "expected": "入力した会社名が保存され、再読み込み後も表示される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "「Brand & Site」セクションでCompany nameにテスト用文字列を入力し「Save Changes」を押す。",
+            "画面を保存または再読み込みし、入力した会社名が保存され、再読み込み後も表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-011",
+          "category": "Brand & Site",
+          "item": "サイト名フィールドの入力と保存",
+          "expected": "入力したサイト名が保存される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "「Brand & Site」セクションでSite nameにテスト用文字列を入力し保存する。",
+            "画面を保存または再読み込みし、入力したサイト名が保存されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-012",
+          "category": "Brand & Site",
+          "item": "サイトURLフィールドの自動入力",
+          "expected": "サイトURLがデフォルトで入力されている",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "「Brand & Site」セクションのSite URLフィールドを開き、初期値を確認する。",
+            "画面を保存または再読み込みし、サイトURLがデフォルトで入力されていることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-013",
+          "category": "Brand & Site",
+          "item": "ロゴ画像のアップロード",
+          "expected": "メディアライブラリから画像を選択できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "ロゴのアップロードボタンを押し、メディアライブラリから画像を選択して反映する。",
+            "画面を保存または再読み込みし、メディアライブラリから画像を選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-014",
+          "category": "Brand & Site",
+          "item": "ロゴ画像のプレビュー表示",
+          "expected": "選択したロゴがプレビュー表示される",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "ロゴ選択後、プレビュー領域に画像が表示されることを確認する。",
+            "画面を保存または再読み込みし、選択したロゴがプレビュー表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-015",
+          "category": "Brand & Site",
+          "item": "ロゴ画像の削除",
+          "expected": "削除ボタンでロゴを解除できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "ロゴプレビュー近くの削除ボタンを押し、選択を解除する。",
+            "画面を保存または再読み込みし、削除ボタンでロゴを解除できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-020",
+          "category": "Schema output",
+          "item": "Entity Typeの選択",
+          "expected": "Organization/LocalBusinessを切り替えられる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Schema outputセクションでEntity Typeのプルダウンを操作し、複数の選択肢を切り替える。",
+            "画面を保存または再読み込みし、Organization/LocalBusinessを切り替えられることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-021",
+          "category": "Schema output",
+          "item": "Content modelの選択",
+          "expected": "WebPage/Article/Productを選択できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Schema outputセクションでContent modelのプルダウンを操作し、選択を変更して保存する。",
+            "画面を保存または再読み込みし、WebPage/Article/Productを選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-022",
+          "category": "Schema output",
+          "item": "LocalBusiness subtypeの選択",
+          "expected": "Restaurant/Store等のサブタイプを選択できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Schema outputセクションでLocalBusiness subtypeのプルダウンを開き、サブタイプを選ぶ。",
+            "画面を保存または再読み込みし、Restaurant/Store等のサブタイプを選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-023",
+          "category": "Schema output",
+          "item": "Schema priorityの切り替え",
+          "expected": "AVC/Externalを切り替えられる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Schema outputセクションのSchema priorityトグルを操作してAVC/Externalを切り替える。",
+            "画面を保存または再読み込みし、AVC/Externalを切り替えられることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-030",
+          "category": "Local details",
+          "item": "郵便番号の入力",
+          "expected": "郵便番号が入力・保存できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Local detailsセクションで郵便番号フィールドに値を入力して保存する。",
+            "画面を保存または再読み込みし、郵便番号が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-031",
+          "category": "Local details",
+          "item": "住所自動補完ボタン",
+          "expected": "郵便番号から住所が自動入力される",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "郵便番号を入力後「住所自動補完」ボタンを押し、住所欄への自動入力を確認する。",
+            "画面を保存または再読み込みし、郵便番号から住所が自動入力されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-032",
+          "category": "Local details",
+          "item": "都道府県プルダウン",
+          "expected": "47都道府県から選択できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Local detailsセクションの都道府県プルダウンを開き、任意の都道府県を選択する。",
+            "画面を保存または再読み込みし、47都道府県から選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-033",
+          "category": "Local details",
+          "item": "市区町村の入力",
+          "expected": "市区町村が入力・保存できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "市区町村フィールドにテスト用の市区町村名を入力し保存する。",
+            "画面を保存または再読み込みし、市区町村が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-034",
+          "category": "Local details",
+          "item": "番地・建物名の入力",
+          "expected": "詳細住所が入力・保存できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "番地・建物名フィールドにテスト用住所を入力し保存する。",
+            "画面を保存または再読み込みし、詳細住所が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-035",
+          "category": "Local details",
+          "item": "電話番号の入力",
+          "expected": "電話番号が入力・保存できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "電話番号フィールドにテスト用電話番号を入力し保存する。",
+            "画面を保存または再読み込みし、電話番号が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-036",
+          "category": "Local details",
+          "item": "緯度の手動入力",
+          "expected": "緯度が入力・保存できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "緯度フィールドに数値を入力し保存する。",
+            "画面を保存または再読み込みし、緯度が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-037",
+          "category": "Local details",
+          "item": "経度の手動入力",
+          "expected": "経度が入力・保存できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "経度フィールドに数値を入力し保存する。",
+            "画面を保存または再読み込みし、経度が入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-038",
+          "category": "Local details",
+          "item": "座標取得ボタン（Google API）",
+          "expected": "APIキー設定時、座標が自動取得される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Google APIキーを設定済みの状態で座標取得ボタンを押し、緯度経度が自動入力されるか確認する。",
+            "画面を保存または再読み込みし、APIキー設定時、座標が自動取得されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-039",
+          "category": "Local details",
+          "item": "座標取得ボタン（OSMフォールバック）",
+          "expected": "APIキー未設定時、OSMで座標取得される",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Google APIキー未設定にして座標取得ボタンを押し、OSMで座標が取得されるか確認する。",
+            "画面を保存または再読み込みし、APIキー未設定時、OSMで座標取得されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-040",
+          "category": "Local details",
+          "item": "レート制限メッセージ",
+          "expected": "10秒以内の連続実行で制限メッセージが表示される",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "座標取得ボタンを連続で押し、10秒以内のリクエストで制限メッセージが出るか確認する。",
+            "画面を保存または再読み込みし、10秒以内の連続実行で制限メッセージが表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-041",
+          "category": "Local details",
+          "item": "Google Maps APIキーの入力",
+          "expected": "APIキーが入力・保存できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Google Maps APIキー入力欄にキーを入力し保存する。",
+            "画面を保存または再読み込みし、APIキーが入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-042",
+          "category": "Local details",
+          "item": "APIキーの削除",
+          "expected": "保存済みキーを削除できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "APIキー入力欄の削除ボタンを使い、保存済みキーを削除する。",
+            "画面を保存または再読み込みし、保存済みキーを削除できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-050",
+          "category": "営業時間",
+          "item": "曜日ごとの営業時間入力",
+          "expected": "各曜日の開始・終了時間を入力できる",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "営業時間セクションで曜日ごとの開始・終了時間を設定し保存する。",
+            "画面を保存または再読み込みし、各曜日の開始・終了時間を入力できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-051",
+          "category": "営業時間",
+          "item": "定休日の設定",
+          "expected": "定休日として曜日を設定できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "営業時間セクションで定休日チェックボックスを操作し、対象曜日を休業日にする。",
+            "画面を保存または再読み込みし、定休日として曜日を設定できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-052",
+          "category": "営業時間",
+          "item": "祝日モードの選択",
+          "expected": "custom/weekday/weekendを選択できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "営業時間セクションの祝日モードプルダウンを操作し、モードを切り替えて保存する。",
+            "画面を保存または再読み込みし、custom/weekday/weekendを選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-053",
+          "category": "営業時間",
+          "item": "価格帯の選択",
+          "expected": "$〜$$$$のプルダウンから選択できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "営業時間セクションの価格帯プルダウンから任意の価格帯を選択する。",
+            "画面を保存または再読み込みし、$〜$$$$のプルダウンから選択できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-060",
+          "category": "Brand assets",
+          "item": "店舗画像のアップロード",
+          "expected": "店舗画像をアップロードできる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "店舗画像のアップロードボタンを押し、メディアライブラリから画像を追加する。",
+            "画面を保存または再読み込みし、店舗画像をアップロードできることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-061",
+          "category": "Brand assets",
+          "item": "Facebook URLの入力",
+          "expected": "FacebookページURLが入力・保存できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Facebook URL入力欄にリンクを入力し保存する。",
+            "画面を保存または再読み込みし、FacebookページURLが入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-062",
+          "category": "Brand assets",
+          "item": "X (Twitter)アカウントの入力",
+          "expected": "Xアカウントが入力・保存できる",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Xアカウント入力欄に@付きのハンドル名を入力し保存する。",
+            "画面を保存または再読み込みし、Xアカウントが入力・保存できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-063",
+          "category": "Brand assets",
+          "item": "その他SNSの追加",
+          "expected": "Instagram/LinkedIn/YouTube等を追加できる",
+          "priority": "低",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "その他SNS入力欄にInstagram等のURLを追加し保存する。",
+            "画面を保存または再読み込みし、Instagram/LinkedIn/YouTube等を追加できることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-070",
+          "category": "Page-type controls",
+          "item": "投稿タイプごとのスキーマ設定",
+          "expected": "投稿/固定ページ別にスキーマタイプを選択",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Page-type controlsカードで投稿タイプごとのスキーマ設定プルダウンを操作する。",
+            "画面を保存または再読み込みし、投稿/固定ページ別にスキーマタイプを選択ことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-071",
+          "category": "Page-type controls",
+          "item": "Breadcrumbs出力設定",
+          "expected": "タイプ別にパンくず出力ON/OFF",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Page-type controlsカードでBreadcrumbs出力ON/OFFのトグルを切り替える。",
+            "画面を保存または再読み込みし、タイプ別にパンくず出力ON/OFFことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-072",
+          "category": "Page-type controls",
+          "item": "FAQ抽出設定",
+          "expected": "FAQ自動抽出のON/OFF",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Page-type controlsカードでFAQ抽出ON/OFFスイッチを操作する。",
+            "画面を保存または再読み込みし、FAQ自動抽出のON/OFFことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-073",
+          "category": "Page-type controls",
+          "item": "優先度オーバーライド",
+          "expected": "タイプ別にAVC/External切り替え",
+          "priority": "中",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "Page-type controlsカードで優先度オーバーライドをAVC/Externalで切り替える。",
+            "画面を保存または再読み込みし、タイプ別にAVC/External切り替えことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-100",
+          "category": "保存",
+          "item": "設定の保存",
+          "expected": "Save Changesで設定が保存される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "設定画面で複数のフィールドを更新した後に「Save Changes」を押す。",
+            "画面を保存または再読み込みし、Save Changesで設定が保存されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-101",
+          "category": "保存",
+          "item": "保存成功メッセージ",
+          "expected": "保存後に成功メッセージが表示される",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "保存処理後に表示される管理画面上部の成功メッセージを確認する。",
+            "画面を保存または再読み込みし、保存後に成功メッセージが表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "UI-102",
+          "category": "バリデーション",
+          "item": "必須フィールド未入力時の警告",
+          "expected": "必須項目未入力でエラー表示",
+          "priority": "高",
+          "steps": [
+            "管理者権限のユーザーでWordPressにログインする。",
+            "必須フィールドを空にした状態で保存し、エラー表示を確認する。",
+            "画面を保存または再読み込みし、必須項目未入力でエラー表示ことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-110",
+          "category": "権限",
+          "item": "管理者でのアクセス",
+          "expected": "manage_options権限で設定ページにアクセス可",
+          "priority": "高",
+          "steps": [
+            "対象の権限（管理者/編集者）でWordPressにログインする。",
+            "管理者権限ユーザーでAEO Schema設定ページにアクセスする。",
+            "画面を保存または再読み込みし、manage_options権限で設定ページにアクセス可ことを確認する。"
+          ]
+        },
+        {
+          "id": "UI-111",
+          "category": "権限",
+          "item": "編集者でのアクセス拒否",
+          "expected": "編集者権限ではアクセス不可",
+          "priority": "高",
+          "steps": [
+            "対象の権限（管理者/編集者）でWordPressにログインする。",
+            "編集者権限ユーザーでAEO Schema設定ページURLにアクセスし、権限拒否を確認する。",
+            "画面を保存または再読み込みし、編集者権限ではアクセス不可ことを確認する。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "schema",
+      "name": "スキーマ出力",
+      "tests": [
+        {
+          "id": "SC-001",
+          "category": "基本出力",
+          "item": "JSON-LDスクリプトタグの存在",
+          "expected": "<script type=\"application/ld+json\">がhead内に存在",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、<script type=\"application/ld+json\">がhead内に存在ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-002",
+          "category": "基本出力",
+          "item": "AISクラスの付与",
+          "expected": "class=\"ai-search-schema\"が付与されている",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、class=\"ai-search-schema\"が付与されていることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-003",
+          "category": "基本出力",
+          "item": "@contextの出力",
+          "expected": "\"@context\": \"https://schema.org\"が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、\"@context\": \"https://schema.org\"が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-004",
+          "category": "基本出力",
+          "item": "@graphの統合出力",
+          "expected": "全スキーマが1つの@graphに統合されている",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、全スキーマが1つの@graphに統合されていることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-005",
+          "category": "基本出力",
+          "item": "出力が1ブロックのみ",
+          "expected": "AVC出力のJSON-LDが1つのみ存在",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、AVC出力のJSON-LDが1つのみ存在ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-010",
+          "category": "Organization",
+          "item": "@typeがOrganization",
+          "expected": "\"@type\": \"Organization\"が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、\"@type\": \"Organization\"が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-011",
+          "category": "Organization",
+          "item": "name出力",
+          "expected": "会社名が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、会社名が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-012",
+          "category": "Organization",
+          "item": "url出力",
+          "expected": "サイトURLが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、サイトURLが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-013",
+          "category": "Organization",
+          "item": "logo出力",
+          "expected": "ロゴ画像URLが出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、ロゴ画像URLが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-014",
+          "category": "Organization",
+          "item": "sameAs出力",
+          "expected": "SNSリンクが配列で出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、SNSリンクが配列で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-020",
+          "category": "LocalBusiness",
+          "item": "@typeがLocalBusiness",
+          "expected": "\"@type\": \"LocalBusiness\"または派生型が出力",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、\"@type\": \"LocalBusiness\"または派生型が出力ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-021",
+          "category": "LocalBusiness",
+          "item": "サブタイプの反映",
+          "expected": "選択したサブタイプ（Restaurant等）が出力",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、選択したサブタイプ（Restaurant等）が出力ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-022",
+          "category": "LocalBusiness",
+          "item": "address出力",
+          "expected": "PostalAddress形式で住所が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、PostalAddress形式で住所が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-023",
+          "category": "LocalBusiness",
+          "item": "geo出力",
+          "expected": "GeoCoordinatesで緯度経度が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、GeoCoordinatesで緯度経度が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-024",
+          "category": "LocalBusiness",
+          "item": "telephone出力",
+          "expected": "電話番号が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、電話番号が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-025",
+          "category": "LocalBusiness",
+          "item": "openingHoursSpecification出力",
+          "expected": "営業時間が配列で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、営業時間が配列で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-026",
+          "category": "LocalBusiness",
+          "item": "priceRange出力",
+          "expected": "価格帯（$〜$$$$）が出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、価格帯（$〜$$$$）が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-027",
+          "category": "LocalBusiness",
+          "item": "areaServed出力",
+          "expected": "サービス提供エリアが出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、サービス提供エリアが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-028",
+          "category": "LocalBusiness",
+          "item": "hasMap出力",
+          "expected": "Googleマップリンクが出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、Googleマップリンクが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-029",
+          "category": "LocalBusiness",
+          "item": "image出力",
+          "expected": "店舗画像URLが出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、店舗画像URLが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-040",
+          "category": "WebSite",
+          "item": "@typeがWebSite",
+          "expected": "\"@type\": \"WebSite\"が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、\"@type\": \"WebSite\"が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-041",
+          "category": "WebSite",
+          "item": "name出力",
+          "expected": "サイト名が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、サイト名が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-042",
+          "category": "WebSite",
+          "item": "url出力",
+          "expected": "サイトURLが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、サイトURLが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-043",
+          "category": "WebSite",
+          "item": "SearchAction出力",
+          "expected": "potentialActionにSearchActionが含まれる",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、potentialActionにSearchActionが含まれることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-050",
+          "category": "WebPage",
+          "item": "@typeがWebPage",
+          "expected": "各ページでWebPageが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、各ページでWebPageが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-051",
+          "category": "WebPage",
+          "item": "name出力",
+          "expected": "ページタイトルが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、ページタイトルが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-052",
+          "category": "WebPage",
+          "item": "url出力",
+          "expected": "ページURLが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、ページURLが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-060",
+          "category": "BreadcrumbList",
+          "item": "@typeがBreadcrumbList",
+          "expected": "パンくず設定ON時に出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、パンくず設定ON時に出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-061",
+          "category": "BreadcrumbList",
+          "item": "itemListElement配列",
+          "expected": "パンくず項目が配列で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、パンくず項目が配列で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-062",
+          "category": "BreadcrumbList",
+          "item": "position出力",
+          "expected": "各項目にpositionが1から連番で付与",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、各項目にpositionが1から連番で付与ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-070",
+          "category": "Article",
+          "item": "@typeがArticle",
+          "expected": "投稿ページでArticleが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、投稿ページでArticleが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-071",
+          "category": "Article",
+          "item": "headline出力",
+          "expected": "記事タイトルが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、記事タイトルが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-072",
+          "category": "Article",
+          "item": "datePublished出力",
+          "expected": "公開日がISO8601形式で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、公開日がISO8601形式で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-073",
+          "category": "Article",
+          "item": "dateModified出力",
+          "expected": "更新日がISO8601形式で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、更新日がISO8601形式で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-074",
+          "category": "Article",
+          "item": "author出力",
+          "expected": "著者情報がPersonで出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、著者情報がPersonで出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-075",
+          "category": "Article",
+          "item": "image出力",
+          "expected": "アイキャッチ画像が出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、アイキャッチ画像が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-080",
+          "category": "FAQPage",
+          "item": "@typeがFAQPage",
+          "expected": "FAQ設定時にFAQPageが出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、FAQ設定時にFAQPageが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-081",
+          "category": "FAQPage",
+          "item": "mainEntity配列",
+          "expected": "Question/Answer配列が出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、Question/Answer配列が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-082",
+          "category": "FAQPage",
+          "item": "Question形式",
+          "expected": "各質問がQuestion型で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、各質問がQuestion型で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-083",
+          "category": "FAQPage",
+          "item": "acceptedAnswer形式",
+          "expected": "回答がAnswer型で出力される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、回答がAnswer型で出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-090",
+          "category": "Product",
+          "item": "@typeがProduct",
+          "expected": "WooCommerce商品でProductが出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、WooCommerce商品でProductが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-091",
+          "category": "Product",
+          "item": "name出力",
+          "expected": "商品名が出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、商品名が出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-092",
+          "category": "Product",
+          "item": "offers出力",
+          "expected": "価格情報がOfferで出力される",
+          "priority": "中",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、価格情報がOfferで出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-093",
+          "category": "Product",
+          "item": "sku出力",
+          "expected": "SKUが出力される",
+          "priority": "低",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、SKUが出力されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-100",
+          "category": "競合抑止",
+          "item": "Yoast SEOスキーマ除去",
+          "expected": "AVC優先時、Yoastスキーマが除去される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、AVC優先時、Yoastスキーマが除去されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-101",
+          "category": "競合抑止",
+          "item": "Rank Mathスキーマ除去",
+          "expected": "AVC優先時、RankMathスキーマが除去される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、AVC優先時、RankMathスキーマが除去されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-102",
+          "category": "競合抑止",
+          "item": "AIOSEOスキーマ除去",
+          "expected": "AVC優先時、AIOSEOスキーマが除去される",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、AVC優先時、AIOSEOスキーマが除去されることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-103",
+          "category": "競合抑止",
+          "item": "External設定時の動作",
+          "expected": "External設定時、他プラグインスキーマが残る",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、External設定時、他プラグインスキーマが残ることを検証する。"
+          ]
+        },
+        {
+          "id": "SC-110",
+          "category": "Google検証",
+          "item": "トップページ検証",
+          "expected": "Rich Results Testでエラー0",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、Rich Results Testでエラー0ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-111",
+          "category": "Google検証",
+          "item": "投稿ページ検証",
+          "expected": "Rich Results Testでエラー0",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、Rich Results Testでエラー0ことを検証する。"
+          ]
+        },
+        {
+          "id": "SC-112",
+          "category": "Google検証",
+          "item": "LocalBusiness検証",
+          "expected": "Rich Results Testでエラー0",
+          "priority": "高",
+          "steps": [
+            "公開ページ（例: サイトトップや投稿ページ）をブラウザで表示する。",
+            "ブラウザの「ページのソースを表示」で application/ld+json のスクリプトを取得する。",
+            "JSON-LDの内容を確認し、Rich Results Testでエラー0ことを検証する。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "function",
+      "name": "プラグイン動作",
+      "tests": [
+        {
+          "id": "FN-001",
+          "category": "インストール",
+          "item": "プラグインのアップロード",
+          "expected": "ZIPファイルからインストール成功",
+          "priority": "高",
+          "steps": [
+            "WordPress管理画面の「プラグイン > 新規追加」で「プラグインのアップロード」を選択する。",
+            "配布ZIPをアップロードしてインストールを実行する。",
+            "インストール完了メッセージが表示されることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-002",
+          "category": "インストール",
+          "item": "プラグインの有効化",
+          "expected": "エラーなく有効化される",
+          "priority": "高",
+          "steps": [
+            "プラグイン一覧で「AEO Schema」を探し「有効化」をクリックする。",
+            "有効化処理が完了するまで待つ。",
+            "エラーメッセージが出ずに有効化されることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-003",
+          "category": "インストール",
+          "item": "有効化後のリダイレクト",
+          "expected": "ウィザードまたは設定画面に遷移",
+          "priority": "中",
+          "steps": [
+            "プラグインを有効化した直後の画面遷移を観察する。",
+            "ウィザードまたは設定ページに自動的にリダイレクトされるか確認する。",
+            "遷移先の画面がエラーなく開くことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-004",
+          "category": "インストール",
+          "item": "メニュー追加",
+          "expected": "設定メニューにAEO Schemaが追加される",
+          "priority": "高",
+          "steps": [
+            "プラグイン有効化後にWordPress管理画面を再読み込みする。",
+            "サイドバーの「設定」メニューを展開する。",
+            "「AEO Schema」が追加されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-010",
+          "category": "ウィザード",
+          "item": "Welcome画面表示",
+          "expected": "初回有効化時にウィザードが表示される",
+          "priority": "中",
+          "steps": [
+            "プラグイン有効化後、初回アクセスでウィザードが表示されるか確認する。",
+            "ウィザードのWelcomeステップが表示されていることを目視する。",
+            "次へ進むボタンが活性化していることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-011",
+          "category": "ウィザード",
+          "item": "Step 1 基本情報",
+          "expected": "会社名・サイト名を入力して次へ進める",
+          "priority": "中",
+          "steps": [
+            "ウィザードのStep 1で会社名とサイト名を入力する。",
+            "次へ進むボタンを押してStep 2に遷移する。",
+            "入力内容がエラーなく受理されることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-012",
+          "category": "ウィザード",
+          "item": "Step 2 サイトタイプ",
+          "expected": "サイトタイプを選択して次へ進める",
+          "priority": "中",
+          "steps": [
+            "ウィザードのStep 2でサイトタイプを選択する。",
+            "選択後に次へ進み、遷移できるか確認する。",
+            "戻るボタンで前のステップに戻れることも確認する。"
+          ]
+        },
+        {
+          "id": "FN-013",
+          "category": "ウィザード",
+          "item": "Step 3 所在地",
+          "expected": "住所を入力して次へ進める",
+          "priority": "中",
+          "steps": [
+            "ウィザードのStep 3で住所情報を入力する。",
+            "郵便番号や住所を入力後、次へ進むボタンを押す。",
+            "入力エラーなくStep 4に遷移できることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-014",
+          "category": "ウィザード",
+          "item": "Step 4 営業時間",
+          "expected": "営業時間を設定して次へ進める",
+          "priority": "中",
+          "steps": [
+            "ウィザードのStep 4で曜日ごとの営業時間を入力する。",
+            "休業日の指定や時間入力を行った後、次へ進む。",
+            "入力内容が保持されたまま完了ステップに進めることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-015",
+          "category": "ウィザード",
+          "item": "Step 5 完了",
+          "expected": "設定が保存されて完了画面が表示される",
+          "priority": "中",
+          "steps": [
+            "ウィザードのStep 5完了画面まで進む。",
+            "完了メッセージと設定保存完了の案内が表示されているか確認する。",
+            "完了ボタンで設定ページへ遷移できることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-016",
+          "category": "ウィザード",
+          "item": "インポート機能",
+          "expected": "Yoast/RankMath/AIOSEOから設定インポート",
+          "priority": "低",
+          "steps": [
+            "ウィザードでインポート機能が表示される場合、Yoast/RankMath/AIOSEOを選択する。",
+            "対象プラグインが有効な環境でインポートボタンを押す。",
+            "設定値が取り込まれたことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-020",
+          "category": "メタボックス",
+          "item": "投稿編集画面でメタボックス表示",
+          "expected": "AEO Schemaメタボックスが表示される",
+          "priority": "高",
+          "steps": [
+            "投稿編集画面（クラシックまたはブロック）を開く。",
+            "本文入力欄の下部に「AEO Schema」メタボックスが表示されるか確認する。",
+            "メタボックス内の項目が正常に操作できることを目視する。"
+          ]
+        },
+        {
+          "id": "FN-021",
+          "category": "メタボックス",
+          "item": "固定ページでメタボックス表示",
+          "expected": "固定ページでもメタボックス表示",
+          "priority": "高",
+          "steps": [
+            "固定ページ編集画面を開く。",
+            "「AEO Schema」メタボックスが表示されるか確認する。",
+            "メタボックスの入力項目が有効であることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-022",
+          "category": "メタボックス",
+          "item": "ページタイプ選択",
+          "expected": "Article/FAQPage/QAPage/WebPageを選択可",
+          "priority": "高",
+          "steps": [
+            "投稿編集画面のメタボックスでページタイプ選択を操作する。",
+            "Article/FAQPage/QAPage/WebPageを選択し、切り替え時にエラーがないか確認する。",
+            "変更を保存して再読み込みし、選択が保持されることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-023",
+          "category": "メタボックス",
+          "item": "FAQ抽出クラス設定",
+          "expected": "カスタムクラス名を設定できる",
+          "priority": "中",
+          "steps": [
+            "メタボックス内のFAQ抽出クラス設定フィールドにクラス名を入力する。",
+            "投稿を更新後、再度メタボックスを確認する。",
+            "入力したクラス名が保存されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-024",
+          "category": "メタボックス",
+          "item": "メタボックス設定の保存",
+          "expected": "投稿保存時にメタ情報も保存される",
+          "priority": "高",
+          "steps": [
+            "メタボックスの複数項目を変更した状態で投稿を更新する。",
+            "更新完了後に再読み込みし、入力値が保存されていることを確認する。",
+            "エラーメッセージが出ていないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-030",
+          "category": "ジオコーディング",
+          "item": "Google API正常動作",
+          "expected": "有効なAPIキーで座標取得成功",
+          "priority": "高",
+          "steps": [
+            "設定ページで有効なGoogle Maps APIキーを入力する。",
+            "住所情報を入力し、座標取得ボタンを押す。",
+            "緯度・経度が自動入力され、取得成功メッセージがあることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-031",
+          "category": "ジオコーディング",
+          "item": "OSMフォールバック",
+          "expected": "APIキー未設定時にOSMで取得",
+          "priority": "中",
+          "steps": [
+            "APIキー未設定の状態で住所情報を入力する。",
+            "座標取得ボタンを押し、OSMフォールバックが動作するか確認する。",
+            "緯度・経度に値が入ることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-032",
+          "category": "ジオコーディング",
+          "item": "レート制限",
+          "expected": "10秒以内の連続リクエストを制限",
+          "priority": "中",
+          "steps": [
+            "同じ住所で座標取得ボタンを10秒以内に連続クリックする。",
+            "連続実行時にレート制限メッセージが表示されるか確認する。",
+            "制限時間経過後に再度取得できることも確認する。"
+          ]
+        },
+        {
+          "id": "FN-033",
+          "category": "ジオコーディング",
+          "item": "エラーハンドリング",
+          "expected": "無効な住所でエラーメッセージ表示",
+          "priority": "中",
+          "steps": [
+            "存在しない住所や不正な値を入力して座標取得を実行する。",
+            "エラー時のレスポンスや画面メッセージを確認する。",
+            "ユーザーに原因が分かるメッセージが表示されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-040",
+          "category": "セキュリティ",
+          "item": "Nonce検証（設定保存）",
+          "expected": "不正なNonceで保存が拒否される",
+          "priority": "高",
+          "steps": [
+            "設定ページでNonceを改ざんしたリクエスト（またはNonceを削除したフォーム送信）を行う。",
+            "保存処理が拒否されるか確認する。",
+            "不正なNonceでは設定が更新されないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-041",
+          "category": "セキュリティ",
+          "item": "Nonce検証（AJAX）",
+          "expected": "不正なNonceでAJAXが拒否される",
+          "priority": "高",
+          "steps": [
+            "ブラウザの開発ツール等でAJAXリクエストのNonce値を空または不正値に変更する。",
+            "座標取得などのAJAX処理を実行し、レスポンスを確認する。",
+            "Nonceエラーが返されることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-042",
+          "category": "セキュリティ",
+          "item": "権限チェック（設定）",
+          "expected": "manage_options権限なしで拒否",
+          "priority": "高",
+          "steps": [
+            "manage_options権限を持たないユーザーで設定ページにアクセスし、保存操作を試す。",
+            "権限チェックで操作が拒否されるか確認する。",
+            "設定値が変更されていないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-043",
+          "category": "セキュリティ",
+          "item": "権限チェック（メタボックス）",
+          "expected": "edit_post権限なしで保存拒否",
+          "priority": "高",
+          "steps": [
+            "編集権限のないユーザーで投稿の更新を試みる。",
+            "AEO Schemaメタボックスの保存処理が拒否されるか確認する。",
+            "メタデータが書き換わっていないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-044",
+          "category": "セキュリティ",
+          "item": "XSS対策",
+          "expected": "入力値がサニタイズされる",
+          "priority": "高",
+          "steps": [
+            "設定ページやメタボックスにHTML/JSを入力して保存する。",
+            "表示側でエスケープされているか確認する。",
+            "XSSが発生しないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-045",
+          "category": "セキュリティ",
+          "item": "APIキー非公開",
+          "expected": "APIキーがHTMLに出力されない",
+          "priority": "高",
+          "steps": [
+            "設定画面に保存したAPIキーがHTML出力されないか確認する。",
+            "ページソースやJSON-LD内にキーが含まれていないことを確認する。",
+            "AJAXレスポンスにもキーが含まれないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-050",
+          "category": "互換性",
+          "item": "PHP 8.0対応",
+          "expected": "PHP 8.0でエラーなく動作",
+          "priority": "高",
+          "steps": [
+            "PHP 8.0環境でプラグインを有効化し、設定ページを開く。",
+            "主要機能（保存・JSON-LD出力）を簡単に確認する。",
+            "エラーが発生しないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-051",
+          "category": "互換性",
+          "item": "PHP 8.4対応",
+          "expected": "PHP 8.4でDeprecation警告なし",
+          "priority": "高",
+          "steps": [
+            "PHP 8.4環境でプラグインを実行する。",
+            "デバッグログや画面にDeprecation警告が出ないか確認する。",
+            "主要機能が正常に動作することを確認する。"
+          ]
+        },
+        {
+          "id": "FN-052",
+          "category": "互換性",
+          "item": "WordPress 6.0対応",
+          "expected": "WP 6.0で正常動作",
+          "priority": "高",
+          "steps": [
+            "WordPress 6.0環境でプラグインを有効化する。",
+            "設定ページとフロントのJSON-LD出力を確認する。",
+            "重大なエラーがないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-053",
+          "category": "互換性",
+          "item": "WordPress 6.7対応",
+          "expected": "WP 6.7で正常動作",
+          "priority": "高",
+          "steps": [
+            "WordPress 6.7環境でプラグインを有効化する。",
+            "設定ページとフロントのJSON-LD出力を確認する。",
+            "警告や互換性エラーが出ていないことを確認する。"
+          ]
+        },
+        {
+          "id": "FN-054",
+          "category": "互換性",
+          "item": "クラシックエディタ対応",
+          "expected": "クラシックエディタでメタボックス表示",
+          "priority": "中",
+          "steps": [
+            "クラシックエディタ環境で投稿編集画面を開く。",
+            "メタボックスが表示され、操作できることを確認する。",
+            "保存後に値が保持されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-055",
+          "category": "互換性",
+          "item": "Gutenberg対応",
+          "expected": "ブロックエディタでメタボックス表示",
+          "priority": "高",
+          "steps": [
+            "ブロックエディタ環境で投稿編集画面を開く。",
+            "メタボックスがサイドパネルまたは下部に表示されることを確認する。",
+            "保存後に値が保持されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-070",
+          "category": "無効化",
+          "item": "プラグイン無効化",
+          "expected": "エラーなく無効化される",
+          "priority": "高",
+          "steps": [
+            "プラグイン一覧からAEO Schemaを無効化する。",
+            "無効化処理後、エラーが出ないことを確認する。",
+            "サイトが表示できるままになっていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-071",
+          "category": "無効化",
+          "item": "無効化後のスキーマ",
+          "expected": "JSON-LD出力が停止する",
+          "priority": "高",
+          "steps": [
+            "プラグイン無効化後にフロントページを表示する。",
+            "ページソースにJSON-LDの出力がなくなっていることを確認する。",
+            "キャッシュをクリアして再確認する。"
+          ]
+        },
+        {
+          "id": "FN-072",
+          "category": "無効化",
+          "item": "再有効化時の設定復元",
+          "expected": "設定が保持されている",
+          "priority": "高",
+          "steps": [
+            "プラグインを再有効化する。",
+            "設定ページを開き、以前保存した設定値が残っているか確認する。",
+            "JSON-LD出力も復元されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-080",
+          "category": "翻訳",
+          "item": "日本語翻訳の読み込み",
+          "expected": "サイト言語が日本語時にUI翻訳される",
+          "priority": "中",
+          "steps": [
+            "サイトの言語設定を日本語に変更する。",
+            "管理画面のAEO Schema設定ページを開く。",
+            "UIテキストが日本語化されていることを確認する。"
+          ]
+        },
+        {
+          "id": "FN-081",
+          "category": "翻訳",
+          "item": "翻訳警告なし",
+          "expected": "WP 6.7+で翻訳読み込み警告が出ない",
+          "priority": "高",
+          "steps": [
+            "WordPress 6.7以上の環境でプラグインを有効化する。",
+            "管理画面やログに翻訳読み込み警告が出ないか確認する。",
+            "AEO SchemaのUIが問題なく表示されることを確認する。"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ux",
+      "name": "UXテスト",
+      "tests": [
+        {
+          "id": "UX-001",
+          "category": "初回体験",
+          "item": "初回有効化の印象",
+          "expected": "ウィザードで設定開始が明確",
+          "priority": "高",
+          "steps": [
+            "プラグインを有効化し、初回アクセスで表示される画面を確認する。",
+            "ウィザード開始動線が分かりやすいかを評価する。",
+            "不安を与える要素がないか簡単にメモする。"
+          ]
+        },
+        {
+          "id": "UX-002",
+          "category": "初回体験",
+          "item": "設定完了までの所要時間",
+          "expected": "5分以内で基本設定が完了",
+          "priority": "高",
+          "steps": [
+            "ウィザードを最初から最後まで操作する。",
+            "各ステップの入力にかかる時間を計測する。",
+            "5分以内に基本設定が完了するか確認する。"
+          ]
+        },
+        {
+          "id": "UX-003",
+          "category": "初回体験",
+          "item": "必須入力項目の明確さ",
+          "expected": "何を入力すべきか迷わない",
+          "priority": "高",
+          "steps": [
+            "必須入力フィールドを順に確認する。",
+            "どの値が必要か迷わず理解できるかを評価する。",
+            "曖昧な箇所はメモしておく。"
+          ]
+        },
+        {
+          "id": "UX-010",
+          "category": "ナビゲーション",
+          "item": "設定画面の構造",
+          "expected": "セクション分けが論理的",
+          "priority": "中",
+          "steps": [
+            "設定画面全体のセクション構造を俯瞰して確認する。",
+            "情報が論理的な順序で並んでいるか評価する。",
+            "必要に応じてスクリーンショットを取得する。"
+          ]
+        },
+        {
+          "id": "UX-011",
+          "category": "ナビゲーション",
+          "item": "カード型UIの視認性",
+          "expected": "各設定グループが識別しやすい",
+          "priority": "中",
+          "steps": [
+            "カード型UIのタイトルや境界線を目視確認する。",
+            "設定グループが識別しやすいか評価する。",
+            "視認性が低い場合は改善案をメモする。"
+          ]
+        },
+        {
+          "id": "UX-020",
+          "category": "入力体験",
+          "item": "プレースホルダーの有用性",
+          "expected": "入力例が参考になる",
+          "priority": "中",
+          "steps": [
+            "入力フィールドに用意されたプレースホルダーを確認する。",
+            "例が実際の入力の助けになるか評価する。",
+            "不足している場合は具体的な例をメモする。"
+          ]
+        },
+        {
+          "id": "UX-021",
+          "category": "入力体験",
+          "item": "入力エラー時のフィードバック",
+          "expected": "エラー箇所と理由が明確",
+          "priority": "高",
+          "steps": [
+            "必須入力を空にして保存を試し、エラーメッセージを確認する。",
+            "どのフィールドで何が問題か即座に分かるか評価する。",
+            "メッセージの改善点があればメモする。"
+          ]
+        },
+        {
+          "id": "UX-022",
+          "category": "入力体験",
+          "item": "保存成功のフィードバック",
+          "expected": "保存完了が明確にわかる",
+          "priority": "高",
+          "steps": [
+            "設定を保存し、画面上部の通知を確認する。",
+            "成功メッセージが明確かどうか評価する。",
+            "通知が見落とされない位置/デザインかも確認する。"
+          ]
+        },
+        {
+          "id": "UX-023",
+          "category": "入力体験",
+          "item": "住所補完の使いやすさ",
+          "expected": "郵便番号から簡単に住所入力",
+          "priority": "中",
+          "steps": [
+            "郵便番号入力から住所補完ボタンまでの動線を操作する。",
+            "操作手順が直感的か、結果がすぐ分かるか評価する。",
+            "ストレスを感じる要素があれば記録する。"
+          ]
+        },
+        {
+          "id": "UX-024",
+          "category": "入力体験",
+          "item": "座標取得の使いやすさ",
+          "expected": "ボタン1つで座標取得できる",
+          "priority": "中",
+          "steps": [
+            "座標取得ボタンを押し、入力から結果表示までの流れを確認する。",
+            "待ち時間やレスポンスの分かりやすさを評価する。",
+            "改善点があればメモする。"
+          ]
+        },
+        {
+          "id": "UX-030",
+          "category": "ガイダンス",
+          "item": "バリデーションサマリーの有用性",
+          "expected": "エラー/警告の概要がわかる",
+          "priority": "中",
+          "steps": [
+            "バリデーションサマリーの表示位置と文言を確認する。",
+            "エラー/警告の概要が一目で分かるか評価する。",
+            "詳細にアクセスしやすいかもチェックする。"
+          ]
+        },
+        {
+          "id": "UX-031",
+          "category": "ガイダンス",
+          "item": "Rich Results Testリンク",
+          "expected": "検証ツールにすぐアクセスできる",
+          "priority": "中",
+          "steps": [
+            "設定画面にあるRich Results Testリンクをクリックする。",
+            "新しいタブでテストツールが開くか確認する。",
+            "すぐに検証に進める導線かを評価する。"
+          ]
+        },
+        {
+          "id": "UX-050",
+          "category": "パフォーマンス",
+          "item": "設定画面の読み込み速度",
+          "expected": "3秒以内に表示される",
+          "priority": "中",
+          "steps": [
+            "設定ページを初回表示する際の読み込み時間を計測する。",
+            "3秒以内に主要UIが表示されるか確認する。",
+            "遅い場合はネットワーク/サーバー状況も記録する。"
+          ]
+        },
+        {
+          "id": "UX-051",
+          "category": "パフォーマンス",
+          "item": "保存処理の速度",
+          "expected": "保存が2秒以内に完了",
+          "priority": "中",
+          "steps": [
+            "複数フィールドを編集し、保存ボタンを押す。",
+            "保存完了までの時間を測定する。",
+            "2秒以内で完了するか評価する。"
+          ]
+        },
+        {
+          "id": "UX-060",
+          "category": "一貫性",
+          "item": "WordPress UIとの整合性",
+          "expected": "WP管理画面のデザインに馴染む",
+          "priority": "中",
+          "steps": [
+            "AEO SchemaのUIとWordPressデフォルトUIを見比べる。",
+            "ボタンやラベルのスタイルが一貫しているか確認する。",
+            "違和感があれば具体的にメモする。"
+          ]
+        },
+        {
+          "id": "UX-070",
+          "category": "エラー回復",
+          "item": "入力ミス時の復旧",
+          "expected": "エラー修正後に再保存できる",
+          "priority": "高",
+          "steps": [
+            "入力ミスを意図的に行いエラーを出す。",
+            "修正後に再保存して正常に進むか確認する。",
+            "復旧がスムーズに行えるか評価する。"
+          ]
+        },
+        {
+          "id": "UX-080",
+          "category": "総合評価",
+          "item": "設定の分かりやすさ（1-5点）",
+          "expected": "4点以上",
+          "priority": "高",
+          "steps": [
+            "全体の設定フローを一通り体験した後、分かりやすさを1-5点で評価する。",
+            "4点以上を目指せるか主観で判断する。",
+            "理由や改善点をメモする。"
+          ]
+        },
+        {
+          "id": "UX-081",
+          "category": "総合評価",
+          "item": "他プラグインとの比較優位性",
+          "expected": "Yoast/RankMathより設定が簡単",
+          "priority": "中",
+          "steps": [
+            "同種のプラグイン（Yoast/RankMath）と比較しながら設定作業を行う。",
+            "AEO Schemaの方が簡単かどうか主観評価する。",
+            "優れている点・劣っている点を簡潔に記録する。"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1590 @@
+/*!
+ * Wizard UI styles for AVC AEO Schema
+ */
+
+// Color tokens (matching admin.scss)
+$color-surface: #ffffff;
+$color-border: #e4e8f0;
+$color-border-strong: #d4dae6;
+$color-muted: #5f6b7c;
+$color-soft: #f8fafc;
+$color-primary: #4f46e5;
+$color-primary-dark: #4338ca;
+$color-primary-light: #eef2ff;
+$color-accent: #1d2671;
+$color-success: #22c55e;
+$color-success-light: #dcfce7;
+$color-danger: #ef4444;
+$color-warning: #f59e0b;
+$shadow-card: 0 16px 40px rgba(15, 23, 42, 0.12);
+$shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+// Layout helpers
+$radius-card: 16px;
+$radius-field: 8px;
+$radius-button: 8px;
+$gap-card: 24px;
+$wizard-max-width: 800px;
+
+// ----------------------------------------
+// Wizard Container
+// ----------------------------------------
+.avc-wizard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  &__container {
+    max-width: $wizard-max-width;
+    margin: 0 auto;
+  }
+
+  // Header
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  &__branding {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    object-fit: contain;
+  }
+
+  &__logo-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+  }
+
+  // Language Switcher
+  &__lang {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: $color-surface;
+    border-radius: $radius-field;
+    padding: 6px 12px;
+    box-shadow: $shadow-sm;
+    font-size: 13px;
+
+    a {
+      color: $color-muted;
+      text-decoration: none;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+
+      &:hover {
+        background: $color-soft;
+        color: $color-primary;
+      }
+
+      &.active {
+        background: $color-primary;
+        color: #fff;
+      }
+    }
+  }
+
+  &__lang-sep {
+    color: $color-border;
+  }
+
+  &__lang-switcher {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: $color-surface;
+    border-radius: $radius-field;
+    padding: 4px;
+    box-shadow: $shadow-sm;
+  }
+
+  &__lang-btn {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    color: $color-muted;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $color-soft;
+    }
+
+    &--active {
+      background: $color-primary;
+      color: #fff;
+
+      &:hover {
+        background: $color-primary-dark;
+      }
+    }
+  }
+
+  // Main Content Card
+  &__content {
+    background: $color-surface;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    overflow: hidden;
+  }
+
+  // Main Content Area
+  &__main {
+    max-width: $wizard-max-width;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  // Footer
+  &__footer {
+    text-align: center;
+    margin-top: 24px;
+    color: $color-muted;
+    font-size: 13px;
+    max-width: $wizard-max-width;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;
+
+    a {
+      color: $color-primary;
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__footer-text {
+    margin: 0;
+  }
+}
+
+// ----------------------------------------
+// Progress Bar (BEM style - .avc-wizard__progress)
+// ----------------------------------------
+.avc-wizard__progress {
+  display: flex;
+  justify-content: center;
+  padding: 24px 32px;
+  background: $color-soft;
+  border-bottom: 1px solid $color-border;
+  overflow-x: auto;
+}
+
+.avc-wizard__steps {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 0;
+}
+
+.avc-wizard__step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  min-width: 100px;
+  padding: 0 16px;
+
+  // コネクターライン
+  &::after {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: calc(50% + 20px);
+    width: calc(100% - 40px);
+    height: 2px;
+    background: $color-border;
+  }
+
+  &:last-child::after {
+    display: none;
+  }
+
+  // 完了済みステップ
+  &--complete::after {
+    background: $color-success;
+  }
+
+  &--complete &-num {
+    background: $color-success;
+    color: #fff;
+  }
+
+  &--complete &-label {
+    color: $color-success;
+  }
+
+  // 現在のステップ
+  &--current &-num {
+    background: $color-primary;
+    color: #fff;
+    box-shadow: 0 0 0 4px $color-primary-light;
+  }
+
+  &--current &-label {
+    color: $color-primary;
+    font-weight: 500;
+  }
+
+  // 完了＋現在のステップ
+  &--current.avc-wizard__step--complete &-num {
+    background: $color-success;
+    box-shadow: 0 0 0 4px $color-success-light;
+  }
+}
+
+.avc-wizard__step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: $color-border;
+  color: $color-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.avc-wizard__step-label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: $color-muted;
+  text-align: center;
+  white-space: nowrap;
+}
+
+// ----------------------------------------
+// Progress Bar (Legacy style - .avc-wizard-progress)
+// ----------------------------------------
+.avc-wizard-progress {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 32px;
+  background: $color-soft;
+  border-bottom: 1px solid $color-border;
+  overflow-x: auto;
+
+  &__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    flex: 1;
+    min-width: 80px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      width: 100%;
+      height: 2px;
+      background: $color-border;
+    }
+
+    &:last-child::after {
+      display: none;
+    }
+
+    &--completed::after {
+      background: $color-success;
+    }
+
+    &--active::after {
+      background: linear-gradient(90deg, $color-success 0%, $color-border 100%);
+    }
+  }
+
+  &__number {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: $color-border;
+    color: $color-muted;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s;
+
+    .avc-wizard-progress__step--completed & {
+      background: $color-success;
+      color: #fff;
+    }
+
+    .avc-wizard-progress__step--active & {
+      background: $color-primary;
+      color: #fff;
+      box-shadow: 0 0 0 4px $color-primary-light;
+    }
+  }
+
+  &__label {
+    margin-top: 8px;
+    font-size: 12px;
+    color: $color-muted;
+    text-align: center;
+    white-space: nowrap;
+
+    .avc-wizard-progress__step--active & {
+      color: $color-primary;
+      font-weight: 500;
+    }
+
+    .avc-wizard-progress__step--completed & {
+      color: $color-success;
+    }
+  }
+}
+
+// ----------------------------------------
+// Step Content
+// ----------------------------------------
+.avc-wizard-step {
+  padding: 40px 32px;
+
+  &__header {
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  &__title {
+    font-size: 28px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+
+  &__description {
+    font-size: 16px;
+    color: $color-muted;
+    margin: 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__hint {
+    font-size: 14px;
+    color: $color-muted;
+    margin: 8px auto 0;
+    max-width: 500px;
+
+    code {
+      background: $color-soft;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
+      font-size: 13px;
+      color: $color-primary;
+    }
+  }
+
+  &__content {
+    margin-bottom: 32px;
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid $color-border;
+  }
+
+  &__footer-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+}
+
+// ----------------------------------------
+// Welcome Step
+// ----------------------------------------
+.avc-wizard-welcome {
+  text-align: center;
+  padding: 20px 0;
+
+  &__icon {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 16px;
+  }
+
+  &__description {
+    font-size: 18px;
+    color: $color-muted;
+    margin: 0 0 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__preview {
+    margin-bottom: 32px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  &__skip {
+    a {
+      color: $color-muted;
+      text-decoration: none;
+      font-size: 14px;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
+  }
+}
+
+// Preview Card
+.avc-wizard-preview-card {
+  max-width: 400px;
+  margin: 0 auto;
+  background: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  overflow: hidden;
+  box-shadow: $shadow-sm;
+  text-align: left;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: $color-soft;
+    border-bottom: 1px solid $color-border;
+    font-size: 13px;
+    color: $color-muted;
+  }
+
+  &__content {
+    padding: 16px;
+  }
+
+  &__result-title {
+    font-size: 18px;
+    color: #1a0dab;
+    margin-bottom: 4px;
+  }
+
+  &__result-meta {
+    font-size: 13px;
+    color: $color-muted;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+  }
+
+  &__stars {
+    color: #f59e0b;
+    letter-spacing: -2px;
+  }
+
+  &__result-status {
+    font-size: 13px;
+    color: $color-muted;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__open {
+    color: $color-success;
+    font-weight: 500;
+  }
+}
+
+// ----------------------------------------
+// Buttons
+// ----------------------------------------
+.avc-wizard-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border: 2px solid transparent;
+  border-radius: $radius-button;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+
+  svg {
+    flex-shrink: 0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &--primary {
+    background: $color-primary;
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: $color-primary-dark;
+    }
+  }
+
+  &--secondary {
+    background: $color-soft;
+    color: #1e293b;
+    border-color: $color-border;
+
+    &:hover:not(:disabled) {
+      background: #fff;
+      border-color: $color-border-strong;
+    }
+  }
+
+  &--outline {
+    background: transparent;
+    color: $color-primary;
+    border-color: $color-primary;
+
+    &:hover:not(:disabled) {
+      background: $color-primary-light;
+    }
+  }
+
+  &--text {
+    background: transparent;
+    color: $color-muted;
+    padding: 8px 12px;
+
+    &:hover:not(:disabled) {
+      color: $color-primary;
+    }
+  }
+
+  &--large {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
+
+  &--small {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+// ----------------------------------------
+// Form Elements
+// ----------------------------------------
+.avc-wizard-form {
+  max-width: 500px;
+  margin: 0 auto;
+
+  &__field {
+    margin-bottom: 24px;
+
+    &--half {
+      flex: 1;
+      min-width: 150px;
+    }
+  }
+
+  &__row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  &__label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    margin-bottom: 8px;
+  }
+
+  &__required {
+    color: $color-danger;
+  }
+
+  &__input,
+  &__textarea,
+  &__select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid $color-border;
+    border-radius: $radius-field;
+    font-size: 15px;
+    background: $color-surface;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      outline: none;
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px $color-primary-light;
+    }
+
+    &:disabled {
+      background: $color-soft;
+      color: $color-muted;
+    }
+  }
+
+  &__select {
+    position: relative;
+    z-index: 10;
+
+    &:focus {
+      z-index: 100;
+    }
+  }
+
+  &__field {
+    position: relative;
+
+    &:focus-within {
+      z-index: 50;
+    }
+  }
+
+  &__textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  &__hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    font-size: 13px;
+    color: $color-muted;
+
+    &--success {
+      color: $color-success;
+
+      svg {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  &__section {
+    background: $color-soft;
+    border-radius: $radius-card;
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+
+  &__section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 16px;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+}
+
+// Logo Upload
+.avc-wizard-logo-upload {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  &__preview {
+    width: 120px;
+    height: 80px;
+    border: 2px dashed $color-border;
+    border-radius: $radius-field;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  &__placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    color: $color-muted;
+    font-size: 11px;
+    text-align: center;
+    padding: 8px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}
+
+// ----------------------------------------
+// Type Selection Grid
+// ----------------------------------------
+.avc-wizard-type-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.avc-wizard-type-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 20px;
+  background: $color-surface;
+  border: 2px solid $color-border;
+  border-radius: $radius-card;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+
+  input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &:hover {
+    border-color: $color-primary;
+  }
+
+  &--selected {
+    border-color: $color-primary;
+    background: $color-primary-light;
+  }
+
+  &__icon {
+    width: 48px;
+    height: 48px;
+    background: $color-soft;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: $color-primary;
+
+    .avc-wizard-type-card--selected & {
+      background: $color-primary;
+      color: #fff;
+    }
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+  }
+
+  &__description {
+    font-size: 13px;
+    color: $color-muted;
+    margin-bottom: 4px;
+  }
+
+  &__examples {
+    font-size: 12px;
+    color: #94a3b8;
+    font-style: italic;
+  }
+
+  &__check {
+    width: 24px;
+    height: 24px;
+    border: 2px solid $color-border;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: transparent;
+
+    .avc-wizard-type-card--selected & {
+      background: $color-primary;
+      border-color: $color-primary;
+      color: #fff;
+    }
+  }
+}
+
+// ----------------------------------------
+// Info Box
+// ----------------------------------------
+.avc-wizard-info-box {
+  display: flex;
+  gap: 12px;
+  padding: 16px;
+  background: $color-primary-light;
+  border-radius: $radius-field;
+  margin-bottom: 24px;
+
+  &--info {
+    background: #eff6ff;
+  }
+
+  &__icon {
+    color: $color-primary;
+    flex-shrink: 0;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: 15px;
+    color: #1e293b;
+    margin: 0 0 8px;
+  }
+
+  &__text {
+    font-size: 14px;
+    color: $color-muted;
+    margin: 0 0 8px;
+    line-height: 1.6;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    &--secondary {
+      font-size: 13px;
+      color: #9ca3af;
+    }
+  }
+}
+
+// ----------------------------------------
+// Instructions
+// ----------------------------------------
+.avc-wizard-instructions {
+  background: $color-soft;
+  border-radius: $radius-field;
+  padding: 20px;
+  margin-top: 24px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+
+  &__list {
+    margin: 0 0 16px;
+    padding-left: 24px;
+    font-size: 14px;
+    color: $color-muted;
+    line-height: 1.8;
+
+    li {
+      margin-bottom: 4px;
+    }
+  }
+}
+
+// ----------------------------------------
+// Geocoding
+// ----------------------------------------
+.avc-wizard-geocoding {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid $color-border;
+
+  button {
+    margin-top: 12px;
+  }
+}
+
+// ----------------------------------------
+// Business Hours
+// ----------------------------------------
+.avc-wizard-hours-quick {
+  background: $color-soft;
+  border-radius: $radius-card;
+  padding: 20px;
+  margin-bottom: 24px;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.avc-wizard-hours-table {
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  overflow: visible;
+
+  &__header {
+    display: flex;
+    background: $color-soft;
+    font-size: 13px;
+    font-weight: 500;
+    color: $color-muted;
+    border-bottom: 1px solid $color-border;
+    border-radius: $radius-card $radius-card 0 0;
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid $color-border;
+    position: relative;
+    z-index: 1;
+
+    &:last-child {
+      border-bottom: none;
+      border-radius: 0 0 $radius-card $radius-card;
+    }
+
+    &:nth-child(even) {
+      background: $color-soft;
+    }
+
+    &:focus-within {
+      z-index: 100;
+    }
+
+    select {
+      position: relative;
+      z-index: 10;
+
+      &:focus {
+        z-index: 100;
+      }
+    }
+  }
+
+  &__col {
+    padding: 12px 16px;
+
+    &--day {
+      width: 120px;
+      flex-shrink: 0;
+    }
+
+    &--status {
+      width: 80px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+
+    &--time {
+      flex: 1;
+      min-width: 100px;
+    }
+  }
+
+  &__day-name {
+    font-weight: 500;
+    color: #1e293b;
+  }
+}
+
+// Toggle Switch
+.avc-wizard-toggle {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  &__slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: $color-border;
+    border-radius: 12px;
+    transition: 0.3s;
+
+    &::before {
+      position: absolute;
+      content: '';
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+      box-shadow: $shadow-sm;
+    }
+  }
+
+  input:checked + &__slider {
+    background: $color-success;
+  }
+
+  input:checked + &__slider::before {
+    transform: translateX(20px);
+  }
+}
+
+// Hours Preview
+.avc-wizard-hours-preview {
+  margin-top: 24px;
+  padding: 20px;
+  background: $color-soft;
+  border-radius: $radius-card;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+  }
+
+  &__content {
+    font-size: 14px;
+    color: $color-muted;
+  }
+
+  &__empty {
+    font-style: italic;
+    margin: 0;
+  }
+}
+
+// ----------------------------------------
+// Complete Step
+// ----------------------------------------
+.avc-wizard-complete {
+  text-align: center;
+  padding: 20px 0;
+
+  &__icon {
+    margin-bottom: 24px;
+  }
+
+  &__title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 16px;
+  }
+
+  &__description {
+    font-size: 18px;
+    color: $color-muted;
+    margin: 0 0 32px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    margin-top: 32px;
+  }
+}
+
+// Summary Card
+.avc-wizard-summary {
+  max-width: 500px;
+  margin: 0 auto 24px;
+  background: $color-soft;
+  border-radius: $radius-card;
+  padding: 24px;
+  text-align: left;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 16px;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+
+  &__section {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid $color-border;
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+  }
+
+  &__section-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: $color-primary;
+    margin: 0 0 8px;
+  }
+
+  &__list {
+    margin: 0;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 6px 0;
+    font-size: 14px;
+
+    dt {
+      color: $color-muted;
+    }
+
+    dd {
+      margin: 0;
+      color: #1e293b;
+      font-weight: 500;
+      text-align: right;
+    }
+  }
+}
+
+// Schema Preview
+.avc-wizard-schema-preview {
+  max-width: 500px;
+  margin: 0 auto 24px;
+  background: #1e293b;
+  border-radius: $radius-card;
+  padding: 20px;
+  text-align: left;
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0 0 12px;
+  }
+
+  &__content {
+    button {
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  &__code {
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    color: #94a3b8;
+    overflow-x: auto;
+    margin-top: 12px;
+  }
+}
+
+// Next Steps
+.avc-wizard-next-steps {
+  max-width: 500px;
+  margin: 0 auto;
+  text-align: left;
+
+  &__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 16px;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 0;
+      font-size: 14px;
+      color: $color-muted;
+
+      svg {
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+
+      a {
+        color: $color-primary;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// ----------------------------------------
+// Modal
+// ----------------------------------------
+.avc-wizard-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  &__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  &__content {
+    position: relative;
+    background: $color-surface;
+    border-radius: $radius-card;
+    box-shadow: $shadow-card;
+    max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+  }
+
+  &__close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: $color-soft;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $color-muted;
+    transition: all 0.2s;
+
+    &:hover {
+      background: $color-border;
+      color: #1e293b;
+    }
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0 0 12px;
+    padding-right: 40px;
+
+    svg {
+      color: $color-primary;
+    }
+  }
+
+  &__description {
+    font-size: 14px;
+    color: $color-muted;
+    margin: 0 0 24px;
+  }
+
+  &__footer {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid $color-border;
+    text-align: center;
+  }
+}
+
+// Import Sources
+.avc-wizard-import-sources {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.avc-wizard-import-source {
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  padding: 16px;
+
+  &--detected {
+    border-color: $color-success;
+    background: $color-success-light;
+  }
+
+  &--not-found {
+    opacity: 0.6;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__name {
+    font-weight: 600;
+    color: #1e293b;
+  }
+
+  &__preview {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      padding: 4px 0;
+    }
+  }
+
+  &__key {
+    color: $color-muted;
+  }
+
+  &__value {
+    color: #1e293b;
+    font-weight: 500;
+  }
+
+  &__actions {
+    margin-top: 12px;
+    text-align: right;
+  }
+
+  &__not-found {
+    margin-top: 8px;
+    font-size: 13px;
+    color: $color-muted;
+    font-style: italic;
+  }
+}
+
+// ----------------------------------------
+// Responsive
+// ----------------------------------------
+@media (max-width: 640px) {
+  .avc-wizard {
+    padding: 20px 16px;
+
+    &__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .avc-wizard-step {
+    padding: 24px 20px;
+
+    &__title {
+      font-size: 24px;
+    }
+
+    &__footer {
+      flex-direction: column;
+      gap: 12px;
+
+      .avc-wizard-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  .avc-wizard-welcome {
+    &__title {
+      font-size: 26px;
+    }
+
+    &__description {
+      font-size: 16px;
+    }
+  }
+
+  .avc-wizard-progress {
+    padding: 16px;
+    gap: 4px;
+
+    &__label {
+      display: none;
+    }
+  }
+
+  .avc-wizard-type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .avc-wizard-hours-table {
+    &__col--day {
+      width: 80px;
+    }
+
+    &__col--time {
+      min-width: 80px;
+    }
+  }
+
+  .avc-wizard-form {
+    &__row {
+      flex-direction: column;
+    }
+  }
+}

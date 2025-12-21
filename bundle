@@ -1,0 +1,116 @@
+#!/usr/bin/env php
+<?php
+declare(strict_types=1);
+
+chdir(__DIR__);
+
+const SLUG = 'avc-aeo-schema';
+const BUNDLE_DIR = 'bundled';
+const DIST_DIR = 'dist';
+
+runOrFail('composer build:prod');
+runOrFail('npm run build');
+
+$version = resolveVersionLabel();
+if (!is_dir(BUNDLE_DIR)) {
+    mkdir(BUNDLE_DIR, 0777, true);
+}
+
+$archiveName = sprintf('AVC-AEO-Schema-%s.zip', $version);
+$archivePath = BUNDLE_DIR . DIRECTORY_SEPARATOR . $archiveName;
+
+createZipFromDist(DIST_DIR, SLUG, $archivePath);
+
+$readmeSource = DIST_DIR . DIRECTORY_SEPARATOR . 'readme.txt';
+$readmeDest = BUNDLE_DIR . DIRECTORY_SEPARATOR . 'readme.txt';
+if (is_file($readmeSource)) {
+    copy($readmeSource, $readmeDest);
+} else {
+    fwrite(STDERR, "[bundle] 注意: dist/readme.txt が見つかりませんでした。\n");
+}
+
+fwrite(STDOUT, "[bundle] Created {$archivePath}\n");
+
+exit(0);
+
+function runOrFail(string $command): void
+{
+    passthru($command, $exitCode);
+    if ($exitCode !== 0) {
+        fwrite(STDERR, "[bundle] Command failed: {$command}\n");
+        exit($exitCode);
+    }
+}
+
+function resolveVersionLabel(): string
+{
+    $tag = trim(shell_exec('git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*" 2>/dev/null') ?? '');
+    $head = trim(shell_exec('git rev-parse --short HEAD 2>/dev/null') ?? '');
+
+    if ($tag !== '') {
+        $tagCommit = trim(shell_exec(sprintf('git rev-list -n 1 %s 2>/dev/null', escapeshellarg($tag))) ?? '');
+        $headCommit = trim(shell_exec('git rev-parse HEAD 2>/dev/null') ?? '');
+        if ($tagCommit !== '' && $headCommit !== '' && $tagCommit !== $headCommit) {
+            $suffix = $head !== '' ? $head : substr($headCommit, 0, 7);
+            return "{$tag}-{$suffix}";
+        }
+        return $tag;
+    }
+
+    if ($head !== '') {
+        return "v1.0.0-{$head}";
+    }
+
+    return 'v1.0.0-unknown';
+}
+
+function createZipFromDist(string $sourceDir, string $slug, string $destination): void
+{
+    if (!is_dir($sourceDir)) {
+        fwrite(STDERR, "[bundle] Source directory not found: {$sourceDir}\n");
+        exit(1);
+    }
+
+    $zip = new ZipArchive();
+    if ($zip->open($destination, ZipArchive::CREATE | ZipArchive::OVERWRITE) !== true) {
+        fwrite(STDERR, "[bundle] Unable to open destination zip: {$destination}\n");
+        exit(1);
+    }
+
+    $rootPrefix = $slug !== '' ? $slug . '/' : '';
+
+    $iterator = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($sourceDir, FilesystemIterator::SKIP_DOTS),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+
+    foreach ($iterator as $fileInfo) {
+        /** @var SplFileInfo $fileInfo */
+        $path = $fileInfo->getPathname();
+        $relativePath = substr($path, strlen($sourceDir) + 1);
+        if ($relativePath === false) {
+            continue;
+        }
+        $relativePath = str_replace('\\', '/', $relativePath);
+        $targetPath = $rootPrefix . $relativePath;
+
+        if ($fileInfo->isDir()) {
+            $zip->addEmptyDir($targetPath);
+            continue;
+        }
+
+        if (!$zip->addFile($path, $targetPath)) {
+            $zip->close();
+            fwrite(STDERR, "[bundle] Failed to add file: {$path}\n");
+            exit(1);
+        }
+
+        $zip->setExternalAttributesName(
+            $targetPath,
+            ZipArchive::OPSYS_UNIX,
+            $fileInfo->getPerms()
+        );
+    }
+
+    $zip->close();
+}
