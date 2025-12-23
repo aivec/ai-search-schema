@@ -962,10 +962,61 @@
     }
   }
 
+  // llms.txt save button handler
+  function initLlmsTxtSave() {
+    const $button = $('#ais-save-llms-txt');
+    const $spinner = $button.parent().find('.spinner');
+    const $status = $button.parent().find('.ais-llms-txt-status');
+    const $textarea = $('#ais-llms-txt-content');
+
+    if (!$button.length || !$textarea.length) {
+      return;
+    }
+
+    $button.on('click', function (e) {
+      e.preventDefault();
+
+      const originalText = $button.text();
+      $button.prop('disabled', true).text(aisSettings.i18nLlmsTxtSaving || 'Saving...');
+      $spinner.addClass('is-active');
+      $status.text('');
+
+      $.ajax({
+        url: aisSettings.ajaxUrl,
+        type: 'POST',
+        data: {
+          action: 'ai_search_schema_save_llms_txt',
+          nonce: aisSettings.llmsTxtSaveNonce,
+          content: $textarea.val()
+        },
+        success: function (response) {
+          if (response.success) {
+            $status.text(aisSettings.i18nLlmsTxtSaved || 'Saved!').css('color', '#46b450');
+            setTimeout(function () {
+              $status.fadeOut(function () {
+                $status.text('').show().css('color', '');
+              });
+            }, 2000);
+          } else {
+            $status.text(response.data?.message || 'Failed to save').css('color', '#dc3232');
+          }
+        },
+        error: function () {
+          $status.text('Failed to save llms.txt').css('color', '#dc3232');
+        },
+        complete: function () {
+          $button.prop('disabled', false).text(aisSettings.i18nLlmsTxtSave || originalText);
+          $spinner.removeClass('is-active');
+        }
+      });
+    });
+  }
+
   // llms.txt regenerate button handler
   function initLlmsTxtRegenerate() {
     const $button = $('#ais-regenerate-llms-txt');
-    const $spinner = $button.siblings('.spinner');
+    const $spinner = $button.parent().find('.spinner');
+    const $status = $button.parent().find('.ais-llms-txt-status');
     const $textarea = $('#ais-llms-txt-content');
 
     if (!$button.length || !$textarea.length) {
@@ -978,6 +1029,7 @@
       const originalText = $button.text();
       $button.prop('disabled', true).text(aisSettings.i18nLlmsTxtRegenerating || 'Regenerating...');
       $spinner.addClass('is-active');
+      $status.text('');
 
       $.ajax({
         url: aisSettings.ajaxUrl,
@@ -989,12 +1041,18 @@
         success: function (response) {
           if (response.success && response.data && response.data.content) {
             $textarea.val(response.data.content);
+            $status.text(response.data.message || 'Regenerated!').css('color', '#46b450');
+            setTimeout(function () {
+              $status.fadeOut(function () {
+                $status.text('').show().css('color', '');
+              });
+            }, 2000);
           } else {
-            alert(response.data?.message || 'Failed to regenerate llms.txt');
+            $status.text(response.data?.message || 'Failed to regenerate').css('color', '#dc3232');
           }
         },
         error: function () {
-          alert('Failed to regenerate llms.txt');
+          $status.text('Failed to regenerate llms.txt').css('color', '#dc3232');
         },
         complete: function () {
           $button.prop('disabled', false).text(aisSettings.i18nLlmsTxtRegenerate || originalText);
@@ -1005,6 +1063,7 @@
   }
 
   $(document).ready(function () {
+    initLlmsTxtSave();
     initLlmsTxtRegenerate();
   });
 })(jQuery);

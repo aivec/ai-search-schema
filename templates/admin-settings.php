@@ -978,11 +978,15 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</p>
 					</div>
 
-					<p>
+					<p class="ais-button-row">
+						<button type="button" class="button button-primary" id="ais-save-llms-txt">
+							<?php esc_html_e( 'Save edits', 'ai-search-schema' ); ?>
+						</button>
 						<button type="button" class="button" id="ais-regenerate-llms-txt">
 							<?php esc_html_e( 'Regenerate from site data', 'ai-search-schema' ); ?>
 						</button>
 						<span class="spinner" style="float: none; margin-top: 0;"></span>
+						<span class="ais-llms-txt-status" style="margin-left: 8px;"></span>
 					</p>
 				</div>
 			</section>

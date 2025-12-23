@@ -39,6 +39,7 @@ class AI_Search_Schema_Settings {
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'wp_ajax_ai_search_schema_geocode', array( $this, 'handle_geocode_request' ) );
 		add_action( 'wp_ajax_ai_search_schema_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
+		add_action( 'wp_ajax_ai_search_schema_save_llms_txt', array( $this, 'handle_save_llms_txt' ) );
 	}
 
 	/**
@@ -133,8 +134,12 @@ class AI_Search_Schema_Settings {
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
 				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'ai-search-schema' ),
 				'llmsTxtNonce'              => wp_create_nonce( 'ai_search_schema_regenerate_llms_txt' ),
+				'llmsTxtSaveNonce'          => wp_create_nonce( 'ai_search_schema_save_llms_txt' ),
 				'i18nLlmsTxtRegenerating'   => __( 'Regenerating...', 'ai-search-schema' ),
 				'i18nLlmsTxtRegenerate'     => __( 'Regenerate from site data', 'ai-search-schema' ),
+				'i18nLlmsTxtSaving'         => __( 'Saving...', 'ai-search-schema' ),
+				'i18nLlmsTxtSave'           => __( 'Save edits', 'ai-search-schema' ),
+				'i18nLlmsTxtSaved'          => __( 'Saved!', 'ai-search-schema' ),
 			)
 		);
 	}
@@ -256,6 +261,41 @@ class AI_Search_Schema_Settings {
 			array(
 				'content' => $content,
 				'message' => __( 'llms.txt content has been regenerated from site data.', 'ai-search-schema' ),
+			)
+		);
+	}
+
+	/**
+	 * AJAX handler for saving llms.txt content.
+	 */
+	public function handle_save_llms_txt() {
+		check_ajax_referer( 'ai_search_schema_save_llms_txt', 'nonce' );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$this->respond_json(
+				false,
+				array(
+					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+				),
+				403
+			);
+		}
+
+		$content = isset( $_POST['content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['content'] ) ) : '';
+
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+
+		if ( ! empty( $content ) ) {
+			$llms_txt->save_content( $content );
+		} else {
+			$llms_txt->reset_content();
+		}
+
+		$this->respond_json(
+			true,
+			array(
+				'message' => __( 'llms.txt content has been saved.', 'ai-search-schema' ),
 			)
 		);
 	}
