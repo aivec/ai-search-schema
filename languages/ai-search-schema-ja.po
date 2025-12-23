@@ -222,17 +222,15 @@ msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:136
 #: includes/class-ai-search-schema-settings.php:136
-#, fuzzy
 msgid "Regenerating..."
-msgstr "取得中…"
+msgstr "再生成中…"
 
 #: dist/includes/class-ai-search-schema-settings.php:137
 #: dist/templates/admin-settings.php:983
 #: includes/class-ai-search-schema-settings.php:137
 #: templates/admin-settings.php:983
-#, fuzzy
 msgid "Regenerate from site data"
-msgstr "保存された座標から hasMap を生成する"
+msgstr "サイトデータから再生成"
 
 #: dist/includes/class-ai-search-schema-settings.php:169
 #: dist/includes/class-ai-search-schema-settings.php:244
@@ -251,7 +249,7 @@ msgstr "%d秒待ってから再度座標をリクエストしてください。"
 #: dist/includes/class-ai-search-schema-settings.php:258
 #: includes/class-ai-search-schema-settings.php:258
 msgid "llms.txt content has been regenerated from site data."
-msgstr ""
+msgstr "llms.txt の内容がサイトデータから再生成されました。"
 
 #: dist/includes/class-ai-search-schema-settings.php:325
 #: dist/includes/class-ai-search-schema-settings.php:485
@@ -2120,27 +2118,27 @@ msgstr "最終診断: %s（再読み込みで更新）"
 
 #: dist/templates/admin-settings.php:950 templates/admin-settings.php:950
 msgid "llms.txt"
-msgstr ""
+msgstr "llms.txt"
 
 #: dist/templates/admin-settings.php:951 templates/admin-settings.php:951
 msgid "Generate llms.txt to help AI systems understand your site structure."
-msgstr ""
+msgstr "llms.txt を生成して、AI システムがサイト構造を理解できるようにします。"
 
 #: dist/templates/admin-settings.php:965 templates/admin-settings.php:965
 msgid "Enable llms.txt"
-msgstr ""
+msgstr "llms.txt を有効化"
 
 #: dist/templates/admin-settings.php:968 templates/admin-settings.php:968
 msgid "When enabled, the file is served at:"
-msgstr ""
+msgstr "有効にすると、以下の URL で配信されます："
 
 #: dist/templates/admin-settings.php:974 templates/admin-settings.php:974
 msgid "Content (Markdown)"
-msgstr ""
+msgstr "内容（Markdown）"
 
 #: dist/templates/admin-settings.php:977 templates/admin-settings.php:977
 msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
-msgstr ""
+msgstr "llms.txt の内容を編集できます。空欄にするとサイトデータから自動生成されます。"
 
 #: dist/templates/admin-settings.php:992 templates/admin-settings.php:992
 msgid "Save settings"

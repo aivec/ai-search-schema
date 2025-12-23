@@ -83,7 +83,7 @@ class AI_Search_Schema_Settings {
 	 * @param string $hook 現在の管理画面フック名
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( 'settings_page_ais-schema' !== $hook ) {
+		if ( 'settings_page_ai-search-schema' !== $hook ) {
 			return;
 		}
 
