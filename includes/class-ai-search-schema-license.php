@@ -134,6 +134,7 @@ class AI_Search_Schema_License {
 	 * @param string $key License key to validate.
 	 * @return array Validation result with 'success' and 'data' keys.
 	 */
+	// phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.Found -- Will be used when API is implemented.
 	public function validate( $key ) {
 		// Stub: Always returns false until license API is implemented.
 		// In production, this would make an API call to validate the key.

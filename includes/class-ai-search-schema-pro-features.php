@@ -106,11 +106,13 @@ class AI_Search_Schema_Pro_Features {
 		return array(
 			array(
 				'title'       => __( 'Multi-Location Support', 'ai-search-schema' ),
+				// phpcs:ignore Generic.Files.LineLength.TooLong -- Translation string.
 				'description' => __( 'Manage multiple LocalBusiness locations from a single WordPress installation.', 'ai-search-schema' ),
 				'icon'        => 'dashicons-location',
 			),
 			array(
 				'title'       => __( 'Custom Schema Templates', 'ai-search-schema' ),
+				// phpcs:ignore Generic.Files.LineLength.TooLong -- Translation string.
 				'description' => __( 'Create and save custom schema templates for different content types.', 'ai-search-schema' ),
 				'icon'        => 'dashicons-editor-code',
 			),
@@ -174,6 +176,7 @@ class AI_Search_Schema_Pro_Features {
 			<?php else : ?>
 				<p><?php esc_html_e( 'Upgrade to Pro to unlock all advanced features.', 'ai-search-schema' ); ?></p>
 			<?php endif; ?>
+			<?php // phpcs:ignore Generic.Files.LineLength.TooLong -- URL cannot be split. ?>
 			<a href="https://aivec.co.jp/apps/ai-search-schema-pro" target="_blank" rel="noopener noreferrer" class="button button-primary">
 				<?php esc_html_e( 'Learn More', 'ai-search-schema' ); ?>
 			</a>
