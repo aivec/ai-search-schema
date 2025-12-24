@@ -139,7 +139,9 @@ GPLv2 or later
 = Response Policy =
 * Best effort - no guaranteed response time
 * Issues without reproduction steps will be closed
-* All bug reports via [GitHub Issues](https://github.com/aivec/ai-search-schema/issues)
+* Bug reports: [GitHub Issues](https://github.com/aivec/ai-search-schema/issues) only
+* **We do not provide support via WordPress.org forums.**
+* WP.orgフォーラムでのサポートは行っておりません。
 
 = Required Information for Bug Reports =
 * WordPress version, PHP version, plugin version

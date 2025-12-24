@@ -1242,7 +1242,24 @@ $gap-card: 24px;
 
     strong {
       color: #78350f;
+      display: block;
+      margin-bottom: 6px;
     }
+  }
+
+  &__en,
+  &__ja {
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  &__en {
+    font-weight: 500;
+  }
+
+  &__ja {
+    font-size: 12px;
+    opacity: 0.9;
   }
 
   &__links {

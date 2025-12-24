@@ -102,11 +102,16 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 	<!-- Support Policy Notice -->
 	<div class="ais-support-notice">
 		<div class="ais-support-notice__message">
-			<strong><?php esc_html_e( 'サポートポリシー', 'ai-search-schema' ); ?>:</strong>
-			<?php esc_html_e( '無料版のサポートは「不具合報告のみ」です。使い方・SEO/AEO相談はサポート対象外です。不具合はGitHubのBug Reportから、再現手順を添えて報告してください。', 'ai-search-schema' ); ?>
+			<strong><?php esc_html_e( 'Support Policy', 'ai-search-schema' ); ?>:</strong>
+			<span class="ais-support-notice__en">
+				<?php esc_html_e( 'Free version support: Bug reports only. Usage questions and SEO/AEO consulting are not supported. Report bugs via GitHub with reproduction steps.', 'ai-search-schema' ); ?>
+			</span>
+			<span class="ais-support-notice__ja">
+				<?php esc_html_e( '無料版サポート：不具合報告のみ。使い方・SEO/AEO相談はサポート対象外です。不具合はGitHubから再現手順を添えて報告してください。', 'ai-search-schema' ); ?>
+			</span>
 		</div>
 		<div class="ais-support-notice__links">
-			<a href="https://github.com/aivec/ai-search-schema/blob/main/docs/faq.md" target="_blank" rel="noopener noreferrer">
+			<a href="https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md" target="_blank" rel="noopener noreferrer">
 				<span class="dashicons dashicons-book"></span> <?php esc_html_e( 'Docs / FAQ', 'ai-search-schema' ); ?>
 			</a>
 			<a href="https://github.com/aivec/ai-search-schema/issues/new?template=bug_report.yml" target="_blank" rel="noopener noreferrer">
