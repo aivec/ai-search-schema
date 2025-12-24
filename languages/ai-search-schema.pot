@@ -2,7 +2,7 @@
 # This file is distributed under the same license as the AI Search Schema plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 0.10.0\n"
+"Project-Id-Version: AI Search Schema 0.10.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"

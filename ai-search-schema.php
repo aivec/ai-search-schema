@@ -3,7 +3,7 @@
  * Plugin Name: AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: WordPress plugin for AEO schema markup, local SEO (MEO), structured breadcrumbs, and FAQ extraction.
- * Version: 0.10.0
+ * Version: 0.10.2
  * Author: AIVEC LLC.
  * Author URI: https://aivec.co.jp/apps
  * Text Domain: ai-search-schema
@@ -13,7 +13,7 @@
  */
 
 // Plugin constants.
-define( 'AI_SEARCH_SCHEMA_VERSION', '0.10.0' );
+define( 'AI_SEARCH_SCHEMA_VERSION', '0.10.2' );
 define( 'AI_SEARCH_SCHEMA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_URL', plugin_dir_url( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );

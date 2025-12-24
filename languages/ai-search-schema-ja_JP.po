@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 0.10.0\n"
+"Project-Id-Version: AI Search Schema 0.10.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
-"POT-Creation-Date: 2025-12-24T04:29:21+00:00\n"
+"POT-Creation-Date: 2025-12-24T07:00:57+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
 "Last-Translator: Aivec LLC. <info@aivec.co.jp>\n"
 "Language-Team: Aivec LLC. <info@aivec.co.jp>\n"
@@ -53,6 +53,67 @@ msgstr "AIVEC LLC."
 msgid "Home"
 msgstr "ホーム"
 
+#: dist/includes/class-ai-search-schema-license.php:145
+#: includes/class-ai-search-schema-license.php:145
+msgid "License validation API is not yet available."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-license.php:162
+#: includes/class-ai-search-schema-license.php:162
+#, fuzzy
+msgid "Please enter a license key."
+msgstr "有効なURLを入力してください"
+
+#: dist/includes/class-ai-search-schema-license.php:180
+#: includes/class-ai-search-schema-license.php:180
+#, fuzzy
+msgid "License activated successfully."
+msgstr "設定のインポートが完了しました"
+
+#: dist/includes/class-ai-search-schema-license.php:195
+#: includes/class-ai-search-schema-license.php:195
+msgid "License validation failed."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-license.php:215
+#: includes/class-ai-search-schema-license.php:215
+msgid "License deactivated."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-license.php:227
+#: dist/includes/class-ai-search-schema-license.php:250
+#: dist/includes/class-ai-search-schema-settings.php:180
+#: dist/includes/class-ai-search-schema-settings.php:255
+#: dist/includes/class-ai-search-schema-settings.php:284
+#: includes/class-ai-search-schema-license.php:227
+#: includes/class-ai-search-schema-license.php:250
+#: includes/class-ai-search-schema-settings.php:180
+#: includes/class-ai-search-schema-settings.php:255
+#: includes/class-ai-search-schema-settings.php:284
+msgid "You do not have permission to perform this action."
+msgstr "この操作を実行する権限がありません。"
+
+#: dist/includes/class-ai-search-schema-license.php:269
+#: includes/class-ai-search-schema-license.php:269
+msgid "Active"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-license.php:271
+#: includes/class-ai-search-schema-license.php:271
+msgid "Expired"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-license.php:273
+#: includes/class-ai-search-schema-license.php:273
+#, fuzzy
+msgid "Invalid"
+msgstr "無効なステップです"
+
+#: dist/includes/class-ai-search-schema-license.php:275
+#: includes/class-ai-search-schema-license.php:275
+msgid "Inactive"
+msgstr ""
+
 #: dist/includes/class-ai-search-schema-metabox.php:50
 #: dist/includes/class-ai-search-schema-settings.php:66
 #: dist/templates/admin-settings.php:110 dist/templates/admin-settings.php:115
@@ -92,40 +153,40 @@ msgid "Automatic"
 msgstr "自動"
 
 #: dist/includes/class-ai-search-schema-metabox.php:101
-#: dist/includes/class-ai-search-schema-settings.php:1206
-#: dist/includes/class-ai-search-schema-settings.php:1525
+#: dist/includes/class-ai-search-schema-settings.php:1226
+#: dist/includes/class-ai-search-schema-settings.php:1545
 #: includes/class-ai-search-schema-metabox.php:101
-#: includes/class-ai-search-schema-settings.php:1212
-#: includes/class-ai-search-schema-settings.php:1531
+#: includes/class-ai-search-schema-settings.php:1226
+#: includes/class-ai-search-schema-settings.php:1545
 msgid "Article"
 msgstr "Article"
 
 #: dist/includes/class-ai-search-schema-metabox.php:102
-#: dist/includes/class-ai-search-schema-settings.php:1207
-#: dist/includes/class-ai-search-schema-settings.php:1528
-#: dist/includes/class-ai-search-schema-settings.php:1966
+#: dist/includes/class-ai-search-schema-settings.php:1227
+#: dist/includes/class-ai-search-schema-settings.php:1548
+#: dist/includes/class-ai-search-schema-settings.php:1986
 #: includes/class-ai-search-schema-metabox.php:102
-#: includes/class-ai-search-schema-settings.php:1213
-#: includes/class-ai-search-schema-settings.php:1534
-#: includes/class-ai-search-schema-settings.php:1972
+#: includes/class-ai-search-schema-settings.php:1227
+#: includes/class-ai-search-schema-settings.php:1548
+#: includes/class-ai-search-schema-settings.php:1986
 msgid "FAQPage"
 msgstr "FAQPage"
 
 #: dist/includes/class-ai-search-schema-metabox.php:103
-#: dist/includes/class-ai-search-schema-settings.php:1208
-#: dist/includes/class-ai-search-schema-settings.php:1529
+#: dist/includes/class-ai-search-schema-settings.php:1228
+#: dist/includes/class-ai-search-schema-settings.php:1549
 #: includes/class-ai-search-schema-metabox.php:103
-#: includes/class-ai-search-schema-settings.php:1214
-#: includes/class-ai-search-schema-settings.php:1535
+#: includes/class-ai-search-schema-settings.php:1228
+#: includes/class-ai-search-schema-settings.php:1549
 msgid "QAPage"
 msgstr "QAPage"
 
 #: dist/includes/class-ai-search-schema-metabox.php:104
-#: dist/includes/class-ai-search-schema-settings.php:1524
-#: dist/includes/class-ai-search-schema-settings.php:1855
+#: dist/includes/class-ai-search-schema-settings.php:1544
+#: dist/includes/class-ai-search-schema-settings.php:1875
 #: includes/class-ai-search-schema-metabox.php:104
-#: includes/class-ai-search-schema-settings.php:1530
-#: includes/class-ai-search-schema-settings.php:1861
+#: includes/class-ai-search-schema-settings.php:1544
+#: includes/class-ai-search-schema-settings.php:1875
 msgid "WebPage"
 msgstr "WebPage"
 
@@ -148,6 +209,78 @@ msgstr "FAQ 回答クラス:"
 #: includes/class-ai-search-schema-metabox.php:122
 msgid "Example: faq-answer, accordion-content"
 msgstr "例: faq-answer, accordion-content"
+
+#: dist/includes/class-ai-search-schema-pro-features.php:108
+#: dist/templates/admin-settings.php:1054
+#: includes/class-ai-search-schema-pro-features.php:108
+#: templates/admin-settings.php:1054
+msgid "Multi-Location Support"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:110
+#: includes/class-ai-search-schema-pro-features.php:110
+msgid ""
+"Manage multiple LocalBusiness locations from a single WordPress installation."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:114
+#: dist/templates/admin-settings.php:1059
+#: includes/class-ai-search-schema-pro-features.php:114
+#: templates/admin-settings.php:1059
+msgid "Custom Schema Templates"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:116
+#: includes/class-ai-search-schema-pro-features.php:116
+msgid "Create and save custom schema templates for different content types."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:120
+#: dist/templates/admin-settings.php:1064
+#: includes/class-ai-search-schema-pro-features.php:120
+#: templates/admin-settings.php:1064
+msgid "Priority Support"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:121
+#: includes/class-ai-search-schema-pro-features.php:121
+msgid "Get priority email support from our development team."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:125
+#: dist/templates/admin-settings.php:1069
+#: includes/class-ai-search-schema-pro-features.php:125
+#: templates/admin-settings.php:1069
+msgid "Advanced Validation"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:126
+#: includes/class-ai-search-schema-pro-features.php:126
+msgid "Scheduled automatic schema validation with email reports."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:165
+#: includes/class-ai-search-schema-pro-features.php:165
+#, fuzzy
+msgid "Pro"
+msgstr "Product"
+
+#. translators: %s: feature name
+#: dist/includes/class-ai-search-schema-pro-features.php:171
+#: includes/class-ai-search-schema-pro-features.php:171
+#, php-format
+msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:177
+#: includes/class-ai-search-schema-pro-features.php:177
+msgid "Upgrade to Pro to unlock all advanced features."
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-pro-features.php:181
+#: includes/class-ai-search-schema-pro-features.php:181
+msgid "Learn More"
+msgstr ""
 
 #. translators: %s is the language label.
 #. translators: %s: The language label shown as a tag.
@@ -178,8 +311,8 @@ msgid "Latitude and longitude updated."
 msgstr "緯度・経度を更新しました。"
 
 #: dist/includes/class-ai-search-schema-settings.php:128
-#: dist/includes/class-ai-search-schema-settings.php:376
-#: dist/includes/class-ai-search-schema-settings.php:535
+#: dist/includes/class-ai-search-schema-settings.php:382
+#: dist/includes/class-ai-search-schema-settings.php:541
 #: includes/class-ai-search-schema-settings.php:128
 #: includes/class-ai-search-schema-settings.php:382
 #: includes/class-ai-search-schema-settings.php:541
@@ -187,7 +320,7 @@ msgid "Unable to fetch latitude and longitude."
 msgstr "緯度・経度を取得できませんでした。"
 
 #: dist/includes/class-ai-search-schema-settings.php:129
-#: dist/includes/class-ai-search-schema-settings.php:215
+#: dist/includes/class-ai-search-schema-settings.php:221
 #: includes/class-ai-search-schema-settings.php:129
 #: includes/class-ai-search-schema-settings.php:221
 msgid "Enter the address information."
@@ -250,42 +383,57 @@ msgstr "編集を保存"
 msgid "Saved!"
 msgstr "保存しました！"
 
-#: dist/includes/class-ai-search-schema-settings.php:174
-#: dist/includes/class-ai-search-schema-settings.php:249
-#: dist/includes/class-ai-search-schema-settings.php:278
-#: includes/class-ai-search-schema-license.php:226
-#: includes/class-ai-search-schema-license.php:249
-#: includes/class-ai-search-schema-settings.php:180
-#: includes/class-ai-search-schema-settings.php:255
-#: includes/class-ai-search-schema-settings.php:284
-msgid "You do not have permission to perform this action."
-msgstr "この操作を実行する権限がありません。"
+#: dist/includes/class-ai-search-schema-settings.php:145
+#: includes/class-ai-search-schema-settings.php:145
+#, fuzzy
+msgid "Activating..."
+msgstr "保存中…"
+
+#: dist/includes/class-ai-search-schema-settings.php:146
+#: includes/class-ai-search-schema-settings.php:146
+#, fuzzy
+msgid "Deactivating..."
+msgstr "保存中…"
+
+#: dist/includes/class-ai-search-schema-settings.php:147
+#: dist/templates/admin-settings.php:1034
+#: includes/class-ai-search-schema-settings.php:147
+#: templates/admin-settings.php:1034
+msgid "Activate"
+msgstr ""
+
+#: dist/includes/class-ai-search-schema-settings.php:148
+#: dist/templates/admin-settings.php:1030
+#: includes/class-ai-search-schema-settings.php:148
+#: templates/admin-settings.php:1030
+msgid "Deactivate"
+msgstr ""
 
 #. translators: %d: number of seconds an admin must wait before requesting new coordinates.
-#: dist/includes/class-ai-search-schema-settings.php:183
+#: dist/includes/class-ai-search-schema-settings.php:189
 #: includes/class-ai-search-schema-settings.php:189
 #, php-format
 msgid "Please wait %d seconds before requesting new coordinates."
 msgstr "%d秒待ってから再度座標をリクエストしてください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:263
+#: dist/includes/class-ai-search-schema-settings.php:269
 #: includes/class-ai-search-schema-settings.php:269
 msgid "llms.txt content has been regenerated from site data."
 msgstr "llms.txt の内容がサイトデータから再生成されました。"
 
-#: dist/includes/class-ai-search-schema-settings.php:298
+#: dist/includes/class-ai-search-schema-settings.php:304
 #: includes/class-ai-search-schema-settings.php:304
 msgid "llms.txt content has been saved."
 msgstr "llms.txt の内容を保存しました。"
 
-#: dist/includes/class-ai-search-schema-settings.php:365
-#: dist/includes/class-ai-search-schema-settings.php:525
+#: dist/includes/class-ai-search-schema-settings.php:371
+#: dist/includes/class-ai-search-schema-settings.php:531
 #: includes/class-ai-search-schema-settings.php:371
 #: includes/class-ai-search-schema-settings.php:531
 msgid "The geocoding API returned an error."
 msgstr "ジオコーディング API からエラー。"
 
-#: dist/includes/class-ai-search-schema-settings.php:544
+#: dist/includes/class-ai-search-schema-settings.php:550
 #: includes/class-ai-search-schema-settings.php:550
 msgid ""
 "No Google Maps API key was found, so OpenStreetMap (for development) was "
@@ -294,611 +442,611 @@ msgstr ""
 "Google Maps APIキーが設定されていないため、開発用として OpenStreetMap を使用"
 "しました。"
 
-#: dist/includes/class-ai-search-schema-settings.php:578
-#: includes/class-ai-search-schema-settings.php:584
+#: dist/includes/class-ai-search-schema-settings.php:586
+#: includes/class-ai-search-schema-settings.php:586
 msgid "Settings template could not be located."
 msgstr "設定テンプレートが見つかりませんでした。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1171
-#: includes/class-ai-search-schema-settings.php:1177
+#: dist/includes/class-ai-search-schema-settings.php:1191
+#: includes/class-ai-search-schema-settings.php:1191
 msgid "Facebook"
 msgstr "Facebook"
 
-#: dist/includes/class-ai-search-schema-settings.php:1172
-#: includes/class-ai-search-schema-settings.php:1178
+#: dist/includes/class-ai-search-schema-settings.php:1192
+#: includes/class-ai-search-schema-settings.php:1192
 msgid "Instagram"
 msgstr "Instagram"
 
-#: dist/includes/class-ai-search-schema-settings.php:1173
-#: includes/class-ai-search-schema-settings.php:1179
+#: dist/includes/class-ai-search-schema-settings.php:1193
+#: includes/class-ai-search-schema-settings.php:1193
 msgid "X"
 msgstr "X"
 
-#: dist/includes/class-ai-search-schema-settings.php:1174
-#: includes/class-ai-search-schema-settings.php:1180
+#: dist/includes/class-ai-search-schema-settings.php:1194
+#: includes/class-ai-search-schema-settings.php:1194
 msgid "YouTube"
 msgstr "YouTube"
 
-#: dist/includes/class-ai-search-schema-settings.php:1175
-#: includes/class-ai-search-schema-settings.php:1181
+#: dist/includes/class-ai-search-schema-settings.php:1195
+#: includes/class-ai-search-schema-settings.php:1195
 msgid "Google+"
 msgstr "Google+"
 
-#: dist/includes/class-ai-search-schema-settings.php:1176
-#: includes/class-ai-search-schema-settings.php:1182
+#: dist/includes/class-ai-search-schema-settings.php:1196
+#: includes/class-ai-search-schema-settings.php:1196
 msgid "LINE"
 msgstr "LINE"
 
-#: dist/includes/class-ai-search-schema-settings.php:1177
-#: includes/class-ai-search-schema-settings.php:1183
+#: dist/includes/class-ai-search-schema-settings.php:1197
+#: includes/class-ai-search-schema-settings.php:1197
 msgid "TikTok"
 msgstr "TikTok"
 
-#: dist/includes/class-ai-search-schema-settings.php:1178
-#: includes/class-ai-search-schema-settings.php:1184
+#: dist/includes/class-ai-search-schema-settings.php:1198
+#: includes/class-ai-search-schema-settings.php:1198
 msgid "Threads"
 msgstr "Threads"
 
-#: dist/includes/class-ai-search-schema-settings.php:1179
-#: includes/class-ai-search-schema-settings.php:1185
+#: dist/includes/class-ai-search-schema-settings.php:1199
+#: includes/class-ai-search-schema-settings.php:1199
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: dist/includes/class-ai-search-schema-settings.php:1180
-#: includes/class-ai-search-schema-settings.php:1186
+#: dist/includes/class-ai-search-schema-settings.php:1200
+#: includes/class-ai-search-schema-settings.php:1200
 msgid "mixi"
 msgstr "mixi"
 
-#: dist/includes/class-ai-search-schema-settings.php:1181
-#: includes/class-ai-search-schema-settings.php:1187
+#: dist/includes/class-ai-search-schema-settings.php:1201
+#: includes/class-ai-search-schema-settings.php:1201
 msgid "Other"
 msgstr "その他"
 
-#: dist/includes/class-ai-search-schema-settings.php:1205
-#: includes/class-ai-search-schema-settings.php:1211
+#: dist/includes/class-ai-search-schema-settings.php:1225
+#: includes/class-ai-search-schema-settings.php:1225
 msgid "WebPage (default)"
 msgstr "WebPage （標準）"
 
-#: dist/includes/class-ai-search-schema-settings.php:1209
-#: dist/includes/class-ai-search-schema-settings.php:1527
-#: includes/class-ai-search-schema-settings.php:1215
-#: includes/class-ai-search-schema-settings.php:1533
+#: dist/includes/class-ai-search-schema-settings.php:1229
+#: dist/includes/class-ai-search-schema-settings.php:1547
+#: includes/class-ai-search-schema-settings.php:1229
+#: includes/class-ai-search-schema-settings.php:1547
 msgid "NewsArticle"
 msgstr "NewsArticle"
 
-#: dist/includes/class-ai-search-schema-settings.php:1210
-#: dist/includes/class-ai-search-schema-settings.php:1526
-#: includes/class-ai-search-schema-settings.php:1216
-#: includes/class-ai-search-schema-settings.php:1532
+#: dist/includes/class-ai-search-schema-settings.php:1230
+#: dist/includes/class-ai-search-schema-settings.php:1546
+#: includes/class-ai-search-schema-settings.php:1230
+#: includes/class-ai-search-schema-settings.php:1546
 msgid "BlogPosting"
 msgstr "BlogPosting"
 
-#: dist/includes/class-ai-search-schema-settings.php:1211
-#: dist/includes/class-ai-search-schema-settings.php:1530
-#: includes/class-ai-search-schema-settings.php:1217
-#: includes/class-ai-search-schema-settings.php:1536
+#: dist/includes/class-ai-search-schema-settings.php:1231
+#: dist/includes/class-ai-search-schema-settings.php:1550
+#: includes/class-ai-search-schema-settings.php:1231
+#: includes/class-ai-search-schema-settings.php:1550
 msgid "Product"
 msgstr "Product"
 
-#: dist/includes/class-ai-search-schema-settings.php:1239
-#: includes/class-ai-search-schema-settings.php:1245
+#: dist/includes/class-ai-search-schema-settings.php:1259
+#: includes/class-ai-search-schema-settings.php:1259
 msgid "Japanese"
 msgstr "日本語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1240
-#: includes/class-ai-search-schema-settings.php:1246
+#: dist/includes/class-ai-search-schema-settings.php:1260
+#: includes/class-ai-search-schema-settings.php:1260
 msgid "English"
 msgstr "英語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1241
-#: includes/class-ai-search-schema-settings.php:1247
+#: dist/includes/class-ai-search-schema-settings.php:1261
+#: includes/class-ai-search-schema-settings.php:1261
 msgid "Chinese (Simplified)"
 msgstr "中国語 (簡体字)"
 
-#: dist/includes/class-ai-search-schema-settings.php:1242
-#: includes/class-ai-search-schema-settings.php:1248
+#: dist/includes/class-ai-search-schema-settings.php:1262
+#: includes/class-ai-search-schema-settings.php:1262
 msgid "Chinese (Traditional)"
 msgstr "中国語 (繁体字)"
 
-#: dist/includes/class-ai-search-schema-settings.php:1243
-#: includes/class-ai-search-schema-settings.php:1249
+#: dist/includes/class-ai-search-schema-settings.php:1263
+#: includes/class-ai-search-schema-settings.php:1263
 msgid "Korean"
 msgstr "韓国語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1244
-#: includes/class-ai-search-schema-settings.php:1250
+#: dist/includes/class-ai-search-schema-settings.php:1264
+#: includes/class-ai-search-schema-settings.php:1264
 msgid "French"
 msgstr "フランス語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1245
-#: includes/class-ai-search-schema-settings.php:1251
+#: dist/includes/class-ai-search-schema-settings.php:1265
+#: includes/class-ai-search-schema-settings.php:1265
 msgid "German"
 msgstr "ドイツ語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1246
-#: includes/class-ai-search-schema-settings.php:1252
+#: dist/includes/class-ai-search-schema-settings.php:1266
+#: includes/class-ai-search-schema-settings.php:1266
 msgid "Spanish"
 msgstr "スペイン語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1247
-#: includes/class-ai-search-schema-settings.php:1253
+#: dist/includes/class-ai-search-schema-settings.php:1267
+#: includes/class-ai-search-schema-settings.php:1267
 msgid "Portuguese"
 msgstr "ポルトガル語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1248
-#: includes/class-ai-search-schema-settings.php:1254
+#: dist/includes/class-ai-search-schema-settings.php:1268
+#: includes/class-ai-search-schema-settings.php:1268
 msgid "Italian"
 msgstr "イタリア語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1249
-#: includes/class-ai-search-schema-settings.php:1255
+#: dist/includes/class-ai-search-schema-settings.php:1269
+#: includes/class-ai-search-schema-settings.php:1269
 msgid "Thai"
 msgstr "タイ語"
 
-#: dist/includes/class-ai-search-schema-settings.php:1274
+#: dist/includes/class-ai-search-schema-settings.php:1294
 #: dist/src/Wizard/Wizard.php:300
 #: dist/templates/wizard/steps/step-4-hours.php:15
-#: includes/class-ai-search-schema-settings.php:1280 src/Wizard/Wizard.php:300
+#: includes/class-ai-search-schema-settings.php:1294 src/Wizard/Wizard.php:300
 #: templates/wizard/steps/step-4-hours.php:15
 msgid "Monday"
 msgstr "月曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1275
+#: dist/includes/class-ai-search-schema-settings.php:1295
 #: dist/src/Wizard/Wizard.php:301
 #: dist/templates/wizard/steps/step-4-hours.php:16
-#: includes/class-ai-search-schema-settings.php:1281 src/Wizard/Wizard.php:301
+#: includes/class-ai-search-schema-settings.php:1295 src/Wizard/Wizard.php:301
 #: templates/wizard/steps/step-4-hours.php:16
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1276
+#: dist/includes/class-ai-search-schema-settings.php:1296
 #: dist/src/Wizard/Wizard.php:302
 #: dist/templates/wizard/steps/step-4-hours.php:17
-#: includes/class-ai-search-schema-settings.php:1282 src/Wizard/Wizard.php:302
+#: includes/class-ai-search-schema-settings.php:1296 src/Wizard/Wizard.php:302
 #: templates/wizard/steps/step-4-hours.php:17
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1277
+#: dist/includes/class-ai-search-schema-settings.php:1297
 #: dist/src/Wizard/Wizard.php:303
 #: dist/templates/wizard/steps/step-4-hours.php:18
-#: includes/class-ai-search-schema-settings.php:1283 src/Wizard/Wizard.php:303
+#: includes/class-ai-search-schema-settings.php:1297 src/Wizard/Wizard.php:303
 #: templates/wizard/steps/step-4-hours.php:18
 msgid "Thursday"
 msgstr "木曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1278
+#: dist/includes/class-ai-search-schema-settings.php:1298
 #: dist/src/Wizard/Wizard.php:304
 #: dist/templates/wizard/steps/step-4-hours.php:19
-#: includes/class-ai-search-schema-settings.php:1284 src/Wizard/Wizard.php:304
+#: includes/class-ai-search-schema-settings.php:1298 src/Wizard/Wizard.php:304
 #: templates/wizard/steps/step-4-hours.php:19
 msgid "Friday"
 msgstr "金曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1279
+#: dist/includes/class-ai-search-schema-settings.php:1299
 #: dist/src/Wizard/Wizard.php:305
 #: dist/templates/wizard/steps/step-4-hours.php:20
-#: includes/class-ai-search-schema-settings.php:1285 src/Wizard/Wizard.php:305
+#: includes/class-ai-search-schema-settings.php:1299 src/Wizard/Wizard.php:305
 #: templates/wizard/steps/step-4-hours.php:20
 msgid "Saturday"
 msgstr "土曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1280
+#: dist/includes/class-ai-search-schema-settings.php:1300
 #: dist/src/Wizard/Wizard.php:306
 #: dist/templates/wizard/steps/step-4-hours.php:21
-#: includes/class-ai-search-schema-settings.php:1286 src/Wizard/Wizard.php:306
+#: includes/class-ai-search-schema-settings.php:1300 src/Wizard/Wizard.php:306
 #: templates/wizard/steps/step-4-hours.php:21
 msgid "Sunday"
 msgstr "日曜日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1281
-#: includes/class-ai-search-schema-settings.php:1287
+#: dist/includes/class-ai-search-schema-settings.php:1301
+#: includes/class-ai-search-schema-settings.php:1301
 msgid "Public holiday"
 msgstr "祝日"
 
-#: dist/includes/class-ai-search-schema-settings.php:1523
-#: includes/class-ai-search-schema-settings.php:1529
+#: dist/includes/class-ai-search-schema-settings.php:1543
+#: includes/class-ai-search-schema-settings.php:1543
 msgid "Use global default content model"
 msgstr "グローバルのデフォルトコンテンツモデルを使用"
 
-#: dist/includes/class-ai-search-schema-settings.php:1531
-#: includes/class-ai-search-schema-settings.php:1537
+#: dist/includes/class-ai-search-schema-settings.php:1551
+#: includes/class-ai-search-schema-settings.php:1551
 msgid "CollectionPage"
 msgstr "コレクションページ"
 
-#: dist/includes/class-ai-search-schema-settings.php:1532
-#: includes/class-ai-search-schema-settings.php:1538
+#: dist/includes/class-ai-search-schema-settings.php:1552
+#: includes/class-ai-search-schema-settings.php:1552
 msgid "ItemList"
 msgstr "アイテムリスト"
 
-#: dist/includes/class-ai-search-schema-settings.php:1551
-#: includes/class-ai-search-schema-settings.php:1557
+#: dist/includes/class-ai-search-schema-settings.php:1571
+#: includes/class-ai-search-schema-settings.php:1571
 msgid "AVC schema priority (suppress other plugins)"
 msgstr "AEOスキーマを優先（他のプラグインのスキーマ出力を抑制）"
 
-#: dist/includes/class-ai-search-schema-settings.php:1552
-#: includes/class-ai-search-schema-settings.php:1558
+#: dist/includes/class-ai-search-schema-settings.php:1572
+#: includes/class-ai-search-schema-settings.php:1572
 msgid "Let other SEO plugins output schema"
 msgstr "他のSEOプラグインのスキーマを優先する"
 
-#: dist/includes/class-ai-search-schema-settings.php:1616
-#: includes/class-ai-search-schema-settings.php:1622
+#: dist/includes/class-ai-search-schema-settings.php:1636
+#: includes/class-ai-search-schema-settings.php:1636
 msgid "Japan"
 msgstr "日本"
 
-#: dist/includes/class-ai-search-schema-settings.php:1617
-#: includes/class-ai-search-schema-settings.php:1623
+#: dist/includes/class-ai-search-schema-settings.php:1637
+#: includes/class-ai-search-schema-settings.php:1637
 msgid "United States"
 msgstr "アメリカ合衆国"
 
-#: dist/includes/class-ai-search-schema-settings.php:1618
-#: includes/class-ai-search-schema-settings.php:1624
+#: dist/includes/class-ai-search-schema-settings.php:1638
+#: includes/class-ai-search-schema-settings.php:1638
 msgid "China"
 msgstr "中国"
 
-#: dist/includes/class-ai-search-schema-settings.php:1619
-#: includes/class-ai-search-schema-settings.php:1625
+#: dist/includes/class-ai-search-schema-settings.php:1639
+#: includes/class-ai-search-schema-settings.php:1639
 msgid "Taiwan"
 msgstr "台湾"
 
-#: dist/includes/class-ai-search-schema-settings.php:1620
-#: includes/class-ai-search-schema-settings.php:1626
+#: dist/includes/class-ai-search-schema-settings.php:1640
+#: includes/class-ai-search-schema-settings.php:1640
 msgid "Hong Kong"
 msgstr "香港"
 
-#: dist/includes/class-ai-search-schema-settings.php:1621
-#: includes/class-ai-search-schema-settings.php:1627
+#: dist/includes/class-ai-search-schema-settings.php:1641
+#: includes/class-ai-search-schema-settings.php:1641
 msgid "South Korea"
 msgstr "韓国"
 
-#: dist/includes/class-ai-search-schema-settings.php:1622
-#: includes/class-ai-search-schema-settings.php:1628
+#: dist/includes/class-ai-search-schema-settings.php:1642
+#: includes/class-ai-search-schema-settings.php:1642
 msgid "Singapore"
 msgstr "シンガポール"
 
-#: dist/includes/class-ai-search-schema-settings.php:1623
-#: includes/class-ai-search-schema-settings.php:1629
+#: dist/includes/class-ai-search-schema-settings.php:1643
+#: includes/class-ai-search-schema-settings.php:1643
 msgid "Thailand"
 msgstr "タイ"
 
-#: dist/includes/class-ai-search-schema-settings.php:1624
-#: includes/class-ai-search-schema-settings.php:1630
+#: dist/includes/class-ai-search-schema-settings.php:1644
+#: includes/class-ai-search-schema-settings.php:1644
 msgid "Vietnam"
 msgstr "ベトナム"
 
-#: dist/includes/class-ai-search-schema-settings.php:1625
-#: includes/class-ai-search-schema-settings.php:1631
+#: dist/includes/class-ai-search-schema-settings.php:1645
+#: includes/class-ai-search-schema-settings.php:1645
 msgid "Philippines"
 msgstr "フィリピン"
 
-#: dist/includes/class-ai-search-schema-settings.php:1626
-#: includes/class-ai-search-schema-settings.php:1632
+#: dist/includes/class-ai-search-schema-settings.php:1646
+#: includes/class-ai-search-schema-settings.php:1646
 msgid "Malaysia"
 msgstr "マレーシア"
 
-#: dist/includes/class-ai-search-schema-settings.php:1627
-#: includes/class-ai-search-schema-settings.php:1633
+#: dist/includes/class-ai-search-schema-settings.php:1647
+#: includes/class-ai-search-schema-settings.php:1647
 msgid "Indonesia"
 msgstr "インドネシア"
 
-#: dist/includes/class-ai-search-schema-settings.php:1628
-#: includes/class-ai-search-schema-settings.php:1634
+#: dist/includes/class-ai-search-schema-settings.php:1648
+#: includes/class-ai-search-schema-settings.php:1648
 msgid "France"
 msgstr "フランス"
 
-#: dist/includes/class-ai-search-schema-settings.php:1629
-#: includes/class-ai-search-schema-settings.php:1635
+#: dist/includes/class-ai-search-schema-settings.php:1649
+#: includes/class-ai-search-schema-settings.php:1649
 msgid "Germany"
 msgstr "ドイツ"
 
-#: dist/includes/class-ai-search-schema-settings.php:1630
-#: includes/class-ai-search-schema-settings.php:1636
+#: dist/includes/class-ai-search-schema-settings.php:1650
+#: includes/class-ai-search-schema-settings.php:1650
 msgid "Spain"
 msgstr "スペイン"
 
-#: dist/includes/class-ai-search-schema-settings.php:1631
-#: includes/class-ai-search-schema-settings.php:1637
+#: dist/includes/class-ai-search-schema-settings.php:1651
+#: includes/class-ai-search-schema-settings.php:1651
 msgid "Italy"
 msgstr "イタリア"
 
-#: dist/includes/class-ai-search-schema-settings.php:1632
-#: includes/class-ai-search-schema-settings.php:1638
+#: dist/includes/class-ai-search-schema-settings.php:1652
+#: includes/class-ai-search-schema-settings.php:1652
 msgid "United Kingdom"
 msgstr "イギリス"
 
-#: dist/includes/class-ai-search-schema-settings.php:1633
-#: includes/class-ai-search-schema-settings.php:1639
+#: dist/includes/class-ai-search-schema-settings.php:1653
+#: includes/class-ai-search-schema-settings.php:1653
 msgid "Canada"
 msgstr "カナダ"
 
-#: dist/includes/class-ai-search-schema-settings.php:1634
-#: includes/class-ai-search-schema-settings.php:1640
+#: dist/includes/class-ai-search-schema-settings.php:1654
+#: includes/class-ai-search-schema-settings.php:1654
 msgid "Australia"
 msgstr "オーストラリア"
 
-#: dist/includes/class-ai-search-schema-settings.php:1635
-#: includes/class-ai-search-schema-settings.php:1641
+#: dist/includes/class-ai-search-schema-settings.php:1655
+#: includes/class-ai-search-schema-settings.php:1655
 msgid "New Zealand"
 msgstr "ニュージーランド"
 
-#: dist/includes/class-ai-search-schema-settings.php:1706
-#: includes/class-ai-search-schema-settings.php:1712
+#: dist/includes/class-ai-search-schema-settings.php:1726
+#: includes/class-ai-search-schema-settings.php:1726
 msgid "Organization name is set."
 msgstr "組織名が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1707
-#: includes/class-ai-search-schema-settings.php:1713
+#: dist/includes/class-ai-search-schema-settings.php:1727
+#: includes/class-ai-search-schema-settings.php:1727
 msgid "Organization name is missing."
 msgstr "組織名がありません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1712
-#: includes/class-ai-search-schema-settings.php:1718
+#: dist/includes/class-ai-search-schema-settings.php:1732
+#: includes/class-ai-search-schema-settings.php:1732
 msgid "Organization URL is set."
 msgstr "組織のURLが設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1713
-#: includes/class-ai-search-schema-settings.php:1719
+#: dist/includes/class-ai-search-schema-settings.php:1733
+#: includes/class-ai-search-schema-settings.php:1733
 msgid "Organization URL is missing."
 msgstr "組織のURLがありません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1718
-#: includes/class-ai-search-schema-settings.php:1724
+#: dist/includes/class-ai-search-schema-settings.php:1738
+#: includes/class-ai-search-schema-settings.php:1738
 msgid "Logo is set."
 msgstr "ロゴが設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1719
-#: includes/class-ai-search-schema-settings.php:1725
+#: dist/includes/class-ai-search-schema-settings.php:1739
+#: includes/class-ai-search-schema-settings.php:1739
 msgid "Logo is not set. Set a square logo image."
 msgstr "ロゴが未設定です。正方形のロゴ画像を設定してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1724
-#: includes/class-ai-search-schema-settings.php:1730
+#: dist/includes/class-ai-search-schema-settings.php:1744
+#: includes/class-ai-search-schema-settings.php:1744
 msgid "SameAs / social profiles are present."
 msgstr "SameAs / ソーシャルプロフィールが設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1725
-#: includes/class-ai-search-schema-settings.php:1731
+#: dist/includes/class-ai-search-schema-settings.php:1745
+#: includes/class-ai-search-schema-settings.php:1745
 msgid "SameAs profiles are missing. Add social links."
 msgstr "SameAs プロフィールが未設定です。ソーシャルリンクを追加してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1729
-#: includes/class-ai-search-schema-settings.php:1735
+#: dist/includes/class-ai-search-schema-settings.php:1749
+#: includes/class-ai-search-schema-settings.php:1749
 msgid "Organization"
 msgstr "組織・団体・法人"
 
-#: dist/includes/class-ai-search-schema-settings.php:1748
-#: includes/class-ai-search-schema-settings.php:1754
+#: dist/includes/class-ai-search-schema-settings.php:1768
+#: includes/class-ai-search-schema-settings.php:1768
 msgid "LocalBusiness name is set."
 msgstr "ローカルビジネス名が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1749
-#: includes/class-ai-search-schema-settings.php:1755
+#: dist/includes/class-ai-search-schema-settings.php:1769
+#: includes/class-ai-search-schema-settings.php:1769
 msgid "LocalBusiness name is missing."
 msgstr "ローカルビジネス名がありません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1754
-#: includes/class-ai-search-schema-settings.php:1760
+#: dist/includes/class-ai-search-schema-settings.php:1774
+#: includes/class-ai-search-schema-settings.php:1774
 msgid "Telephone is set."
 msgstr "電話番号が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1755
-#: includes/class-ai-search-schema-settings.php:1761
+#: dist/includes/class-ai-search-schema-settings.php:1775
+#: includes/class-ai-search-schema-settings.php:1775
 msgid "Telephone is missing."
 msgstr "電話番号が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1762
-#: includes/class-ai-search-schema-settings.php:1768
+#: dist/includes/class-ai-search-schema-settings.php:1782
+#: includes/class-ai-search-schema-settings.php:1782
 msgid "Address fields are set."
 msgstr "住所が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1763
-#: includes/class-ai-search-schema-settings.php:1769
+#: dist/includes/class-ai-search-schema-settings.php:1783
+#: includes/class-ai-search-schema-settings.php:1783
 msgid "Address is incomplete. Set prefecture, city, street, and postal code."
 msgstr ""
 "住所が不完全です。都道府県、市区町村、番地、郵便番号を設定してください。住所"
 "が不完全です。都道府県・市区町村・丁目番地・郵便番号を入力してください。"
 
 #. translators: %s decimal places
-#: dist/includes/class-ai-search-schema-settings.php:1777
-#: includes/class-ai-search-schema-settings.php:1783
+#: dist/includes/class-ai-search-schema-settings.php:1797
+#: includes/class-ai-search-schema-settings.php:1797
 #, php-format
 msgid "Geo coordinates set (lat/long, %s decimals)."
 msgstr "緯度経度が設定されています（小数点 %s 桁）。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1780
-#: includes/class-ai-search-schema-settings.php:1786
+#: dist/includes/class-ai-search-schema-settings.php:1800
+#: includes/class-ai-search-schema-settings.php:1800
 msgid "Geo coordinates are missing. Fetch via address or enter lat/long."
 msgstr "緯度経度が未設定です。住所から取得するか手入力してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1786
-#: includes/class-ai-search-schema-settings.php:1792
+#: dist/includes/class-ai-search-schema-settings.php:1806
+#: includes/class-ai-search-schema-settings.php:1806
 msgid "Opening hours are configured."
 msgstr "営業時間が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1787
-#: includes/class-ai-search-schema-settings.php:1793
+#: dist/includes/class-ai-search-schema-settings.php:1807
+#: includes/class-ai-search-schema-settings.php:1807
 msgid "Opening hours are empty. Add at least one slot."
 msgstr "営業時間が空です。少なくとも1つ追加してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1793
-#: includes/class-ai-search-schema-settings.php:1799
+#: dist/includes/class-ai-search-schema-settings.php:1813
+#: includes/class-ai-search-schema-settings.php:1813
 msgid "addressCountry is set."
 msgstr "addressCountry が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1794
-#: includes/class-ai-search-schema-settings.php:1800
+#: dist/includes/class-ai-search-schema-settings.php:1814
+#: includes/class-ai-search-schema-settings.php:1814
 msgid "addressCountry is missing."
 msgstr "addressCountry が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1798
-#: includes/class-ai-search-schema-settings.php:1804
+#: dist/includes/class-ai-search-schema-settings.php:1818
+#: includes/class-ai-search-schema-settings.php:1818
 msgid "LocalBusiness"
 msgstr "ローカルビジネス"
 
-#: dist/includes/class-ai-search-schema-settings.php:1809
-#: includes/class-ai-search-schema-settings.php:1815
+#: dist/includes/class-ai-search-schema-settings.php:1829
+#: includes/class-ai-search-schema-settings.php:1829
 msgid "WebSite name is set."
 msgstr "Webサイト名が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1810
-#: includes/class-ai-search-schema-settings.php:1816
+#: dist/includes/class-ai-search-schema-settings.php:1830
+#: includes/class-ai-search-schema-settings.php:1830
 msgid "WebSite name is missing."
 msgstr "WebSite 名が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1815
-#: includes/class-ai-search-schema-settings.php:1821
+#: dist/includes/class-ai-search-schema-settings.php:1835
+#: includes/class-ai-search-schema-settings.php:1835
 msgid "WebSite URL is set."
 msgstr "WebSite URL が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1816
-#: includes/class-ai-search-schema-settings.php:1822
+#: dist/includes/class-ai-search-schema-settings.php:1836
+#: includes/class-ai-search-schema-settings.php:1836
 msgid "WebSite URL is missing."
 msgstr "WebSite URL が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1822
-#: includes/class-ai-search-schema-settings.php:1828
+#: dist/includes/class-ai-search-schema-settings.php:1842
+#: includes/class-ai-search-schema-settings.php:1842
 msgid "Language (inLanguage) is set."
 msgstr "言語 (inLanguage) が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1823
-#: includes/class-ai-search-schema-settings.php:1829
+#: dist/includes/class-ai-search-schema-settings.php:1843
+#: includes/class-ai-search-schema-settings.php:1843
 msgid "Language is missing. Add at least one language."
 msgstr "言語が未設定です。少なくとも1件追加してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1828
-#: includes/class-ai-search-schema-settings.php:1834
+#: dist/includes/class-ai-search-schema-settings.php:1848
+#: includes/class-ai-search-schema-settings.php:1848
 msgid "Publisher is set."
 msgstr "publisher が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1829
-#: includes/class-ai-search-schema-settings.php:1835
+#: dist/includes/class-ai-search-schema-settings.php:1849
+#: includes/class-ai-search-schema-settings.php:1849
 msgid "Publisher is missing. Set Organization first."
 msgstr "publisher が未設定です。先に Organization を設定してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1833
-#: includes/class-ai-search-schema-settings.php:1839
+#: dist/includes/class-ai-search-schema-settings.php:1853
+#: includes/class-ai-search-schema-settings.php:1853
 msgid "WebSite"
 msgstr "WebSite"
 
-#: dist/includes/class-ai-search-schema-settings.php:1843
-#: includes/class-ai-search-schema-settings.php:1849
+#: dist/includes/class-ai-search-schema-settings.php:1863
+#: includes/class-ai-search-schema-settings.php:1863
 msgid "WebPage @id/url base is set."
 msgstr "WebPage の @id/URL ベースが設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1844
-#: includes/class-ai-search-schema-settings.php:1850
+#: dist/includes/class-ai-search-schema-settings.php:1864
+#: includes/class-ai-search-schema-settings.php:1864
 msgid "WebPage base URL is missing."
 msgstr "WebPage のベースURLが未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1850
-#: includes/class-ai-search-schema-settings.php:1856
+#: dist/includes/class-ai-search-schema-settings.php:1870
+#: includes/class-ai-search-schema-settings.php:1870
 msgid "WebPage inLanguage ready."
 msgstr "WebPage の inLanguage が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1851
-#: includes/class-ai-search-schema-settings.php:1857
+#: dist/includes/class-ai-search-schema-settings.php:1871
+#: includes/class-ai-search-schema-settings.php:1871
 msgid "WebPage inLanguage will fallback. Consider setting languages."
 msgstr "WebPage の inLanguage はフォールバックします。言語を設定してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1866
-#: includes/class-ai-search-schema-settings.php:1872
+#: dist/includes/class-ai-search-schema-settings.php:1886
+#: includes/class-ai-search-schema-settings.php:1886
 msgid "Article schema is preferred for content."
 msgstr "コンテンツに Article スキーマが推奨されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1867
-#: includes/class-ai-search-schema-settings.php:1873
+#: dist/includes/class-ai-search-schema-settings.php:1887
+#: includes/class-ai-search-schema-settings.php:1887
 msgid "Content model is not set to Article by default."
 msgstr "デフォルトのコンテンツモデルが Article になっていません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1884
-#: includes/class-ai-search-schema-settings.php:1890
+#: dist/includes/class-ai-search-schema-settings.php:1904
+#: includes/class-ai-search-schema-settings.php:1904
 msgid "No published posts found. Article schema cannot be checked."
 msgstr "公開済み投稿が見つかりません。Article スキーマのチェックができません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1887
-#: dist/includes/class-ai-search-schema-settings.php:1930
-#: includes/class-ai-search-schema-settings.php:1893
-#: includes/class-ai-search-schema-settings.php:1936
+#: dist/includes/class-ai-search-schema-settings.php:1907
+#: dist/includes/class-ai-search-schema-settings.php:1950
+#: includes/class-ai-search-schema-settings.php:1907
+#: includes/class-ai-search-schema-settings.php:1950
 msgid "Article (sample post)"
 msgstr "Article（サンプル投稿）"
 
-#: dist/includes/class-ai-search-schema-settings.php:1895
-#: includes/class-ai-search-schema-settings.php:1901
+#: dist/includes/class-ai-search-schema-settings.php:1915
+#: includes/class-ai-search-schema-settings.php:1915
 msgid "Headline is present."
 msgstr "見出しがあります。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1896
-#: includes/class-ai-search-schema-settings.php:1902
+#: dist/includes/class-ai-search-schema-settings.php:1916
+#: includes/class-ai-search-schema-settings.php:1916
 msgid "Headline is missing."
 msgstr "見出しがありません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1901
-#: includes/class-ai-search-schema-settings.php:1907
+#: dist/includes/class-ai-search-schema-settings.php:1921
+#: includes/class-ai-search-schema-settings.php:1921
 msgid "datePublished is present."
 msgstr "datePublished が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1902
-#: includes/class-ai-search-schema-settings.php:1908
+#: dist/includes/class-ai-search-schema-settings.php:1922
+#: includes/class-ai-search-schema-settings.php:1922
 msgid "datePublished is missing."
 msgstr "datePublished が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1907
-#: includes/class-ai-search-schema-settings.php:1913
+#: dist/includes/class-ai-search-schema-settings.php:1927
+#: includes/class-ai-search-schema-settings.php:1927
 msgid "dateModified is present."
 msgstr "dateModified が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1908
-#: includes/class-ai-search-schema-settings.php:1914
+#: dist/includes/class-ai-search-schema-settings.php:1928
+#: includes/class-ai-search-schema-settings.php:1928
 msgid "dateModified is missing."
 msgstr "dateModified が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1915
-#: includes/class-ai-search-schema-settings.php:1921
+#: dist/includes/class-ai-search-schema-settings.php:1935
+#: includes/class-ai-search-schema-settings.php:1935
 msgid "Author is set."
 msgstr "投稿者が設定されています。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1916
-#: includes/class-ai-search-schema-settings.php:1922
+#: dist/includes/class-ai-search-schema-settings.php:1936
+#: includes/class-ai-search-schema-settings.php:1936
 msgid "Author information is missing."
 msgstr "投稿者情報が未設定です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1925
-#: includes/class-ai-search-schema-settings.php:1931
+#: dist/includes/class-ai-search-schema-settings.php:1945
+#: includes/class-ai-search-schema-settings.php:1945
 msgid "Featured image found for the sample post."
 msgstr "サンプル投稿にアイキャッチ画像があります。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1926
-#: includes/class-ai-search-schema-settings.php:1932
+#: dist/includes/class-ai-search-schema-settings.php:1946
+#: includes/class-ai-search-schema-settings.php:1946
 msgid "Featured image missing on the sample post."
 msgstr "サンプル投稿にアイキャッチ画像がありません。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1952
-#: includes/class-ai-search-schema-settings.php:1958
+#: dist/includes/class-ai-search-schema-settings.php:1972
+#: includes/class-ai-search-schema-settings.php:1972
 msgid "FAQPage schema is enabled for at least one post type."
 msgstr "FAQPage スキーマが少なくとも1つの投稿タイプで有効です。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1956
-#: includes/class-ai-search-schema-settings.php:1962
+#: dist/includes/class-ai-search-schema-settings.php:1976
+#: includes/class-ai-search-schema-settings.php:1976
 msgid "Ensure each FAQ has both question and answer in the page content."
 msgstr "各FAQに質問と回答が揃っていることを確認してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:1961
-#: includes/class-ai-search-schema-settings.php:1967
+#: dist/includes/class-ai-search-schema-settings.php:1981
+#: includes/class-ai-search-schema-settings.php:1981
 msgid "FAQPage schema is disabled. Enable it on relevant post types if needed."
 msgstr "FAQPage スキーマが無効です。必要な投稿タイプで有効にしてください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:2006
-#: includes/class-ai-search-schema-settings.php:2012
+#: dist/includes/class-ai-search-schema-settings.php:2026
+#: includes/class-ai-search-schema-settings.php:2026
 msgid "BreadcrumbList can be generated."
 msgstr "BreadcrumbList を生成できます。"
 
-#: dist/includes/class-ai-search-schema-settings.php:2007
-#: includes/class-ai-search-schema-settings.php:2013
+#: dist/includes/class-ai-search-schema-settings.php:2027
+#: includes/class-ai-search-schema-settings.php:2027
 msgid "Breadcrumb trail is empty. Check HTML output or enable breadcrumbs."
 msgstr "パンくずリストが空です。HTML出力を確認するか有効化してください。"
 
-#: dist/includes/class-ai-search-schema-settings.php:2011
-#: includes/class-ai-search-schema-settings.php:2017
+#: dist/includes/class-ai-search-schema-settings.php:2031
+#: includes/class-ai-search-schema-settings.php:2031
 msgid "BreadcrumbList"
 msgstr "パンくずリスト (BreadcrumbList)"
 
@@ -1470,19 +1618,19 @@ msgstr ""
 "SNSプロフィールを追加。Organization/LocalBusinessのsameAsプロパティとしてナ"
 "レッジパネルに使用されます。"
 
-#: dist/templates/admin-settings.php:344 dist/templates/admin-settings.php:1009
+#: dist/templates/admin-settings.php:344 dist/templates/admin-settings.php:1093
 #: templates/admin-settings.php:344 templates/admin-settings.php:1093
 msgid "Account name or profile URL"
 msgstr "アカウント名またはURL"
 
-#: dist/templates/admin-settings.php:345 dist/templates/admin-settings.php:1010
+#: dist/templates/admin-settings.php:345 dist/templates/admin-settings.php:1094
 #: templates/admin-settings.php:345 templates/admin-settings.php:1094
 msgid "Other service label"
 msgstr "その他のサービス名"
 
 #: dist/templates/admin-settings.php:346 dist/templates/admin-settings.php:886
-#: dist/templates/admin-settings.php:1011
-#: dist/templates/admin-settings.php:1026
+#: dist/templates/admin-settings.php:1095
+#: dist/templates/admin-settings.php:1110
 #: dist/templates/wizard/steps/step-1-basics.php:77
 #: templates/admin-settings.php:346 templates/admin-settings.php:886
 #: templates/admin-settings.php:1095 templates/admin-settings.php:1110
@@ -2163,13 +2311,72 @@ msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
 msgstr ""
 "llms.txt の内容を編集できます。空欄にするとサイトデータから自動生成されます。"
 
-#: dist/templates/admin-settings.php:996 templates/admin-settings.php:1080
+#: dist/templates/admin-settings.php:996 templates/admin-settings.php:996
+msgid "License"
+msgstr ""
+
+#: dist/templates/admin-settings.php:997 templates/admin-settings.php:997
+msgid "Manage your AI Search Schema Pro license."
+msgstr ""
+
+#: dist/templates/admin-settings.php:1011 templates/admin-settings.php:1011
+msgid "Status:"
+msgstr ""
+
+#: dist/templates/admin-settings.php:1018 templates/admin-settings.php:1018
+msgid "License Key"
+msgstr ""
+
+#: dist/templates/admin-settings.php:1025 templates/admin-settings.php:1025
+msgid "Enter your license key"
+msgstr ""
+
+#: dist/templates/admin-settings.php:1040 templates/admin-settings.php:1040
+msgid "Enter your Pro license key to unlock advanced features."
+msgstr ""
+
+#: dist/templates/admin-settings.php:1042 templates/admin-settings.php:1042
+msgid "Get a license"
+msgstr ""
+
+#: dist/templates/admin-settings.php:1050 templates/admin-settings.php:1050
+msgid "Pro Features"
+msgstr ""
+
+#: dist/templates/admin-settings.php:1055 templates/admin-settings.php:1055
+#, fuzzy
+msgid "Manage multiple LocalBusiness locations."
+msgstr "Google LocalBusiness ドキュメントを見る →"
+
+#: dist/templates/admin-settings.php:1060 templates/admin-settings.php:1060
+msgid "Create custom schema templates for different content types."
+msgstr ""
+
+#: dist/templates/admin-settings.php:1065 templates/admin-settings.php:1065
+msgid "Get priority email support."
+msgstr ""
+
+#: dist/templates/admin-settings.php:1070 templates/admin-settings.php:1070
+msgid "Scheduled automatic schema validation."
+msgstr ""
+
+#: dist/templates/admin-settings.php:1080 templates/admin-settings.php:1080
 msgid "Save settings"
 msgstr "設定を保存"
 
-#: dist/templates/admin-settings.php:1024 templates/admin-settings.php:1108
+#: dist/templates/admin-settings.php:1108 templates/admin-settings.php:1108
 msgid "〜"
 msgstr "〜"
+
+#: dist/templates/admin-settings.php:1116 templates/admin-settings.php:1116
+#, fuzzy
+msgid "Open Test Manager"
+msgstr "AEOスキーマ設定"
+
+#: dist/templates/admin-settings.php:1118 templates/admin-settings.php:1118
+#, fuzzy
+msgid "Test Manager"
+msgstr "AEOスキーマ設定"
 
 #: dist/templates/wizard/components/progress-bar.php:18
 #: templates/wizard/components/progress-bar.php:18
@@ -2917,170 +3124,6 @@ msgstr "設定テンプレートが見つかりませんでした。"
 #, fuzzy, php-format
 msgid "AI Search Schema v%s"
 msgstr "AEO スキーマ"
-
-#: includes/class-ai-search-schema-license.php:144
-msgid "License validation API is not yet available."
-msgstr ""
-
-#: includes/class-ai-search-schema-license.php:161
-#, fuzzy
-msgid "Please enter a license key."
-msgstr "有効なURLを入力してください"
-
-#: includes/class-ai-search-schema-license.php:179
-#, fuzzy
-msgid "License activated successfully."
-msgstr "設定のインポートが完了しました"
-
-#: includes/class-ai-search-schema-license.php:194
-msgid "License validation failed."
-msgstr ""
-
-#: includes/class-ai-search-schema-license.php:214
-msgid "License deactivated."
-msgstr ""
-
-#: includes/class-ai-search-schema-license.php:268
-msgid "Active"
-msgstr ""
-
-#: includes/class-ai-search-schema-license.php:270
-msgid "Expired"
-msgstr ""
-
-#: includes/class-ai-search-schema-license.php:272
-#, fuzzy
-msgid "Invalid"
-msgstr "無効なステップです"
-
-#: includes/class-ai-search-schema-license.php:274
-msgid "Inactive"
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:108
-#: templates/admin-settings.php:1054
-msgid "Multi-Location Support"
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:109
-msgid ""
-"Manage multiple LocalBusiness locations from a single WordPress installation."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:113
-#: templates/admin-settings.php:1059
-msgid "Custom Schema Templates"
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:114
-msgid "Create and save custom schema templates for different content types."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:118
-#: templates/admin-settings.php:1064
-msgid "Priority Support"
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:119
-msgid "Get priority email support from our development team."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:123
-#: templates/admin-settings.php:1069
-msgid "Advanced Validation"
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:124
-msgid "Scheduled automatic schema validation with email reports."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:163
-#, fuzzy
-msgid "Pro"
-msgstr "Product"
-
-#. translators: %s: feature name
-#: includes/class-ai-search-schema-pro-features.php:169
-#, php-format
-msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:175
-msgid "Upgrade to Pro to unlock all advanced features."
-msgstr ""
-
-#: includes/class-ai-search-schema-pro-features.php:178
-msgid "Learn More"
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:145
-#, fuzzy
-msgid "Activating..."
-msgstr "保存中…"
-
-#: includes/class-ai-search-schema-settings.php:146
-#, fuzzy
-msgid "Deactivating..."
-msgstr "保存中…"
-
-#: includes/class-ai-search-schema-settings.php:147
-#: templates/admin-settings.php:1034
-msgid "Activate"
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:148
-#: templates/admin-settings.php:1030
-msgid "Deactivate"
-msgstr ""
-
-#: templates/admin-settings.php:996
-msgid "License"
-msgstr ""
-
-#: templates/admin-settings.php:997
-msgid "Manage your AI Search Schema Pro license."
-msgstr ""
-
-#: templates/admin-settings.php:1011
-msgid "Status:"
-msgstr ""
-
-#: templates/admin-settings.php:1018
-msgid "License Key"
-msgstr ""
-
-#: templates/admin-settings.php:1025
-msgid "Enter your license key"
-msgstr ""
-
-#: templates/admin-settings.php:1040
-msgid "Enter your Pro license key to unlock advanced features."
-msgstr ""
-
-#: templates/admin-settings.php:1042
-msgid "Get a license"
-msgstr ""
-
-#: templates/admin-settings.php:1050
-msgid "Pro Features"
-msgstr ""
-
-#: templates/admin-settings.php:1055
-#, fuzzy
-msgid "Manage multiple LocalBusiness locations."
-msgstr "Google LocalBusiness ドキュメントを見る →"
-
-#: templates/admin-settings.php:1060
-msgid "Create custom schema templates for different content types."
-msgstr ""
-
-#: templates/admin-settings.php:1065
-msgid "Get priority email support."
-msgstr ""
-
-#: templates/admin-settings.php:1070
-msgid "Scheduled automatic schema validation."
-msgstr ""
 
 #: tools/test-manager.php:48
 #, fuzzy
