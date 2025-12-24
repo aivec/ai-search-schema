@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/aivec/ai-search-schema#readme
+    about: Check the documentation before opening an issue
+  - name: WordPress.org Support Forum
+    url: https://wordpress.org/support/plugin/ai-search-schema/
+    about: For usage questions (not bug reports)

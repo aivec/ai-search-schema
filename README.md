@@ -109,24 +109,6 @@ See [docs/FAQ.md](docs/FAQ.md) for frequently asked questions about:
 - LocalBusiness schema setup / LocalBusinessスキーマの設定
 - Troubleshooting common issues / よくある問題のトラブルシューティング
 
-## Support Policy / サポートポリシー
-
-**Bug Reports / バグ報告:**
-Please report bugs on [GitHub Issues](https://github.com/aivec/ai-search-schema/issues) with:
-以下の情報とともにGitHub Issuesでバグ報告をお願いします：
-
-- WordPress version / WordPressバージョン
-- PHP version / PHPバージョン
-- Theme name / テーマ名
-- Steps to reproduce / 再現手順
-- Error logs (if available) / エラーログ（あれば）
-
-**Not Supported / サポート対象外:**
-- Usage questions and setup assistance / 使い方の相談・設定代行
-- SEO/AEO strategy consulting / SEO/AEO戦略相談
-- Theme or plugin compatibility issues / テーマ・他プラグインの個別問題
-- Customization requests / カスタマイズ要望
-
 ## License / ライセンス
 
 GPLv2 or later
