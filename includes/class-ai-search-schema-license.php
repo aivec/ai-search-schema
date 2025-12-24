@@ -5,6 +5,23 @@
  * Pro版のライセンス管理を行うクラスです。
  * ライセンスキーの検証・保存・ステータス管理を行います。
  *
+ * ## External Communication / 外部通信
+ *
+ * When the license API is implemented, the following data will be sent
+ * to the license server (api.aivec.co.jp):
+ *
+ * - License key
+ * - Site URL (domain)
+ * - Plugin version
+ *
+ * We do NOT collect or transmit:
+ * - Post/page content
+ * - User personal data
+ * - Analytics or tracking data
+ *
+ * Note: The free version does not make any external API calls.
+ * The validate() method currently returns a stub response.
+ *
  * @package AI_Search_Schema
  * @since 0.10.0
  */

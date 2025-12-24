@@ -1,8 +1,16 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Documentation
-    url: https://github.com/aivec/ai-search-schema#readme
-    about: Check the documentation before opening an issue
-  - name: WordPress.org Support Forum
-    url: https://wordpress.org/support/plugin/ai-search-schema/
-    about: For usage questions (not bug reports)
+  - name: "⚠️ Bug Reports Only"
+    url: https://github.com/aivec/ai-search-schema/blob/main/docs/faq.md
+    about: |
+      This repository accepts BUG REPORTS ONLY.
+      Usage questions and SEO/AEO consulting are NOT supported.
+      Issues without reproduction steps will be CLOSED without response.
+  - name: "📘 FAQ / Documentation"
+    url: https://github.com/aivec/ai-search-schema/blob/main/docs/faq.md
+    about: Check the FAQ before opening an issue. Most questions are answered there.
+  - name: "🧾 Support Policy"
+    url: https://github.com/aivec/ai-search-schema#support-policy
+    about: |
+      Free version support: Bug reports only (best effort, no guarantee).
+      For Pro support or feature requests, contact us separately.

@@ -1,6 +1,57 @@
 # FAQ / よくある質問
 
-AVC AEO Schema プラグインに関するよくある質問と回答をまとめています。
+AI Search Schema プラグインに関するよくある質問と回答をまとめています。
+
+---
+
+## Support Policy / サポートポリシー
+
+### Supported (Free Version) / サポート対象
+
+- Bug reports with clear reproduction steps
+- 再現手順が明確なバグ報告のみ
+
+### NOT Supported (Free Version) / サポート対象外
+
+- Usage questions ("How do I...?") / 使い方の質問
+- SEO/AEO strategy consulting / SEO/AEO戦略のコンサルティング
+- Feature requests / 機能リクエスト
+- Customization requests / カスタマイズ依頼
+- Issues without reproduction steps / 再現手順のない問題
+
+### Response Policy / 対応方針
+
+- Best effort, no guaranteed response time / ベストエフォート、返信保証なし
+- Issues without required information will be closed without response / 必要情報のない問題は対応なしでクローズ
+- All bug reports must be submitted via [GitHub Issues](https://github.com/aivec/ai-search-schema/issues/new?template=bug_report.yml)
+
+---
+
+## Required Information for Bug Reports / バグ報告に必要な情報
+
+When submitting a bug report, you **MUST** provide:
+
+1. **WordPress Version** (e.g., 6.7)
+2. **PHP Version** (e.g., 8.2)
+3. **Plugin Version** (e.g., 0.10.0)
+4. **Theme Name**
+5. **Active Plugins** (especially SEO plugins)
+6. **Steps to Reproduce** - Exact steps to trigger the issue
+7. **Expected Behavior** - What should happen
+8. **Actual Behavior** - What actually happens
+9. **Error Logs** (if applicable)
+
+**Issues without reproduction steps will be closed without response.**
+
+---
+
+## How to Validate Structured Data / 構造化データの検証方法
+
+Use these tools to validate your schema output:
+
+1. **Google Rich Results Test** - https://search.google.com/test/rich-results
+2. **Schema.org Validator** - https://validator.schema.org/
+3. **Google Search Console** - Check "Enhancements" section
 
 ---
 
@@ -32,9 +83,9 @@ AVC AEO Schema プラグインに関するよくある質問と回答をまと�
 ### Do I still need Yoast SEO / Rank Math if I use this plugin?
 ### このプラグインを使う場合、Yoast SEO / Rank Mathは必要ですか？
 
-**English:** Yes, you can keep using your existing SEO plugin. AVC AEO Schema focuses *only* on structured data (JSON-LD). It doesn't handle meta tags, sitemaps, or content analysis. Use both together—this plugin will automatically suppress conflicting schema output from other plugins.
+**English:** Yes, you can keep using your existing SEO plugin. AI Search Schema focuses *only* on structured data (JSON-LD). It doesn't handle meta tags, sitemaps, or content analysis. Use both together—this plugin will automatically suppress conflicting schema output from other plugins.
 
-**日本語:** はい、既存のSEOプラグインを引き続き使用できます。AVC AEO Schemaは構造化データ（JSON-LD）*のみ*に焦点を当てています。メタタグ、サイトマップ、コンテンツ分析は扱いません。両方を併用してください—このプラグインは他のプラグインからの競合するスキーマ出力を自動的に抑制します。
+**日本語:** はい、既存のSEOプラグインを引き続き使用できます。AI Search Schemaは構造化データ（JSON-LD）*のみ*に焦点を当てています。メタタグ、サイトマップ、コンテンツ分析は扱いません。両方を併用してください—このプラグインは他のプラグインからの競合するスキーマ出力を自動的に抑制します。
 
 ---
 
@@ -43,14 +94,14 @@ AVC AEO Schema プラグインに関するよくある質問と回答をまと�
 ### My site already has schema from another plugin. Will there be duplicates?
 ### サイトに他のプラグインからのスキーマがあります。重複しますか？
 
-**English:** No. AVC AEO Schema automatically detects and suppresses schema output from:
+**English:** No. AI Search Schema automatically detects and suppresses schema output from:
 - Yoast SEO
 - Rank Math
 - All in One SEO (AIOSEO)
 
 The plugin uses output buffering and filter removal to ensure only one schema source is active.
 
-**日本語:** いいえ。AVC AEO Schemaは以下からのスキーマ出力を自動的に検出して抑制します：
+**日本語:** いいえ。AI Search Schemaは以下からのスキーマ出力を自動的に検出して抑制します：
 - Yoast SEO
 - Rank Math
 - All in One SEO (AIOSEO)
@@ -66,13 +117,13 @@ The plugin uses output buffering and filter removal to ensure only one schema so
 
 1. **Filter removal**: Hooks from competing plugins are removed before `wp_head`
 2. **Output buffering**: Any remaining schema in the HTML buffer is stripped
-3. **Unified output**: AVC AEO Schema outputs a single, merged `@graph`
+3. **Unified output**: AI Search Schema outputs a single, merged `@graph`
 
 **日本語:** 設定で「AEO Schema出力を使用」が選択されている場合：
 
 1. **フィルター除去**: `wp_head`の前に競合プラグインのフックを除去
 2. **出力バッファリング**: HTMLバッファ内の残りのスキーマを除去
-3. **統合出力**: AVC AEO Schemaが単一の統合された`@graph`を出力
+3. **統合出力**: AI Search Schemaが単一の統合された`@graph`を出力
 
 ---
 
@@ -238,9 +289,35 @@ The plugin's admin panel includes a real-time guide showing which properties are
 
 ---
 
+## External Communication / 外部通信について
+
+### License Validation (Pro Version) / ライセンス検証（Pro版）
+
+When activating a Pro license, the following information may be sent to our license server:
+
+Pro版ライセンス有効化時に、以下の情報がライセンスサーバーに送信される場合があります：
+
+- License key / ライセンスキー
+- Site URL (domain) / サイトURL（ドメイン）
+- Plugin version / プラグインバージョン
+
+**We do NOT collect or transmit / 収集・送信しない情報:**
+
+- Post/page content / 投稿・ページのコンテンツ
+- User personal data / ユーザーの個人情報
+- Analytics or tracking data / アナリティクス・トラッキングデータ
+
+**Note:** The free version does not make any external API calls for license validation.
+
+**注意:** 無料版ではライセンス検証のための外部API通信は行いません。
+
+---
+
 ## Further Resources / 関連リソース
 
 - [Google Structured Data Documentation](https://developers.google.com/search/docs/appearance/structured-data)
 - [Google Rich Results Test](https://search.google.com/test/rich-results)
 - [Schema.org Full Reference](https://schema.org/)
 - [Google LocalBusiness Guidelines](https://developers.google.com/search/docs/appearance/structured-data/local-business)
+- [GitHub Repository](https://github.com/aivec/ai-search-schema)
+- [Bug Report](https://github.com/aivec/ai-search-schema/issues/new?template=bug_report.yml)

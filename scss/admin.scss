@@ -1225,3 +1225,56 @@ $gap-card: 24px;
   letter-spacing: 0.5px;
   border-radius: 4px;
 }
+
+// Support Policy Notice
+.ais-support-notice {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border: 1px solid #f59e0b;
+  border-radius: $radius-field;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+
+  &__message {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #92400e;
+    margin-bottom: 12px;
+
+    strong {
+      color: #78350f;
+    }
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+
+    a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #fff;
+      border: 1px solid #f59e0b;
+      border-radius: 6px;
+      color: #92400e;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #fef3c7;
+        border-color: #d97706;
+        color: #78350f;
+      }
+
+      .dashicons {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}

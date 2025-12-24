@@ -122,6 +122,44 @@ See [docs/FAQ.md](docs/FAQ.md) for frequently asked questions about:
 GPLv2 or later
 
 
+== Support Policy ==
+
+**Free version support: Bug reports only.**
+
+= What We Support =
+* Bug reports with clear reproduction steps
+* Issues causing PHP errors or broken schema output
+
+= What We Do NOT Support =
+* Usage questions ("How do I...?")
+* SEO/AEO strategy consulting
+* Feature requests
+* Customization requests
+
+= Response Policy =
+* Best effort - no guaranteed response time
+* Issues without reproduction steps will be closed
+* All bug reports via [GitHub Issues](https://github.com/aivec/ai-search-schema/issues)
+
+= Required Information for Bug Reports =
+* WordPress version, PHP version, plugin version
+* Theme name and active plugins (especially SEO plugins)
+* **Steps to reproduce** (mandatory)
+* Expected vs actual behavior
+* Error logs (if available)
+
+== External Communication ==
+
+= License Validation (Pro Version) =
+When activating a Pro license, the following may be sent to our server:
+* License key
+* Site URL (domain)
+* Plugin version
+
+We do NOT collect: post content, user data, or analytics.
+
+The free version makes no external license API calls.
+
 == Frequently Asked Questions ==
 
 = Does it support multiple locations? =
@@ -135,28 +173,6 @@ llms.txt is a standard for helping AI systems understand your site structure. Se
 
 = Can I use this with other SEO plugins? =
 Yes! This plugin automatically suppresses conflicting schema output from Yoast SEO, Rank Math, and All in One SEO.
-
-== Support Policy ==
-
-= Free Version =
-* Bug reports only (with reproduction steps required)
-* Please use GitHub Issues for bug reports
-
-= Not Supported =
-* Usage questions and setup assistance
-* SEO/AEO strategy consulting
-* Theme or other plugin compatibility issues
-* Customization requests
-
-= Bug Reports =
-Please report bugs on [GitHub](https://github.com/aivec/ai-search-schema/issues) with:
-* WordPress version
-* PHP version
-* Theme name
-* Conflicting plugins (if any)
-* Steps to reproduce
-* Expected vs actual behavior
-* Error logs (if available)
 
 == Screenshots ==
 1. Settings → AI Search Schema (card-based UI with brand/site, local business, schema output, geocoding)
