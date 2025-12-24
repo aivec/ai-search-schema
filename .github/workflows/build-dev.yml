@@ -22,7 +22,7 @@ on:
   workflow_dispatch:  # 手動実行も可能
 
 env:
-  PLUGIN_SLUG: avc-aeo-schema
+  PLUGIN_SLUG: ai-search-schema
   PHP_VERSION: '8.2'
   NODE_VERSION: '20'
 
