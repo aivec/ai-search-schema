@@ -1,7 +1,11 @@
 # =============================================================================
-# AVC AEO Schema - Release Build Workflow
+# AI Search Schema - Release Build Workflow
 # =============================================================================
 # mainブランチへのpush時に製品ZIPをビルドしてS3にアップロード
+#
+# タグ命名規則:
+#   - v*.*.* (例: v0.10.2) → リリースビルド実行
+#   - v*.*.*-dev (例: v0.10.2-dev) → スキップ（devビルド用）
 #
 # 必要なGitHub Secrets:
 #   AWS_ACCESS_KEY_ID     - AWSアクセスキーID
@@ -21,7 +25,8 @@ on:
       - main
   push:
     tags:
-      - 'v*'  # v0.17.10 等のタグでもトリガー
+      - 'v*'
+      - '!v*-dev'  # -dev タグは除外
   workflow_dispatch:  # 手動実行も可能
 
 env:
@@ -32,8 +37,8 @@ env:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
-    # CI が成功し main ブランチの場合、タグpush時、または手動実行時のみ実行
-    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || github.event_name == 'push' || github.event_name == 'workflow_dispatch' }}
+    # CI が成功し main ブランチの場合、タグpush時（-dev除く）、または手動実行時のみ実行
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'push' && !contains(github.ref, '-dev')) || github.event_name == 'workflow_dispatch' }}
 
     steps:
       # -----------------------------------------------------------------------
