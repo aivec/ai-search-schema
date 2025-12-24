@@ -3,7 +3,7 @@
  * Plugin Name: AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: WordPress plugin for AEO schema markup, local SEO (MEO), structured breadcrumbs, and FAQ extraction.
- * Version: 0.9.0
+ * Version: 0.10.0
  * Author: AIVEC LLC.
  * Author URI: https://aivec.co.jp/apps
  * Text Domain: ai-search-schema
@@ -13,7 +13,7 @@
  */
 
 // Plugin constants.
-define( 'AI_SEARCH_SCHEMA_VERSION', '0.9.0' );
+define( 'AI_SEARCH_SCHEMA_VERSION', '0.10.0' );
 define( 'AI_SEARCH_SCHEMA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_URL', plugin_dir_url( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );
@@ -49,6 +49,7 @@ function ai_search_schema_filter_null_option_values( $value ) {
 add_filter( 'option_ai_search_schema_options', 'ai_search_schema_filter_null_option_values', 1 );
 add_filter( 'option_ai_search_schema_settings', 'ai_search_schema_filter_null_option_values', 1 );
 add_filter( 'option_ai_search_schema_wizard_progress', 'ai_search_schema_filter_null_option_values', 1 );
+add_filter( 'option_ai_search_schema_license', 'ai_search_schema_filter_null_option_values', 1 );
 
 // Composer autoloader or PSR-4 fallback.
 $ais_autoloader = AI_SEARCH_SCHEMA_DIR . 'vendor/autoload.php';
@@ -105,6 +106,16 @@ add_action(
 		AI_Search_Schema_Llms_Txt::init();
 	},
 	5
+);
+
+// Initialize Pro features manager.
+add_action(
+	'init',
+	static function () {
+		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-pro-features.php';
+		AI_Search_Schema_Pro_Features::init();
+	},
+	10
 );
 
 // Activation hook - set redirect transient for wizard and flush rewrite rules.

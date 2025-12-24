@@ -1076,3 +1076,152 @@ $gap-card: 24px;
     margin-right: 4px;
   }
 }
+
+// License card styles
+.ais-license-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding: 12px 16px;
+  background: $color-soft;
+  border-radius: $radius-field;
+}
+
+.ais-license-status-label {
+  font-weight: 500;
+  color: $color-muted;
+}
+
+.ais-license-status {
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+
+  &--active {
+    background: #dcfce7;
+    color: #166534;
+  }
+
+  &--expired {
+    background: #fef3c7;
+    color: #92400e;
+  }
+
+  &--invalid {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+
+  &--inactive {
+    background: #f1f5f9;
+    color: #64748b;
+  }
+}
+
+.ais-license-key-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+
+  input.regular-text {
+    flex: 1;
+    min-width: 250px;
+    max-width: 400px;
+  }
+}
+
+.ais-license-message {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.ais-pro-features-preview {
+  margin-top: 24px;
+  padding: 20px;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: $radius-field;
+  border: 1px solid $color-border;
+
+  h3 {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: $color-accent;
+  }
+}
+
+.ais-pro-features-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px;
+    background: $color-surface;
+    border-radius: 8px;
+    border: 1px solid $color-border;
+
+    .dashicons {
+      flex-shrink: 0;
+      color: $color-primary;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+    }
+
+    strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 4px;
+    }
+
+    span:last-child {
+      font-size: 13px;
+      color: $color-muted;
+      line-height: 1.4;
+    }
+  }
+}
+
+.ais-pro-notice {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: $radius-field;
+  border: 1px solid #f59e0b;
+  margin: 16px 0;
+
+  p {
+    flex: 1;
+    margin: 0;
+    font-size: 14px;
+    color: #92400e;
+  }
+}
+
+.ais-pro-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: linear-gradient(135deg, $color-primary 0%, $color-accent 100%);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+}

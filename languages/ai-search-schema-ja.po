@@ -3021,3 +3021,152 @@ msgstr "AEOスキーマ設定"
 #~ msgstr ""
 #~ "Organization: 企業・非営利団体・ブランド向け。LocalBusiness: 実店舗・レス"
 #~ "トラン・所在地のあるサービス業向け。"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-license.php
+msgid "License"
+msgstr "ライセンス"
+
+#: templates/admin-settings.php
+msgid "Manage your AI Search Schema Pro license."
+msgstr "AI Search Schema Proライセンスを管理します。"
+
+#: templates/admin-settings.php
+msgid "Status:"
+msgstr "ステータス:"
+
+#: templates/admin-settings.php
+msgid "License Key"
+msgstr "ライセンスキー"
+
+#: templates/admin-settings.php
+msgid "Enter your license key"
+msgstr "ライセンスキーを入力してください"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-license.php
+msgid "Deactivate"
+msgstr "無効化"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-license.php
+msgid "Activate"
+msgstr "有効化"
+
+#: templates/admin-settings.php
+msgid "Enter your Pro license key to unlock advanced features."
+msgstr "Proライセンスキーを入力して高度な機能をアンロックしてください。"
+
+#: templates/admin-settings.php
+msgid "Get a license"
+msgstr "ライセンスを取得"
+
+#: templates/admin-settings.php
+msgid "Pro Features"
+msgstr "Pro機能"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-pro-features.php
+msgid "Multi-Location Support"
+msgstr "マルチロケーション対応"
+
+#: templates/admin-settings.php
+msgid "Manage multiple LocalBusiness locations."
+msgstr "複数のLocalBusinessロケーションを管理できます。"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-pro-features.php
+msgid "Custom Schema Templates"
+msgstr "カスタムスキーマテンプレート"
+
+#: templates/admin-settings.php
+msgid "Create custom schema templates for different content types."
+msgstr "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成できます。"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-pro-features.php
+msgid "Priority Support"
+msgstr "優先サポート"
+
+#: templates/admin-settings.php
+msgid "Get priority email support."
+msgstr "優先メールサポートを受けられます。"
+
+#: templates/admin-settings.php includes/class-ai-search-schema-pro-features.php
+msgid "Advanced Validation"
+msgstr "高度な検証機能"
+
+#: templates/admin-settings.php
+msgid "Scheduled automatic schema validation."
+msgstr "スケジュール自動スキーマ検証。"
+
+#: includes/class-ai-search-schema-license.php
+msgid "Active"
+msgstr "有効"
+
+#: includes/class-ai-search-schema-license.php
+msgid "Expired"
+msgstr "期限切れ"
+
+#: includes/class-ai-search-schema-license.php
+msgid "Invalid"
+msgstr "無効"
+
+#: includes/class-ai-search-schema-license.php
+msgid "Inactive"
+msgstr "未使用"
+
+#: includes/class-ai-search-schema-license.php
+msgid "License validation API is not yet available."
+msgstr "ライセンス検証APIはまだ利用できません。"
+
+#: includes/class-ai-search-schema-license.php
+msgid "Please enter a license key."
+msgstr "ライセンスキーを入力してください。"
+
+#: includes/class-ai-search-schema-license.php
+msgid "License activated successfully."
+msgstr "ライセンスが正常に有効化されました。"
+
+#: includes/class-ai-search-schema-license.php
+msgid "License validation failed."
+msgstr "ライセンス検証に失敗しました。"
+
+#: includes/class-ai-search-schema-license.php
+msgid "License deactivated."
+msgstr "ライセンスが無効化されました。"
+
+#: includes/class-ai-search-schema-settings.php
+msgid "Activating..."
+msgstr "有効化中..."
+
+#: includes/class-ai-search-schema-settings.php
+msgid "Deactivating..."
+msgstr "無効化中..."
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Manage multiple LocalBusiness locations from a single WordPress installation."
+msgstr "単一のWordPressインストールから複数のLocalBusinessロケーションを管理できます。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Create and save custom schema templates for different content types."
+msgstr "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成・保存できます。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Get priority email support from our development team."
+msgstr "開発チームからの優先メールサポートを受けられます。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Scheduled automatic schema validation with email reports."
+msgstr "メールレポート付きのスケジュール自動スキーマ検証。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Pro"
+msgstr "Pro"
+
+#: includes/class-ai-search-schema-pro-features.php
+#, php-format
+msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
+msgstr "%s はPro機能です。アップグレードしてすべてのPro機能をアンロックしてください。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Upgrade to Pro to unlock all advanced features."
+msgstr "Proにアップグレードしてすべての高度な機能をアンロックしてください。"
+
+#: includes/class-ai-search-schema-pro-features.php
+msgid "Learn More"
+msgstr "詳しく見る"

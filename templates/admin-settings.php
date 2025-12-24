@@ -990,6 +990,90 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					</p>
 				</div>
 			</section>
+
+			<section class="ais-card">
+				<div class="ais-card__header">
+					<h2><?php esc_html_e( 'License', 'ai-search-schema' ); ?></h2>
+					<p><?php esc_html_e( 'Manage your AI Search Schema Pro license.', 'ai-search-schema' ); ?></p>
+				</div>
+				<div class="ais-card__body">
+					<?php
+					require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-license.php';
+					$license_manager = AI_Search_Schema_License::init();
+					$license_key     = $license_manager->get_license_key();
+					$license_status  = $license_manager->get_license_status();
+					$status_label    = $license_manager->get_status_label();
+					$status_class    = $license_manager->get_status_class();
+					$is_pro          = $license_manager->is_pro();
+					?>
+
+					<div class="ais-license-status-row">
+						<span class="ais-license-status-label"><?php esc_html_e( 'Status:', 'ai-search-schema' ); ?></span>
+						<span class="ais-license-status <?php echo esc_attr( $status_class ); ?>">
+							<?php echo esc_html( $status_label ); ?>
+						</span>
+					</div>
+
+					<div class="ais-field">
+						<label for="ais-license-key"><?php esc_html_e( 'License Key', 'ai-search-schema' ); ?></label>
+						<div class="ais-license-key-row">
+							<input
+								type="text"
+								id="ais-license-key"
+								class="regular-text"
+								value="<?php echo esc_attr( $license_key ); ?>"
+								placeholder="<?php esc_attr_e( 'Enter your license key', 'ai-search-schema' ); ?>"
+								<?php echo $is_pro ? 'readonly' : ''; ?>
+							/>
+							<?php if ( $is_pro ) : ?>
+								<button type="button" class="button" id="ais-deactivate-license">
+									<?php esc_html_e( 'Deactivate', 'ai-search-schema' ); ?>
+								</button>
+							<?php else : ?>
+								<button type="button" class="button button-primary" id="ais-activate-license">
+									<?php esc_html_e( 'Activate', 'ai-search-schema' ); ?>
+								</button>
+							<?php endif; ?>
+							<span class="spinner" style="float: none; margin-top: 0;"></span>
+						</div>
+						<p class="ais-field__description">
+							<?php esc_html_e( 'Enter your Pro license key to unlock advanced features.', 'ai-search-schema' ); ?>
+							<a href="https://aivec.co.jp/apps/ai-search-schema-pro" target="_blank" rel="noopener noreferrer">
+								<?php esc_html_e( 'Get a license', 'ai-search-schema' ); ?>
+							</a>
+						</p>
+						<span class="ais-license-message" id="ais-license-message"></span>
+					</div>
+
+					<?php if ( ! $is_pro ) : ?>
+					<div class="ais-pro-features-preview">
+						<h3><?php esc_html_e( 'Pro Features', 'ai-search-schema' ); ?></h3>
+						<ul class="ais-pro-features-list">
+							<li>
+								<span class="dashicons dashicons-location"></span>
+								<strong><?php esc_html_e( 'Multi-Location Support', 'ai-search-schema' ); ?></strong>
+								<span><?php esc_html_e( 'Manage multiple LocalBusiness locations.', 'ai-search-schema' ); ?></span>
+							</li>
+							<li>
+								<span class="dashicons dashicons-editor-code"></span>
+								<strong><?php esc_html_e( 'Custom Schema Templates', 'ai-search-schema' ); ?></strong>
+								<span><?php esc_html_e( 'Create custom schema templates for different content types.', 'ai-search-schema' ); ?></span>
+							</li>
+							<li>
+								<span class="dashicons dashicons-sos"></span>
+								<strong><?php esc_html_e( 'Priority Support', 'ai-search-schema' ); ?></strong>
+								<span><?php esc_html_e( 'Get priority email support.', 'ai-search-schema' ); ?></span>
+							</li>
+							<li>
+								<span class="dashicons dashicons-yes-alt"></span>
+								<strong><?php esc_html_e( 'Advanced Validation', 'ai-search-schema' ); ?></strong>
+								<span><?php esc_html_e( 'Scheduled automatic schema validation.', 'ai-search-schema' ); ?></span>
+							</li>
+						</ul>
+					</div>
+					<?php endif; ?>
+				</div>
+			</section>
 		</div>
 
 		<div class="ais-settings__actions">

@@ -140,6 +140,12 @@ class AI_Search_Schema_Settings {
 				'i18nLlmsTxtSaving'         => __( 'Saving...', 'ai-search-schema' ),
 				'i18nLlmsTxtSave'           => __( 'Save edits', 'ai-search-schema' ),
 				'i18nLlmsTxtSaved'          => __( 'Saved!', 'ai-search-schema' ),
+				// License strings.
+				'licenseNonce'              => wp_create_nonce( 'ai_search_schema_license' ),
+				'i18nLicenseActivating'     => __( 'Activating...', 'ai-search-schema' ),
+				'i18nLicenseDeactivating'   => __( 'Deactivating...', 'ai-search-schema' ),
+				'i18nLicenseActivate'       => __( 'Activate', 'ai-search-schema' ),
+				'i18nLicenseDeactivate'     => __( 'Deactivate', 'ai-search-schema' ),
 			)
 		);
 	}
