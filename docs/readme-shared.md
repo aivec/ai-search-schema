@@ -1,5 +1,5 @@
 ## Overview / 概要
-WordPress plugin for AI search optimization, Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
+WordPress plugin for generating structured data optimized for AI-powered search engines, including Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
 AI検索最適化・ローカルSEO対応のWordPressプラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
 
 ## Why Structured Data Matters Now / 今、構造化データが重要な理由
@@ -70,8 +70,8 @@ This plugin follows WordPress security best practices:
 
 ## FAQ / よくある質問
 
-See [docs/FAQ.md](docs/FAQ.md) for frequently asked questions about:
-よくある質問については [docs/FAQ.md](docs/FAQ.md) をご覧ください：
+See [See the FAQ on GitHub:](https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md) for frequently asked questions about:
+よくある質問については [See the FAQ on GitHub:](https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md) をご覧ください：
 
 - Schema conflicts with other plugins / 他プラグインとのスキーマ衝突
 - LocalBusiness schema setup / LocalBusinessスキーマの設定
