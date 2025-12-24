@@ -1,16 +1,16 @@
 blank_issues_enabled: false
 contact_links:
   - name: "⚠️ Bug Reports Only"
-    url: https://github.com/aivec/ai-search-schema/blob/main/docs/faq.md
+    url: https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md#support-policy--サポートポリシー
     about: |
       This repository accepts BUG REPORTS ONLY.
       Usage questions and SEO/AEO consulting are NOT supported.
       Issues without reproduction steps will be CLOSED without response.
   - name: "📘 FAQ / Documentation"
-    url: https://github.com/aivec/ai-search-schema/blob/main/docs/faq.md
+    url: https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md
     about: Check the FAQ before opening an issue. Most questions are answered there.
   - name: "🧾 Support Policy"
-    url: https://github.com/aivec/ai-search-schema#support-policy
+    url: https://github.com/aivec/ai-search-schema/blob/main/docs/FAQ.md#support-policy--サポートポリシー
     about: |
       Free version support: Bug reports only (best effort, no guarantee).
       For Pro support or feature requests, contact us separately.
