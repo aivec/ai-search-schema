@@ -33,7 +33,7 @@ When submitting a bug report, you **MUST** provide:
 
 1. **WordPress Version** (e.g., 6.7)
 2. **PHP Version** (e.g., 8.2)
-3. **Plugin Version** (e.g., 0.10.0)
+3. **Plugin Version** (e.g., 1.0.0)
 4. **Theme Name**
 5. **Active Plugins** (especially SEO plugins)
 6. **Steps to Reproduce** - Exact steps to trigger the issue

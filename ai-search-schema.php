@@ -3,17 +3,19 @@
  * Plugin Name: AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version: 0.10.3
- * Author: AIVEC LLC.
- * Author URI: https://aivec.co.jp/apps
- * Text Domain: ai-search-schema
- * Domain Path: /languages
+ * Version:           1.0.0
  * Requires at least: 6.0
- * Requires PHP: 8.0
+ * Requires PHP:      8.0
+ * Author:            Aivec LLC
+ * Author URI:        https://aivec.co.jp/
+ * License:           GPLv2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       ai-search-schema
+ * Domain Path:       /languages
  */
 
 // Plugin constants.
-define( 'AI_SEARCH_SCHEMA_VERSION', '0.10.3' );
+define( 'AI_SEARCH_SCHEMA_VERSION', '1.0.0' );
 define( 'AI_SEARCH_SCHEMA_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_URL', plugin_dir_url( __FILE__ ) );
 define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );

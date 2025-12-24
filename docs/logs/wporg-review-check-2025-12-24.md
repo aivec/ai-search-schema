@@ -1,7 +1,7 @@
 # WP.org Plugin Review Compliance Check
 
 **Date:** 2025-12-24
-**Version:** 0.10.2
+**Version:** 1.0.0
 **Status:** Ready for submission
 
 ---
@@ -42,7 +42,7 @@ The AI Search Schema plugin was reviewed for WordPress.org plugin directory comp
 **Required Headers:**
 | Header | Value | Status |
 |--------|-------|--------|
-| Stable tag | 0.10.2 | ✅ |
+| Stable tag | 1.0.0 | ✅ |
 | Requires PHP | 8.0 | ✅ |
 | Tested up to | 6.7 | ✅ |
 | Requires at least | 6.0 | ✅ |
