@@ -1111,4 +1111,54 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		</div>
 	</script>
 
+<?php if ( $is_dev_mode && $test_manager_url ) : ?>
+<!-- Dev Mode: Test Manager Link -->
+<a href="<?php echo esc_url( $test_manager_url ); ?>" target="_blank" class="ais-dev-test-manager-link" title="<?php esc_attr_e( 'Open Test Manager', 'ai-search-schema' ); ?>">
+	<span class="dashicons dashicons-clipboard"></span>
+	<span class="ais-dev-label"><?php esc_html_e( 'Test Manager', 'ai-search-schema' ); ?></span>
+</a>
+<style>
+.ais-dev-test-manager-link {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 10px 16px;
+	background: #1e1e1e;
+	color: #fff;
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 13px;
+	font-weight: 500;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	z-index: 9999;
+	transition: background 0.2s, transform 0.2s;
+}
+.ais-dev-test-manager-link:hover {
+	background: #2271b1;
+	color: #fff;
+	transform: translateY(-2px);
+}
+.ais-dev-test-manager-link .dashicons {
+	font-size: 18px;
+	width: 18px;
+	height: 18px;
+}
+.ais-dev-test-manager-link::before {
+	content: 'DEV';
+	position: absolute;
+	top: -8px;
+	left: -8px;
+	background: #d63638;
+	color: #fff;
+	font-size: 9px;
+	font-weight: 700;
+	padding: 2px 5px;
+	border-radius: 3px;
+}
+</style>
+<?php endif; ?>
+
 <?php /* phpcs:enable WordPress.Files.LineLength.TooLong */

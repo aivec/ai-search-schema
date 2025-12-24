@@ -574,6 +574,8 @@ class AI_Search_Schema_Settings {
 		$schema_type_choices     = $this->get_schema_type_choices();
 		$schema_priority_choices = $this->get_schema_priority_choices();
 		$diagnostics             = $this->get_diagnostics_report( $options );
+		$is_dev_mode             = $this->is_dev_mode();
+		$test_manager_url        = $is_dev_mode ? AI_SEARCH_SCHEMA_URL . 'tools/test-manager.php' : '';
 		$template                = AI_SEARCH_SCHEMA_DIR . 'templates/admin-settings.php';
 
 		if ( file_exists( $template ) ) {
@@ -584,6 +586,18 @@ class AI_Search_Schema_Settings {
 				esc_html__( 'Settings template could not be located.', 'ai-search-schema' )
 			);
 		}
+	}
+
+	/**
+	 * Check if the plugin is running in dev mode.
+	 *
+	 * Dev mode is detected by the presence of the tools directory
+	 * which is only included in dev builds.
+	 *
+	 * @return bool True if dev mode is active.
+	 */
+	public function is_dev_mode() {
+		return file_exists( AI_SEARCH_SCHEMA_DIR . 'tools/test-manager.php' );
 	}
 
 	/**
