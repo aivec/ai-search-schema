@@ -21,7 +21,7 @@ $total_steps = count( $step_keys );
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AEO Schema Setup', 'ai-search-schema' ) ); ?></title>
+	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AI Search Schema Setup', 'ai-search-schema' ) ); ?></title>
 	<?php
 	wp_enqueue_style( 'ais-wizard' );
 	wp_print_styles( 'ais-wizard' );

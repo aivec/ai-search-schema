@@ -127,7 +127,7 @@ class Wizard {
 	public function add_admin_menu() {
 		$hook = add_submenu_page(
 			'options.php', // Hidden from menu (use options.php instead of null for PHP 8 compatibility).
-			__( 'AEO Schema Setup', 'ai-search-schema' ),
+			__( 'AI Search Schema Setup', 'ai-search-schema' ),
 			__( 'Setup Wizard', 'ai-search-schema' ),
 			'manage_options',
 			self::PAGE_SLUG,
@@ -145,7 +145,7 @@ class Wizard {
 	 */
 	public function set_page_title() {
 		global $title;
-		$title = __( 'AEO Schema Setup', 'ai-search-schema' );
+		$title = __( 'AI Search Schema Setup', 'ai-search-schema' );
 	}
 
 	/**

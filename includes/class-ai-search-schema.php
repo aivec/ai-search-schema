@@ -2289,14 +2289,14 @@ class AI_Search_Schema {
 
 		if ( $should_log ) {
 			// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Logged only when WP_DEBUG_LOG is enabled.
-			error_log( '[AVC AEO Schema] Validation errors: ' . implode( ', ', $errors ) );
+			error_log( '[AI Search Schema] Validation errors: ' . implode( ', ', $errors ) );
 		}
 
 		if ( $this->is_debug_mode() && $should_log ) {
 			$schema_json = wp_json_encode( $schema, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES );
 			if ( $schema_json ) {
 				// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log -- Logged only when WP_DEBUG_LOG is enabled.
-				error_log( '[AVC AEO Schema] Schema payload: ' . $schema_json );
+				error_log( '[AI Search Schema] Schema payload: ' . $schema_json );
 			}
 		}
 	}
@@ -2351,7 +2351,7 @@ class AI_Search_Schema {
 		);
 
 		printf(
-			"<!-- AVC AEO Schema JSON-LD start -->\n%s\n<!-- AVC AEO Schema JSON-LD end -->\n",
+			"<!-- AI Search Schema JSON-LD start -->\n%s\n<!-- AI Search Schema JSON-LD end -->\n",
 			wp_kses(
 				$script_tag,
 				array(
@@ -2444,7 +2444,7 @@ class AI_Search_Schema {
 
 		echo '<div class="notice notice-info is-dismissible ai-search-schema-notice">';
 		echo '<p><strong>'
-			. esc_html__( 'AVC AEO Schema – Development Mode Warning', 'ai-search-schema' )
+			. esc_html__( 'AI Search Schema – Development Mode Warning', 'ai-search-schema' )
 			. '</strong></p>';
 		if ( ! empty( $errors ) ) {
 			echo '<p>'
@@ -2485,7 +2485,7 @@ class AI_Search_Schema {
 			echo '<div class="notice notice-info ai-search-schema-notice"'
 				. ' style="margin:20px;">';
 			echo '<p><strong>'
-				. esc_html__( 'AVC AEO Schema – Development Mode Warning', 'ai-search-schema' )
+				. esc_html__( 'AI Search Schema – Development Mode Warning', 'ai-search-schema' )
 				. '</strong></p>';
 			echo '<p>'
 				. esc_html__( 'The following validation errors were detected:', 'ai-search-schema' )

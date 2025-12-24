@@ -9,8 +9,8 @@ License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 == Overview / 概要 ==
-WordPress plugin for Answer Engine Optimization (AEO), Local SEO, breadcrumbs, and FAQ extraction. Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
-WordPress 用 AEO / ローカルSEO プラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
+WordPress plugin for AI search optimization, Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
+AI検索最適化・ローカルSEO対応のWordPressプラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
 
 == Why Structured Data Matters Now / 今、構造化データが重要な理由 ==
 
@@ -19,7 +19,7 @@ WordPress 用 AEO / ローカルSEO プラグインです。**設定 → AI Sear
 Search is evolving from "10 blue links" to AI-powered answer engines (Google SGE, Bing Copilot, ChatGPT with browsing). These systems don't just index pages—they understand them. Structured data (JSON-LD) is the language that helps AI comprehend your content.
 検索は「10本の青いリンク」から、AIによる回答エンジン（Google SGE、Bing Copilot、ChatGPTのブラウジング機能）へと進化しています。これらのシステムはページを単にインデックスするだけでなく、「理解」します。構造化データ（JSON-LD）は、AIがあなたのコンテンツを正しく理解するための言語です。
 
-**Why AEO Matters for Your Business / AEOがビジネスに重要な理由**
+**Why AI Search Optimization Matters / AI検索最適化が重要な理由**
 
 - **AI citations**: When AI assistants answer questions, they cite sources. Proper schema increases the chance of being cited.
   **AI引用**: AIアシスタントが質問に回答する際、出典を引用します。適切なスキーマは引用される可能性を高めます。
@@ -47,36 +47,6 @@ Search is evolving from "10 blue links" to AI-powered answer engines (Google SGE
   **多言語UI**：英語ベースの翻訳ファイル＆日本語翻訳を標準同梱
 - **llms.txt Generation** – Auto-generate llms.txt to help AI systems understand your site structure. Editable in the settings.
   **llms.txt生成**：AI検索エンジンがサイト構造を理解しやすいllms.txtを自動生成。設定画面で編集可能
-
-== Comparison with Other SEO Plugins / 他SEOプラグインとの比較 ==
-
-| Feature | AI Search Schema | Yoast SEO | Rank Math | All in One SEO |
-|---------|---------------|-----------|-----------|----------------|
-| **AEO-focused JSON-LD** | ✅ Specialized | ⚠️ Basic | ⚠️ Basic | ⚠️ Basic |
-| **Single @graph output** | ✅ Unified | ❌ Scattered | ❌ Scattered | ❌ Scattered |
-| **LocalBusiness full support** | ✅ All properties | ⚠️ Limited | ⚠️ Limited | ⚠️ Limited |
-| **Auto schema conflict suppression** | ✅ Built-in | ❌ | ❌ | ❌ |
-| **Japanese address format** | ✅ Native | ❌ | ❌ | ❌ |
-| **Geocoding (Google + OSM)** | ✅ Built-in | ❌ | ❌ | ❌ |
-| **Self-diagnostics** | ✅ Google validation | ⚠️ Limited | ⚠️ Limited | ⚠️ Limited |
-| **Lightweight / No bloat** | ✅ Schema-only | ❌ Full SEO suite | ❌ Full SEO suite | ❌ Full SEO suite |
-
-**Key Differentiators / 主な差別化ポイント:**
-
-1. **AEO-first design**: Built specifically for the AI search era, not retrofitted from traditional SEO tools.
-   **AEOファースト設計**: 従来のSEOツールからの拡張ではなく、AI検索時代のために専用設計。
-
-2. **Unified @graph**: All schema types are merged into a single, coherent JSON-LD graph—exactly what Google recommends.
-   **統合@graph**: すべてのスキーマタイプを単一の一貫したJSON-LDグラフに統合—Googleが推奨する形式。
-
-3. **No conflicts**: Automatically suppresses schema output from Yoast, Rank Math, and AIOSEO to prevent duplicate/conflicting markup.
-   **衝突なし**: Yoast、Rank Math、AIOSEOからのスキーマ出力を自動抑制し、重複・競合するマークアップを防止。
-
-4. **Japan-ready**: Native support for Japanese address hierarchy (prefecture/city/line), postal codes, and business customs.
-   **日本対応**: 日本の住所体系（都道府県/市区町村/番地）、郵便番号、商習慣にネイティブ対応。
-
-5. **Schema-only focus**: Does one thing well. Use alongside your existing SEO plugin without feature overlap.
-   **スキーマ専用**: 一つのことを確実に実行。既存のSEOプラグインと機能重複なく併用可能。
 
 == Geocoding / ジオコーディング ==
 1. Obtain a **Google Maps Geocoding API key** (limit it to “Geocoding API” only) and add referrer/IP restrictions plus daily quotas.  
@@ -273,5 +243,6 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 * [Compatibility] WordPress 6.0+
 * [Compatibility] PHP 8.0+
 * [Compatibility] Tested up to WordPress 6.7
+
 
 == Upgrade Notice ==

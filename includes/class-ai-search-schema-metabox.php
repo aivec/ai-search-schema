@@ -47,7 +47,7 @@ class AI_Search_Schema_MetaBox {
 
 		add_meta_box(
 			'ai_search_schema_meta',
-			__( 'AEO Schema Settings', 'ai-search-schema' ),
+			__( 'AI Search Schema', 'ai-search-schema' ),
 			array( $this, 'render_meta_box' ),
 			$allowed_post_types,
 			'normal',
@@ -73,7 +73,7 @@ class AI_Search_Schema_MetaBox {
 		<div class="ais-metabox">
 			<div class="ais-metabox__card">
 				<div class="ais-metabox__header">
-					<p class="ais-metabox__eyebrow"><?php esc_html_e( 'AEO Schema', 'ai-search-schema' ); ?></p>
+					<p class="ais-metabox__eyebrow"><?php esc_html_e( 'AI Search Schema', 'ai-search-schema' ); ?></p>
 					<h3 class="ais-metabox__title">
 						<?php esc_html_e( 'Page schema settings', 'ai-search-schema' ); ?>
 					</h3>

@@ -31,7 +31,7 @@ foreach ( $sources as $source ) {
 		</div>
 
 		<h1 class="ais-wizard-welcome__title">
-			<?php esc_html_e( 'Welcome to AVC AEO Schema', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Welcome to AI Search Schema', 'ai-search-schema' ); ?>
 		</h1>
 
 		<p class="ais-wizard-welcome__description">

@@ -63,8 +63,8 @@ class AI_Search_Schema_Settings {
 	 */
 	public function add_settings_page() {
 		add_options_page(
-			__( 'AEO Schema Settings', 'ai-search-schema' ),
-			__( 'AEO Schema', 'ai-search-schema' ),
+			__( 'AI Search Schema Settings', 'ai-search-schema' ),
+			__( 'AI Search Schema', 'ai-search-schema' ),
 			'manage_options',
 			'ai-search-schema',
 			array( $this, 'render_settings_page' )

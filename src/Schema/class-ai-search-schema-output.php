@@ -42,7 +42,7 @@ class AI_Search_Schema_Output {
 		}
 
 		printf(
-			"<!-- AVC AEO Schema JSON-LD start -->\n%s\n<!-- AVC AEO Schema JSON-LD end -->\n",
+			"<!-- AI Search Schema JSON-LD start -->\n%s\n<!-- AI Search Schema JSON-LD end -->\n",
 			wp_kses(
 				sprintf(
 					'<script type="application/ld+json" class="ai-search-schema">%s</script>',

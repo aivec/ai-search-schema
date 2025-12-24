@@ -113,13 +113,13 @@ The plugin uses output buffering and filter removal to ensure only one schema so
 ### How does the conflict suppression work?
 ### 衝突抑制はどのように機能しますか？
 
-**English:** When "Use AEO Schema output" is selected in settings:
+**English:** When "Use AI Search Schema output" is selected in settings:
 
 1. **Filter removal**: Hooks from competing plugins are removed before `wp_head`
 2. **Output buffering**: Any remaining schema in the HTML buffer is stripped
 3. **Unified output**: AI Search Schema outputs a single, merged `@graph`
 
-**日本語:** 設定で「AEO Schema出力を使用」が選択されている場合：
+**日本語:** 設定で「AI Search Schema 出力を使用」が選択されている場合：
 
 1. **フィルター除去**: `wp_head`の前に競合プラグインのフックを除去
 2. **出力バッファリング**: HTMLバッファ内の残りのスキーマを除去
@@ -130,9 +130,9 @@ The plugin uses output buffering and filter removal to ensure only one schema so
 ### I want to keep both schemas. Is that possible?
 ### 両方のスキーマを保持したいです。可能ですか？
 
-**English:** Yes. In **Settings → AEO Schema → Schema priority**, select "Allow both (may cause conflicts)". Note that Google may show warnings for duplicate Organization/LocalBusiness schemas.
+**English:** Yes. In **Settings → AI Search Schema → Schema priority**, select "Allow both (may cause conflicts)". Note that Google may show warnings for duplicate Organization/LocalBusiness schemas.
 
-**日本語:** はい。**設定 → AEOスキーマ → スキーマ優先度**で「両方許可（競合の可能性あり）」を選択してください。ただし、GoogleがOrganization/LocalBusinessスキーマの重複に対して警告を表示する場合があります。
+**日本語:** はい。**設定 → AI Search Schema → スキーマ優先度**で「両方許可（競合の可能性あり）」を選択してください。ただし、GoogleがOrganization/LocalBusinessスキーマの重複に対して警告を表示する場合があります。
 
 ---
 

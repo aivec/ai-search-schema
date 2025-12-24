@@ -130,12 +130,12 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 	<?php endif; ?>
 
 	<div class="ais-modern-settings__content">
-		<h1 class="screen-reader-text ais-settings-page-title"><?php esc_html_e( 'AEO Schema Settings', 'ai-search-schema' ); ?></h1>
+		<h1 class="screen-reader-text ais-settings-page-title"><?php esc_html_e( 'AI Search Schema Settings', 'ai-search-schema' ); ?></h1>
 
 		<div class="ais-settings-hero">
 			<div class="ais-hero__content">
 				<span class="ais-badge"><?php esc_html_e( 'Schema Console', 'ai-search-schema' ); ?></span>
-				<div class="ais-hero__title" aria-hidden="true"><?php esc_html_e( 'AEO Schema Settings', 'ai-search-schema' ); ?></div>
+				<div class="ais-hero__title" aria-hidden="true"><?php esc_html_e( 'AI Search Schema Settings', 'ai-search-schema' ); ?></div>
 				<p><?php esc_html_e( 'Manage brand profiles, publishing entities, and local SEO schema from a single console.', 'ai-search-schema' ); ?></p>
 			</div>
 			<div class="ais-hero__meta">
@@ -401,7 +401,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'ai-search-schema' ) ); ?></span>
 							<label class="ais-radio">
 								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="avc" <?php checked( $options['ai_search_schema_priority'], 'avc' ); ?> />
-								<span><?php esc_html_e( 'Use AEO Schema output (disable other plugins)', 'ai-search-schema' ); ?></span>
+								<span><?php esc_html_e( 'Use AI Search Schema output (disable other plugins)', 'ai-search-schema' ); ?></span>
 							</label>
 							<label class="ais-radio">
 								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="external" <?php checked( $options['ai_search_schema_priority'], 'external' ); ?> />

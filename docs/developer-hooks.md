@@ -115,8 +115,8 @@ add_filter( 'avc_aeo_breadcrumb_home_label', function( $label ) {
 
 ### `avc_aeo_allowed_post_types`
 
-Control which post types show the AEO Schema metabox.
-AEO Schema メタボックスを表示する投稿タイプを制御します。
+Control which post types show the AI Search Schema metabox.
+AI Search Schema メタボックスを表示する投稿タイプを制御します。
 
 **Parameters:**
 - `array $post_types` - Array of allowed post type slugs (default: `['post', 'page']`)

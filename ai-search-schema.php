@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
- * Description: WordPress plugin for AEO schema markup, local SEO (MEO), structured breadcrumbs, and FAQ extraction.
+ * Description: WordPress plugin for AI search optimization schema markup, local SEO (MEO), structured breadcrumbs, and FAQ extraction.
  * Version: 0.10.2
  * Author: AIVEC LLC.
  * Author URI: https://aivec.co.jp/apps

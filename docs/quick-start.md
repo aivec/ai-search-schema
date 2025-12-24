@@ -1,7 +1,7 @@
 # Quick Start Guide / クイックスタートガイド
 
-Get AVC AEO Schema up and running in 5 minutes.
-5分でAVC AEO Schemaを設定する方法を説明します。
+Get AI Search Schema up and running in 5 minutes.
+5分でAI Search Schemaを設定する方法を説明します。
 
 ---
 
@@ -27,8 +27,8 @@ ZIPを `/wp-content/plugins/avc-aeo-schema/` に展開し、プラグイン一�
 
 ## Step 2: Basic Configuration / 基本設定
 
-Navigate to **Settings → AEO Schema** in your WordPress admin.
-WordPress管理画面で **設定 → AEOスキーマ** に移動します。
+Navigate to **Settings → AI Search Schema** in your WordPress admin.
+WordPress管理画面で **設定 → AI Search Schema** に移動します。
 
 ### Required Fields / 必須項目
 
@@ -84,7 +84,7 @@ To automatically get coordinates from your address:
 1. Create a project in [Google Cloud Console](https://console.cloud.google.com/)
 2. Enable **Geocoding API**
 3. Create an API key with appropriate restrictions (HTTP referrer or IP)
-4. Paste the key in **Settings → AEO Schema → Google Maps API key**
+4. Paste the key in **Settings → AI Search Schema → Google Maps API key**
 5. Click **Fetch coordinates** to get lat/lng from your address
 
 ### Using OpenStreetMap (Development Only)
@@ -131,12 +131,12 @@ If you use Yoast SEO, Rank Math, or All in One SEO:
 
 ## Next Steps / 次のステップ
 
-- Configure per-post schema types via the **AEO Schema** metabox on posts/pages
+- Configure per-post schema types via the **AI Search Schema** metabox on posts/pages
 - Set up social profiles in the **Social profiles** section
 - Add business hours in the **Local details & hours** section
 - Review the full [FAQ](./FAQ.md) for common questions
 
-投稿・固定ページの **AEOスキーマ** メタボックスで記事ごとのスキーマタイプを設定できます。また、ソーシャルプロフィールや営業時間の設定もご確認ください。
+投稿・固定ページの **AI Search Schema** メタボックスで記事ごとのスキーマタイプを設定できます。また、ソーシャルプロフィールや営業時間の設定もご確認ください。
 
 ---
 

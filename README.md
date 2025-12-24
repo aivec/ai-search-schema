@@ -1,8 +1,8 @@
 # AI Search Schema
 
 ## Overview / 概要
-WordPress plugin for Answer Engine Optimization (AEO), Local SEO, breadcrumbs, and FAQ extraction. Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
-WordPress 用 AEO / ローカルSEO プラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
+WordPress plugin for AI search optimization, Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
+AI検索最適化・ローカルSEO対応のWordPressプラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
 
 ## Why Structured Data Matters Now / 今、構造化データが重要な理由
 
@@ -11,7 +11,7 @@ WordPress 用 AEO / ローカルSEO プラグインです。**設定 → AI Sear
 Search is evolving from "10 blue links" to AI-powered answer engines (Google SGE, Bing Copilot, ChatGPT with browsing). These systems don't just index pages—they understand them. Structured data (JSON-LD) is the language that helps AI comprehend your content.
 検索は「10本の青いリンク」から、AIによる回答エンジン（Google SGE、Bing Copilot、ChatGPTのブラウジング機能）へと進化しています。これらのシステムはページを単にインデックスするだけでなく、「理解」します。構造化データ（JSON-LD）は、AIがあなたのコンテンツを正しく理解するための言語です。
 
-**Why AEO Matters for Your Business / AEOがビジネスに重要な理由**
+**Why AI Search Optimization Matters / AI検索最適化が重要な理由**
 
 - **AI citations**: When AI assistants answer questions, they cite sources. Proper schema increases the chance of being cited.
   **AI引用**: AIアシスタントが質問に回答する際、出典を引用します。適切なスキーマは引用される可能性を高めます。

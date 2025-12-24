@@ -180,7 +180,7 @@ $test_data_json   = wp_json_encode( $test_data );
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php esc_html_e( 'AEO Schema Test Manager', 'ai-search-schema' ); ?></title>
+	<title><?php esc_html_e( 'AI Search Schema Test Manager', 'ai-search-schema' ); ?></title>
 	<?php wp_head(); ?>
 	<style>
 		:root {
@@ -480,7 +480,7 @@ $test_data_json   = wp_json_encode( $test_data );
 <body>
 	<div class="test-manager">
 		<header class="test-manager__header">
-			<h1 class="test-manager__title">🧪 AEO Schema Test Manager</h1>
+			<h1 class="test-manager__title">🧪 AI Search Schema Test Manager</h1>
 			<p class="test-manager__subtitle">
 				v<?php echo esc_html( $plugin_version ); ?> - テスト実行・スクリーンショット管理
 			</p>
