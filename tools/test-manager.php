@@ -873,14 +873,17 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 			reader.onload = function(e) {
 				try {
 					const imported = JSON.parse(e.target.result);
-					if (imported.testData) {
-						testData = imported.testData;
+					if (imported.testData !== undefined) {
+						// 配列の場合はオブジェクトに変換（空配列対策）
+						testData = Array.isArray(imported.testData) ? {} : imported.testData;
 						renderPanels();
 						updateStats();
 						showToast('データをインポートしました', 'success');
+					} else {
+						showToast('testDataが見つかりません', 'error');
 					}
 				} catch (error) {
-					showToast('インポートに失敗しました', 'error');
+					showToast('インポートに失敗しました: ' + error.message, 'error');
 				}
 			};
 			reader.readAsText(file);
