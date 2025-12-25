@@ -172,7 +172,8 @@ $settings_url     = admin_url( 'options-general.php?page=ai-search-schema' );
 $rich_results_url = 'https://search.google.com/test/rich-results?url=' . rawurlencode( home_url() );
 $nonce_value      = wp_create_nonce( 'ai_search_schema_test_manager' );
 $test_spec_json   = wp_json_encode( $test_spec );
-$test_data_json   = wp_json_encode( $test_data );
+// 空配列の場合はオブジェクトとして出力（JSで文字列キーが使えるようにするため）
+$test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_data );
 
 ?>
 <!DOCTYPE html>
@@ -543,7 +544,9 @@ $test_data_json   = wp_json_encode( $test_data );
 	<script>
 		// Test spec and data are safely encoded via wp_json_encode().
 		const testSpec = <?php echo $test_spec_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() is safe for JS ?>;
+		// 空配列の場合はオブジェクトに変換（配列に文字列キーを設定するとJSON.stringifyで失われるため）
 		let testData = <?php echo $test_data_json; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_json_encode() is safe for JS ?>;
+		if (Array.isArray(testData)) testData = {};
 		const nonce = <?php echo wp_json_encode( $nonce_value ); ?>;
 		const pluginVersion = <?php echo wp_json_encode( $plugin_version ); ?>;
 
