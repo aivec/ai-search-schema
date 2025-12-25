@@ -44,7 +44,7 @@ The AI Search Schema plugin was reviewed for WordPress.org plugin directory comp
 |--------|-------|--------|
 | Stable tag | 1.0.0 | ✅ |
 | Requires PHP | 8.0 | ✅ |
-| Tested up to | 6.7 | ✅ |
+| Tested up to | 6.9 | ✅ |
 | Requires at least | 6.0 | ✅ |
 | License | GPLv2 or later | ✅ |
 
@@ -101,14 +101,82 @@ The AI Search Schema plugin was reviewed for WordPress.org plugin directory comp
 
 ---
 
+## v1.0.0 Release Changes (2025-12-25)
+
+### Naming Standardization
+
+1. **Renamed "AEO Schema" to "AI Search Schema" across codebase**
+   - Plugin name: "AI Search Schema" (no Japanese translation)
+   - Japanese UI: Uses "AI Search Schema" without translation
+   - AEO only used as explanatory term in descriptions
+   - Updated all `__()` translatable strings
+
+2. **Files updated for naming:**
+   - `ai-search-schema.php` - Plugin header, constants
+   - `includes/class-ai-search-schema.php` - HTML comments
+   - `includes/class-ai-search-schema-settings.php` - Menu labels
+   - `includes/class-ai-search-schema-metabox.php` - Metabox title
+   - `src/Wizard/Wizard.php` - Wizard UI
+   - `templates/admin-settings.php`, `wizard-page.php`, `welcome.php`
+   - Translation files (.pot, .po, .mo)
+   - Documentation (README.md, FAQ.md, quick-start.md)
+
+### Version Bump to 1.0.0
+
+1. **Updated version in all files:**
+   - `ai-search-schema.php` - Version header and constant
+   - `readme.txt` / `docs/readme.txt.tpl` - Stable tag
+   - `package.json` / `package-lock.json`
+   - Translation files (.pot, .po) - Project-Id-Version
+   - `tools/test-spec.json`
+   - `.github/ISSUE_TEMPLATE/bug_report.yml` - Placeholder
+   - `docs/FAQ.md` - Example version
+   - `docs/logs/wporg-review-check-2025-12-24.md`
+
+2. **Created v1.0.0 release notes:**
+   - `docs/release-notes/v1.0.0.md` - Initial public release
+
+3. **Updated WordPress compatibility:**
+   - Tested up to: 6.7 → 6.9
+
+### Code Quality Fixes
+
+1. **PHPCS line length fix:**
+   - Shortened plugin Description in header to comply with 120 char limit
+
+---
+
 ## Files Modified
 
+### 2025-12-24 (Initial Review)
 - `README.md` - Removed comparison table
 - `docs/release-notes/v0.10.0.md` - Converted to English
 - `docs/release-notes/v0.10.2.md` - Converted to English
 - `readme.txt` - Regenerated changelog in English
 - `.github/ISSUE_TEMPLATE/config.yml` - Fixed FAQ links
 - `.github/ISSUE_TEMPLATE/bug_report.yml` - Updated version placeholder
+
+### 2025-12-25 (v1.0.0 Release)
+- `ai-search-schema.php` - Version 1.0.0, naming, description fix
+- `includes/class-ai-search-schema.php` - Naming update
+- `includes/class-ai-search-schema-settings.php` - Naming update
+- `includes/class-ai-search-schema-metabox.php` - Naming update
+- `src/Wizard/Wizard.php` - Naming update
+- `templates/admin-settings.php` - Naming update
+- `templates/wizard/wizard-page.php` - Naming update
+- `templates/wizard/steps/welcome.php` - Naming update
+- `languages/ai-search-schema.pot` - Version 1.0.0
+- `languages/messages.pot` - Version 1.0.0
+- `languages/ai-search-schema-ja.po` - Version 1.0.0, naming
+- `languages/ai-search-schema-ja_JP.po` - Version 1.0.0, naming
+- `languages/*.mo` - Regenerated
+- `package.json` - Version 1.0.0
+- `package-lock.json` - Version 1.0.0
+- `docs/readme.txt.tpl` - Stable tag 1.0.0, Tested up to 6.9
+- `readme.txt` - Regenerated
+- `docs/FAQ.md` - Version example 1.0.0
+- `docs/release-notes/v1.0.0.md` - New file
+- `tools/test-spec.json` - Version 1.0.0
 
 ---
 
