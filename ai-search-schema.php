@@ -110,12 +110,14 @@ add_action(
 	5
 );
 
-// Initialize Pro features manager.
+// Initialize Pro features manager (only if Pro add-on hasn't loaded its own).
 add_action(
 	'init',
 	static function () {
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-pro-features.php';
-		AI_Search_Schema_Pro_Features::init();
+		if ( ! class_exists( 'AI_Search_Schema_Pro_Features' ) ) {
+			require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-pro-features.php';
+			AI_Search_Schema_Pro_Features::init();
+		}
 	},
 	10
 );
