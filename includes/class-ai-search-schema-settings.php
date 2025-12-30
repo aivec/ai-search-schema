@@ -62,9 +62,22 @@ class AI_Search_Schema_Settings {
 	 * 設定ページを追加
 	 */
 	public function add_settings_page() {
-		add_options_page(
+		// トップレベルメニューを追加.
+		add_menu_page(
 			__( 'AI Search Schema Settings', 'ai-search-schema' ),
 			__( 'AI Search Schema', 'ai-search-schema' ),
+			'manage_options',
+			'ai-search-schema',
+			array( $this, 'render_settings_page' ),
+			'dashicons-schema',
+			81
+		);
+
+		// メイン設定ページをサブメニューとして追加（トップレベルと同じページ）.
+		add_submenu_page(
+			'ai-search-schema',
+			__( 'AI Search Schema Settings', 'ai-search-schema' ),
+			__( 'Settings', 'ai-search-schema' ),
 			'manage_options',
 			'ai-search-schema',
 			array( $this, 'render_settings_page' )
@@ -84,7 +97,7 @@ class AI_Search_Schema_Settings {
 	 * @param string $hook 現在の管理画面フック名
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( 'settings_page_ai-search-schema' !== $hook ) {
+		if ( 'toplevel_page_ai-search-schema' !== $hook ) {
 			return;
 		}
 
