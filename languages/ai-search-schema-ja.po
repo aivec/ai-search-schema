@@ -424,7 +424,7 @@ msgstr "llms.txt の内容を保存しました。"
 #: includes/class-ai-search-schema-settings.php:371
 #: includes/class-ai-search-schema-settings.php:531
 msgid "The geocoding API returned an error."
-msgstr "ジオコーディング API からエラー。"
+msgstr "ジオコーディングAPIがエラーになりました。"
 
 #: dist/includes/class-ai-search-schema-settings.php:550
 #: includes/class-ai-search-schema-settings.php:550
@@ -655,7 +655,7 @@ msgstr "アイテムリスト"
 #: dist/includes/class-ai-search-schema-settings.php:1571
 #: includes/class-ai-search-schema-settings.php:1571
 msgid "AVC schema priority (suppress other plugins)"
-msgstr "AEOスキーマを優先（他のプラグインのスキーマ出力を抑制）"
+msgstr "AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
 
 #: dist/includes/class-ai-search-schema-settings.php:1572
 #: includes/class-ai-search-schema-settings.php:1572
@@ -835,9 +835,7 @@ msgstr "住所が設定されています。"
 #: dist/includes/class-ai-search-schema-settings.php:1783
 #: includes/class-ai-search-schema-settings.php:1783
 msgid "Address is incomplete. Set prefecture, city, street, and postal code."
-msgstr ""
-"住所が不完全です。都道府県、市区町村、番地、郵便番号を設定してください。住所"
-"が不完全です。都道府県・市区町村・丁目番地・郵便番号を入力してください。"
+msgstr "住所が不完全です。郵便番号・都道府県・市区町村・丁目番地を入力してください。"
 
 #. translators: %s decimal places
 #: dist/includes/class-ai-search-schema-settings.php:1797
@@ -1121,20 +1119,18 @@ msgstr "基本情報"
 #: dist/templates/wizard/steps/step-5-complete.php:50 src/Wizard/Wizard.php:95
 #: templates/wizard/components/progress-bar.php:19
 #: templates/wizard/steps/step-5-complete.php:50
-#, fuzzy
 msgid "Site Type"
-msgstr "エンティティ"
+msgstr "サイトタイプ"
 
 #: dist/src/Wizard/Wizard.php:100 src/Wizard/Wizard.php:100
 msgid "API Key"
-msgstr ""
+msgstr "APIキー"
 
 #: dist/src/Wizard/Wizard.php:105
 #: dist/templates/wizard/components/progress-bar.php:20
 #: src/Wizard/Wizard.php:105 templates/wizard/components/progress-bar.php:20
-#, fuzzy
 msgid "Location"
-msgstr "拠点ラベル"
+msgstr "所在地"
 
 #: dist/src/Wizard/Wizard.php:110
 #: dist/templates/wizard/steps/step-4-hours.php:36 src/Wizard/Wizard.php:110
@@ -1171,9 +1167,8 @@ msgid "Start Setup"
 msgstr "セットアップを開始"
 
 #: dist/src/Wizard/Wizard.php:279 src/Wizard/Wizard.php:279
-#, fuzzy
 msgid "Saved"
-msgstr "キーを保存"
+msgstr "保存しました"
 
 #: dist/src/Wizard/Wizard.php:280 src/Wizard/Wizard.php:280
 msgid "An error occurred"
@@ -1243,9 +1238,8 @@ msgstr "座標を取得できませんでした。"
 #: dist/src/Wizard/Wizard.php:295
 #: dist/templates/wizard/steps/step-5-complete.php:109
 #: src/Wizard/Wizard.php:295 templates/wizard/steps/step-5-complete.php:109
-#, fuzzy
 msgid "View JSON-LD Schema"
-msgstr "AEO スキーマ"
+msgstr "JSON-LDスキーマを表示"
 
 #: dist/src/Wizard/Wizard.php:296 src/Wizard/Wizard.php:296
 msgid "Hide JSON-LD Schema"
@@ -1368,7 +1362,7 @@ msgstr "未設定"
 #: dist/templates/admin-settings.php:105 dist/templates/admin-settings.php:121
 #: templates/admin-settings.php:105 templates/admin-settings.php:121
 msgid "Support Policy"
-msgstr ""
+msgstr "サポートポリシー"
 
 #: dist/templates/admin-settings.php:107 templates/admin-settings.php:107
 msgid ""
@@ -1384,11 +1378,11 @@ msgstr ""
 
 #: dist/templates/admin-settings.php:115 templates/admin-settings.php:115
 msgid "Docs / FAQ"
-msgstr ""
+msgstr "ドキュメント / FAQ"
 
 #: dist/templates/admin-settings.php:118 templates/admin-settings.php:118
 msgid "Bug Report"
-msgstr ""
+msgstr "バグ報告"
 
 #: dist/templates/admin-settings.php:137 templates/admin-settings.php:137
 msgid "Schema Console"
@@ -1593,8 +1587,7 @@ msgid ""
 "differs from the logo."
 msgstr ""
 "LocalBusiness の image に使用されます。ロゴとは別に店舗写真などを登録してくだ"
-"さい。LocalBusiness の image に使用されます。ロゴとは別に店舗写真などを登録し"
-"てください。"
+"さい。"
 
 #: dist/templates/admin-settings.php:331 templates/admin-settings.php:331
 msgid "Select storefront image"
@@ -2068,9 +2061,7 @@ msgid ""
 "empty, OpenStreetMap is used for development purposes."
 msgstr ""
 "ジオコーディングに Google Maps Geocoding API を利用する場合はAPIキーを入力し"
-"てください。未入力時は開発用として OpenStreetMap を使用します。ジオコーディン"
-"グに Google Maps Geocoding API を利用する場合はAPIキーを入力してください。未"
-"入力時は開発用として OpenStreetMap を使用します。"
+"てください。未入力時は OpenStreetMap を使用します。"
 
 #: dist/templates/admin-settings.php:724
 #: dist/templates/wizard/steps/step-3-location.php:88
@@ -2385,14 +2376,12 @@ msgid "〜"
 msgstr "〜"
 
 #: dist/templates/admin-settings.php:1139 templates/admin-settings.php:1139
-#, fuzzy
 msgid "Open Test Manager"
-msgstr "AEOスキーマ設定"
+msgstr "テストマネージャーを開く"
 
 #: dist/templates/admin-settings.php:1141 templates/admin-settings.php:1141
-#, fuzzy
 msgid "Test Manager"
-msgstr "AEOスキーマ設定"
+msgstr "テストマネージャー"
 
 #: dist/templates/wizard/components/progress-bar.php:18
 #: templates/wizard/components/progress-bar.php:18
@@ -2486,9 +2475,8 @@ msgstr "戻る"
 #: templates/wizard/steps/step-3-location.php:201
 #: templates/wizard/steps/step-4-hours.php:155
 #: templates/wizard/steps/step-api-key.php:99
-#, fuzzy
 msgid "Continue"
-msgstr "コンテンツ"
+msgstr "続行"
 
 #: dist/templates/wizard/steps/step-2-type.php:17
 #: templates/wizard/steps/step-2-type.php:17
@@ -2649,9 +2637,8 @@ msgstr "不動産業"
 
 #: dist/templates/wizard/steps/step-3-location.php:31
 #: templates/wizard/steps/step-3-location.php:31
-#, fuzzy
 msgid "Auto Repair"
-msgstr "自動"
+msgstr "自動車整備"
 
 #: dist/templates/wizard/steps/step-3-location.php:32
 #: templates/wizard/steps/step-3-location.php:32
@@ -2698,9 +2685,8 @@ msgstr "$$$$ (高級)"
 
 #: dist/templates/wizard/steps/step-3-location.php:49
 #: templates/wizard/steps/step-3-location.php:49
-#, fuzzy
 msgid "Business Location"
-msgstr "営業時間"
+msgstr "ビジネス所在地"
 
 #: dist/templates/wizard/steps/step-3-location.php:52
 #: templates/wizard/steps/step-3-location.php:52
@@ -2715,17 +2701,15 @@ msgstr ""
 #: dist/templates/wizard/steps/step-5-complete.php:66
 #: templates/wizard/steps/step-3-location.php:61
 #: templates/wizard/steps/step-5-complete.php:66
-#, fuzzy
 msgid "Business Type"
-msgstr "LocalBusinessサブタイプ"
+msgstr "ビジネスタイプ"
 
 #: dist/templates/wizard/steps/step-3-location.php:76
 #: dist/templates/wizard/steps/step-5-complete.php:62
 #: templates/wizard/steps/step-3-location.php:76
 #: templates/wizard/steps/step-5-complete.php:62
-#, fuzzy
 msgid "Business Name"
-msgstr "営業時間"
+msgstr "店舗名"
 
 #: dist/templates/wizard/steps/step-3-location.php:94
 #: templates/wizard/steps/step-3-location.php:94
@@ -2915,9 +2899,8 @@ msgstr "サイト情報"
 
 #: dist/templates/wizard/steps/step-5-complete.php:59
 #: templates/wizard/steps/step-5-complete.php:59
-#, fuzzy
 msgid "Business Information"
-msgstr "営業時間"
+msgstr "ビジネス情報"
 
 #: dist/templates/wizard/steps/step-5-complete.php:89
 #: templates/wizard/steps/step-5-complete.php:89
@@ -2979,7 +2962,7 @@ msgstr ""
 #: dist/templates/wizard/steps/step-api-key.php:34
 #: templates/wizard/steps/step-api-key.php:34
 msgid "Why do I need this?"
-msgstr ""
+msgstr "なぜ必要なのか？"
 
 #: dist/templates/wizard/steps/step-api-key.php:37
 #: templates/wizard/steps/step-api-key.php:37
@@ -3048,7 +3031,7 @@ msgstr ""
 #: dist/templates/wizard/steps/step-api-key.php:96
 #: templates/wizard/steps/step-api-key.php:96
 msgid "Skip"
-msgstr ""
+msgstr "スキップ"
 
 #: dist/templates/wizard/steps/welcome.php:34
 #: templates/wizard/steps/welcome.php:34
@@ -3152,7 +3135,7 @@ msgstr "権限がありません"
 
 #: tools/test-manager.php:60
 msgid "Security check failed."
-msgstr ""
+msgstr "セキュリティチェックに失敗しました。"
 
 #: tools/test-manager.php:80
 #, fuzzy
@@ -3166,15 +3149,15 @@ msgstr "無効なステップです"
 
 #: tools/test-manager.php:133
 msgid "Screenshot uploaded."
-msgstr ""
+msgstr "スクリーンショットをアップロードしました。"
 
 #: tools/test-manager.php:140
 msgid "Failed to create attachment."
-msgstr ""
+msgstr "添付ファイルの作成に失敗しました。"
 
 #: tools/test-manager.php:146
 msgid "No file uploaded."
-msgstr ""
+msgstr "ファイルがアップロードされていません。"
 
 #: tools/test-manager.php:183
 #, fuzzy
