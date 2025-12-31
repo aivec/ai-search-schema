@@ -254,5 +254,4 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 * [Compatibility] PHP 8.0+
 * [Compatibility] Tested up to WordPress 6.7
 
-
 == Upgrade Notice ==
