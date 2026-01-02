@@ -11,7 +11,7 @@ defined( 'ABSPATH' ) || exit;
 $options     = get_option( 'ai_search_schema_options', array() );
 $entity_type = $options['entity_type'] ?? '';
 
-// Site type options with icons.
+// Site type options with icons (Organization and LocalBusiness only for schema compatibility).
 $site_types = array(
 	'LocalBusiness' => array(
 		'label'       => __( 'Local Business', 'ai-search-schema' ),
@@ -21,21 +21,9 @@ $site_types = array(
 	),
 	'Organization'  => array(
 		'label'       => __( 'Organization / Company', 'ai-search-schema' ),
-		'description' => __( 'Corporate website, non-profit, educational institution', 'ai-search-schema' ),
+		'description' => __( 'Corporate website, non-profit, educational institution, personal blog, online service', 'ai-search-schema' ),
 		'icon'        => '<path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>',
-		'examples'    => __( 'e.g., Corporation, NPO, University', 'ai-search-schema' ),
-	),
-	'Person'        => array(
-		'label'       => __( 'Personal / Individual', 'ai-search-schema' ),
-		'description' => __( 'Personal blog, portfolio, freelancer website', 'ai-search-schema' ),
-		'icon'        => '<path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>',
-		'examples'    => __( 'e.g., Blog, Portfolio, Artist', 'ai-search-schema' ),
-	),
-	'WebSite'       => array(
-		'label'       => __( 'Online Service / Media', 'ai-search-schema' ),
-		'description' => __( 'News site, online tool, web application', 'ai-search-schema' ),
-		'icon'        => '<path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/>',
-		'examples'    => __( 'e.g., News, SaaS, Web App', 'ai-search-schema' ),
+		'examples'    => __( 'e.g., Corporation, NPO, Blog, News site', 'ai-search-schema' ),
 	),
 );
 ?>

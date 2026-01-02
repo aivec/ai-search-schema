@@ -573,6 +573,8 @@ class Wizard {
 	/**
 	 * Sanitize step data.
 	 *
+	 * Accepts input names from UI and normalizes them for internal storage.
+	 *
 	 * @param string $step Step slug.
 	 * @param array  $data Raw data.
 	 * @return array Sanitized data.
@@ -582,14 +584,45 @@ class Wizard {
 
 		switch ( $step ) {
 			case 'basics':
-				$sanitized['company_name'] = isset( $data['company_name'] ) ? sanitize_text_field( $data['company_name'] ) : '';
-				$sanitized['site_name']    = isset( $data['site_name'] ) ? sanitize_text_field( $data['site_name'] ) : '';
-				$sanitized['site_url']     = isset( $data['site_url'] ) ? esc_url_raw( $data['site_url'] ) : '';
-				$sanitized['logo_id']      = isset( $data['logo_id'] ) ? absint( $data['logo_id'] ) : 0;
+				// UI sends: site_name, site_description, logo_url.
+				// Also accept legacy: company_name, site_url, logo_id for backwards compatibility.
+				$sanitized['site_name']        = isset( $data['site_name'] ) ? sanitize_text_field( $data['site_name'] ) : '';
+				$sanitized['site_description'] = isset( $data['site_description'] ) ? sanitize_textarea_field( $data['site_description'] ) : '';
+				$sanitized['logo_url']         = isset( $data['logo_url'] ) ? esc_url_raw( $data['logo_url'] ) : '';
+
+				// company_name: use provided value, or fallback to site_name.
+				$sanitized['company_name'] = isset( $data['company_name'] ) && '' !== $data['company_name']
+					? sanitize_text_field( $data['company_name'] )
+					: $sanitized['site_name'];
+
+				// Legacy support: logo_id, site_url.
+				$sanitized['logo_id']  = isset( $data['logo_id'] ) ? absint( $data['logo_id'] ) : 0;
+				$sanitized['site_url'] = isset( $data['site_url'] ) ? esc_url_raw( $data['site_url'] ) : '';
 				break;
 
 			case 'type':
-				$sanitized['site_type']     = isset( $data['site_type'] ) ? sanitize_key( $data['site_type'] ) : 'organization';
+				// UI sends: entity_type (LocalBusiness, Organization, Person, WebSite).
+				// Normalize to Organization or LocalBusiness only.
+				$entity_type = isset( $data['entity_type'] ) ? sanitize_key( $data['entity_type'] ) : '';
+
+				// Map UI values to valid entity types.
+				$valid_types = array( 'organization', 'localbusiness' );
+				$entity_type = strtolower( $entity_type );
+
+				if ( in_array( $entity_type, $valid_types, true ) ) {
+					$sanitized['entity_type'] = 'localbusiness' === $entity_type ? 'LocalBusiness' : 'Organization';
+				} else {
+					// Person/WebSite -> Organization for schema compatibility.
+					$sanitized['entity_type'] = 'Organization';
+				}
+
+				// Legacy support: site_type.
+				if ( isset( $data['site_type'] ) && ! isset( $data['entity_type'] ) ) {
+					$site_type = sanitize_key( $data['site_type'] );
+					$sanitized['entity_type'] = 'local_business' === $site_type ? 'LocalBusiness' : 'Organization';
+				}
+
+				// business_type is set in location step, but accept here for legacy.
 				$sanitized['business_type'] = isset( $data['business_type'] ) ? sanitize_text_field( $data['business_type'] ) : '';
 				break;
 
@@ -598,25 +631,86 @@ class Wizard {
 				break;
 
 			case 'location':
-				$sanitized['postal_code'] = isset( $data['postal_code'] ) ? sanitize_text_field( $data['postal_code'] ) : '';
-				$sanitized['prefecture']  = isset( $data['prefecture'] ) ? sanitize_text_field( $data['prefecture'] ) : '';
-				$sanitized['city']        = isset( $data['city'] ) ? sanitize_text_field( $data['city'] ) : '';
-				$sanitized['street']      = isset( $data['street'] ) ? sanitize_text_field( $data['street'] ) : '';
-				$sanitized['phone']       = isset( $data['phone'] ) ? sanitize_text_field( $data['phone'] ) : '';
-				$sanitized['latitude']    = isset( $data['latitude'] ) ? floatval( $data['latitude'] ) : 0;
-				$sanitized['longitude']   = isset( $data['longitude'] ) ? floatval( $data['longitude'] ) : 0;
+				// UI sends: local_business_name, local_business_type,
+				// postal_code, address_region, address_locality, street_address, address_country,
+				// telephone, email, geo_latitude, geo_longitude, price_range.
+				$sanitized['local_business_name'] = isset( $data['local_business_name'] ) ? sanitize_text_field( $data['local_business_name'] ) : '';
+				$sanitized['local_business_type'] = isset( $data['local_business_type'] ) ? sanitize_text_field( $data['local_business_type'] ) : '';
+
+				// Build normalized address array.
+				$sanitized['address'] = array(
+					'postal_code'    => isset( $data['postal_code'] ) ? sanitize_text_field( $data['postal_code'] ) : '',
+					'region'         => isset( $data['address_region'] ) ? sanitize_text_field( $data['address_region'] ) : '',
+					'locality'       => isset( $data['address_locality'] ) ? sanitize_text_field( $data['address_locality'] ) : '',
+					'street_address' => isset( $data['street_address'] ) ? sanitize_text_field( $data['street_address'] ) : '',
+					'country'        => isset( $data['address_country'] ) ? sanitize_text_field( $data['address_country'] ) : 'JP',
+				);
+
+				// Build normalized geo array.
+				$sanitized['geo'] = array(
+					'latitude'  => isset( $data['geo_latitude'] ) ? floatval( $data['geo_latitude'] ) : 0,
+					'longitude' => isset( $data['geo_longitude'] ) ? floatval( $data['geo_longitude'] ) : 0,
+				);
+
+				// Contact info.
+				$sanitized['telephone'] = isset( $data['telephone'] ) ? sanitize_text_field( $data['telephone'] ) : '';
+				$sanitized['email']     = isset( $data['email'] ) ? sanitize_email( $data['email'] ) : '';
+
+				// Price range.
+				$sanitized['price_range'] = isset( $data['price_range'] ) ? sanitize_text_field( $data['price_range'] ) : '';
+
+				// Legacy support: old field names.
+				if ( ! $sanitized['address']['region'] && isset( $data['prefecture'] ) ) {
+					$sanitized['address']['region'] = sanitize_text_field( $data['prefecture'] );
+				}
+				if ( ! $sanitized['address']['locality'] && isset( $data['city'] ) ) {
+					$sanitized['address']['locality'] = sanitize_text_field( $data['city'] );
+				}
+				if ( ! $sanitized['address']['street_address'] && isset( $data['street'] ) ) {
+					$sanitized['address']['street_address'] = sanitize_text_field( $data['street'] );
+				}
+				if ( ! $sanitized['telephone'] && isset( $data['phone'] ) ) {
+					$sanitized['telephone'] = sanitize_text_field( $data['phone'] );
+				}
+				if ( 0 === $sanitized['geo']['latitude'] && isset( $data['latitude'] ) ) {
+					$sanitized['geo']['latitude'] = floatval( $data['latitude'] );
+				}
+				if ( 0 === $sanitized['geo']['longitude'] && isset( $data['longitude'] ) ) {
+					$sanitized['geo']['longitude'] = floatval( $data['longitude'] );
+				}
 				break;
 
 			case 'hours':
-				$sanitized['opening_hours']        = isset( $data['opening_hours'] ) && is_array( $data['opening_hours'] )
-					? $this->sanitize_opening_hours( $data['opening_hours'] )
-					: array();
+				// UI sends: hours_{day}_opens, hours_{day}_closes (individual selects).
+				// Convert to opening_hours array format.
+				$opening_hours = array();
+				$valid_days    = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'holiday' );
+
+				foreach ( $valid_days as $day ) {
+					$open_key  = 'hours_' . $day . '_opens';
+					$close_key = 'hours_' . $day . '_closes';
+
+					if ( ! empty( $data[ $open_key ] ) && ! empty( $data[ $close_key ] ) ) {
+						$opening_hours[] = array(
+							'day'   => $day,
+							'open'  => sanitize_text_field( $data[ $open_key ] ),
+							'close' => sanitize_text_field( $data[ $close_key ] ),
+						);
+					}
+				}
+
+				// Also accept pre-formatted opening_hours array (from imports/legacy).
+				if ( empty( $opening_hours ) && isset( $data['opening_hours'] ) && is_array( $data['opening_hours'] ) ) {
+					$opening_hours = $this->sanitize_opening_hours( $data['opening_hours'] );
+				}
+
+				$sanitized['opening_hours']        = $opening_hours;
 				$sanitized['price_range']          = isset( $data['price_range'] ) ? sanitize_text_field( $data['price_range'] ) : '';
 				$sanitized['accepts_reservations'] = isset( $data['accepts_reservations'] ) ? (bool) $data['accepts_reservations'] : false;
 				break;
 
 			default:
-				$sanitized = array_map( 'sanitize_text_field', $data );
+				$sanitized = is_array( $data ) ? array_map( 'sanitize_text_field', $data ) : array();
 				break;
 		}
 
@@ -651,6 +745,8 @@ class Wizard {
 	/**
 	 * Save wizard data to main plugin settings.
 	 *
+	 * Normalizes data from sanitize_step_data() and saves to ai_search_schema_options.
+	 *
 	 * @param string $step Step slug.
 	 * @param array  $data Sanitized data.
 	 */
@@ -659,40 +755,42 @@ class Wizard {
 
 		switch ( $step ) {
 			case 'basics':
-				if ( ! empty( $data['company_name'] ) ) {
-					$settings['company_name'] = $data['company_name'];
-				}
+				// Save site_name.
 				if ( ! empty( $data['site_name'] ) ) {
 					$settings['site_name'] = $data['site_name'];
 				}
+
+				// Save company_name (defaults to site_name in sanitize_step_data).
+				if ( ! empty( $data['company_name'] ) ) {
+					$settings['company_name'] = $data['company_name'];
+				}
+
+				// Save site_url if provided.
 				if ( ! empty( $data['site_url'] ) ) {
 					$settings['site_url'] = $data['site_url'];
 				}
-				if ( ! empty( $data['logo_id'] ) ) {
+
+				// Save logo: prefer logo_url, fallback to logo_id.
+				if ( ! empty( $data['logo_url'] ) ) {
+					$settings['logo'] = $data['logo_url'];
+				} elseif ( ! empty( $data['logo_id'] ) ) {
 					$settings['logo'] = wp_get_attachment_url( $data['logo_id'] );
+				}
+
+				// site_description is stored but not used in schema currently.
+				if ( ! empty( $data['site_description'] ) ) {
+					$settings['site_description'] = $data['site_description'];
 				}
 				break;
 
 			case 'type':
-				$type_mapping = array(
-					'organization'   => 'Organization',
-					'local_business' => 'LocalBusiness',
-					'blog'           => 'Organization',
-					'ecommerce'      => 'Organization',
-				);
+				// entity_type is now directly available from sanitize_step_data.
+				$settings['entity_type'] = $data['entity_type'] ?? 'Organization';
 
-				$content_model_mapping = array(
-					'organization'   => 'WebPage',
-					'local_business' => 'WebPage',
-					'blog'           => 'Article',
-					'ecommerce'      => 'Product',
-				);
+				// Set content_model based on entity_type.
+				$settings['content_model'] = 'WebPage';
 
-				$site_type = $data['site_type'] ?? 'organization';
-
-				$settings['entity_type']   = $type_mapping[ $site_type ] ?? 'Organization';
-				$settings['content_model'] = $content_model_mapping[ $site_type ] ?? 'WebPage';
-
+				// Save business_type if provided (legacy support).
 				if ( ! empty( $data['business_type'] ) ) {
 					$settings['local_business_type'] = $data['business_type'];
 				}
@@ -706,26 +804,46 @@ class Wizard {
 				return; // Return early as we don't need to update main settings.
 
 			case 'location':
-				if ( ! empty( $data['postal_code'] ) ) {
-					$settings['postal_code'] = $data['postal_code'];
+				// Update company_name from local_business_name if company_name not already set.
+				if ( ! empty( $data['local_business_name'] ) ) {
+					if ( empty( $settings['company_name'] ) ) {
+						$settings['company_name'] = $data['local_business_name'];
+					}
+					// Also store as local_business_name for reference.
+					$settings['local_business_name'] = $data['local_business_name'];
 				}
-				if ( ! empty( $data['prefecture'] ) ) {
-					$settings['prefecture'] = $data['prefecture'];
+
+				// Save local_business_type.
+				if ( ! empty( $data['local_business_type'] ) ) {
+					$settings['local_business_type'] = $data['local_business_type'];
 				}
-				if ( ! empty( $data['city'] ) ) {
-					$settings['city'] = $data['city'];
+
+				// Save normalized address array.
+				if ( ! empty( $data['address'] ) && is_array( $data['address'] ) ) {
+					$settings['address'] = $data['address'];
 				}
-				if ( ! empty( $data['street'] ) ) {
-					$settings['street'] = $data['street'];
+
+				// Save normalized geo array.
+				if ( ! empty( $data['geo'] ) && is_array( $data['geo'] ) ) {
+					$geo = $data['geo'];
+					if ( ! empty( $geo['latitude'] ) || ! empty( $geo['longitude'] ) ) {
+						$settings['geo'] = $geo;
+					}
 				}
-				if ( ! empty( $data['phone'] ) ) {
-					$settings['phone'] = $data['phone'];
+
+				// Save phone (normalize from telephone).
+				if ( ! empty( $data['telephone'] ) ) {
+					$settings['phone'] = $data['telephone'];
 				}
-				if ( ! empty( $data['latitude'] ) ) {
-					$settings['latitude'] = $data['latitude'];
+
+				// Save email.
+				if ( ! empty( $data['email'] ) ) {
+					$settings['email'] = $data['email'];
 				}
-				if ( ! empty( $data['longitude'] ) ) {
-					$settings['longitude'] = $data['longitude'];
+
+				// Save price_range.
+				if ( ! empty( $data['price_range'] ) ) {
+					$settings['price_range'] = $data['price_range'];
 				}
 				break;
 

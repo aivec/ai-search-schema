@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$options = get_option( 'ai_search_schema_settings', array() );
+$options = get_option( 'ai_search_schema_options', array() );
 ?>
 <div class="ais-wizard-step ais-wizard-step--complete">
 	<div class="ais-wizard-complete">
@@ -54,40 +54,43 @@ $options = get_option( 'ai_search_schema_settings', array() );
 				</div>
 
 				<?php if ( ( $options['entity_type'] ?? '' ) === 'LocalBusiness' ) : ?>
+					<?php
+					// Get address from normalized array.
+					$address = $options['address'] ?? array();
+					?>
 					<!-- Business Info -->
 					<div class="ais-wizard-summary__section">
 						<h4 class="ais-wizard-summary__section-title"><?php esc_html_e( 'Business Information', 'ai-search-schema' ); ?></h4>
 						<dl class="ais-wizard-summary__list">
 							<div class="ais-wizard-summary__item">
 								<dt><?php esc_html_e( 'Business Name', 'ai-search-schema' ); ?></dt>
-								<dd><?php echo esc_html( $options['local_business_name'] ?? '-' ); ?></dd>
+								<dd><?php echo esc_html( $options['company_name'] ?? '-' ); ?></dd>
 							</div>
 							<div class="ais-wizard-summary__item">
 								<dt><?php esc_html_e( 'Business Type', 'ai-search-schema' ); ?></dt>
 								<dd><?php echo esc_html( $options['local_business_type'] ?? '-' ); ?></dd>
 							</div>
-							<?php if ( ! empty( $options['street_address'] ) || ! empty( $options['address_locality'] ) ) : ?>
+							<?php
+							// Build address display from normalized array.
+							$address_parts = array_filter(
+								array(
+									$address['postal_code'] ?? '',
+									$address['region'] ?? '',
+									$address['locality'] ?? '',
+									$address['street_address'] ?? '',
+								)
+							);
+							if ( ! empty( $address_parts ) ) :
+								?>
 								<div class="ais-wizard-summary__item">
 									<dt><?php esc_html_e( 'Address', 'ai-search-schema' ); ?></dt>
-									<dd>
-										<?php
-										$address_parts = array_filter(
-											array(
-												$options['postal_code'] ?? '',
-												$options['address_region'] ?? '',
-												$options['address_locality'] ?? '',
-												$options['street_address'] ?? '',
-											)
-										);
-										echo esc_html( implode( ' ', $address_parts ) );
-										?>
-									</dd>
+									<dd><?php echo esc_html( implode( ' ', $address_parts ) ); ?></dd>
 								</div>
 							<?php endif; ?>
-							<?php if ( ! empty( $options['telephone'] ) ) : ?>
+							<?php if ( ! empty( $options['phone'] ) ) : ?>
 								<div class="ais-wizard-summary__item">
 									<dt><?php esc_html_e( 'Phone', 'ai-search-schema' ); ?></dt>
-									<dd><?php echo esc_html( $options['telephone'] ); ?></dd>
+									<dd><?php echo esc_html( $options['phone'] ); ?></dd>
 								</div>
 							<?php endif; ?>
 						</dl>

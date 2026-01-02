@@ -236,7 +236,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	// ===== sanitize_step_data Tests (via Reflection) =====
 
 	/**
-	 * basics ステップのサニタイズをテスト。
+	 * basics ステップのサニタイズをテスト（UI入力名）。
 	 */
 	public function test_sanitize_basics_step() {
 		$reflection = new ReflectionClass( $this->wizard );
@@ -244,22 +244,22 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'company_name' => '  Test Company<script>  ',
-			'site_name'    => '<b>Site Name</b>',
-			'site_url'     => 'https://example.com',
-			'logo_id'      => '123',
+			'site_name'        => '<b>Site Name</b>',
+			'site_description' => 'Test description',
+			'logo_url'         => 'https://example.com/logo.png',
 		);
 
 		$result = $method->invoke( $this->wizard, 'basics', $input );
 
-		$this->assertEquals( 'Test Company', $result['company_name'] );
 		$this->assertEquals( 'Site Name', $result['site_name'] );
-		$this->assertEquals( 'https://example.com', $result['site_url'] );
-		$this->assertEquals( 123, $result['logo_id'] );
+		$this->assertEquals( 'Test description', $result['site_description'] );
+		$this->assertEquals( 'https://example.com/logo.png', $result['logo_url'] );
+		// company_name should fallback to site_name.
+		$this->assertEquals( 'Site Name', $result['company_name'] );
 	}
 
 	/**
-	 * type ステップのサニタイズをテスト。
+	 * type ステップのサニタイズをテスト（entity_type）。
 	 */
 	public function test_sanitize_type_step() {
 		$reflection = new ReflectionClass( $this->wizard );
@@ -267,18 +267,18 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'site_type'     => 'LOCAL_BUSINESS',
+			'entity_type'   => 'LocalBusiness',
 			'business_type' => 'Restaurant<script>',
 		);
 
 		$result = $method->invoke( $this->wizard, 'type', $input );
 
-		$this->assertEquals( 'local_business', $result['site_type'] );
+		$this->assertEquals( 'LocalBusiness', $result['entity_type'] );
 		$this->assertEquals( 'Restaurant', $result['business_type'] );
 	}
 
 	/**
-	 * location ステップのサニタイズをテスト。
+	 * location ステップのサニタイズをテスト（UI入力名）。
 	 */
 	public function test_sanitize_location_step() {
 		$reflection = new ReflectionClass( $this->wizard );
@@ -286,47 +286,48 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'postal_code' => '100-0001',
-			'prefecture'  => '東京都',
-			'city'        => '千代田区',
-			'street'      => '霞が関1-1',
-			'phone'       => '03-1234-5678',
-			'latitude'    => '35.6762',
-			'longitude'   => '139.6503',
+			'local_business_name' => 'Test Business',
+			'local_business_type' => 'Restaurant',
+			'postal_code'         => '100-0001',
+			'address_region'      => '東京都',
+			'address_locality'    => '千代田区',
+			'street_address'      => '霞が関1-1',
+			'telephone'           => '03-1234-5678',
+			'geo_latitude'        => '35.6762',
+			'geo_longitude'       => '139.6503',
 		);
 
 		$result = $method->invoke( $this->wizard, 'location', $input );
 
-		$this->assertEquals( '100-0001', $result['postal_code'] );
-		$this->assertEquals( '東京都', $result['prefecture'] );
-		$this->assertEquals( '千代田区', $result['city'] );
-		$this->assertEquals( '霞が関1-1', $result['street'] );
-		$this->assertEquals( '03-1234-5678', $result['phone'] );
-		$this->assertEquals( 35.6762, $result['latitude'] );
-		$this->assertEquals( 139.6503, $result['longitude'] );
+		$this->assertEquals( 'Test Business', $result['local_business_name'] );
+		$this->assertEquals( 'Restaurant', $result['local_business_type'] );
+		$this->assertEquals( '03-1234-5678', $result['telephone'] );
+
+		// Check address array.
+		$this->assertEquals( '100-0001', $result['address']['postal_code'] );
+		$this->assertEquals( '東京都', $result['address']['region'] );
+		$this->assertEquals( '千代田区', $result['address']['locality'] );
+		$this->assertEquals( '霞が関1-1', $result['address']['street_address'] );
+
+		// Check geo array.
+		$this->assertEquals( 35.6762, $result['geo']['latitude'] );
+		$this->assertEquals( 139.6503, $result['geo']['longitude'] );
 	}
 
 	/**
-	 * hours ステップのサニタイズをテスト。
+	 * hours ステップのサニタイズをテスト（UI入力形式）。
 	 */
 	public function test_sanitize_hours_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
 		$method->setAccessible( true );
 
+		// UI sends hours_{day}_opens/closes format.
 		$input = array(
-			'opening_hours'        => array(
-				array(
-					'day'   => 'monday',
-					'open'  => '09:00',
-					'close' => '18:00',
-				),
-				array(
-					'day'   => 'tuesday',
-					'open'  => '10:00',
-					'close' => '17:00',
-				),
-			),
+			'hours_monday_opens'   => '09:00',
+			'hours_monday_closes'  => '18:00',
+			'hours_tuesday_opens'  => '10:00',
+			'hours_tuesday_closes' => '17:00',
 			'price_range'          => '$$',
 			'accepts_reservations' => '1',
 		);
@@ -336,6 +337,8 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$this->assertCount( 2, $result['opening_hours'] );
 		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
 		$this->assertEquals( '09:00', $result['opening_hours'][0]['open'] );
+		$this->assertEquals( '18:00', $result['opening_hours'][0]['close'] );
+		$this->assertEquals( 'tuesday', $result['opening_hours'][1]['day'] );
 		$this->assertEquals( '$$', $result['price_range'] );
 		$this->assertTrue( $result['accepts_reservations'] );
 	}
@@ -397,9 +400,10 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$data = array(
-			'company_name' => 'Test Company',
-			'site_name'    => 'Test Site',
-			'site_url'     => 'https://example.com',
+			'company_name'     => 'Test Company',
+			'site_name'        => 'Test Site',
+			'site_description' => 'Test description',
+			'logo_url'         => 'https://example.com/logo.png',
 		);
 
 		$method->invoke( $this->wizard, 'basics', $data );
@@ -408,7 +412,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$this->assertEquals( 'Test Company', $settings['company_name'] );
 		$this->assertEquals( 'Test Site', $settings['site_name'] );
-		$this->assertEquals( 'https://example.com', $settings['site_url'] );
+		$this->assertEquals( 'https://example.com/logo.png', $settings['logo'] );
 	}
 
 	/**
@@ -420,7 +424,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$data = array(
-			'site_type'     => 'local_business',
+			'entity_type'   => 'LocalBusiness',
 			'business_type' => 'Restaurant',
 		);
 
@@ -434,15 +438,15 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * save_to_settings が blog タイプを Article として保存することをテスト。
+	 * save_to_settings が Organization タイプを正しく保存することをテスト。
 	 */
-	public function test_save_to_settings_type_blog() {
+	public function test_save_to_settings_type_organization() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
 		$method->setAccessible( true );
 
 		$data = array(
-			'site_type' => 'blog',
+			'entity_type' => 'Organization',
 		);
 
 		$method->invoke( $this->wizard, 'type', $data );
@@ -450,27 +454,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$settings = get_option( 'ai_search_schema_options', array() );
 
 		$this->assertEquals( 'Organization', $settings['entity_type'] );
-		$this->assertEquals( 'Article', $settings['content_model'] );
-	}
-
-	/**
-	 * save_to_settings が ecommerce タイプを Product として保存することをテスト。
-	 */
-	public function test_save_to_settings_type_ecommerce() {
-		$reflection = new ReflectionClass( $this->wizard );
-		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
-
-		$data = array(
-			'site_type' => 'ecommerce',
-		);
-
-		$method->invoke( $this->wizard, 'type', $data );
-
-		$settings = get_option( 'ai_search_schema_options', array() );
-
-		$this->assertEquals( 'Organization', $settings['entity_type'] );
-		$this->assertEquals( 'Product', $settings['content_model'] );
+		$this->assertEquals( 'WebPage', $settings['content_model'] );
 	}
 
 	/**
@@ -482,24 +466,43 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$data = array(
-			'postal_code' => '100-0001',
-			'prefecture'  => '東京都',
-			'city'        => '千代田区',
-			'street'      => '霞が関1-1',
-			'phone'       => '03-1234-5678',
-			'latitude'    => 35.6762,
-			'longitude'   => 139.6503,
+			'local_business_name' => 'Test Business',
+			'local_business_type' => 'Restaurant',
+			'address'             => array(
+				'postal_code'    => '100-0001',
+				'region'         => '東京都',
+				'locality'       => '千代田区',
+				'street_address' => '霞が関1-1',
+				'country'        => 'JP',
+			),
+			'geo'                 => array(
+				'latitude'  => 35.6762,
+				'longitude' => 139.6503,
+			),
+			'telephone'           => '03-1234-5678',
+			'email'               => 'test@example.com',
+			'price_range'         => '$$',
 		);
 
 		$method->invoke( $this->wizard, 'location', $data );
 
 		$settings = get_option( 'ai_search_schema_options', array() );
 
-		$this->assertEquals( '100-0001', $settings['postal_code'] );
-		$this->assertEquals( '東京都', $settings['prefecture'] );
-		$this->assertEquals( '千代田区', $settings['city'] );
+		// company_name should be set from local_business_name.
+		$this->assertEquals( 'Test Business', $settings['company_name'] );
+		$this->assertEquals( 'Restaurant', $settings['local_business_type'] );
 		$this->assertEquals( '03-1234-5678', $settings['phone'] );
-		$this->assertEquals( 35.6762, $settings['latitude'] );
+		$this->assertEquals( 'test@example.com', $settings['email'] );
+		$this->assertEquals( '$$', $settings['price_range'] );
+
+		// Check address array.
+		$this->assertIsArray( $settings['address'] );
+		$this->assertEquals( '100-0001', $settings['address']['postal_code'] );
+		$this->assertEquals( '東京都', $settings['address']['region'] );
+
+		// Check geo array.
+		$this->assertIsArray( $settings['geo'] );
+		$this->assertEquals( 35.6762, $settings['geo']['latitude'] );
 	}
 
 	/**
@@ -609,10 +612,10 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$result = $method->invoke( $this->wizard, 'basics', array() );
 
-		$this->assertArrayHasKey( 'company_name', $result );
 		$this->assertArrayHasKey( 'site_name', $result );
-		$this->assertArrayHasKey( 'site_url', $result );
-		$this->assertArrayHasKey( 'logo_id', $result );
+		$this->assertArrayHasKey( 'site_description', $result );
+		$this->assertArrayHasKey( 'logo_url', $result );
+		$this->assertArrayHasKey( 'company_name', $result );
 	}
 
 	/**
@@ -673,16 +676,16 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$malicious_input = array(
-			'company_name' => '<script>alert("XSS")</script>Company',
-			'site_name'    => '<img src=x onerror=alert(1)>Site',
-			'site_url'     => 'javascript:alert(1)',
+			'site_name'        => '<script>alert("XSS")</script>Site Name',
+			'site_description' => '<img src=x onerror=alert(1)>Description',
+			'logo_url'         => 'javascript:alert(1)',
 		);
 
 		$result = $method->invoke( $this->wizard, 'basics', $malicious_input );
 
-		$this->assertStringNotContainsString( '<script>', $result['company_name'] );
-		$this->assertStringNotContainsString( 'onerror', $result['site_name'] );
-		$this->assertStringNotContainsString( 'javascript:', $result['site_url'] );
+		$this->assertStringNotContainsString( '<script>', $result['site_name'] );
+		$this->assertStringNotContainsString( 'onerror', $result['site_description'] );
+		$this->assertStringNotContainsString( 'javascript:', $result['logo_url'] );
 	}
 
 	/**
@@ -718,16 +721,16 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'latitude'  => '35.6762',
-			'longitude' => '139.6503',
+			'geo_latitude'  => '35.6762',
+			'geo_longitude' => '139.6503',
 		);
 
 		$result = $method->invoke( $this->wizard, 'location', $input );
 
-		$this->assertIsFloat( $result['latitude'] );
-		$this->assertIsFloat( $result['longitude'] );
-		$this->assertEquals( 35.6762, $result['latitude'] );
-		$this->assertEquals( 139.6503, $result['longitude'] );
+		$this->assertIsFloat( $result['geo']['latitude'] );
+		$this->assertIsFloat( $result['geo']['longitude'] );
+		$this->assertEquals( 35.6762, $result['geo']['latitude'] );
+		$this->assertEquals( 139.6503, $result['geo']['longitude'] );
 	}
 
 	/**
@@ -739,13 +742,13 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'latitude'  => 'not_a_number',
-			'longitude' => '',
+			'geo_latitude'  => 'not_a_number',
+			'geo_longitude' => '',
 		);
 
 		$result = $method->invoke( $this->wizard, 'location', $input );
 
-		$this->assertEquals( 0.0, $result['latitude'] );
-		$this->assertEquals( 0.0, $result['longitude'] );
+		$this->assertEquals( 0.0, $result['geo']['latitude'] );
+		$this->assertEquals( 0.0, $result['geo']['longitude'] );
 	}
 }
