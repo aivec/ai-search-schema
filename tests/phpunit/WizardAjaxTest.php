@@ -412,7 +412,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$this->assertEquals( 'Test Company', $settings['company_name'] );
 		$this->assertEquals( 'Test Site', $settings['site_name'] );
-		$this->assertEquals( 'https://example.com/logo.png', $settings['logo'] );
+		$this->assertEquals( 'https://example.com/logo.png', $settings['logo_url'] );
 	}
 
 	/**
@@ -491,6 +491,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		// company_name should be set from local_business_name.
 		$this->assertEquals( 'Test Business', $settings['company_name'] );
 		$this->assertEquals( 'Restaurant', $settings['local_business_type'] );
+		$this->assertEquals( 'Restaurant', $settings['lb_subtype'] );
 		$this->assertEquals( '03-1234-5678', $settings['phone'] );
 		$this->assertEquals( 'test@example.com', $settings['email'] );
 		$this->assertEquals( '$$', $settings['price_range'] );

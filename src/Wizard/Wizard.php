@@ -770,11 +770,11 @@ class Wizard {
 					$settings['site_url'] = $data['site_url'];
 				}
 
-				// Save logo: prefer logo_url, fallback to logo_id.
+				// Save logo_url: prefer logo_url, fallback to logo_id.
 				if ( ! empty( $data['logo_url'] ) ) {
-					$settings['logo'] = $data['logo_url'];
+					$settings['logo_url'] = $data['logo_url'];
 				} elseif ( ! empty( $data['logo_id'] ) ) {
-					$settings['logo'] = wp_get_attachment_url( $data['logo_id'] );
+					$settings['logo_url'] = wp_get_attachment_url( $data['logo_id'] );
 				}
 
 				// site_description is stored but not used in schema currently.
@@ -813,9 +813,10 @@ class Wizard {
 					$settings['local_business_name'] = $data['local_business_name'];
 				}
 
-				// Save local_business_type.
+				// Save local_business_type and sync to lb_subtype for schema output compatibility.
 				if ( ! empty( $data['local_business_type'] ) ) {
 					$settings['local_business_type'] = $data['local_business_type'];
+					$settings['lb_subtype']          = $data['local_business_type'];
 				}
 
 				// Save normalized address array.
@@ -944,7 +945,7 @@ class Wizard {
 		}
 
 		// Logo.
-		if ( ! empty( $options['logo'] ) ) {
+		if ( ! empty( $options['logo_url'] ) ) {
 			$logo = $this->build_preview_logo( $options, $ids );
 			if ( ! empty( $logo ) ) {
 				$graph[] = $logo;
@@ -996,7 +997,7 @@ class Wizard {
 			'url'   => $site_url,
 		);
 
-		if ( ! empty( $options['logo'] ) ) {
+		if ( ! empty( $options['logo_url'] ) ) {
 			$org['logo'] = array( '@id' => $ids['logo'] );
 		}
 
@@ -1011,15 +1012,15 @@ class Wizard {
 	 * @return array Logo schema.
 	 */
 	private function build_preview_logo( array $options, array $ids ) {
-		if ( empty( $options['logo'] ) ) {
+		if ( empty( $options['logo_url'] ) ) {
 			return array();
 		}
 
 		return array(
 			'@type'      => 'ImageObject',
 			'@id'        => $ids['logo'],
-			'url'        => $options['logo'],
-			'contentUrl' => $options['logo'],
+			'url'        => $options['logo_url'],
+			'contentUrl' => $options['logo_url'],
 		);
 	}
 

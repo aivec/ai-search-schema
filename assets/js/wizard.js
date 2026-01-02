@@ -527,8 +527,8 @@
           },
           success: function (response) {
             if (response.success && response.data) {
-              $('#ais-wizard-lat').val(response.data.lat);
-              $('#ais-wizard-lng').val(response.data.lng);
+              $('#ais-wizard-lat').val(response.data.latitude);
+              $('#ais-wizard-lng').val(response.data.longitude);
             } else {
               alert(response.data.message || aisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
             }
