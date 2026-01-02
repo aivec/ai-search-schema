@@ -165,10 +165,35 @@ class WizardTest extends WP_UnitTestCase {
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
 		$method->setAccessible( true );
 
+		// Test with UI input names.
+		$input = array(
+			'site_name'        => '<script>alert("xss")</script>My Site',
+			'site_description' => '  Test description  ',
+			'logo_url'         => 'https://example.com/logo.png',
+		);
+
+		$result = $method->invoke( $wizard, 'basics', $input );
+
+		$this->assertEquals( 'My Site', $result['site_name'] );
+		$this->assertEquals( 'Test description', $result['site_description'] );
+		$this->assertEquals( 'https://example.com/logo.png', $result['logo_url'] );
+		// company_name should fallback to site_name.
+		$this->assertEquals( 'My Site', $result['company_name'] );
+	}
+
+	/**
+	 * basicsステップで company_name が明示的に指定された場合のテスト。
+	 */
+	public function test_sanitize_basics_step_with_explicit_company_name() {
+		$wizard = new Wizard();
+
+		$reflection = new ReflectionClass( $wizard );
+		$method     = $reflection->getMethod( 'sanitize_step_data' );
+		$method->setAccessible( true );
+
 		$input = array(
 			'company_name' => '  Test Company  ',
-			'site_name'    => '<script>alert("xss")</script>My Site',
-			'site_url'     => 'https://example.com',
+			'site_name'    => 'My Site',
 			'logo_id'      => '123',
 		);
 
@@ -176,12 +201,11 @@ class WizardTest extends WP_UnitTestCase {
 
 		$this->assertEquals( 'Test Company', $result['company_name'] );
 		$this->assertEquals( 'My Site', $result['site_name'] );
-		$this->assertEquals( 'https://example.com', $result['site_url'] );
 		$this->assertEquals( 123, $result['logo_id'] );
 	}
 
 	/**
-	 * typeステップのサニタイズをテスト。
+	 * typeステップのサニタイズをテスト（entity_type）。
 	 */
 	public function test_sanitize_type_step_data() {
 		$wizard = new Wizard();
@@ -190,19 +214,54 @@ class WizardTest extends WP_UnitTestCase {
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
 		$method->setAccessible( true );
 
+		// UI sends entity_type directly.
 		$input = array(
-			'site_type'     => 'LOCAL_BUSINESS',
+			'entity_type'   => 'LocalBusiness',
 			'business_type' => 'Restaurant',
 		);
 
 		$result = $method->invoke( $wizard, 'type', $input );
 
-		$this->assertEquals( 'local_business', $result['site_type'] );
+		$this->assertEquals( 'LocalBusiness', $result['entity_type'] );
 		$this->assertEquals( 'Restaurant', $result['business_type'] );
 	}
 
 	/**
-	 * locationステップのサニタイズをテスト。
+	 * typeステップでPerson/WebSiteがOrganizationにマップされることをテスト。
+	 */
+	public function test_sanitize_type_maps_person_to_organization() {
+		$wizard = new Wizard();
+
+		$reflection = new ReflectionClass( $wizard );
+		$method     = $reflection->getMethod( 'sanitize_step_data' );
+		$method->setAccessible( true );
+
+		$input = array( 'entity_type' => 'Person' );
+		$result = $method->invoke( $wizard, 'type', $input );
+		$this->assertEquals( 'Organization', $result['entity_type'] );
+
+		$input = array( 'entity_type' => 'WebSite' );
+		$result = $method->invoke( $wizard, 'type', $input );
+		$this->assertEquals( 'Organization', $result['entity_type'] );
+	}
+
+	/**
+	 * typeステップのレガシーsite_typeサポートをテスト。
+	 */
+	public function test_sanitize_type_legacy_site_type() {
+		$wizard = new Wizard();
+
+		$reflection = new ReflectionClass( $wizard );
+		$method     = $reflection->getMethod( 'sanitize_step_data' );
+		$method->setAccessible( true );
+
+		$input = array( 'site_type' => 'local_business' );
+		$result = $method->invoke( $wizard, 'type', $input );
+		$this->assertEquals( 'LocalBusiness', $result['entity_type'] );
+	}
+
+	/**
+	 * locationステップのサニタイズをテスト（UI入力名）。
 	 */
 	public function test_sanitize_location_step_data() {
 		$wizard = new Wizard();
@@ -211,6 +270,55 @@ class WizardTest extends WP_UnitTestCase {
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
 		$method->setAccessible( true );
 
+		// UI input names.
+		$input = array(
+			'local_business_name' => 'Test Business',
+			'local_business_type' => 'Restaurant',
+			'postal_code'         => '100-0001',
+			'address_region'      => '東京都',
+			'address_locality'    => '千代田区',
+			'street_address'      => '霞が関1-1',
+			'address_country'     => 'JP',
+			'telephone'           => '03-1234-5678',
+			'email'               => 'test@example.com',
+			'geo_latitude'        => '35.6762',
+			'geo_longitude'       => '139.6503',
+			'price_range'         => '$$',
+		);
+
+		$result = $method->invoke( $wizard, 'location', $input );
+
+		$this->assertEquals( 'Test Business', $result['local_business_name'] );
+		$this->assertEquals( 'Restaurant', $result['local_business_type'] );
+		$this->assertEquals( '03-1234-5678', $result['telephone'] );
+		$this->assertEquals( 'test@example.com', $result['email'] );
+		$this->assertEquals( '$$', $result['price_range'] );
+
+		// Check address array.
+		$this->assertIsArray( $result['address'] );
+		$this->assertEquals( '100-0001', $result['address']['postal_code'] );
+		$this->assertEquals( '東京都', $result['address']['region'] );
+		$this->assertEquals( '千代田区', $result['address']['locality'] );
+		$this->assertEquals( '霞が関1-1', $result['address']['street_address'] );
+		$this->assertEquals( 'JP', $result['address']['country'] );
+
+		// Check geo array.
+		$this->assertIsArray( $result['geo'] );
+		$this->assertEquals( 35.6762, $result['geo']['latitude'] );
+		$this->assertEquals( 139.6503, $result['geo']['longitude'] );
+	}
+
+	/**
+	 * locationステップのレガシー入力名サポートをテスト。
+	 */
+	public function test_sanitize_location_legacy_input() {
+		$wizard = new Wizard();
+
+		$reflection = new ReflectionClass( $wizard );
+		$method     = $reflection->getMethod( 'sanitize_step_data' );
+		$method->setAccessible( true );
+
+		// Legacy input names.
 		$input = array(
 			'postal_code' => '100-0001',
 			'prefecture'  => '東京都',
@@ -223,17 +331,17 @@ class WizardTest extends WP_UnitTestCase {
 
 		$result = $method->invoke( $wizard, 'location', $input );
 
-		$this->assertEquals( '100-0001', $result['postal_code'] );
-		$this->assertEquals( '東京都', $result['prefecture'] );
-		$this->assertEquals( '千代田区', $result['city'] );
-		$this->assertEquals( '霞が関1-1', $result['street'] );
-		$this->assertEquals( '03-1234-5678', $result['phone'] );
-		$this->assertEquals( 35.6762, $result['latitude'] );
-		$this->assertEquals( 139.6503, $result['longitude'] );
+		// Legacy values should be mapped to new structure.
+		$this->assertEquals( '東京都', $result['address']['region'] );
+		$this->assertEquals( '千代田区', $result['address']['locality'] );
+		$this->assertEquals( '霞が関1-1', $result['address']['street_address'] );
+		$this->assertEquals( '03-1234-5678', $result['telephone'] );
+		$this->assertEquals( 35.6762, $result['geo']['latitude'] );
+		$this->assertEquals( 139.6503, $result['geo']['longitude'] );
 	}
 
 	/**
-	 * hoursステップのサニタイズをテスト。
+	 * hoursステップのサニタイズをテスト（UI入力形式）。
 	 */
 	public function test_sanitize_hours_step_data() {
 		$wizard = new Wizard();
@@ -242,8 +350,39 @@ class WizardTest extends WP_UnitTestCase {
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
 		$method->setAccessible( true );
 
+		// UI sends hours_{day}_opens/closes format.
 		$input = array(
-			'opening_hours'        => array(
+			'hours_monday_opens'    => '09:00',
+			'hours_monday_closes'   => '18:00',
+			'hours_tuesday_opens'   => '10:00',
+			'hours_tuesday_closes'  => '17:00',
+			'price_range'           => '$$',
+			'accepts_reservations'  => '1',
+		);
+
+		$result = $method->invoke( $wizard, 'hours', $input );
+
+		$this->assertCount( 2, $result['opening_hours'] );
+		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
+		$this->assertEquals( '09:00', $result['opening_hours'][0]['open'] );
+		$this->assertEquals( '18:00', $result['opening_hours'][0]['close'] );
+		$this->assertEquals( 'tuesday', $result['opening_hours'][1]['day'] );
+		$this->assertEquals( '$$', $result['price_range'] );
+		$this->assertTrue( $result['accepts_reservations'] );
+	}
+
+	/**
+	 * hoursステップのレガシー opening_hours 配列形式をテスト。
+	 */
+	public function test_sanitize_hours_legacy_array_format() {
+		$wizard = new Wizard();
+
+		$reflection = new ReflectionClass( $wizard );
+		$method     = $reflection->getMethod( 'sanitize_step_data' );
+		$method->setAccessible( true );
+
+		$input = array(
+			'opening_hours' => array(
 				array(
 					'day'   => 'monday',
 					'open'  => '09:00',
@@ -255,18 +394,12 @@ class WizardTest extends WP_UnitTestCase {
 					'close' => '17:00',
 				),
 			),
-			'price_range'          => '$$',
-			'accepts_reservations' => '1',
 		);
 
 		$result = $method->invoke( $wizard, 'hours', $input );
 
 		$this->assertCount( 1, $result['opening_hours'], 'Invalid day should be filtered out' );
 		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
-		$this->assertEquals( '09:00', $result['opening_hours'][0]['open'] );
-		$this->assertEquals( '18:00', $result['opening_hours'][0]['close'] );
-		$this->assertEquals( '$$', $result['price_range'] );
-		$this->assertTrue( $result['accepts_reservations'] );
 	}
 
 	/**
@@ -280,14 +413,14 @@ class WizardTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$input = array(
-			'latitude'  => 'not a number',
-			'longitude' => '',
+			'geo_latitude'  => 'not a number',
+			'geo_longitude' => '',
 		);
 
 		$result = $method->invoke( $wizard, 'location', $input );
 
-		$this->assertEquals( 0.0, $result['latitude'] );
-		$this->assertEquals( 0.0, $result['longitude'] );
+		$this->assertEquals( 0.0, $result['geo']['latitude'] );
+		$this->assertEquals( 0.0, $result['geo']['longitude'] );
 	}
 
 	/**

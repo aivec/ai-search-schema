@@ -501,14 +501,13 @@
       }
 
       $geocodeBtn.on('click', function () {
-        const address = [
-          $('#ais-wizard-postal-code').val(),
-          $('#ais-wizard-region').val(),
-          $('#ais-wizard-locality').val(),
-          $('#ais-wizard-street').val()
-        ].filter(Boolean).join(' ');
+        const postalCode = $('#ais-wizard-postal-code').val();
+        const region = $('#ais-wizard-region').val();
+        const locality = $('#ais-wizard-locality').val();
+        const street = $('#ais-wizard-street').val();
 
-        if (!address) {
+        // Check if at least one address field is filled
+        if (!postalCode && !region && !locality && !street) {
           alert(aisWizardData.strings.enterAddress || 'Please enter an address first.');
           return;
         }
@@ -521,7 +520,10 @@
           data: {
             action: 'ai_search_schema_geocode',
             nonce: aisWizardData.geocodeNonce || aisWizardData.nonce,
-            address: address
+            'address[postal_code]': postalCode,
+            'address[region]': region,
+            'address[locality]': locality,
+            'address[street_address]': street
           },
           success: function (response) {
             if (response.success && response.data) {
