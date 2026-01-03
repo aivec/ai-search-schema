@@ -4,7 +4,7 @@ Tags: schema, seo, structured-data, ai-search, local-seo, breadcrumbs, faq, llms
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.4-dev
+Stable tag: 1.0.5-dev
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -253,5 +253,6 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 * [Compatibility] WordPress 6.0+
 * [Compatibility] PHP 8.0+
 * [Compatibility] Tested up to WordPress 6.7
+
 
 == Upgrade Notice ==
