@@ -335,10 +335,10 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$result = $method->invoke( $this->wizard, 'hours', $input );
 
 		$this->assertCount( 2, $result['opening_hours'] );
-		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
-		$this->assertEquals( '09:00', $result['opening_hours'][0]['open'] );
-		$this->assertEquals( '18:00', $result['opening_hours'][0]['close'] );
-		$this->assertEquals( 'tuesday', $result['opening_hours'][1]['day'] );
+		$this->assertEquals( 'Monday', $result['opening_hours'][0]['day_key'] );
+		$this->assertEquals( '09:00', $result['opening_hours'][0]['opens'] );
+		$this->assertEquals( '18:00', $result['opening_hours'][0]['closes'] );
+		$this->assertEquals( 'Tuesday', $result['opening_hours'][1]['day_key'] );
 		$this->assertEquals( '$$', $result['price_range'] );
 		$this->assertTrue( $result['accepts_reservations'] );
 	}
@@ -369,7 +369,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$result = $method->invoke( $this->wizard, 'hours', $input );
 
 		$this->assertCount( 1, $result['opening_hours'] );
-		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
+		$this->assertEquals( 'Monday', $result['opening_hours'][0]['day_key'] );
 	}
 
 	/**
@@ -517,9 +517,9 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$data = array(
 			'opening_hours'        => array(
 				array(
-					'day'   => 'monday',
-					'open'  => '09:00',
-					'close' => '18:00',
+					'day_key' => 'Monday',
+					'opens'   => '09:00',
+					'closes'  => '18:00',
 				),
 			),
 			'price_range'          => '$$',
@@ -531,6 +531,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$settings = get_option( 'ai_search_schema_options', array() );
 
 		$this->assertNotEmpty( $settings['opening_hours'] );
+		$this->assertEquals( 'Monday', $settings['opening_hours'][0]['day_key'] );
 		$this->assertEquals( '$$', $settings['price_range'] );
 		$this->assertEquals( '1', $settings['accepts_reservations'] );
 	}
@@ -710,7 +711,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$result = $method->invoke( $this->wizard, 'hours', $input );
 
 		$this->assertCount( 1, $result['opening_hours'] );
-		$this->assertEquals( 'holiday', $result['opening_hours'][0]['day'] );
+		$this->assertEquals( 'PublicHoliday', $result['opening_hours'][0]['day_key'] );
 	}
 
 	/**

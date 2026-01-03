@@ -682,19 +682,30 @@ class Wizard {
 
 			case 'hours':
 				// UI sends: hours_{day}_opens, hours_{day}_closes (individual selects).
-				// Convert to opening_hours array format.
+				// Convert to opening_hours array format matching settings expectations.
 				$opening_hours = array();
-				$valid_days    = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'holiday' );
 
-				foreach ( $valid_days as $day ) {
-					$open_key  = 'hours_' . $day . '_opens';
-					$close_key = 'hours_' . $day . '_closes';
+				// Map lowercase wizard days to capitalized settings format.
+				$day_map = array(
+					'monday'    => 'Monday',
+					'tuesday'   => 'Tuesday',
+					'wednesday' => 'Wednesday',
+					'thursday'  => 'Thursday',
+					'friday'    => 'Friday',
+					'saturday'  => 'Saturday',
+					'sunday'    => 'Sunday',
+					'holiday'   => 'PublicHoliday',
+				);
+
+				foreach ( $day_map as $wizard_day => $settings_day ) {
+					$open_key  = 'hours_' . $wizard_day . '_opens';
+					$close_key = 'hours_' . $wizard_day . '_closes';
 
 					if ( ! empty( $data[ $open_key ] ) && ! empty( $data[ $close_key ] ) ) {
 						$opening_hours[] = array(
-							'day'   => $day,
-							'open'  => sanitize_text_field( $data[ $open_key ] ),
-							'close' => sanitize_text_field( $data[ $close_key ] ),
+							'day_key' => $settings_day,
+							'opens'   => sanitize_text_field( $data[ $open_key ] ),
+							'closes'  => sanitize_text_field( $data[ $close_key ] ),
 						);
 					}
 				}
@@ -720,22 +731,50 @@ class Wizard {
 	/**
 	 * Sanitize opening hours array.
 	 *
+	 * Normalizes both legacy format (day/open/close) and new format (day_key/opens/closes).
+	 *
 	 * @param array $hours Raw hours data.
-	 * @return array Sanitized hours.
+	 * @return array Sanitized hours in settings-compatible format.
 	 */
 	private function sanitize_opening_hours( $hours ) {
-		$sanitized  = array();
-		$valid_days = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'holiday' );
+		$sanitized = array();
+
+		// Map lowercase wizard days to capitalized settings format.
+		$day_map = array(
+			'monday'    => 'Monday',
+			'tuesday'   => 'Tuesday',
+			'wednesday' => 'Wednesday',
+			'thursday'  => 'Thursday',
+			'friday'    => 'Friday',
+			'saturday'  => 'Saturday',
+			'sunday'    => 'Sunday',
+			'holiday'   => 'PublicHoliday',
+		);
+
+		$valid_days = array_merge( array_keys( $day_map ), array_values( $day_map ) );
 
 		foreach ( $hours as $entry ) {
-			if ( ! isset( $entry['day'] ) || ! in_array( $entry['day'], $valid_days, true ) ) {
+			// Accept both 'day' and 'day_key'.
+			$day = $entry['day_key'] ?? $entry['day'] ?? '';
+			if ( ! in_array( $day, $valid_days, true ) ) {
+				continue;
+			}
+
+			// Normalize lowercase to capitalized.
+			$day_key = isset( $day_map[ $day ] ) ? $day_map[ $day ] : $day;
+
+			// Accept both 'opens'/'closes' and 'open'/'close'.
+			$opens  = $entry['opens'] ?? $entry['open'] ?? '';
+			$closes = $entry['closes'] ?? $entry['close'] ?? '';
+
+			if ( empty( $opens ) || empty( $closes ) ) {
 				continue;
 			}
 
 			$sanitized[] = array(
-				'day'   => sanitize_key( $entry['day'] ),
-				'open'  => isset( $entry['open'] ) ? sanitize_text_field( $entry['open'] ) : '',
-				'close' => isset( $entry['close'] ) ? sanitize_text_field( $entry['close'] ) : '',
+				'day_key' => $day_key,
+				'opens'   => sanitize_text_field( $opens ),
+				'closes'  => sanitize_text_field( $closes ),
 			);
 		}
 
