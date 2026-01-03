@@ -1892,12 +1892,13 @@ class AI_Search_Schema_Settings {
 
 	private function diagnose_article( array $options ) {
 			$items = array();
-			$article_preference = $options['content_model'] ?? 'WebPage';
+			$post_schema_type = $options['content_type_settings']['post_types']['post']['schema_type'] ?? 'auto';
+			$is_article = 'Article' === $post_schema_type || 'auto' === $post_schema_type;
 			$items[] = $this->make_item(
-				'Article' === $article_preference ? 'ok' : 'warning',
-				'Article' === $article_preference
-					? __( 'Article schema is preferred for content.', 'ai-search-schema' )
-					: __( 'Content model is not set to Article by default.', 'ai-search-schema' )
+				$is_article ? 'ok' : 'warning',
+				$is_article
+					? __( 'Article schema is enabled for posts.', 'ai-search-schema' )
+					: __( 'Post schema is WebPage. Consider Article for blogs.', 'ai-search-schema' )
 			);
 		$posts = get_posts(
 			array(
@@ -1985,7 +1986,7 @@ class AI_Search_Schema_Settings {
 				__( 'FAQPage schema is enabled for at least one post type.', 'ai-search-schema' )
 			);
 			$items[] = $this->make_item(
-				'warning',
+				'info',
 				__( 'Ensure each FAQ has both question and answer in the page content.', 'ai-search-schema' )
 			);
 		} else {

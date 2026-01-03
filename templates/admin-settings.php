@@ -928,6 +928,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						.ais-diagnostic-item{display:flex;align-items:center;gap:8px;margin:6px 0}
 						.ais-status-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
 						.ais-status-ok{background:#e6f4ea;color:#1a7f37}
+						.ais-status-info{background:#e8f4fd;color:#0969da}
 						.ais-status-warning{background:#fff4e5;color:#b06100}
 						.ais-status-error{background:#fdecea;color:#b3261e}
 					</style>
@@ -939,8 +940,14 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<?php if ( ! empty( $group['items'] ) && is_array( $group['items'] ) ) : ?>
 										<?php foreach ( $group['items'] as $item ) : ?>
 											<?php
-											$diag_status = isset( $item['status'] ) ? $item['status'] : 'warning';
-											$label       = 'ok' === $diag_status ? __( 'OK', 'ai-search-schema' ) : ( 'error' === $diag_status ? __( 'Error', 'ai-search-schema' ) : __( 'Warning', 'ai-search-schema' ) );
+											$diag_status   = isset( $item['status'] ) ? $item['status'] : 'warning';
+											$status_labels = array(
+												'ok'      => __( 'OK', 'ai-search-schema' ),
+												'info'    => __( 'Info', 'ai-search-schema' ),
+												'warning' => __( 'Warning', 'ai-search-schema' ),
+												'error'   => __( 'Error', 'ai-search-schema' ),
+											);
+											$label         = $status_labels[ $diag_status ] ?? __( 'Warning', 'ai-search-schema' );
 											?>
 											<div class="ais-diagnostic-item">
 												<span class="ais-status-badge ais-status-<?php echo esc_attr( $diag_status ); ?>"><?php echo esc_html( $label ); ?></span>
