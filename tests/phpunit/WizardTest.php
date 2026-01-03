@@ -363,10 +363,10 @@ class WizardTest extends WP_UnitTestCase {
 		$result = $method->invoke( $wizard, 'hours', $input );
 
 		$this->assertCount( 2, $result['opening_hours'] );
-		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
-		$this->assertEquals( '09:00', $result['opening_hours'][0]['open'] );
-		$this->assertEquals( '18:00', $result['opening_hours'][0]['close'] );
-		$this->assertEquals( 'tuesday', $result['opening_hours'][1]['day'] );
+		$this->assertEquals( 'Monday', $result['opening_hours'][0]['day_key'] );
+		$this->assertEquals( '09:00', $result['opening_hours'][0]['opens'] );
+		$this->assertEquals( '18:00', $result['opening_hours'][0]['closes'] );
+		$this->assertEquals( 'Tuesday', $result['opening_hours'][1]['day_key'] );
 		$this->assertEquals( '$$', $result['price_range'] );
 		$this->assertTrue( $result['accepts_reservations'] );
 	}
@@ -399,7 +399,7 @@ class WizardTest extends WP_UnitTestCase {
 		$result = $method->invoke( $wizard, 'hours', $input );
 
 		$this->assertCount( 1, $result['opening_hours'], 'Invalid day should be filtered out' );
-		$this->assertEquals( 'monday', $result['opening_hours'][0]['day'] );
+		$this->assertEquals( 'Monday', $result['opening_hours'][0]['day_key'] );
 	}
 
 	/**
