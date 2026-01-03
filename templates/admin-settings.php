@@ -400,7 +400,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<div class="ais-field ais-field--radios">
 							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'ai-search-schema' ) ); ?></span>
 							<label class="ais-radio">
-								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="avc" <?php checked( $options['ai_search_schema_priority'], 'avc' ); ?> />
+								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="ais" <?php checked( $options['ai_search_schema_priority'], 'ais' ); ?> />
 								<span><?php esc_html_e( 'Use AI Search Schema output (disable other plugins)', 'ai-search-schema' ); ?></span>
 							</label>
 							<label class="ais-radio">

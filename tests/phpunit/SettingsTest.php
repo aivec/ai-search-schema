@@ -727,7 +727,7 @@ class SettingsTest extends WP_UnitTestCase {
 			foreach ( $group['items'] as $item ) {
 				$this->assertArrayHasKey( 'status', $item );
 				$this->assertArrayHasKey( 'message', $item );
-				$this->assertContains( $item['status'], array( 'ok', 'warning', 'error' ) );
+				$this->assertContains( $item['status'], array( 'ok', 'info', 'warning', 'error' ) );
 			}
 		}
 	}

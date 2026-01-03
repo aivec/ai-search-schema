@@ -688,7 +688,7 @@ class AI_Search_Schema_Settings {
 			: 'Organization';
 
 		$publisher_entity           = sanitize_text_field( $input['publisher_entity'] ?? 'Organization' );
-		$output['publisher_entity'] = in_array( $publisher_entity, array( 'Organization' ), true )
+		$output['publisher_entity'] = in_array( $publisher_entity, array( 'Organization', 'LocalBusiness' ), true )
 			? $publisher_entity
 			: 'Organization';
 
@@ -1099,8 +1099,8 @@ class AI_Search_Schema_Settings {
 		}
 		$merged['has_map_enabled'] = ! empty( $merged['has_map_enabled'] );
 
-		if ( 'Organization' !== $merged['publisher_entity'] ) {
-				$merged['publisher_entity'] = 'Organization';
+		if ( ! in_array( $merged['publisher_entity'], array( 'Organization', 'LocalBusiness' ), true ) ) {
+			$merged['publisher_entity'] = 'Organization';
 		}
 
 		if ( empty( $merged['lb_subtype'] ) ) {
