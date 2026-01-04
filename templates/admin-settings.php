@@ -437,14 +437,6 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</label>
 						<p class="ais-field__description"><?php esc_html_e( 'ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme already has breadcrumbs.', 'ai-search-schema' ); ?></p>
 					</div>
-					<div class="ais-field ais-field--toggle">
-						<span class="ais-field__label"><?php esc_html_e( 'Author box', 'ai-search-schema' ); ?></span>
-						<label class="ais-toggle" for="ais-author-box">
-							<input id="ais-author-box" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[author_box_enabled]" value="1" <?php checked( true, ! empty( $options['author_box_enabled'] ) ); ?> />
-							<span><?php esc_html_e( 'Display author information box after post content', 'ai-search-schema' ); ?></span>
-						</label>
-						<p class="ais-field__description"><?php esc_html_e( 'ON: Shows author name, avatar, and bio at the end of posts and pages. Uses WordPress user profile data.', 'ai-search-schema' ); ?></p>
-					</div>
 				</div>
 			</section>
 

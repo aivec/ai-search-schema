@@ -809,7 +809,6 @@ class AI_Search_Schema_Settings {
 		$output['ai_search_schema_breadcrumbs_schema_enabled'] = $breadcrumbs_schema_enabled;
 		$output['ai_search_schema_breadcrumbs_html_enabled']   = $breadcrumbs_html_enabled;
 		$output['enable_breadcrumbs']                          = $breadcrumbs_schema_enabled;
-		$output['author_box_enabled']                          = ! empty( $input['author_box_enabled'] );
 
 		$social_links = array();
 		if ( ! empty( $input['social_links'] ) && is_array( $input['social_links'] ) ) {
@@ -928,7 +927,6 @@ class AI_Search_Schema_Settings {
 			'ai_search_schema_breadcrumbs_schema_enabled' => true,
 			'ai_search_schema_breadcrumbs_html_enabled'   => false,
 			'enable_breadcrumbs'                          => false,
-			'author_box_enabled'                          => false,
 			'local_business_label'                        => '',
 			'localbusiness_address_locality'              => '',
 			'localbusiness_street_address'                => '',

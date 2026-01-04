@@ -117,18 +117,6 @@ add_action(
 	5
 );
 
-// Initialize author display for frontend.
-add_action(
-	'init',
-	static function () {
-		if ( ! is_admin() ) {
-			require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-author-display.php';
-			AI_Search_Schema_Author_Display::init();
-		}
-	},
-	10
-);
-
 // Initialize Pro features manager (only if Pro add-on hasn't loaded its own).
 add_action(
 	'init',
