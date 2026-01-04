@@ -468,7 +468,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 											'schema_type' => 'auto',
 											'breadcrumbs_enabled' => true,
 											'faq_enabled' => false,
-											'schema_priority' => 'avc',
+											'schema_priority' => 'ais',
 										);
 									}
 									$label = ! empty( $type_obj->labels->singular_name ) ? $type_obj->labels->singular_name : ( ! empty( $type_obj->label ) ? $type_obj->label : $slug );
@@ -532,7 +532,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 												'schema_type' => 'auto',
 												'breadcrumbs_enabled' => true,
 												'faq_enabled' => false,
-												'schema_priority' => 'avc',
+												'schema_priority' => 'ais',
 											);
 										}
 										$label = ! empty( $taxonomy_object->labels->singular_name ) ? $taxonomy_object->labels->singular_name : ( ! empty( $taxonomy_object->label ) ? $taxonomy_object->label : $slug );
