@@ -1736,26 +1736,26 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			$has_name ? 'ok' : 'error',
 			$has_name
-				? __( 'Organization name is set.', 'ai-search-schema' )
-				: __( 'Organization name is missing.', 'ai-search-schema' )
+				? __( 'The site operator is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The site operator name is not set. Entity identification may be difficult.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			$has_url ? 'ok' : 'error',
 			$has_url
-				? __( 'Organization URL is set.', 'ai-search-schema' )
-				: __( 'Organization URL is missing.', 'ai-search-schema' )
+				? __( 'The organization URL is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The organization URL is not set. Entity identification may be difficult.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			$has_logo ? 'ok' : 'warning',
 			$has_logo
-				? __( 'Logo is set.', 'ai-search-schema' )
-				: __( 'Logo is not set. Set a square logo image.', 'ai-search-schema' )
+				? __( 'A logo is registered for entity identification.', 'ai-search-schema' )
+				: __( 'No logo is registered. Credibility assessment may be affected.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			$has_same ? 'ok' : 'warning',
 			$has_same
-				? __( 'SameAs / social profiles are present.', 'ai-search-schema' )
-				: __( 'SameAs profiles are missing. Add social links.', 'ai-search-schema' )
+				? __( 'Social profiles (sameAs) are linked for entity verification.', 'ai-search-schema' )
+				: __( 'No social profiles are linked. Entity verification may be limited.', 'ai-search-schema' )
 		);
 
 		return array(
@@ -1778,22 +1778,22 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			! empty( $options['company_name'] ) ? 'ok' : 'error',
 			! empty( $options['company_name'] )
-				? __( 'LocalBusiness name is set.', 'ai-search-schema' )
-				: __( 'LocalBusiness name is missing.', 'ai-search-schema' )
+				? __( 'The business name is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The business name is not set. Local search visibility may be affected.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $options['phone'] ) ? 'ok' : 'error',
 			! empty( $options['phone'] )
-				? __( 'Telephone is set.', 'ai-search-schema' )
-				: __( 'Telephone is missing.', 'ai-search-schema' )
+				? __( 'A phone number is registered for contact purposes.', 'ai-search-schema' )
+				: __( 'No phone number is set. This is a required field for LocalBusiness.', 'ai-search-schema' )
 		);
 
 		$addr_status = ( $street && $locality && $region && $postal ) ? 'ok' : 'error';
 		$items[]     = $this->make_item(
 			$addr_status,
 			'ok' === $addr_status
-				? __( 'Address fields are set.', 'ai-search-schema' )
-				: __( 'Address is incomplete. Set prefecture, city, street, and postal code.', 'ai-search-schema' )
+				? __( 'The address is fully defined in the structured data.', 'ai-search-schema' )
+				: __( 'The address is incomplete. Some fields may be missing.', 'ai-search-schema' )
 		);
 
 		$geo_status  = $has_geo ? 'ok' : 'warning';
@@ -1807,24 +1807,24 @@ class AI_Search_Schema_Settings {
 			$has_geo
 				? sprintf(
 					/* translators: %s decimal places */
-					__( 'Geo coordinates set (lat/long, %s decimals).', 'ai-search-schema' ),
+					__( 'Geo coordinates are registered (%s decimal places). Map display is ready.', 'ai-search-schema' ),
 					max( $lat_decimal, $lng_decimal )
 				)
-				: __( 'Geo coordinates are missing. Fetch via address or enter lat/long.', 'ai-search-schema' )
+				: __( 'Geo coordinates are not set. Map-based local search may be affected.', 'ai-search-schema' )
 		);
 
 		$items[] = $this->make_item(
 			$oh_entries ? 'ok' : 'warning',
 			$oh_entries
-				? __( 'Opening hours are configured.', 'ai-search-schema' )
-				: __( 'Opening hours are empty. Add at least one slot.', 'ai-search-schema' )
+				? __( 'Business hours are defined in the structured data.', 'ai-search-schema' )
+				: __( 'No business hours are set. Open/closed status cannot be determined.', 'ai-search-schema' )
 		);
 
 		$items[] = $this->make_item(
 			! empty( $country ) ? 'ok' : 'warning',
 			! empty( $country )
-				? __( 'addressCountry is set.', 'ai-search-schema' )
-				: __( 'addressCountry is missing.', 'ai-search-schema' )
+				? __( 'The country code is defined for address context.', 'ai-search-schema' )
+				: __( 'The country code is not set. Regional interpretation may vary.', 'ai-search-schema' )
 		);
 
 		return array(
@@ -1839,27 +1839,27 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			! empty( $options['site_name'] ) ? 'ok' : 'error',
 			! empty( $options['site_name'] )
-				? __( 'WebSite name is set.', 'ai-search-schema' )
-				: __( 'WebSite name is missing.', 'ai-search-schema' )
+				? __( 'The site name is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The site name is not set. Site identification may be unclear.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $options['site_url'] ) ? 'ok' : 'error',
 			! empty( $options['site_url'] )
-				? __( 'WebSite URL is set.', 'ai-search-schema' )
-				: __( 'WebSite URL is missing.', 'ai-search-schema' )
+				? __( 'The site URL is defined as the canonical reference.', 'ai-search-schema' )
+				: __( 'The site URL is not set. Canonical identification may fail.', 'ai-search-schema' )
 		);
 		$langs = $options['languages'] ?? array();
 		$items[] = $this->make_item(
 			! empty( $langs ) ? 'ok' : 'warning',
 			! empty( $langs )
-				? __( 'Language (inLanguage) is set.', 'ai-search-schema' )
-				: __( 'Language is missing. Add at least one language.', 'ai-search-schema' )
+				? __( 'The site language is defined for content context.', 'ai-search-schema' )
+				: __( 'No language is set. Content language context may be ambiguous.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $options['company_name'] ) ? 'ok' : 'warning',
 			! empty( $options['company_name'] )
-				? __( 'Publisher is set.', 'ai-search-schema' )
-				: __( 'Publisher is missing. Set Organization first.', 'ai-search-schema' )
+				? __( 'The publisher is linked to the site entity.', 'ai-search-schema' )
+				: __( 'No publisher is set. Site-entity relationship is undefined.', 'ai-search-schema' )
 		);
 
 		return array(
@@ -1873,15 +1873,15 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			! empty( $options['site_url'] ) ? 'ok' : 'warning',
 			! empty( $options['site_url'] )
-				? __( 'WebPage @id/url base is set.', 'ai-search-schema' )
-				: __( 'WebPage base URL is missing.', 'ai-search-schema' )
+				? __( 'The WebPage base URL is defined for page identification.', 'ai-search-schema' )
+				: __( 'The WebPage base URL is not set. Page linking may be affected.', 'ai-search-schema' )
 		);
 		$langs = $options['languages'] ?? array();
 		$items[] = $this->make_item(
 			! empty( $langs ) ? 'ok' : 'warning',
 			! empty( $langs )
-				? __( 'WebPage inLanguage ready.', 'ai-search-schema' )
-				: __( 'WebPage inLanguage will fallback. Consider setting languages.', 'ai-search-schema' )
+				? __( 'The page language is defined for content context.', 'ai-search-schema' )
+				: __( 'No language is set. System default will be used.', 'ai-search-schema' )
 		);
 
 		return array(
@@ -1895,10 +1895,10 @@ class AI_Search_Schema_Settings {
 			$post_schema_type = $options['content_type_settings']['post_types']['post']['schema_type'] ?? 'auto';
 			$is_article = 'Article' === $post_schema_type || 'auto' === $post_schema_type;
 			$items[] = $this->make_item(
-				$is_article ? 'ok' : 'warning',
+				$is_article ? 'ok' : 'info',
 				$is_article
-					? __( 'Article schema is enabled for posts.', 'ai-search-schema' )
-					: __( 'Post schema is WebPage. Consider Article for blogs.', 'ai-search-schema' )
+					? __( 'Posts are output as Article schema for blog content.', 'ai-search-schema' )
+					: __( 'Posts are output as WebPage schema. Article may be more suitable for blogs.', 'ai-search-schema' )
 			);
 		$posts = get_posts(
 			array(
@@ -1914,8 +1914,8 @@ class AI_Search_Schema_Settings {
 
 		if ( ! $has_post ) {
 			$items[] = $this->make_item(
-				'warning',
-				__( 'No published posts found. Article schema cannot be checked.', 'ai-search-schema' )
+				'info',
+				__( 'No published posts found. Sample check cannot be performed.', 'ai-search-schema' )
 			);
 			return array(
 				'title' => __( 'Article (sample post)', 'ai-search-schema' ),
@@ -1926,28 +1926,28 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			! empty( $post->post_title ) ? 'ok' : 'error',
 			! empty( $post->post_title )
-				? __( 'Headline is present.', 'ai-search-schema' )
-				: __( 'Headline is missing.', 'ai-search-schema' )
+				? __( 'The headline is defined in the sample post.', 'ai-search-schema' )
+				: __( 'The headline is missing from the sample post.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $post->post_date ) ? 'ok' : 'error',
 			! empty( $post->post_date )
-				? __( 'datePublished is present.', 'ai-search-schema' )
-				: __( 'datePublished is missing.', 'ai-search-schema' )
+				? __( 'The publication date is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The publication date is missing. Freshness signals may be affected.', 'ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $post->post_modified ) ? 'ok' : 'warning',
 			! empty( $post->post_modified )
-				? __( 'dateModified is present.', 'ai-search-schema' )
-				: __( 'dateModified is missing.', 'ai-search-schema' )
+				? __( 'The modification date is defined for content freshness.', 'ai-search-schema' )
+				: __( 'The modification date is not available.', 'ai-search-schema' )
 		);
 
 		$author = get_user_by( 'id', $post->post_author );
 		$items[] = $this->make_item(
 			$author ? 'ok' : 'warning',
 			$author
-				? __( 'Author is set.', 'ai-search-schema' )
-				: __( 'Author information is missing.', 'ai-search-schema' )
+				? __( 'The author is defined for content attribution.', 'ai-search-schema' )
+				: __( 'No author is set. Content attribution may be unclear.', 'ai-search-schema' )
 		);
 
 			$post_id = $post->ID ?? 0;
@@ -1956,8 +1956,8 @@ class AI_Search_Schema_Settings {
 			$items[] = $this->make_item(
 				$has_image ? 'ok' : 'warning',
 				$has_image
-					? __( 'Featured image found for the sample post.', 'ai-search-schema' )
-					: __( 'Featured image missing on the sample post.', 'ai-search-schema' )
+					? __( 'A featured image is set for the sample post.', 'ai-search-schema' )
+					: __( 'No featured image on the sample post. Rich results may be limited.', 'ai-search-schema' )
 			);
 
 		return array(
@@ -1983,16 +1983,16 @@ class AI_Search_Schema_Settings {
 		if ( $faq_enabled_any ) {
 			$items[] = $this->make_item(
 				'ok',
-				__( 'FAQPage schema is enabled for at least one post type.', 'ai-search-schema' )
+				__( 'FAQ schema extraction is enabled for at least one post type.', 'ai-search-schema' )
 			);
 			$items[] = $this->make_item(
 				'info',
-				__( 'Ensure each FAQ has both question and answer in the page content.', 'ai-search-schema' )
+				__( 'FAQ content requires both question and answer elements with matching CSS classes.', 'ai-search-schema' )
 			);
 		} else {
 			$items[] = $this->make_item(
-				'warning',
-				__( 'FAQPage schema is disabled. Enable it on relevant post types if needed.', 'ai-search-schema' )
+				'info',
+				__( 'FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections.', 'ai-search-schema' )
 			);
 		}
 
@@ -2037,8 +2037,8 @@ class AI_Search_Schema_Settings {
 		$items[] = $this->make_item(
 			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1 ? 'ok' : 'warning',
 			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1
-				? __( 'BreadcrumbList can be generated.', 'ai-search-schema' )
-				: __( 'Breadcrumb trail is empty. Check HTML output or enable breadcrumbs.', 'ai-search-schema' )
+				? __( 'Breadcrumb navigation is defined in the structured data.', 'ai-search-schema' )
+				: __( 'The breadcrumb trail is empty. Site hierarchy may be unclear.', 'ai-search-schema' )
 		);
 
 		return array(

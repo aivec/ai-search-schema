@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-06T08:45:00+00:00\n"
+"POT-Creation-Date: 2026-01-06T10:02:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: ai-search-schema\n"
@@ -750,42 +750,34 @@ msgid "New Zealand"
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1739
-#: includes/class-ai-search-schema-settings.php:1739
 msgid "Organization name is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1740
-#: includes/class-ai-search-schema-settings.php:1740
 msgid "Organization name is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1745
-#: includes/class-ai-search-schema-settings.php:1745
 msgid "Organization URL is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1746
-#: includes/class-ai-search-schema-settings.php:1746
 msgid "Organization URL is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1751
-#: includes/class-ai-search-schema-settings.php:1751
 msgid "Logo is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1752
-#: includes/class-ai-search-schema-settings.php:1752
 msgid "Logo is not set. Set a square logo image."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1757
-#: includes/class-ai-search-schema-settings.php:1757
 msgid "SameAs / social profiles are present."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1758
-#: includes/class-ai-search-schema-settings.php:1758
 msgid "SameAs profiles are missing. Add social links."
 msgstr ""
 
@@ -795,63 +787,51 @@ msgid "Organization"
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1781
-#: includes/class-ai-search-schema-settings.php:1781
 msgid "LocalBusiness name is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1782
-#: includes/class-ai-search-schema-settings.php:1782
 msgid "LocalBusiness name is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1787
-#: includes/class-ai-search-schema-settings.php:1787
 msgid "Telephone is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1788
-#: includes/class-ai-search-schema-settings.php:1788
 msgid "Telephone is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1795
-#: includes/class-ai-search-schema-settings.php:1795
 msgid "Address fields are set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1796
-#: includes/class-ai-search-schema-settings.php:1796
 msgid "Address is incomplete. Set prefecture, city, street, and postal code."
 msgstr ""
 
 #. translators: %s decimal places
 #: dist/includes/class-ai-search-schema-settings.php:1810
-#: includes/class-ai-search-schema-settings.php:1810
 msgid "Geo coordinates set (lat/long, %s decimals)."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1813
-#: includes/class-ai-search-schema-settings.php:1813
 msgid "Geo coordinates are missing. Fetch via address or enter lat/long."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1819
-#: includes/class-ai-search-schema-settings.php:1819
 msgid "Opening hours are configured."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1820
-#: includes/class-ai-search-schema-settings.php:1820
 msgid "Opening hours are empty. Add at least one slot."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1826
-#: includes/class-ai-search-schema-settings.php:1826
 msgid "addressCountry is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1827
-#: includes/class-ai-search-schema-settings.php:1827
 msgid "addressCountry is missing."
 msgstr ""
 
@@ -861,42 +841,34 @@ msgid "LocalBusiness"
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1842
-#: includes/class-ai-search-schema-settings.php:1842
 msgid "WebSite name is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1843
-#: includes/class-ai-search-schema-settings.php:1843
 msgid "WebSite name is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1848
-#: includes/class-ai-search-schema-settings.php:1848
 msgid "WebSite URL is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1849
-#: includes/class-ai-search-schema-settings.php:1849
 msgid "WebSite URL is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1855
-#: includes/class-ai-search-schema-settings.php:1855
 msgid "Language (inLanguage) is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1856
-#: includes/class-ai-search-schema-settings.php:1856
 msgid "Language is missing. Add at least one language."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1861
-#: includes/class-ai-search-schema-settings.php:1861
 msgid "Publisher is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1862
-#: includes/class-ai-search-schema-settings.php:1862
 msgid "Publisher is missing. Set Organization first."
 msgstr ""
 
@@ -906,22 +878,18 @@ msgid "WebSite"
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1876
-#: includes/class-ai-search-schema-settings.php:1876
 msgid "WebPage @id/url base is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1877
-#: includes/class-ai-search-schema-settings.php:1877
 msgid "WebPage base URL is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1883
-#: includes/class-ai-search-schema-settings.php:1883
 msgid "WebPage inLanguage ready."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1884
-#: includes/class-ai-search-schema-settings.php:1884
 msgid "WebPage inLanguage will fallback. Consider setting languages."
 msgstr ""
 
@@ -934,7 +902,6 @@ msgid "Content model is not set to Article by default."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1917
-#: includes/class-ai-search-schema-settings.php:1918
 msgid "No published posts found. Article schema cannot be checked."
 msgstr ""
 
@@ -946,77 +913,62 @@ msgid "Article (sample post)"
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1928
-#: includes/class-ai-search-schema-settings.php:1929
 msgid "Headline is present."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1929
-#: includes/class-ai-search-schema-settings.php:1930
 msgid "Headline is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1934
-#: includes/class-ai-search-schema-settings.php:1935
 msgid "datePublished is present."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1935
-#: includes/class-ai-search-schema-settings.php:1936
 msgid "datePublished is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1940
-#: includes/class-ai-search-schema-settings.php:1941
 msgid "dateModified is present."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1941
-#: includes/class-ai-search-schema-settings.php:1942
 msgid "dateModified is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1948
-#: includes/class-ai-search-schema-settings.php:1949
 msgid "Author is set."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1949
-#: includes/class-ai-search-schema-settings.php:1950
 msgid "Author information is missing."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1958
-#: includes/class-ai-search-schema-settings.php:1959
 msgid "Featured image found for the sample post."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1959
-#: includes/class-ai-search-schema-settings.php:1960
 msgid "Featured image missing on the sample post."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1985
-#: includes/class-ai-search-schema-settings.php:1986
 msgid "FAQPage schema is enabled for at least one post type."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1989
-#: includes/class-ai-search-schema-settings.php:1990
 msgid "Ensure each FAQ has both question and answer in the page content."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:1994
-#: includes/class-ai-search-schema-settings.php:1995
 msgid "FAQPage schema is disabled. Enable it on relevant post types if needed."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:2039
-#: includes/class-ai-search-schema-settings.php:2040
 msgid "BreadcrumbList can be generated."
 msgstr ""
 
 #: dist/includes/class-ai-search-schema-settings.php:2040
-#: includes/class-ai-search-schema-settings.php:2041
 msgid "Breadcrumb trail is empty. Check HTML output or enable breadcrumbs."
 msgstr ""
 
@@ -3186,12 +3138,205 @@ msgstr ""
 msgid "AI Search Schema v%s"
 msgstr ""
 
+#: includes/class-ai-search-schema-settings.php:1739
+msgid "The site operator is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1740
+msgid "The site operator name is not set. Entity identification may be difficult."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1745
+msgid "The organization URL is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1746
+msgid "The organization URL is not set. Entity identification may be difficult."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1751
+msgid "A logo is registered for entity identification."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1752
+msgid "No logo is registered. Credibility assessment may be affected."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1757
+msgid "Social profiles (sameAs) are linked for entity verification."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1758
+msgid "No social profiles are linked. Entity verification may be limited."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1781
+msgid "The business name is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1782
+msgid "The business name is not set. Local search visibility may be affected."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1787
+msgid "A phone number is registered for contact purposes."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1788
+msgid "No phone number is set. This is a required field for LocalBusiness."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1795
+msgid "The address is fully defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1796
+msgid "The address is incomplete. Some fields may be missing."
+msgstr ""
+
+#. translators: %s decimal places
+#: includes/class-ai-search-schema-settings.php:1810
+msgid "Geo coordinates are registered (%s decimal places). Map display is ready."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1813
+msgid "Geo coordinates are not set. Map-based local search may be affected."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1819
+msgid "Business hours are defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1820
+msgid "No business hours are set. Open/closed status cannot be determined."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1826
+msgid "The country code is defined for address context."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1827
+msgid "The country code is not set. Regional interpretation may vary."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1842
+msgid "The site name is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1843
+msgid "The site name is not set. Site identification may be unclear."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1848
+msgid "The site URL is defined as the canonical reference."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1849
+msgid "The site URL is not set. Canonical identification may fail."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1855
+msgid "The site language is defined for content context."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1856
+msgid "No language is set. Content language context may be ambiguous."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1861
+msgid "The publisher is linked to the site entity."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1862
+msgid "No publisher is set. Site-entity relationship is undefined."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1876
+msgid "The WebPage base URL is defined for page identification."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1877
+msgid "The WebPage base URL is not set. Page linking may be affected."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1883
+msgid "The page language is defined for content context."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1884
+msgid "No language is set. System default will be used."
+msgstr ""
+
 #: includes/class-ai-search-schema-settings.php:1900
-msgid "Article schema is enabled for posts."
+msgid "Posts are output as Article schema for blog content."
 msgstr ""
 
 #: includes/class-ai-search-schema-settings.php:1901
-msgid "Post schema is WebPage. Consider Article for blogs."
+msgid "Posts are output as WebPage schema. Article may be more suitable for blogs."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1918
+msgid "No published posts found. Sample check cannot be performed."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1929
+msgid "The headline is defined in the sample post."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1930
+msgid "The headline is missing from the sample post."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1935
+msgid "The publication date is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1936
+msgid "The publication date is missing. Freshness signals may be affected."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1941
+msgid "The modification date is defined for content freshness."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1942
+msgid "The modification date is not available."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1949
+msgid "The author is defined for content attribution."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1950
+msgid "No author is set. Content attribution may be unclear."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1959
+msgid "A featured image is set for the sample post."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1960
+msgid "No featured image on the sample post. Rich results may be limited."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1986
+msgid "FAQ schema extraction is enabled for at least one post type."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1990
+msgid "FAQ content requires both question and answer elements with matching CSS classes."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:1995
+msgid "FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:2040
+msgid "Breadcrumb navigation is defined in the structured data."
+msgstr ""
+
+#: includes/class-ai-search-schema-settings.php:2041
+msgid "The breadcrumb trail is empty. Site hierarchy may be unclear."
 msgstr ""
 
 #: templates/admin-settings.php:231
