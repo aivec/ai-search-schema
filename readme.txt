@@ -4,7 +4,7 @@ Tags: schema, seo, structured-data, ai-search, local-seo, breadcrumbs, faq, llms
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.8-dev
+Stable tag: 1.0.9-dev
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

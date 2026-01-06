@@ -1,6 +1,6 @@
 {
   "name": "ai-search-schema",
-  "version": "1.0.8-dev",
+  "version": "1.0.9-dev",
   "private": true,
   "scripts": {
     "clean": "rimraf dist",

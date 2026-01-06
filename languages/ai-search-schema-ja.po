@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.0.8-dev\n"
+"Project-Id-Version: AI Search Schema 1.0.9-dev\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
 "POT-Creation-Date: 2026-01-06T10:02:33+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
