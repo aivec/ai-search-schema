@@ -3401,6 +3401,64 @@ msgstr "ファイルがアップロードされていません。"
 msgid "AI Search Schema Test Manager"
 msgstr "AEOスキーマ設定"
 
+#: tools/test-manager.php:176
+msgid "This test requires manual verification."
+msgstr "このテストは手動での確認が必要です。"
+
+#: tools/test-manager.php:186
+msgid "Diagnostic evaluator not available."
+msgstr "診断エバリュエーターが利用できません。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:92
+msgid "All checks passed."
+msgstr "すべてのチェックに合格しました。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:93
+msgid "Some issues detected. See details."
+msgstr "いくつかの問題が検出されました。詳細を確認してください。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:119
+msgid "No JSON-LD structured data found on this page."
+msgstr "このページにJSON-LD構造化データが見つかりません。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:128
+msgid "JSON-LD could not be parsed. Invalid format."
+msgstr "JSON-LDを解析できませんでした。形式が無効です。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:144
+#, php-format
+msgid "Target schema type \"%s\" not found in JSON-LD."
+msgstr "対象のスキーマタイプ「%s」がJSON-LD内に見つかりません。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:201
+#, php-format
+msgid "Required fields missing: %s"
+msgstr "必須フィールドが不足しています: %s"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:256
+#, php-format
+msgid "Recommended fields missing: %s"
+msgstr "推奨フィールドが不足しています: %s"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:275
+#, php-format
+msgid "%1$s has %3$d items (minimum: %2$d)."
+msgstr "%1$sには%3$d件のアイテムがあります（最小: %2$d）。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:296
+#, php-format
+msgid "%1$s is %3$d characters (minimum: %2$d)."
+msgstr "%1$sは%3$d文字です（最小: %2$d）。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:317
+msgid "Quality issues detected."
+msgstr "品質に関する問題が検出されました。"
+
+#: includes/class-ai-search-schema-diagnostic-evaluator.php:356
+#, php-format
+msgid "Partial data: some fields in group are missing: %s"
+msgstr "データが不完全です: グループ内の一部フィールドが不足しています: %s"
+
 #, fuzzy
 #~ msgid "Article schema is enabled for posts."
 #~ msgstr "コンテンツに Article スキーマが推奨されています。"

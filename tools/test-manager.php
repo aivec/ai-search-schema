@@ -150,6 +150,79 @@ if ( 'upload_screenshot' === $post_action ) {
 	wp_die();
 }
 
+// AJAXハンドラー：自動判定
+if ( 'auto_judge' === $post_action ) {
+	// Diagnostic Evaluator をロード
+	$evaluator_file = dirname( __DIR__ ) . '/includes/class-ai-search-schema-diagnostic-evaluator.php';
+	if ( file_exists( $evaluator_file ) ) {
+		require_once $evaluator_file;
+	}
+
+	$test_id     = isset( $_POST['test_id'] ) ? sanitize_text_field( wp_unslash( $_POST['test_id'] ) ) : '';
+	$json_ld_raw = isset( $_POST['json_ld'] ) ? wp_unslash( $_POST['json_ld'] ) : '';
+
+	// テスト仕様をロード
+	$spec_file    = __DIR__ . '/test-spec.json';
+	$spec_content = file_exists( $spec_file )
+		// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+		? file_get_contents( $spec_file )
+		: '{}';
+	$spec_data = json_decode( $spec_content, true );
+	$spec_data = is_array( $spec_data ) ? $spec_data : array();
+	$judgment  = $spec_data['schemaJudgment'][ $test_id ] ?? array();
+
+	if ( empty( $judgment ) || 'manual' === ( $judgment['checkType'] ?? '' ) ) {
+		wp_send_json_error(
+			array(
+				'message' => __( 'This test requires manual verification.', 'ai-search-schema' ),
+				'status'  => 'manual',
+			)
+		);
+		wp_die();
+	}
+
+	// Evaluatorが利用可能か確認
+	if ( ! class_exists( 'AI_Search_Schema_Diagnostic_Evaluator' ) ) {
+		wp_send_json_error(
+			array( 'message' => __( 'Diagnostic evaluator not available.', 'ai-search-schema' ) )
+		);
+		wp_die();
+	}
+
+	// スペック構築
+	$eval_spec = array(
+		'targetType'    => $judgment['targetType'] ?? null,
+		'required'      => $judgment['required'] ?? array(),
+		'recommended'   => $judgment['recommended'] ?? array(),
+		'minCount'      => $judgment['minCount'] ?? 0,
+		'minCountField' => $judgment['minCountField'] ?? '',
+		'minLen'        => $judgment['minLen'] ?? 0,
+		'minLenField'   => $judgment['minLenField'] ?? '',
+		'errorOnFail'   => $judgment['errorOnFail'] ?? false,
+	);
+
+	// 判定実行
+	$result = AI_Search_Schema_Diagnostic_Evaluator::evaluate( $eval_spec, $json_ld_raw );
+
+	// ステータスをレガシー形式にマップ（UI互換性）
+	$status_map = array(
+		'info'    => 'pass',
+		'warning' => 'pending',
+		'error'   => 'fail',
+	);
+
+	wp_send_json_success(
+		array(
+			'status'       => $result['status'],
+			'legacyStatus' => $status_map[ $result['status'] ] ?? 'pending',
+			'message'      => $result['message'],
+			'phase'        => $result['phase'] ?? '',
+			'details'      => $result['details'] ?? array(),
+			'checkType'    => $judgment['checkType'] ?? 'unknown',
+		)
+	);
+	wp_die();
+}
 
 // プラグインのルートディレクトリを取得
 $plugin_dir = dirname( __DIR__ );
@@ -211,7 +284,7 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 		.test-manager { max-width: 1400px; margin: 0 auto; }
 
 		.test-manager__header {
-			background: white;
+			background-color: white!important;
 			padding: 24px;
 			border-radius: 12px;
 			margin-bottom: 24px;
@@ -473,6 +546,123 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 		.toast--success { background: var(--color-success); }
 		.toast--error { background: var(--color-error); }
 
+		/* Auto-Judge Button */
+		.auto-judge-btn {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			width: 28px;
+			height: 28px;
+			margin-left: 4px;
+			background: var(--color-gray-100);
+			border: 1px solid var(--color-gray-300);
+			border-radius: 4px;
+			cursor: pointer;
+			font-size: 14px;
+			vertical-align: middle;
+			transition: background 0.2s;
+		}
+		.auto-judge-btn:hover {
+			background: var(--color-primary);
+			color: white;
+			border-color: var(--color-primary);
+		}
+
+		/* Auto-Judge Dialog */
+		.auto-judge-dialog {
+			background: white;
+			border-radius: 12px;
+			max-width: 600px;
+			width: 90%;
+			max-height: 90vh;
+			overflow: auto;
+			box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+		}
+		.auto-judge-dialog__header {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 16px 20px;
+			border-bottom: 1px solid var(--color-gray-200);
+		}
+		.auto-judge-dialog__header h3 {
+			margin: 0;
+			font-size: 18px;
+			color: var(--color-gray-900);
+		}
+		.auto-judge-dialog__header .modal-close {
+			position: static;
+			width: 32px;
+			height: 32px;
+			font-size: 20px;
+		}
+		.auto-judge-dialog__body {
+			padding: 20px;
+		}
+		.auto-judge-info {
+			background: var(--color-gray-50);
+			padding: 12px 16px;
+			border-radius: 8px;
+			margin-bottom: 16px;
+		}
+		.auto-judge-info p {
+			margin: 4px 0;
+			font-size: 14px;
+			color: var(--color-gray-700);
+		}
+		.auto-judge-input {
+			margin-bottom: 16px;
+		}
+		.auto-judge-input label {
+			display: block;
+			margin-bottom: 8px;
+			font-weight: 500;
+			color: var(--color-gray-700);
+		}
+		.auto-judge-input textarea {
+			width: 100%;
+			padding: 12px;
+			border: 1px solid var(--color-gray-300);
+			border-radius: 6px;
+			font-family: monospace;
+			font-size: 13px;
+			resize: vertical;
+			box-sizing: border-box;
+		}
+		.auto-judge-input textarea:focus {
+			outline: none;
+			border-color: var(--color-primary);
+			box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+		}
+		.auto-judge-actions {
+			display: flex;
+			gap: 8px;
+			margin-bottom: 16px;
+		}
+		.btn {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 6px;
+			font-size: 14px;
+			font-weight: 500;
+			cursor: pointer;
+			transition: background 0.2s;
+		}
+		.btn--primary {
+			background: var(--color-primary);
+			color: white;
+		}
+		.btn--primary:hover {
+			background: #1d4ed8;
+		}
+		.btn--secondary {
+			background: var(--color-gray-200);
+			color: var(--color-gray-700);
+		}
+		.btn--secondary:hover {
+			background: var(--color-gray-300);
+		}
+
 		@media (max-width: 1200px) {
 			.test-table { display: block; overflow-x: auto; }
 		}
@@ -537,6 +727,33 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 	<div class="modal-overlay" id="imageModal" onclick="closeModal()">
 		<button class="modal-close" onclick="closeModal()">×</button>
 		<img id="modalImage" src="" alt="Screenshot preview">
+	</div>
+
+	<!-- Auto-Judge Modal -->
+	<div class="modal-overlay" id="autoJudgeModal" onclick="if(event.target===this)closeAutoJudgeModal()">
+		<div class="auto-judge-dialog">
+			<div class="auto-judge-dialog__header">
+				<h3>🔍 自動判定</h3>
+				<button class="modal-close" onclick="closeAutoJudgeModal()">×</button>
+			</div>
+			<div class="auto-judge-dialog__body">
+				<div class="auto-judge-info">
+					<p><strong>テストID:</strong> <span id="autoJudgeTestId"></span></p>
+					<p><strong>項目:</strong> <span id="autoJudgeTestItem"></span></p>
+					<p><strong>チェック種別:</strong> <span id="autoJudgeCheckType"></span></p>
+					<p><strong>対象タイプ:</strong> <span id="autoJudgeTargetType"></span></p>
+				</div>
+				<div class="auto-judge-input">
+					<label for="jsonLdInput">JSON-LDを貼り付け:</label>
+					<textarea id="jsonLdInput" rows="10" placeholder='&lt;script type="application/ld+json"&gt;...&lt;/script&gt;&#10;または&#10;{"@context":"https://schema.org",...}'></textarea>
+				</div>
+				<div class="auto-judge-actions">
+					<button type="button" class="btn btn--primary" onclick="runAutoJudge()">判定実行</button>
+					<button type="button" class="btn btn--secondary" onclick="closeAutoJudgeModal()">キャンセル</button>
+				</div>
+				<div id="autoJudgeResult"></div>
+			</div>
+		</div>
 	</div>
 
 	<div class="toast" id="toast"></div>
@@ -905,8 +1122,139 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 			setTimeout(() => toast.classList.remove('show'), 3000);
 		}
 
+		// Auto-Judgment機能
+		let currentAutoJudgeTestId = null;
+		const schemaJudgment = testSpec.schemaJudgment || {};
+
+		function isSchemaTest(testId) {
+			return testId && testId.startsWith('SC-');
+		}
+
+		function hasAutoJudge(testId) {
+			const judgment = schemaJudgment[testId];
+			return judgment && judgment.checkType !== 'manual';
+		}
+
+		function openAutoJudgeModal(testId) {
+			currentAutoJudgeTestId = testId;
+			const modal = document.getElementById('autoJudgeModal');
+			const testInfo = findTestById(testId);
+			const judgment = schemaJudgment[testId] || {};
+
+			document.getElementById('autoJudgeTestId').textContent = testId;
+			document.getElementById('autoJudgeTestItem').textContent = testInfo ? testInfo.item : '';
+			document.getElementById('autoJudgeCheckType').textContent = judgment.checkType || 'unknown';
+			document.getElementById('autoJudgeTargetType').textContent = judgment.targetType || '-';
+			document.getElementById('jsonLdInput').value = '';
+			document.getElementById('autoJudgeResult').innerHTML = '';
+
+			modal.classList.add('active');
+		}
+
+		function closeAutoJudgeModal() {
+			document.getElementById('autoJudgeModal').classList.remove('active');
+			currentAutoJudgeTestId = null;
+		}
+
+		async function runAutoJudge() {
+			if (!currentAutoJudgeTestId) return;
+
+			const jsonLd = document.getElementById('jsonLdInput').value.trim();
+			if (!jsonLd) {
+				showToast('JSON-LDを入力してください', 'error');
+				return;
+			}
+
+			const resultDiv = document.getElementById('autoJudgeResult');
+			resultDiv.innerHTML = '<p style="color:#6b7280">判定中...</p>';
+
+			const formData = new FormData();
+			formData.append('action', 'auto_judge');
+			formData.append('ai_search_schema_test_nonce', nonce);
+			formData.append('test_id', currentAutoJudgeTestId);
+			formData.append('json_ld', jsonLd);
+
+			try {
+				const response = await fetch(window.location.href, {
+					method: 'POST',
+					body: formData
+				});
+				const result = await response.json();
+
+				if (result.success) {
+					const data = result.data;
+					const statusColors = {
+						'info': '#16a34a',
+						'warning': '#d97706',
+						'error': '#dc2626'
+					};
+					const statusLabels = {
+						'info': '✅ OK (info)',
+						'warning': '⚠️ 警告 (warning)',
+						'error': '❌ エラー (error)'
+					};
+
+					let html = '<div style="padding:12px;background:#f9fafb;border-radius:6px;margin-top:8px">';
+					html += '<p style="margin:0 0 8px;font-weight:600;color:' + (statusColors[data.status] || '#374151') + '">';
+					html += (statusLabels[data.status] || data.status) + '</p>';
+					html += '<p style="margin:0 0 8px;color:#374151">' + escapeHtml(data.message) + '</p>';
+					html += '<p style="margin:0;font-size:12px;color:#6b7280">Phase: ' + escapeHtml(data.phase || '-') + '</p>';
+					html += '</div>';
+
+					resultDiv.innerHTML = html;
+
+					// テストデータを自動更新するかどうか確認
+					if (confirm('判定結果をテスト結果に反映しますか？')) {
+						if (!testData[currentAutoJudgeTestId]) {
+							testData[currentAutoJudgeTestId] = {};
+						}
+						testData[currentAutoJudgeTestId].result = data.legacyStatus;
+						testData[currentAutoJudgeTestId].autoJudgeStatus = data.status;
+						testData[currentAutoJudgeTestId].autoJudgeMessage = data.message;
+
+						// UIを更新
+						const row = document.querySelector('tr[data-test-id="' + currentAutoJudgeTestId + '"]');
+						const rowNumber = row ? row.dataset.rowNumber : '';
+						const test = findTestById(currentAutoJudgeTestId);
+						if (row && test) row.outerHTML = renderTestRow(test, rowNumber);
+						updateStats();
+						showToast('判定結果を反映しました', 'success');
+					}
+				} else {
+					resultDiv.innerHTML = '<p style="color:#dc2626">' +
+						escapeHtml(result.data?.message || '判定に失敗しました') + '</p>';
+				}
+			} catch (error) {
+				resultDiv.innerHTML = '<p style="color:#dc2626">エラー: ' + escapeHtml(error.message) + '</p>';
+			}
+		}
+
+		// Auto-Judgeボタンをスキーマテストの行に追加するための拡張
+		const originalRenderTestRow = renderTestRow;
+		renderTestRow = function(test, rowNumber = '') {
+			const html = originalRenderTestRow(test, rowNumber);
+
+			// スキーマテスト（SC-*）で自動判定可能な場合、ボタンを追加
+			if (isSchemaTest(test.id) && hasAutoJudge(test.id)) {
+				const testIdEsc = escapeHtml(test.id);
+				const buttonHtml = '<button class="auto-judge-btn" ' +
+					'onclick="openAutoJudgeModal(\'' + testIdEsc + '\')" ' +
+					'title="JSON-LDから自動判定">🔍</button>';
+
+				// result-selectの後ろにボタンを挿入
+				return html.replace(
+					'</select>\n\t\t\t\t</td>',
+					'</select> ' + buttonHtml + '</td>'
+				);
+			}
+			return html;
+		};
+
 		document.addEventListener('keydown', function(e) {
-			if (e.key === 'Escape') closeModal();
+			if (e.key === 'Escape') {
+				closeModal();
+				closeAutoJudgeModal();
+			}
 		});
 	</script>
 	<?php wp_footer(); ?>

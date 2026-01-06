@@ -1,6 +1,293 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "createdAt": "2025-12-24",
+  "schemaJudgment": {
+    "_comment": "Judgment parameters for schema tests. Follows Presence -> Validity -> Quality hierarchy.",
+    "SC-001": {
+      "checkType": "presence",
+      "description": "JSON-LDタグの存在確認"
+    },
+    "SC-002": {
+      "checkType": "presence",
+      "description": "AISクラス付与確認"
+    },
+    "SC-003": {
+      "checkType": "validity",
+      "targetType": null,
+      "checkField": "@context",
+      "expectedValue": "https://schema.org",
+      "description": "@contextの検証"
+    },
+    "SC-004": {
+      "checkType": "validity",
+      "targetType": null,
+      "checkField": "@graph",
+      "description": "@graph統合出力の確認"
+    },
+    "SC-005": {
+      "checkType": "presence",
+      "description": "出力ブロック数の確認（手動）"
+    },
+    "SC-010": {
+      "checkType": "presence",
+      "targetType": "Organization",
+      "description": "Organizationタイプの存在確認"
+    },
+    "SC-011": {
+      "checkType": "validity",
+      "targetType": "Organization",
+      "required": ["name"],
+      "description": "Organization.name必須確認"
+    },
+    "SC-012": {
+      "checkType": "validity",
+      "targetType": "Organization",
+      "required": ["url"],
+      "description": "Organization.url必須確認"
+    },
+    "SC-013": {
+      "checkType": "quality",
+      "targetType": "Organization",
+      "recommended": ["logo"],
+      "description": "Organization.logo推奨確認"
+    },
+    "SC-014": {
+      "checkType": "quality",
+      "targetType": "Organization",
+      "recommended": ["sameAs"],
+      "description": "Organization.sameAs推奨確認"
+    },
+    "SC-020": {
+      "checkType": "presence",
+      "targetType": "LocalBusiness",
+      "description": "LocalBusinessタイプの存在確認"
+    },
+    "SC-021": {
+      "checkType": "validity",
+      "targetType": "LocalBusiness",
+      "required": ["@type"],
+      "description": "LocalBusinessサブタイプ確認"
+    },
+    "SC-022": {
+      "checkType": "validity",
+      "targetType": "LocalBusiness",
+      "required": ["address"],
+      "description": "LocalBusiness.address必須確認"
+    },
+    "SC-023": {
+      "checkType": "validity",
+      "targetType": "LocalBusiness",
+      "required": ["geo"],
+      "description": "LocalBusiness.geo必須確認"
+    },
+    "SC-024": {
+      "checkType": "validity",
+      "targetType": "LocalBusiness",
+      "required": ["telephone"],
+      "description": "LocalBusiness.telephone必須確認"
+    },
+    "SC-025": {
+      "checkType": "quality",
+      "targetType": "LocalBusiness",
+      "recommended": ["openingHoursSpecification"],
+      "minCountField": "openingHoursSpecification",
+      "minCount": 1,
+      "description": "LocalBusiness.openingHoursSpecification推奨確認"
+    },
+    "SC-026": {
+      "checkType": "quality",
+      "targetType": "LocalBusiness",
+      "recommended": ["priceRange"],
+      "description": "LocalBusiness.priceRange推奨確認"
+    },
+    "SC-027": {
+      "checkType": "quality",
+      "targetType": "LocalBusiness",
+      "recommended": ["areaServed"],
+      "description": "LocalBusiness.areaServed推奨確認"
+    },
+    "SC-028": {
+      "checkType": "quality",
+      "targetType": "LocalBusiness",
+      "recommended": ["hasMap"],
+      "description": "LocalBusiness.hasMap推奨確認"
+    },
+    "SC-029": {
+      "checkType": "quality",
+      "targetType": "LocalBusiness",
+      "recommended": ["image"],
+      "description": "LocalBusiness.image推奨確認"
+    },
+    "SC-040": {
+      "checkType": "presence",
+      "targetType": "WebSite",
+      "description": "WebSiteタイプの存在確認"
+    },
+    "SC-041": {
+      "checkType": "validity",
+      "targetType": "WebSite",
+      "required": ["name"],
+      "description": "WebSite.name必須確認"
+    },
+    "SC-042": {
+      "checkType": "validity",
+      "targetType": "WebSite",
+      "required": ["url"],
+      "description": "WebSite.url必須確認"
+    },
+    "SC-043": {
+      "checkType": "quality",
+      "targetType": "WebSite",
+      "recommended": ["potentialAction"],
+      "description": "WebSite.potentialAction推奨確認"
+    },
+    "SC-050": {
+      "checkType": "presence",
+      "targetType": "WebPage",
+      "description": "WebPageタイプの存在確認"
+    },
+    "SC-051": {
+      "checkType": "validity",
+      "targetType": "WebPage",
+      "required": ["name"],
+      "description": "WebPage.name必須確認"
+    },
+    "SC-052": {
+      "checkType": "validity",
+      "targetType": "WebPage",
+      "required": ["url"],
+      "description": "WebPage.url必須確認"
+    },
+    "SC-060": {
+      "checkType": "presence",
+      "targetType": "BreadcrumbList",
+      "description": "BreadcrumbListタイプの存在確認"
+    },
+    "SC-061": {
+      "checkType": "validity",
+      "targetType": "BreadcrumbList",
+      "required": ["itemListElement"],
+      "minCountField": "itemListElement",
+      "minCount": 2,
+      "errorOnFail": true,
+      "description": "BreadcrumbList.itemListElement必須確認"
+    },
+    "SC-062": {
+      "checkType": "quality",
+      "targetType": "BreadcrumbList",
+      "description": "BreadcrumbList position連番確認（手動）"
+    },
+    "SC-070": {
+      "checkType": "presence",
+      "targetType": "Article",
+      "description": "Articleタイプの存在確認"
+    },
+    "SC-071": {
+      "checkType": "validity",
+      "targetType": "Article",
+      "required": ["headline"],
+      "description": "Article.headline必須確認"
+    },
+    "SC-072": {
+      "checkType": "validity",
+      "targetType": "Article",
+      "required": ["datePublished"],
+      "description": "Article.datePublished必須確認"
+    },
+    "SC-073": {
+      "checkType": "quality",
+      "targetType": "Article",
+      "recommended": ["dateModified"],
+      "description": "Article.dateModified推奨確認"
+    },
+    "SC-074": {
+      "checkType": "validity",
+      "targetType": "Article",
+      "required": ["author"],
+      "description": "Article.author必須確認"
+    },
+    "SC-075": {
+      "checkType": "quality",
+      "targetType": "Article",
+      "recommended": ["image"],
+      "description": "Article.image推奨確認"
+    },
+    "SC-080": {
+      "checkType": "presence",
+      "targetType": "FAQPage",
+      "description": "FAQPageタイプの存在確認"
+    },
+    "SC-081": {
+      "checkType": "validity",
+      "targetType": "FAQPage",
+      "required": ["mainEntity"],
+      "minCountField": "mainEntity",
+      "minCount": 1,
+      "errorOnFail": true,
+      "description": "FAQPage.mainEntity必須確認"
+    },
+    "SC-082": {
+      "checkType": "quality",
+      "targetType": "FAQPage",
+      "description": "FAQPage Question型確認（手動）"
+    },
+    "SC-083": {
+      "checkType": "quality",
+      "targetType": "FAQPage",
+      "description": "FAQPage acceptedAnswer確認（手動）"
+    },
+    "SC-090": {
+      "checkType": "presence",
+      "targetType": "Product",
+      "description": "Productタイプの存在確認"
+    },
+    "SC-091": {
+      "checkType": "validity",
+      "targetType": "Product",
+      "required": ["name"],
+      "description": "Product.name必須確認"
+    },
+    "SC-092": {
+      "checkType": "validity",
+      "targetType": "Product",
+      "required": ["offers"],
+      "description": "Product.offers必須確認"
+    },
+    "SC-093": {
+      "checkType": "quality",
+      "targetType": "Product",
+      "recommended": ["sku"],
+      "description": "Product.sku推奨確認"
+    },
+    "SC-100": {
+      "checkType": "manual",
+      "description": "Yoast SEOスキーマ除去確認（手動）"
+    },
+    "SC-101": {
+      "checkType": "manual",
+      "description": "Rank Mathスキーマ除去確認（手動）"
+    },
+    "SC-102": {
+      "checkType": "manual",
+      "description": "AIOSEOスキーマ除去確認（手動）"
+    },
+    "SC-103": {
+      "checkType": "manual",
+      "description": "External設定時の動作確認（手動）"
+    },
+    "SC-110": {
+      "checkType": "manual",
+      "description": "Rich Results Test（トップページ）"
+    },
+    "SC-111": {
+      "checkType": "manual",
+      "description": "Rich Results Test（投稿ページ）"
+    },
+    "SC-112": {
+      "checkType": "manual",
+      "description": "Rich Results Test（LocalBusiness）"
+    }
+  },
   "categories": [
     {
       "id": "ui",
