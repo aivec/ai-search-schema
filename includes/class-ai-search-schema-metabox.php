@@ -122,6 +122,13 @@ class AI_Search_Schema_MetaBox {
 											__( 'Example: faq-answer, accordion-content', 'ai-search-schema' ),
 											'ai_search_schema_meta[faq_answer_class]'
 										);
+
+									/**
+									 * Pro版用フック: メタボックスのフィールド群の後にコンテンツを追加
+									 *
+									 * @param WP_Post $post 投稿オブジェクト.
+									 */
+									do_action( 'ai_search_schema_metabox_after_fields', $post );
 									?>
 								</div>
 						</div>
