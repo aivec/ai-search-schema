@@ -228,7 +228,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Brand & Site', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Register brand, site, and contact information.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Tell search engines who you are. This information forms the foundation of Organization and WebSite schemas, helping you appear in knowledge panels and AI search results.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<div class="ais-field-grid two-col">
@@ -302,7 +302,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Brand assets & social', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Manage logos, storefront imagery, and social profiles.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Build trust and recognition. Your logo and social profiles help search engines verify your identity and display richer, more credible results.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<div class="ais-field-grid two-col">
@@ -378,7 +378,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Schema output', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Control entity types and content models.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Control how structured data is delivered. JSON-LD is invisible to visitors but essential for search engines and AI systems to understand your content.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<div class="ais-field-grid two-col">
@@ -446,7 +446,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card ais-card--full">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Page-type schema controls', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type.', 'ai-search-schema' ) ); ?></h2>
-					<p><?php esc_html_e( 'Adjust schema types, breadcrumb output, FAQ extraction, and priority per content area.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Fine-tune schema per content type. Choose the right schema for each post type or taxonomy to maximize how your content appears in search results.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<div class="ais-content-schema">
@@ -582,7 +582,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card ais-card--full" id="ais-local-business-section">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'Local details & hours', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Capture address, coordinates, and hours to enrich the LocalBusiness schema.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Get found locally. Address, coordinates, and business hours power LocalBusiness schema for Google Maps, local search, and "near me" queries.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<!-- LocalBusiness Google 推奨項目ガイド -->
@@ -917,8 +917,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 
 			<section class="ais-card">
 				<div class="ais-card__header">
-					<h2><?php esc_html_e( 'AEO/GEO チェック', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( '主要スキーマの必須項目が揃っているかを自己診断します。', 'ai-search-schema' ); ?></p>
+					<h2><?php esc_html_e( 'AEO/GEO Diagnostics', 'ai-search-schema' ); ?></h2>
+					<p><?php esc_html_e( 'Check your schema readiness. This diagnostic validates required fields and highlights issues that may prevent rich results or AI visibility.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<style>
@@ -978,7 +978,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 			<section class="ais-card">
 				<div class="ais-card__header">
 					<h2><?php esc_html_e( 'llms.txt', 'ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Generate llms.txt to help AI systems understand your site structure.', 'ai-search-schema' ); ?></p>
+					<p><?php esc_html_e( 'Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude understand your site structure for better AI-powered search visibility.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
 					<?php
