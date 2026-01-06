@@ -229,9 +229,8 @@ $gap-card: 24px;
   }
 
   &__fields {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    display: flex;
+    flex-direction: column;
   }
 
   .ais-render-field {
@@ -242,7 +241,11 @@ $gap-card: 24px;
     display: flex;
     flex-direction: column;
     gap: 6px;
-    margin: 0;
+    margin: 24px 0 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
 
     label {
       font-weight: 600;
