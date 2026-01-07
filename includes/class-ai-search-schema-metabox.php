@@ -130,9 +130,18 @@ class AI_Search_Schema_MetaBox {
 									 */
 									do_action( 'ai_search_schema_metabox_after_fields', $post );
 									?>
-								</div>
-						</div>
-				</div>
+								</div><!-- /.ais-metabox__fields -->
+
+								<?php
+								/**
+								 * Pro版用フック: フィールドコンテナの外側にコンテンツを追加
+								 *
+								 * @param WP_Post $post 投稿オブジェクト.
+								 */
+								do_action( 'ai_search_schema_metabox_card_footer', $post );
+								?>
+						</div><!-- /.ais-metabox__card -->
+				</div><!-- /.ais-metabox -->
 				<?php
 	}
 

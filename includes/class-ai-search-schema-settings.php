@@ -1807,7 +1807,7 @@ class AI_Search_Schema_Settings {
 			$has_geo
 				? sprintf(
 					/* translators: %s decimal places */
-					__( 'Geo coordinates are registered (%s decimal places). Map display is ready.', 'ai-search-schema' ),
+					__( 'Geo coordinates are registered (%s decimal places). Map display is ready.', 'ai-search-schema' ), // phpcs:ignore Generic.Files.LineLength.TooLong
 					max( $lat_decimal, $lng_decimal )
 				)
 				: __( 'Geo coordinates are not set. Map-based local search may be affected.', 'ai-search-schema' )
@@ -1898,7 +1898,7 @@ class AI_Search_Schema_Settings {
 				$is_article ? 'ok' : 'info',
 				$is_article
 					? __( 'Posts are output as Article schema for blog content.', 'ai-search-schema' )
-					: __( 'Posts are output as WebPage schema. Article may be more suitable for blogs.', 'ai-search-schema' )
+					: __( 'Posts are output as WebPage schema. Article may be more suitable for blogs.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
 			);
 		$posts = get_posts(
 			array(
@@ -1987,12 +1987,12 @@ class AI_Search_Schema_Settings {
 			);
 			$items[] = $this->make_item(
 				'info',
-				__( 'FAQ content requires both question and answer elements with matching CSS classes.', 'ai-search-schema' )
+				__( 'FAQ content requires both question and answer elements with matching CSS classes.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
 			);
 		} else {
 			$items[] = $this->make_item(
 				'info',
-				__( 'FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections.', 'ai-search-schema' )
+				__( 'FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
 			);
 		}
 
