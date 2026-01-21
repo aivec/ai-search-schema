@@ -24,7 +24,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 	 */
 	public function set_up() {
 		parent::set_up();
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 
 		// Reset singleton for clean tests.
 		$reflection = new ReflectionClass( 'AI_Search_Schema_Llms_Txt' );
@@ -190,7 +190,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 	 */
 	public function test_default_content_filter() {
 		add_filter(
-			'ai_search_schema_llms_txt_default_content',
+			'avc_ais_llms_txt_default_content',
 			function ( $content ) {
 				return $content . "\n\n## Custom Section from Filter";
 			}
@@ -200,7 +200,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 
 		$this->assertStringContainsString( '## Custom Section from Filter', $content );
 
-		remove_all_filters( 'ai_search_schema_llms_txt_default_content' );
+		remove_all_filters( 'avc_ais_llms_txt_default_content' );
 	}
 
 	/**

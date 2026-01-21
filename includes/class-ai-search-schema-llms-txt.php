@@ -16,12 +16,12 @@ class AI_Search_Schema_Llms_Txt {
 	/**
 	 * Option name for stored content.
 	 */
-	const OPTION_NAME = 'ai_search_schema_llms_txt';
+	const OPTION_NAME = 'avc_ais_llms_txt';
 
 	/**
 	 * Option name for enabled flag.
 	 */
-	const OPTION_ENABLED = 'ai_search_schema_llms_txt_enabled';
+	const OPTION_ENABLED = 'avc_ais_llms_txt_enabled';
 
 	/**
 	 * Singleton instance.
@@ -168,7 +168,7 @@ class AI_Search_Schema_Llms_Txt {
 		 *
 		 * @param string $content Default generated content.
 		 */
-		return apply_filters( 'ai_search_schema_llms_txt_default_content', $content );
+		return apply_filters( 'avc_ais_llms_txt_default_content', $content );
 	}
 
 	/**

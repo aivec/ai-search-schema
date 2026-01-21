@@ -19,14 +19,14 @@ class AI_Search_Schema_LocalBusiness_Test extends WP_UnitTestCase {
 
         update_post_meta(
             $this->page_id,
-            '_ai_search_schema_meta',
+            '_avc_ais_meta',
             [
                 'page_type' => 'WebPage',
             ]
         );
 
         update_option(
-            'ai_search_schema_options',
+            'avc_ais_options',
             [
                 'company_name' => 'Sample Store',
                 'logo_url' => 'http://example.com/logo.png',

@@ -44,7 +44,7 @@ class AI_Search_Schema_Pro_Features {
 	 * Constructor.
 	 */
 	private function __construct() {
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-license.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-license.php';
 		$this->license = AI_Search_Schema_License::init();
 
 		// Register Pro features hooks if license is valid.

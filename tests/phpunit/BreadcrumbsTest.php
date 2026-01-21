@@ -112,12 +112,12 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	protected function tearDown(): void {
 		// オプションをクリア.
-		delete_option( 'ai_search_schema_options' );
+		delete_option( 'avc_ais_options' );
 
 		// フィルターをクリア.
-		remove_all_filters( 'ai_search_schema_show_breadcrumbs' );
-		remove_all_filters( 'ai_search_schema_breadcrumb_items' );
-		remove_all_filters( 'ai_search_schema_breadcrumb_home_label' );
+		remove_all_filters( 'avc_ais_show_breadcrumbs' );
+		remove_all_filters( 'avc_ais_breadcrumb_items' );
+		remove_all_filters( 'avc_ais_breadcrumb_home_label' );
 
 		parent::tearDown();
 	}
@@ -313,7 +313,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_home_label_filter() {
 		add_filter(
-			'ai_search_schema_breadcrumb_home_label',
+			'avc_ais_breadcrumb_home_label',
 			function () {
 				return 'トップページ';
 			}
@@ -338,7 +338,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_breadcrumb_items_filter() {
 		add_filter(
-			'ai_search_schema_breadcrumb_items',
+			'avc_ais_breadcrumb_items',
 			function ( $items ) {
 				// カスタム項目を追加.
 				array_splice(
@@ -381,9 +381,9 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	public function test_output_breadcrumbs_html() {
 		// パンくずを有効化.
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
-				'ai_search_schema_breadcrumbs_html_enabled' => true,
+				'avc_ais_breadcrumbs_html_enabled' => true,
 			)
 		);
 
@@ -410,9 +410,9 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	public function test_output_breadcrumbs_disabled() {
 		// パンくずを無効化.
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
-				'ai_search_schema_breadcrumbs_html_enabled' => false,
+				'avc_ais_breadcrumbs_html_enabled' => false,
 			)
 		);
 
@@ -461,12 +461,12 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * フィルターで無効化した場合をテスト。
 	 */
 	public function test_should_render_disabled_by_filter() {
-		add_filter( 'ai_search_schema_show_breadcrumbs', '__return_false' );
+		add_filter( 'avc_ais_show_breadcrumbs', '__return_false' );
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
-				'ai_search_schema_breadcrumbs_html_enabled' => true,
+				'avc_ais_breadcrumbs_html_enabled' => true,
 			)
 		);
 
@@ -486,7 +486,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_should_render_with_legacy_option() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'enable_breadcrumbs' => true,
 			)
@@ -512,7 +512,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_output_skips_empty_labels() {
 		add_filter(
-			'ai_search_schema_breadcrumb_items',
+			'avc_ais_breadcrumb_items',
 			function ( $items ) {
 				// 空ラベルの項目を追加.
 				$items[] = array(
@@ -524,9 +524,9 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		);
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
-				'ai_search_schema_breadcrumbs_html_enabled' => true,
+				'avc_ais_breadcrumbs_html_enabled' => true,
 			)
 		);
 
@@ -547,7 +547,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_output_handles_alternative_keys() {
 		add_filter(
-			'ai_search_schema_breadcrumb_items',
+			'avc_ais_breadcrumb_items',
 			function () {
 				return array(
 					array(
@@ -563,9 +563,9 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		);
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
-				'ai_search_schema_breadcrumbs_html_enabled' => true,
+				'avc_ais_breadcrumbs_html_enabled' => true,
 			)
 		);
 
@@ -634,7 +634,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	public function test_should_render_with_invalid_options() {
 		// 無効なオプション（文字列）.
-		update_option( 'ai_search_schema_options', 'invalid' );
+		update_option( 'avc_ais_options', 'invalid' );
 
 		$this->go_to( get_permalink( $this->post_id ) );
 

@@ -65,7 +65,7 @@ class AI_Search_Schema_ProductSchema_Test extends WP_UnitTestCase {
 
 		update_post_meta(
 			$this->product_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			array(
 				'page_type' => 'Product',
 			)
@@ -88,13 +88,13 @@ class AI_Search_Schema_ProductSchema_Test extends WP_UnitTestCase {
 		);
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'        => 'Shop Co',
 				'logo_url'            => 'http://example.com/logo.png',
 				'site_url'            => 'http://example.com',
 				'languages'           => array( 'en' ),
-				'ai_search_schema_priority' => 'ais',
+				'avc_ais_priority' => 'ais',
 			)
 		);
 
@@ -104,7 +104,7 @@ class AI_Search_Schema_ProductSchema_Test extends WP_UnitTestCase {
 	public function test_product_schema_contains_woocommerce_data() {
 		$resolver = new AI_Search_Schema_ContentResolver();
 		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
-		$schema   = $builder->build( get_option( 'ai_search_schema_options' ) );
+		$schema   = $builder->build( get_option( 'avc_ais_options' ) );
 
 		$product = $this->find_by_type( $schema['@graph'], 'Product' );
 		$this->assertNotEmpty( $product );

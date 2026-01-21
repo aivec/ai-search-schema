@@ -70,13 +70,13 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	 */
 	protected function tearDown(): void {
 		// ユーザーメタをクリア.
-		delete_user_meta( $this->admin_user_id, 'ai_search_schema_wizard_progress' );
-		delete_user_meta( $this->subscriber_user_id, 'ai_search_schema_wizard_progress' );
+		delete_user_meta( $this->admin_user_id, 'avc_ais_wizard_progress' );
+		delete_user_meta( $this->subscriber_user_id, 'avc_ais_wizard_progress' );
 
 		// オプションをクリア.
-		delete_option( 'ai_search_schema_wizard_completed' );
-		delete_option( 'ai_search_schema_wizard_completed_at' );
-		delete_option( 'ai_search_schema_options' );
+		delete_option( 'avc_ais_wizard_completed' );
+		delete_option( 'avc_ais_wizard_completed_at' );
+		delete_option( 'avc_ais_options' );
 
 		// POSTデータをクリア.
 		$_POST = array();
@@ -92,7 +92,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	 *
 	 * @param string $action Nonce action.
 	 */
-	private function set_ajax_nonce( $action = 'ai_search_schema_wizard_nonce' ) {
+	private function set_ajax_nonce( $action = 'avc_ais_wizard_nonce' ) {
 		$_POST['nonce']  = wp_create_nonce( $action );
 		$_REQUEST['_wpnonce'] = $_POST['nonce'];
 	}
@@ -188,7 +188,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$this->wizard->mark_completed();
 
 		$this->assertTrue( $this->wizard->is_completed() );
-		$this->assertNotEmpty( get_option( 'ai_search_schema_wizard_completed_at' ) );
+		$this->assertNotEmpty( get_option( 'avc_ais_wizard_completed_at' ) );
 	}
 
 	/**
@@ -208,7 +208,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$this->assertTrue( $wizard2->is_completed() );
 
 		// クリーンアップ.
-		delete_user_meta( $admin2_id, 'ai_search_schema_wizard_progress' );
+		delete_user_meta( $admin2_id, 'avc_ais_wizard_progress' );
 	}
 
 	// ===== Wizard URL Tests =====
@@ -408,7 +408,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'basics', $data );
 
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		$this->assertEquals( 'Test Company', $settings['company_name'] );
 		$this->assertEquals( 'Test Site', $settings['site_name'] );
@@ -430,7 +430,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'type', $data );
 
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		$this->assertEquals( 'LocalBusiness', $settings['entity_type'] );
 		$this->assertEquals( 'WebPage', $settings['content_model'] );
@@ -451,7 +451,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'type', $data );
 
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		$this->assertEquals( 'Organization', $settings['entity_type'] );
 		$this->assertEquals( 'WebPage', $settings['content_model'] );
@@ -486,7 +486,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'location', $data );
 
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		// company_name should be set from local_business_name.
 		$this->assertEquals( 'Test Business', $settings['company_name'] );
@@ -528,7 +528,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'hours', $data );
 
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		$this->assertNotEmpty( $settings['opening_hours'] );
 		$this->assertEquals( 'Monday', $settings['opening_hours'][0]['day_key'] );
@@ -550,8 +550,8 @@ class WizardAjaxTest extends WP_UnitTestCase {
 
 		$method->invoke( $this->wizard, 'api-key', $data );
 
-		$api_key  = get_option( 'ai_search_schema_gmaps_api_key' );
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$api_key  = get_option( 'avc_ais_gmaps_api_key' );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		$this->assertEquals( 'AIzaSyTestKey', $api_key );
 		// メイン設定には保存されない.
@@ -666,7 +666,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 		$this->assertEmpty( $progress['completed_steps'] );
 
 		// クリーンアップ.
-		delete_user_meta( $admin2_id, 'ai_search_schema_wizard_progress' );
+		delete_user_meta( $admin2_id, 'avc_ais_wizard_progress' );
 	}
 
 	/**

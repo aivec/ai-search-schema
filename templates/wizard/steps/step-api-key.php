@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$gmaps_api_key = get_option( 'ai_search_schema_gmaps_api_key', '' );
+$gmaps_api_key = get_option( 'avc_ais_gmaps_api_key', '' );
 $has_api_key   = ! empty( $gmaps_api_key );
 ?>
 <div class="ais-wizard-step ais-wizard-step--api-key">

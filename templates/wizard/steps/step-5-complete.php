@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$options = get_option( 'ai_search_schema_options', array() );
+$options = get_option( 'avc_ais_options', array() );
 ?>
 <div class="ais-wizard-step ais-wizard-step--complete">
 	<div class="ais-wizard-complete">

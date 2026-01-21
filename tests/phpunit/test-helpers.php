@@ -30,11 +30,11 @@ class AI_Search_Schema_TEST_Env {
 if (!function_exists('add_action')) {
     function add_action($hook, $callback, $priority = 10, $accepted_args = 1) {
         // For testing we store callbacks but do not execute automatically.
-        global $ai_search_schema_test_actions;
-        if (!isset($ai_search_schema_test_actions)) {
-            $ai_search_schema_test_actions = [];
+        global $avc_ais_test_actions;
+        if (!isset($avc_ais_test_actions)) {
+            $avc_ais_test_actions = [];
         }
-        $ai_search_schema_test_actions[$hook][] = $callback;
+        $avc_ais_test_actions[$hook][] = $callback;
     }
 }
 

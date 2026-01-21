@@ -1,9 +1,9 @@
 <?php
 /**
- * Plugin Name: AI Search Schema
+ * Plugin Name: Aivec AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version:           1.0.9-dev
+ * Version:           1.1.0
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Aivec LLC
@@ -14,11 +14,15 @@
  * Domain Path:       /languages
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 // Plugin constants.
-define( 'AI_SEARCH_SCHEMA_VERSION', '1.0.9-dev' );
-define( 'AI_SEARCH_SCHEMA_DIR', plugin_dir_path( __FILE__ ) );
-define( 'AI_SEARCH_SCHEMA_URL', plugin_dir_url( __FILE__ ) );
-define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );
+define( 'AVC_AIS_VERSION', '1.1.0' );
+define( 'AVC_AIS_DIR', plugin_dir_path( __FILE__ ) );
+define( 'AVC_AIS_URL', plugin_dir_url( __FILE__ ) );
+define( 'AVC_AIS_FILE', __FILE__ );
 
 /**
  * Filter null values from plugin options to prevent PHP 8 deprecation warnings.
@@ -29,7 +33,7 @@ define( 'AI_SEARCH_SCHEMA_FILE', __FILE__ );
  * @param mixed $value Option value.
  * @return mixed Filtered value.
  */
-function ai_search_schema_filter_null_option_values( $value ) {
+function avc_ais_filter_null_option_values( $value ) {
 	if ( ! is_array( $value ) ) {
 		return $value;
 	}
@@ -39,7 +43,7 @@ function ai_search_schema_filter_null_option_values( $value ) {
 			continue;
 		}
 		if ( is_array( $val ) ) {
-			$result[ $key ] = ai_search_schema_filter_null_option_values( $val );
+			$result[ $key ] = avc_ais_filter_null_option_values( $val );
 		} else {
 			$result[ $key ] = $val;
 		}
@@ -48,13 +52,13 @@ function ai_search_schema_filter_null_option_values( $value ) {
 }
 
 // Register null filters for all plugin options at the earliest point.
-add_filter( 'option_ai_search_schema_options', 'ai_search_schema_filter_null_option_values', 1 );
-add_filter( 'option_ai_search_schema_settings', 'ai_search_schema_filter_null_option_values', 1 );
-add_filter( 'option_ai_search_schema_wizard_progress', 'ai_search_schema_filter_null_option_values', 1 );
-add_filter( 'option_ai_search_schema_license', 'ai_search_schema_filter_null_option_values', 1 );
+add_filter( 'option_avc_ais_options', 'avc_ais_filter_null_option_values', 1 );
+add_filter( 'option_avc_ais_settings', 'avc_ais_filter_null_option_values', 1 );
+add_filter( 'option_avc_ais_wizard_progress', 'avc_ais_filter_null_option_values', 1 );
+add_filter( 'option_avc_ais_license', 'avc_ais_filter_null_option_values', 1 );
 
 // Composer autoloader or PSR-4 fallback.
-$ais_autoloader = AI_SEARCH_SCHEMA_DIR . 'vendor/autoload.php';
+$ais_autoloader = AVC_AIS_DIR . 'vendor/autoload.php';
 if ( file_exists( $ais_autoloader ) ) {
 	require_once $ais_autoloader;
 } else {
@@ -62,7 +66,7 @@ if ( file_exists( $ais_autoloader ) ) {
 		static function ( $class_name ) {
 			// PSR-4 (namespaced).
 			$prefix   = 'Aivec\\AiSearchSchema\\';
-			$base_dir = AI_SEARCH_SCHEMA_DIR . 'src/';
+			$base_dir = AVC_AIS_DIR . 'src/';
 
 			$len = strlen( $prefix );
 			if ( strncmp( $prefix, $class_name, $len ) === 0 ) {
@@ -82,11 +86,11 @@ if ( file_exists( $ais_autoloader ) ) {
 				$slug     = strtolower( str_replace( '_', '-', $relative ) );
 
 				if ( strpos( $relative, 'Type_' ) === 0 ) {
-					$file = AI_SEARCH_SCHEMA_DIR . 'src/Schema/Type/class-ai-search-schema-' . $slug . '.php';
+					$file = AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-' . $slug . '.php';
 				} elseif ( strpos( $relative, 'Adapter_' ) === 0 ) {
-					$file = AI_SEARCH_SCHEMA_DIR . 'src/Schema/Adapter/class-ai-search-schema-' . $slug . '.php';
+					$file = AVC_AIS_DIR . 'src/Schema/Adapter/class-ai-search-schema-' . $slug . '.php';
 				} else {
-					$file = AI_SEARCH_SCHEMA_DIR . 'src/Schema/class-ai-search-schema-' . $slug . '.php';
+					$file = AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-' . $slug . '.php';
 				}
 
 				if ( file_exists( $file ) ) {
@@ -95,7 +99,7 @@ if ( file_exists( $ais_autoloader ) ) {
 				}
 
 				// Fallback to includes/ directory.
-				$includes_file = AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-' . $slug . '.php';
+				$includes_file = AVC_AIS_DIR . 'includes/class-ai-search-schema-' . $slug . '.php';
 				if ( file_exists( $includes_file ) ) {
 					require $includes_file;
 				}
@@ -111,7 +115,7 @@ $ais_plugin->register();
 add_action(
 	'init',
 	static function () {
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		AI_Search_Schema_Llms_Txt::init();
 	},
 	5
@@ -122,7 +126,7 @@ add_action(
 	'init',
 	static function () {
 		if ( ! class_exists( 'AI_Search_Schema_Pro_Features' ) ) {
-			require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-pro-features.php';
+			require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-pro-features.php';
 			AI_Search_Schema_Pro_Features::init();
 		}
 	},
@@ -134,12 +138,12 @@ register_activation_hook(
 	__FILE__,
 	static function () {
 		// Only set redirect if wizard hasn't been completed.
-		if ( ! get_option( 'ai_search_schema_wizard_completed', false ) ) {
-			set_transient( 'ai_search_schema_wizard_redirect', true, 30 );
+		if ( ! get_option( 'avc_ais_wizard_completed', false ) ) {
+			set_transient( 'avc_ais_wizard_redirect', true, 30 );
 		}
 
 		// Flush rewrite rules for llms.txt.
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		AI_Search_Schema_Llms_Txt::activate();
 	}
 );
@@ -148,7 +152,7 @@ register_activation_hook(
 register_deactivation_hook(
 	__FILE__,
 	static function () {
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		AI_Search_Schema_Llms_Txt::deactivate();
 	}
 );

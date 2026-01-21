@@ -201,7 +201,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		// functions.php から読み込まれる関数をチェック.
 		// 注: 実際に存在する関数名に合わせる必要がある.
-		$functions_file = AI_SEARCH_SCHEMA_DIR . 'includes/functions.php';
+		$functions_file = AVC_AIS_DIR . 'includes/functions.php';
 		$this->assertTrue( file_exists( $functions_file ) );
 	}
 
@@ -294,15 +294,15 @@ class PluginTest extends WP_UnitTestCase {
 	 * プラグイン定数が定義されていることをテスト。
 	 */
 	public function test_plugin_constants_are_defined() {
-		$this->assertTrue( defined( 'AI_SEARCH_SCHEMA_DIR' ) );
-		$this->assertTrue( defined( 'AI_SEARCH_SCHEMA_VERSION' ) );
+		$this->assertTrue( defined( 'AVC_AIS_DIR' ) );
+		$this->assertTrue( defined( 'AVC_AIS_VERSION' ) );
 	}
 
 	/**
-	 * AI_SEARCH_SCHEMA_DIR が正しいパスを指すことをテスト。
+	 * AVC_AIS_DIR が正しいパスを指すことをテスト。
 	 */
 	public function test_plugin_dir_constant_points_to_correct_path() {
-		$dir = AI_SEARCH_SCHEMA_DIR;
+		$dir = AVC_AIS_DIR;
 
 		$this->assertNotEmpty( $dir );
 		$this->assertDirectoryExists( $dir );
@@ -310,10 +310,10 @@ class PluginTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * AI_SEARCH_SCHEMA_VERSION が正しいフォーマットであることをテスト。
+	 * AVC_AIS_VERSION が正しいフォーマットであることをテスト。
 	 */
 	public function test_plugin_version_has_correct_format() {
-		$version = AI_SEARCH_SCHEMA_VERSION;
+		$version = AVC_AIS_VERSION;
 
 		$this->assertNotEmpty( $version );
 		// セマンティックバージョニングのパターン（緩いチェック）.
@@ -349,7 +349,7 @@ class PluginTest extends WP_UnitTestCase {
 	 * 言語ディレクトリが存在することをテスト。
 	 */
 	public function test_languages_directory_exists() {
-		$languages_dir = AI_SEARCH_SCHEMA_DIR . 'languages';
+		$languages_dir = AVC_AIS_DIR . 'languages';
 
 		$this->assertDirectoryExists( $languages_dir );
 	}
@@ -364,7 +364,7 @@ class PluginTest extends WP_UnitTestCase {
 		);
 
 		foreach ( $files as $file ) {
-			$path = AI_SEARCH_SCHEMA_DIR . $file;
+			$path = AVC_AIS_DIR . $file;
 			$this->assertFileExists( $path, "File {$file} should exist" );
 		}
 	}

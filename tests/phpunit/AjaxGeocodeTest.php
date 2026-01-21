@@ -12,13 +12,13 @@ class AI_Search_Schema_Ajax_Geocode_Test extends WP_UnitTestCase {
         $this->subscriber_id = self::factory()->user->create(array('role' => 'subscriber'));
         wp_set_current_user($this->admin_id);
         wp_set_auth_cookie($this->admin_id);
-        $this->nonce = wp_create_nonce('ai_search_schema_geocode');
-        add_filter('ai_search_schema_bypass_geocode_nonce', '__return_true');
-        add_action('ai_search_schema_json_responder', array($this, 'json_responder'), 10, 3);
-        update_option('ai_search_schema_gmaps_api_key', 'test-key', false);
+        $this->nonce = wp_create_nonce('avc_ais_geocode');
+        add_filter('avc_ais_bypass_geocode_nonce', '__return_true');
+        add_action('avc_ais_json_responder', array($this, 'json_responder'), 10, 3);
+        update_option('avc_ais_gmaps_api_key', 'test-key', false);
 
         AI_Search_Schema_TEST_Env::$options = array(
-            'ai_search_schema_gmaps_api_key' => 'test-key',
+            'avc_ais_gmaps_api_key' => 'test-key',
         );
         AI_Search_Schema_TEST_Env::$http_handler = null;
         AI_Search_Schema_TEST_Env::$transients = array();
@@ -33,10 +33,10 @@ class AI_Search_Schema_Ajax_Geocode_Test extends WP_UnitTestCase {
         AI_Search_Schema_TEST_Env::$transients = array();
         AI_Search_Schema_TEST_Env::$capabilities = array('manage_options' => true);
         unset($_POST);
-        delete_transient('ai_search_schema_geocode_' . md5('user_' . $this->admin_id));
-        remove_filter('ai_search_schema_bypass_geocode_nonce', '__return_true');
-        remove_action('ai_search_schema_json_responder', array($this, 'json_responder'), 10);
-        delete_option('ai_search_schema_gmaps_api_key');
+        delete_transient('avc_ais_geocode_' . md5('user_' . $this->admin_id));
+        remove_filter('avc_ais_bypass_geocode_nonce', '__return_true');
+        remove_action('avc_ais_json_responder', array($this, 'json_responder'), 10);
+        delete_option('avc_ais_gmaps_api_key');
     }
 
     /**
@@ -123,7 +123,7 @@ class AI_Search_Schema_Ajax_Geocode_Test extends WP_UnitTestCase {
     public function test_geocode_requires_manage_options_capability() {
         $this->prepare_request_address();
         wp_set_current_user($this->subscriber_id);
-        $this->nonce = wp_create_nonce('ai_search_schema_geocode');
+        $this->nonce = wp_create_nonce('avc_ais_geocode');
         $_POST['nonce'] = $this->nonce;
         $settings = new AI_Search_Schema_Settings();
 

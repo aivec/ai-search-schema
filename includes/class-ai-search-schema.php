@@ -197,12 +197,12 @@ class AI_Search_Schema {
 		$default_enabled = ( 'external' !== $this->get_schema_priority_value( $options ) );
 
 		/**
-		 * フィルター: ai_search_schema_enabled
+		 * フィルター: avc_ais_enabled
 		 * スキーマ出力を有効 / 無効にする。
 		 *
 		 * @param bool $enabled 現在の有効状態
 		 */
-		$is_enabled = (bool) apply_filters( 'ai_search_schema_enabled', $default_enabled );
+		$is_enabled = (bool) apply_filters( 'avc_ais_enabled', $default_enabled );
 
 		return $is_enabled;
 	}
@@ -312,8 +312,8 @@ class AI_Search_Schema {
 			$options = array();
 		}
 
-		if ( isset( $options['ai_search_schema_priority'] ) ) {
-			$priority = $options['ai_search_schema_priority'];
+		if ( isset( $options['avc_ais_priority'] ) ) {
+			$priority = $options['avc_ais_priority'];
 		} elseif ( isset( $options['schema_priority'] ) ) {
 			$priority = $options['schema_priority'];
 		} else {
@@ -339,8 +339,8 @@ class AI_Search_Schema {
 	 */
 	private function get_context_override( array $options, array $context ) {
 		$global_breadcrumbs = true;
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $options ) ) {
-			$global_breadcrumbs = (bool) $options['ai_search_schema_breadcrumbs_schema_enabled'];
+		if ( array_key_exists( 'avc_ais_breadcrumbs_schema_enabled', $options ) ) {
+			$global_breadcrumbs = (bool) $options['avc_ais_breadcrumbs_schema_enabled'];
 		} elseif ( array_key_exists( 'enable_breadcrumbs', $options ) ) {
 			$global_breadcrumbs = (bool) $options['enable_breadcrumbs'];
 		}
@@ -349,7 +349,7 @@ class AI_Search_Schema {
 			'schema_type'         => 'auto',
 			'breadcrumbs_enabled' => $global_breadcrumbs,
 			'faq_enabled'         => true,
-			'schema_priority'     => $options['ai_search_schema_priority'] ?? 'ais',
+			'schema_priority'     => $options['avc_ais_priority'] ?? 'ais',
 		);
 
 		$settings = isset( $options['content_type_settings'] ) && is_array( $options['content_type_settings'] )
@@ -1225,7 +1225,7 @@ class AI_Search_Schema {
 	 */
 	private function determine_content_schema_type( $options, array $context ) {
 		$meta         = ! empty( $context['post_id'] )
-			? get_post_meta( $context['post_id'], '_ai_search_schema_meta', true )
+			? get_post_meta( $context['post_id'], '_avc_ais_meta', true )
 			: array();
 		$page_type    = ( is_array( $meta ) && ! empty( $meta['page_type'] ) )
 			? $meta['page_type']
@@ -1520,7 +1520,7 @@ class AI_Search_Schema {
 			return array();
 		}
 
-		$meta = get_post_meta( $context['post_id'], '_ai_search_schema_meta', true );
+		$meta = get_post_meta( $context['post_id'], '_avc_ais_meta', true );
 		if ( ! is_array( $meta ) ) {
 			return array();
 		}
@@ -2227,7 +2227,7 @@ class AI_Search_Schema {
 					return $script_tag;
 				}
 
-				$custom_patterns = apply_filters( 'ai_search_schema_competing_patterns', array() );
+				$custom_patterns = apply_filters( 'avc_ais_competing_patterns', array() );
 
 				foreach ( $custom_patterns as $custom_pattern ) {
 					if ( is_string( $custom_pattern ) && '' !== $custom_pattern ) {
@@ -2312,7 +2312,7 @@ class AI_Search_Schema {
 			return;
 		}
 
-		set_transient( 'ai_search_schema_last_validation_errors', $errors, 5 * MINUTE_IN_SECONDS );
+		set_transient( 'avc_ais_last_validation_errors', $errors, 5 * MINUTE_IN_SECONDS );
 	}
 
 	/**
@@ -2322,7 +2322,7 @@ class AI_Search_Schema {
 		$this->runtime_validation_errors   = array();
 		$this->runtime_validation_warnings = array();
 		if ( $this->is_debug_mode() ) {
-			delete_transient( 'ai_search_schema_last_validation_errors' );
+			delete_transient( 'avc_ais_last_validation_errors' );
 		}
 	}
 
@@ -2434,13 +2434,13 @@ class AI_Search_Schema {
 			return;
 		}
 
-		$errors   = get_transient( 'ai_search_schema_last_validation_errors' );
+		$errors   = get_transient( 'avc_ais_last_validation_errors' );
 		$warnings = $this->runtime_validation_warnings;
 		if ( empty( $errors ) && empty( $warnings ) ) {
 			return;
 		}
 
-		delete_transient( 'ai_search_schema_last_validation_errors' );
+		delete_transient( 'avc_ais_last_validation_errors' );
 
 		echo '<div class="notice notice-info is-dismissible ai-search-schema-notice">';
 		echo '<p><strong>'

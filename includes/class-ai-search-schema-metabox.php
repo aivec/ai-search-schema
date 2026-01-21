@@ -37,7 +37,7 @@ class AI_Search_Schema_MetaBox {
 	 */
 	public function add_meta_box() {
 		$allowed_post_types = apply_filters(
-			'ai_search_schema_meta_allowed_post_types',
+			'avc_ais_meta_allowed_post_types',
 			array( 'post', 'page' )
 		);
 
@@ -46,7 +46,7 @@ class AI_Search_Schema_MetaBox {
 		}
 
 		add_meta_box(
-			'ai_search_schema_meta',
+			'avc_ais_meta',
 			__( 'AI Search Schema', 'ai-search-schema' ),
 			array( $this, 'render_meta_box' ),
 			$allowed_post_types,
@@ -62,14 +62,14 @@ class AI_Search_Schema_MetaBox {
 	 */
 	public function render_meta_box( $post ) {
 		// メタデータを取得.
-		$meta               = get_post_meta( $post->ID, '_ai_search_schema_meta', true );
+		$meta               = get_post_meta( $post->ID, '_avc_ais_meta', true );
 		$page_type          = isset( $meta['page_type'] ) ? esc_attr( $meta['page_type'] ) : 'auto';
 		$faq_question_class = isset( $meta['faq_question_class'] ) ? esc_attr( $meta['faq_question_class'] ) : '';
 		$faq_answer_class   = isset( $meta['faq_answer_class'] ) ? esc_attr( $meta['faq_answer_class'] ) : '';
 
 		// メタボックスのフォーム.
 		?>
-		<?php wp_nonce_field( 'ai_search_schema_meta_nonce', 'ai_search_schema_meta_nonce' ); ?>
+		<?php wp_nonce_field( 'avc_ais_meta_nonce', 'avc_ais_meta_nonce' ); ?>
 		<div class="ais-metabox">
 			<div class="ais-metabox__card">
 				<div class="ais-metabox__header">
@@ -90,12 +90,12 @@ class AI_Search_Schema_MetaBox {
 				<div class="ais-metabox__fields">
 									<?php
 									ais_render_field(
-										'ai_search_schema_page_type',
+										'avc_ais_page_type',
 										__( 'Page type:', 'ai-search-schema' ),
 										'select',
 										$page_type,
 										'',
-										'ai_search_schema_meta[page_type]',
+										'avc_ais_meta[page_type]',
 										array(
 											'auto'    => __( 'Automatic', 'ai-search-schema' ),
 											'Article' => __( 'Article', 'ai-search-schema' ),
@@ -106,21 +106,21 @@ class AI_Search_Schema_MetaBox {
 									);
 
 										ais_render_field(
-											'ai_search_schema_faq_question_class',
+											'avc_ais_faq_question_class',
 											__( 'FAQ question class:', 'ai-search-schema' ),
 											'text',
 											$faq_question_class,
 											__( 'Example: faq-question, accordion-title', 'ai-search-schema' ),
-											'ai_search_schema_meta[faq_question_class]'
+											'avc_ais_meta[faq_question_class]'
 										);
 
 										ais_render_field(
-											'ai_search_schema_faq_answer_class',
+											'avc_ais_faq_answer_class',
 											__( 'FAQ answer class:', 'ai-search-schema' ),
 											'text',
 											$faq_answer_class,
 											__( 'Example: faq-answer, accordion-content', 'ai-search-schema' ),
-											'ai_search_schema_meta[faq_answer_class]'
+											'avc_ais_meta[faq_answer_class]'
 										);
 
 									/**
@@ -128,7 +128,7 @@ class AI_Search_Schema_MetaBox {
 									 *
 									 * @param WP_Post $post 投稿オブジェクト.
 									 */
-									do_action( 'ai_search_schema_metabox_after_fields', $post );
+									do_action( 'avc_ais_metabox_after_fields', $post );
 									?>
 								</div><!-- /.ais-metabox__fields -->
 
@@ -138,7 +138,7 @@ class AI_Search_Schema_MetaBox {
 								 *
 								 * @param WP_Post $post 投稿オブジェクト.
 								 */
-								do_action( 'ai_search_schema_metabox_card_footer', $post );
+								do_action( 'avc_ais_metabox_card_footer', $post );
 								?>
 						</div><!-- /.ais-metabox__card -->
 				</div><!-- /.ais-metabox -->
@@ -161,7 +161,7 @@ class AI_Search_Schema_MetaBox {
 		}
 
 			$allowed_post_types = apply_filters(
-				'ai_search_schema_meta_allowed_post_types',
+				'avc_ais_meta_allowed_post_types',
 				array( 'post', 'page' )
 			);
 
@@ -173,12 +173,12 @@ class AI_Search_Schema_MetaBox {
 				return;
 		}
 
-			$style_path    = AI_SEARCH_SCHEMA_DIR . 'assets/dist/css/admin.min.css';
-			$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : AI_SEARCH_SCHEMA_VERSION;
+			$style_path    = AVC_AIS_DIR . 'assets/dist/css/admin.min.css';
+			$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : AVC_AIS_VERSION;
 
 			wp_enqueue_style(
 				'ais-admin',
-				AI_SEARCH_SCHEMA_URL . 'assets/dist/css/admin.min.css',
+				AVC_AIS_URL . 'assets/dist/css/admin.min.css',
 				array(),
 				$style_version
 			);
@@ -197,7 +197,7 @@ class AI_Search_Schema_MetaBox {
 
 			// 対象外の投稿タイプでは処理しない。
 		$allowed_post_types = apply_filters(
-			'ai_search_schema_meta_allowed_post_types',
+			'avc_ais_meta_allowed_post_types',
 			array( 'post', 'page' )
 		);
 		if ( ! is_array( $allowed_post_types ) ) {
@@ -210,10 +210,10 @@ class AI_Search_Schema_MetaBox {
 
 			// nonce チェック
 		if (
-					! isset( $_POST['ai_search_schema_meta_nonce'] )
+					! isset( $_POST['avc_ais_meta_nonce'] )
 					|| ! wp_verify_nonce(
-						wp_unslash( $_POST['ai_search_schema_meta_nonce'] ),
-						'ai_search_schema_meta_nonce'
+						sanitize_text_field( wp_unslash( $_POST['avc_ais_meta_nonce'] ) ),
+						'avc_ais_meta_nonce'
 					)
 			) {
 				return;
@@ -225,8 +225,8 @@ class AI_Search_Schema_MetaBox {
 		}
 
 				// データを保存
-				$raw_meta = isset( $_POST['ai_search_schema_meta'] )
-					? (array) wp_unslash( $_POST['ai_search_schema_meta'] )
+				$raw_meta = isset( $_POST['avc_ais_meta'] )
+					? (array) wp_unslash( $_POST['avc_ais_meta'] )
 					: array();
 
 				$allowed_page_types = array( 'auto', 'Article', 'FAQPage', 'QAPage', 'WebPage' );
@@ -256,7 +256,7 @@ class AI_Search_Schema_MetaBox {
 			}
 		}
 
-			update_post_meta( $post_id, '_ai_search_schema_meta', $meta );
+			update_post_meta( $post_id, '_avc_ais_meta', $meta );
 	}
 }
 /* phpcs:enable WordPress.Files.LineLength.TooLong */

@@ -106,7 +106,7 @@ class SettingsTest extends WP_UnitTestCase {
 	 */
 	public function test_get_options_merges_saved_with_defaults() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name' => 'Test Company',
 				'phone'        => '03-1234-5678',
@@ -127,7 +127,7 @@ class SettingsTest extends WP_UnitTestCase {
 	 */
 	public function test_get_options_filters_null_values() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name' => null,
 				'phone'        => '03-1234-5678',
@@ -338,18 +338,18 @@ class SettingsTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * sanitize_options が ai_search_schema_priority を正しくサニタイズすることをテスト。
+	 * sanitize_options が avc_ais_priority を正しくサニタイズすることをテスト。
 	 */
 	public function test_sanitize_schema_priority() {
-		$result1 = $this->settings->sanitize_options( array( 'ai_search_schema_priority' => 'ais' ) );
-		$this->assertEquals( 'ais', $result1['ai_search_schema_priority'] );
+		$result1 = $this->settings->sanitize_options( array( 'avc_ais_priority' => 'ais' ) );
+		$this->assertEquals( 'ais', $result1['avc_ais_priority'] );
 
-		$result2 = $this->settings->sanitize_options( array( 'ai_search_schema_priority' => 'external' ) );
-		$this->assertEquals( 'external', $result2['ai_search_schema_priority'] );
+		$result2 = $this->settings->sanitize_options( array( 'avc_ais_priority' => 'external' ) );
+		$this->assertEquals( 'external', $result2['avc_ais_priority'] );
 
 		// 無効な値はデフォルトに.
-		$result3 = $this->settings->sanitize_options( array( 'ai_search_schema_priority' => 'invalid' ) );
-		$this->assertEquals( 'ais', $result3['ai_search_schema_priority'] );
+		$result3 = $this->settings->sanitize_options( array( 'avc_ais_priority' => 'invalid' ) );
+		$this->assertEquals( 'ais', $result3['avc_ais_priority'] );
 	}
 
 	/**
@@ -627,15 +627,15 @@ class SettingsTest extends WP_UnitTestCase {
 	 * sanitize_options が breadcrumbs 設定を正しくサニタイズすることをテスト。
 	 */
 	public function test_sanitize_breadcrumbs_settings() {
-		$result1 = $this->settings->sanitize_options( array( 'ai_search_schema_breadcrumbs_schema_enabled' => '1' ) );
-		$this->assertTrue( $result1['ai_search_schema_breadcrumbs_schema_enabled'] );
+		$result1 = $this->settings->sanitize_options( array( 'avc_ais_breadcrumbs_schema_enabled' => '1' ) );
+		$this->assertTrue( $result1['avc_ais_breadcrumbs_schema_enabled'] );
 
-		$result2 = $this->settings->sanitize_options( array( 'ai_search_schema_breadcrumbs_html_enabled' => '1' ) );
-		$this->assertTrue( $result2['ai_search_schema_breadcrumbs_html_enabled'] );
+		$result2 = $this->settings->sanitize_options( array( 'avc_ais_breadcrumbs_html_enabled' => '1' ) );
+		$this->assertTrue( $result2['avc_ais_breadcrumbs_html_enabled'] );
 
 		// レガシー enable_breadcrumbs からの移行.
 		$result3 = $this->settings->sanitize_options( array( 'enable_breadcrumbs' => '1' ) );
-		$this->assertTrue( $result3['ai_search_schema_breadcrumbs_schema_enabled'] );
+		$this->assertTrue( $result3['avc_ais_breadcrumbs_schema_enabled'] );
 	}
 
 	// ===== Logo and Image Sanitization Tests =====
@@ -861,7 +861,7 @@ class SettingsTest extends WP_UnitTestCase {
 	 * get_options が壊れたオプションデータを処理できることをテスト。
 	 */
 	public function test_get_options_handles_corrupted_data() {
-		AI_Search_Schema_TEST_Env::$options['ai_search_schema_options'] = 'not an array';
+		AI_Search_Schema_TEST_Env::$options['avc_ais_options'] = 'not an array';
 
 		$options = $this->settings->get_options();
 

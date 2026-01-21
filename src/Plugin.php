@@ -34,7 +34,7 @@ class Plugin {
 		$locale = \apply_filters( 'plugin_locale', $locale, $domain );
 		$locale = $locale ?: 'en_US';
 
-		$language_dir = \trailingslashit( AI_SEARCH_SCHEMA_DIR . 'languages' );
+		$language_dir = \trailingslashit( AVC_AIS_DIR . 'languages' );
 		$mofile       = $language_dir . $domain . '-' . $locale . '.mo';
 
 		\unload_textdomain( $domain );
@@ -54,7 +54,7 @@ class Plugin {
 			}
 		}
 
-		\load_plugin_textdomain( $domain, false, \dirname( \plugin_basename( AI_SEARCH_SCHEMA_FILE ) ) . '/languages/' );
+		\load_plugin_textdomain( $domain, false, \dirname( \plugin_basename( AVC_AIS_FILE ) ) . '/languages/' );
 	}
 
 	/**
@@ -76,9 +76,9 @@ class Plugin {
 			// cptm-client ベースの更新チェッカーを初期化（依存パッケージが存在する場合のみ）.
 			if ( \class_exists( \Aivec\Welcart\CptmClient\Client::class ) ) {
 				$update_client = new Client(
-					AI_SEARCH_SCHEMA_FILE,
+					AVC_AIS_FILE,
 					'ai-search-schema',
-					AI_SEARCH_SCHEMA_VERSION
+					AVC_AIS_VERSION
 				);
 				$update_client->initUpdateChecker();
 			}
@@ -96,7 +96,7 @@ class Plugin {
 		);
 
 		foreach ( $includes as $relative_path ) {
-			$path = AI_SEARCH_SCHEMA_DIR . $relative_path;
+			$path = AVC_AIS_DIR . $relative_path;
 			if ( \file_exists( $path ) ) {
 				require_once $path;
 			}

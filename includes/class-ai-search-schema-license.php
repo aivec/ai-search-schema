@@ -34,7 +34,7 @@ class AI_Search_Schema_License {
 	/**
 	 * Option name for license data.
 	 */
-	private const OPTION_NAME = 'ai_search_schema_license';
+	private const OPTION_NAME = 'avc_ais_license';
 
 	/**
 	 * License API endpoint (future implementation).
@@ -71,8 +71,8 @@ class AI_Search_Schema_License {
 	 * Constructor.
 	 */
 	private function __construct() {
-		add_action( 'wp_ajax_ai_search_schema_activate_license', array( $this, 'handle_activate_license' ) );
-		add_action( 'wp_ajax_ai_search_schema_deactivate_license', array( $this, 'handle_deactivate_license' ) );
+		add_action( 'wp_ajax_avc_ais_activate_license', array( $this, 'handle_activate_license' ) );
+		add_action( 'wp_ajax_avc_ais_deactivate_license', array( $this, 'handle_deactivate_license' ) );
 	}
 
 	/**
@@ -237,7 +237,7 @@ class AI_Search_Schema_License {
 	 * AJAX handler for license activation.
 	 */
 	public function handle_activate_license() {
-		check_ajax_referer( 'ai_search_schema_license', 'nonce' );
+		check_ajax_referer( 'avc_ais_license', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
@@ -260,7 +260,7 @@ class AI_Search_Schema_License {
 	 * AJAX handler for license deactivation.
 	 */
 	public function handle_deactivate_license() {
-		check_ajax_referer( 'ai_search_schema_license', 'nonce' );
+		check_ajax_referer( 'avc_ais_license', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(

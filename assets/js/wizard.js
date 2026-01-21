@@ -138,7 +138,7 @@
         url: aisWizardData.ajaxUrl,
         method: 'POST',
         data: {
-          action: 'ai_search_schema_wizard_save_step',
+          action: 'avc_ais_wizard_save_step',
           nonce: aisWizardData.nonce,
           step: aisWizardData.currentStep,
           data: formData
@@ -419,7 +419,7 @@
           url: aisWizardData.ajaxUrl,
           method: 'POST',
           data: {
-            action: 'ai_search_schema_wizard_import',
+            action: 'avc_ais_wizard_import',
             nonce: aisWizardData.nonce,
             source: source
           },
@@ -518,7 +518,7 @@
           url: aisWizardData.ajaxUrl,
           method: 'POST',
           data: {
-            action: 'ai_search_schema_geocode',
+            action: 'avc_ais_geocode',
             nonce: aisWizardData.geocodeNonce || aisWizardData.nonce,
             'address[postal_code]': postalCode,
             'address[region]': region,
@@ -563,7 +563,7 @@
             url: aisWizardData.ajaxUrl,
             method: 'POST',
             data: {
-              action: 'ai_search_schema_wizard_get_schema',
+              action: 'avc_ais_wizard_get_schema',
               nonce: aisWizardData.nonce
             },
             success: function (response) {

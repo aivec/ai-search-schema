@@ -49,7 +49,7 @@ class WizardTest extends WP_UnitTestCase {
 	 */
 	protected function tearDown(): void {
 		// ユーザーメタをクリア.
-		delete_user_meta( $this->user_id, 'ai_search_schema_wizard_progress' );
+		delete_user_meta( $this->user_id, 'avc_ais_wizard_progress' );
 		wp_set_current_user( 0 );
 		parent::tearDown();
 	}
@@ -96,7 +96,7 @@ class WizardTest extends WP_UnitTestCase {
 		$this->wizard->mark_completed();
 
 		$this->assertTrue( $this->wizard->is_completed() );
-		$this->assertNotEmpty( get_option( 'ai_search_schema_wizard_completed_at' ) );
+		$this->assertNotEmpty( get_option( 'avc_ais_wizard_completed_at' ) );
 	}
 
 	/**

@@ -8,7 +8,7 @@
 namespace Aivec\AiSearchSchema\Type;
 
 if ( ! class_exists( '\AI_Search_Schema_Type_QAPage' ) ) {
-	require_once AI_SEARCH_SCHEMA_DIR . 'src/Schema/Type/class-ai-search-schema-type-qapage.php';
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-qapage.php';
 }
 
 /**

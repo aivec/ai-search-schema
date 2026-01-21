@@ -7,7 +7,7 @@
 namespace Aivec\AiSearchSchema\Wp;
 
 if ( ! class_exists( '\AI_Search_Schema_Prefectures' ) ) {
-	require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-prefectures.php';
+	require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-prefectures.php';
 }
 
 /**

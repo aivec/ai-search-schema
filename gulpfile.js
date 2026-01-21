@@ -124,7 +124,11 @@ function copy() {
     '!tests/**',
     '!vendor/**',
     '!.git/**',
-    '!.github/**'
+    '!.github/**',
+    // Exclude WordPress.org directory assets (icons, screenshots, banners)
+    '!assets/icon-*.png',
+    '!assets/screenshot-*.png',
+    '!assets/banner-*.png'
   ];
 
   return gulp.src(
@@ -220,7 +224,7 @@ function updatePluginFileVersion(version) {
 
   const contents = fs.readFileSync(pluginPath, 'utf8');
   const headerRegex = /(\*\s*Version:\s*)([^\r\n]+)/;
-  const constRegex = /(define\(\s*['"]AI_SEARCH_SCHEMA_VERSION['"]\s*,\s*['"])([^'"]+)(['"]\s*\);)/;
+  const constRegex = /(define\(\s*['"]AVC_AIS_VERSION['"]\s*,\s*['"])([^'"]+)(['"]\s*\);)/;
 
   let updated = contents;
   if (headerRegex.test(updated)) {

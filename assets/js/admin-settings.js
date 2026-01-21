@@ -342,7 +342,7 @@
   }
   function applyHolidayMode() {
     const enabled = $('#ais-holiday-enabled').is(':checked');
-    const mode = $('input[name="ai_search_schema_options[holiday_mode]"]:checked').val() || 'custom';
+    const mode = $('input[name="avc_ais_options[holiday_mode]"]:checked').val() || 'custom';
     if (!enabled) {
       $('#ais-include-holiday').prop('checked', false).trigger('change');
       return;
@@ -392,7 +392,7 @@
     addTemplateButtons();
     initDayToggles();
     $('#ais-holiday-enabled').on('change', applyHolidayMode);
-    $('input[name="ai_search_schema_options[holiday_mode]"]').on('change', applyHolidayMode);
+    $('input[name="avc_ais_options[holiday_mode]"]').on('change', applyHolidayMode);
     initOpeningHoursDrag();
     updateOpeningHoursNames($container);
     applyHolidayMode();
@@ -551,7 +551,7 @@
         method: 'POST',
         dataType: 'json',
         data: {
-          action: 'ai_search_schema_geocode',
+          action: 'avc_ais_geocode',
           nonce: settings.geocodeNonce || '',
           address: address,
         },
@@ -985,7 +985,7 @@
         url: aisSettings.ajaxUrl,
         type: 'POST',
         data: {
-          action: 'ai_search_schema_save_llms_txt',
+          action: 'avc_ais_save_llms_txt',
           nonce: aisSettings.llmsTxtSaveNonce,
           content: $textarea.val()
         },
@@ -1035,7 +1035,7 @@
         url: aisSettings.ajaxUrl,
         type: 'POST',
         data: {
-          action: 'ai_search_schema_regenerate_llms_txt',
+          action: 'avc_ais_regenerate_llms_txt',
           nonce: aisSettings.llmsTxtNonce
         },
         success: function (response) {
@@ -1093,7 +1093,7 @@
         url: aisSettings.ajaxUrl,
         type: 'POST',
         data: {
-          action: 'ai_search_schema_activate_license',
+          action: 'avc_ais_activate_license',
           nonce: aisSettings.licenseNonce,
           license_key: licenseKey
         },
@@ -1130,7 +1130,7 @@
         url: aisSettings.ajaxUrl,
         type: 'POST',
         data: {
-          action: 'ai_search_schema_deactivate_license',
+          action: 'avc_ais_deactivate_license',
           nonce: aisSettings.licenseNonce
         },
         success: function (response) {

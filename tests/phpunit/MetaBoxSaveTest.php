@@ -11,7 +11,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
 
         $this->admin_id = self::factory()->user->create(array('role' => 'administrator'));
         wp_set_current_user($this->admin_id);
-        $this->nonce = wp_create_nonce('ai_search_schema_meta_nonce');
+        $this->nonce = wp_create_nonce('avc_ais_meta_nonce');
 
         AI_Search_Schema_TEST_Env::$current_post_id = 0;
         AI_Search_Schema_TEST_Env::$posts          = [];
@@ -40,7 +40,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
 
         update_post_meta(
             $post_id,
-            '_ai_search_schema_meta',
+            '_avc_ais_meta',
             [
                 'page_type'          => 'Article',
                 'faq_question_class' => 'question-class',
@@ -58,8 +58,8 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
         );
 
         $_POST = [
-            'ai_search_schema_meta_nonce' => $this->nonce,
-            'ai_search_schema_meta'       => [
+            'avc_ais_meta_nonce' => $this->nonce,
+            'avc_ais_meta'       => [
                 'page_type'          => 'FAQPage',
                 'faq_question_class' => 'new-question',
                 'faq_answer_class'   => 'new-answer',
@@ -69,7 +69,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
         $metabox = new AI_Search_Schema_MetaBox();
         $metabox->save_meta_box($autosave_id);
 
-        $meta = get_post_meta($post_id, '_ai_search_schema_meta', true);
+        $meta = get_post_meta($post_id, '_avc_ais_meta', true);
 
         $this->assertSame(
             [
@@ -90,8 +90,8 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
         );
 
         $_POST = [
-            'ai_search_schema_meta_nonce' => $this->nonce,
-            'ai_search_schema_meta'       => [
+            'avc_ais_meta_nonce' => $this->nonce,
+            'avc_ais_meta'       => [
                 'page_type'          => 'InvalidType',
                 'faq_question_class' => 'invalid class!',
                 'faq_answer_class'   => '日本語',
@@ -101,7 +101,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
         $metabox = new AI_Search_Schema_MetaBox();
         $metabox->save_meta_box($post_id);
 
-        $meta = get_post_meta($post_id, '_ai_search_schema_meta', true);
+        $meta = get_post_meta($post_id, '_avc_ais_meta', true);
 
         $this->assertSame(
             [

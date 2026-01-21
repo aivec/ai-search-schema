@@ -64,7 +64,7 @@ class AI_Search_Schema_Breadcrumbs {
 	 * @return bool
 	 */
 	private function should_render() {
-		if ( ! apply_filters( 'ai_search_schema_show_breadcrumbs', true ) ) {
+		if ( ! apply_filters( 'avc_ais_show_breadcrumbs', true ) ) {
 			return false;
 		}
 
@@ -72,7 +72,7 @@ class AI_Search_Schema_Breadcrumbs {
 			return false;
 		}
 
-		$options = get_option( 'ai_search_schema_options', array() );
+		$options = get_option( 'avc_ais_options', array() );
 		if ( ! is_array( $options ) ) {
 			$options = array();
 		}
@@ -87,8 +87,8 @@ class AI_Search_Schema_Breadcrumbs {
 	 * @return bool
 	 */
 	private function is_html_output_enabled( array $options ) {
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_html_enabled', $options ) ) {
-			return (bool) $options['ai_search_schema_breadcrumbs_html_enabled'];
+		if ( array_key_exists( 'avc_ais_breadcrumbs_html_enabled', $options ) ) {
+			return (bool) $options['avc_ais_breadcrumbs_html_enabled'];
 		}
 
 		if ( array_key_exists( 'enable_breadcrumbs', $options ) ) {
@@ -190,7 +190,7 @@ class AI_Search_Schema_Breadcrumbs {
 		}
 
 		$items = $this->build_items( $context );
-		$items = apply_filters( 'ai_search_schema_breadcrumb_items', $items, $context );
+		$items = apply_filters( 'avc_ais_breadcrumb_items', $items, $context );
 
 		if ( $should_cache ) {
 			$this->cached_items = $items;
@@ -211,7 +211,7 @@ class AI_Search_Schema_Breadcrumbs {
 		}
 
 		$items      = array();
-		$home_label = apply_filters( 'ai_search_schema_breadcrumb_home_label', __( 'Home', 'ai-search-schema' ) );
+		$home_label = apply_filters( 'avc_ais_breadcrumb_home_label', __( 'Home', 'ai-search-schema' ) );
 
 		$items[] = array(
 			'label' => $home_label,

@@ -8,7 +8,7 @@
 namespace Aivec\AiSearchSchema\Adapter;
 
 if ( ! class_exists( '\AI_Search_Schema_WooProductAdapter' ) ) {
-	require_once AI_SEARCH_SCHEMA_DIR . 'src/Schema/Adapter/class-ai-search-schema-wooproductadapter.php';
+	require_once AVC_AIS_DIR . 'src/Schema/Adapter/class-ai-search-schema-wooproductadapter.php';
 }
 
 /**

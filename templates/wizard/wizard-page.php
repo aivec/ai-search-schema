@@ -33,7 +33,7 @@ $total_steps = count( $step_keys );
 		<!-- Header -->
 		<header class="ais-wizard__header">
 			<div class="ais-wizard__logo">
-				<img src="<?php echo esc_url( AI_SEARCH_SCHEMA_URL . 'assets/icon-256x256.png' ); ?>" alt="AI Search Schema" class="ais-wizard__logo-icon" width="40" height="40">
+				<img src="<?php echo esc_url( AVC_AIS_URL . 'assets/icon-256x256.png' ); ?>" alt="AI Search Schema" class="ais-wizard__logo-icon" width="40" height="40">
 				<span class="ais-wizard__logo-text">AI Search Schema</span>
 			</div>
 			<div class="ais-wizard__lang">
@@ -50,7 +50,7 @@ $total_steps = count( $step_keys );
 
 		<!-- Progress Bar (hidden on welcome step) -->
 		<?php if ( 'welcome' !== $current_step ) : ?>
-			<?php include AI_SEARCH_SCHEMA_DIR . 'templates/wizard/components/progress-bar.php'; ?>
+			<?php include AVC_AIS_DIR . 'templates/wizard/components/progress-bar.php'; ?>
 		<?php endif; ?>
 
 		<!-- Main Content -->
@@ -58,7 +58,7 @@ $total_steps = count( $step_keys );
 			<div class="ais-wizard__content">
 				<?php
 				$step_view = $this->steps[ $current_step ]['view'] ?? '';
-				$step_file = AI_SEARCH_SCHEMA_DIR . 'templates/wizard/steps/' . $step_view . '.php';
+				$step_file = AVC_AIS_DIR . 'templates/wizard/steps/' . $step_view . '.php';
 
 				if ( file_exists( $step_file ) ) {
 					include $step_file;
@@ -76,7 +76,7 @@ $total_steps = count( $step_keys );
 				printf(
 					/* translators: %s: plugin version */
 					esc_html__( 'AI Search Schema v%s', 'ai-search-schema' ),
-					esc_html( AI_SEARCH_SCHEMA_VERSION )
+					esc_html( AVC_AIS_VERSION )
 				);
 				?>
 				&bull;

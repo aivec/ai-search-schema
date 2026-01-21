@@ -11,7 +11,7 @@
  * @return mixed オプションの値
  */
 function ais_get_option( $key, $default_value = '' ) {
-	$options = get_option( 'ai_search_schema_options', array() );
+	$options = get_option( 'avc_ais_options', array() );
 	return isset( $options[ $key ] ) ? $options[ $key ] : $default_value;
 }
 
@@ -22,9 +22,9 @@ function ais_get_option( $key, $default_value = '' ) {
  * @param mixed  $value オプションの値
  */
 function ais_update_option( $key, $value ) {
-	$options         = get_option( 'ai_search_schema_options', array() );
+	$options         = get_option( 'avc_ais_options', array() );
 	$options[ $key ] = $value;
-	update_option( 'ai_search_schema_options', $options );
+	update_option( 'avc_ais_options', $options );
 }
 
 /**

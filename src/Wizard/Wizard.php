@@ -25,14 +25,14 @@ class Wizard {
 	 *
 	 * @var string
 	 */
-	const OPTION_COMPLETED = 'ai_search_schema_wizard_completed';
+	const OPTION_COMPLETED = 'avc_ais_wizard_completed';
 
 	/**
 	 * User meta key for wizard progress.
 	 *
 	 * @var string
 	 */
-	const META_PROGRESS = 'ai_search_schema_wizard_progress';
+	const META_PROGRESS = 'avc_ais_wizard_progress';
 
 	/**
 	 * Available steps.
@@ -66,12 +66,12 @@ class Wizard {
 		add_action( 'current_screen', array( $this, 'maybe_set_wizard_title' ) );
 
 		// Ajax handlers.
-		add_action( 'wp_ajax_ai_search_schema_wizard_save_step', array( $this, 'ajax_save_step' ) );
-		add_action( 'wp_ajax_ai_search_schema_wizard_skip_step', array( $this, 'ajax_skip_step' ) );
-		add_action( 'wp_ajax_ai_search_schema_wizard_complete', array( $this, 'ajax_complete' ) );
-		add_action( 'wp_ajax_ai_search_schema_wizard_reset', array( $this, 'ajax_reset' ) );
-		add_action( 'wp_ajax_ai_search_schema_wizard_import', array( $this, 'ajax_import' ) );
-		add_action( 'wp_ajax_ai_search_schema_wizard_get_schema', array( $this, 'ajax_get_schema' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_save_step', array( $this, 'ajax_save_step' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_skip_step', array( $this, 'ajax_skip_step' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_complete', array( $this, 'ajax_complete' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_reset', array( $this, 'ajax_reset' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_import', array( $this, 'ajax_import' ) );
+		add_action( 'wp_ajax_avc_ais_wizard_get_schema', array( $this, 'ajax_get_schema' ) );
 	}
 
 	/**
@@ -118,7 +118,7 @@ class Wizard {
 			),
 		);
 
-		return apply_filters( 'ai_search_schema_wizard_steps', $steps );
+		return apply_filters( 'avc_ais_wizard_steps', $steps );
 	}
 
 	/**
@@ -173,9 +173,9 @@ class Wizard {
 		}
 
 		// Check if we should redirect.
-		$redirect = get_transient( 'ai_search_schema_wizard_redirect' );
+		$redirect = get_transient( 'avc_ais_wizard_redirect' );
 		if ( $redirect ) {
-			delete_transient( 'ai_search_schema_wizard_redirect' );
+			delete_transient( 'avc_ais_wizard_redirect' );
 
 			// Don't redirect if wizard is already completed.
 			if ( $this->is_completed() ) {
@@ -212,7 +212,7 @@ class Wizard {
 		}
 
 		// Don't show if dismissed.
-		if ( get_user_meta( get_current_user_id(), 'ai_search_schema_wizard_notice_dismissed', true ) ) {
+		if ( get_user_meta( get_current_user_id(), 'avc_ais_wizard_notice_dismissed', true ) ) {
 			return;
 		}
 
@@ -251,16 +251,16 @@ class Wizard {
 
 		wp_enqueue_style(
 			'ais-wizard',
-			AI_SEARCH_SCHEMA_URL . 'assets/dist/css/wizard.min.css',
+			AVC_AIS_URL . 'assets/dist/css/wizard.min.css',
 			array(),
-			AI_SEARCH_SCHEMA_VERSION
+			AVC_AIS_VERSION
 		);
 
 		wp_enqueue_script(
 			'ais-wizard',
-			AI_SEARCH_SCHEMA_URL . 'assets/js/wizard.js',
+			AVC_AIS_URL . 'assets/js/wizard.js',
 			array( 'jquery', 'wp-util' ),
-			AI_SEARCH_SCHEMA_VERSION,
+			AVC_AIS_VERSION,
 			true
 		);
 
@@ -269,8 +269,8 @@ class Wizard {
 			'aisWizardData',
 			array(
 				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
-				'nonce'        => wp_create_nonce( 'ai_search_schema_wizard_nonce' ),
-				'geocodeNonce' => wp_create_nonce( 'ai_search_schema_geocode' ),
+				'nonce'        => wp_create_nonce( 'avc_ais_wizard_nonce' ),
+				'geocodeNonce' => wp_create_nonce( 'avc_ais_geocode' ),
 				'currentStep'  => $this->current_step,
 				'wizardUrl'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG ),
 				'settingsUrl'  => admin_url( 'options-general.php?page=ai-search-schema' ),
@@ -334,13 +334,13 @@ class Wizard {
 		// Get wizard data.
 		$progress    = $this->get_progress();
 		$wizard_data = $progress['data'] ?? array();
-		$options     = get_option( 'ai_search_schema_options', array() );
+		$options     = get_option( 'avc_ais_options', array() );
 
 		// Make current_step available as a local variable for templates.
 		$current_step = $this->current_step;
 
 		// Include the wizard template.
-		include AI_SEARCH_SCHEMA_DIR . 'templates/wizard/wizard-page.php';
+		include AVC_AIS_DIR . 'templates/wizard/wizard-page.php';
 	}
 
 	/**
@@ -389,10 +389,10 @@ class Wizard {
 	 */
 	public function mark_completed() {
 		update_option( self::OPTION_COMPLETED, true );
-		update_option( 'ai_search_schema_wizard_completed_at', current_time( 'mysql' ) );
-		update_option( 'ai_search_schema_wizard_version', AI_SEARCH_SCHEMA_VERSION );
+		update_option( 'avc_ais_wizard_completed_at', current_time( 'mysql' ) );
+		update_option( 'avc_ais_wizard_version', AVC_AIS_VERSION );
 
-		do_action( 'ai_search_schema_wizard_completed', $this->get_progress() );
+		do_action( 'avc_ais_wizard_completed', $this->get_progress() );
 	}
 
 	/**
@@ -415,7 +415,7 @@ class Wizard {
 	 * Ajax: Save step data.
 	 */
 	public function ajax_save_step() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -443,7 +443,7 @@ class Wizard {
 		// Also save to main settings.
 		$this->save_to_settings( $step, $sanitized_data );
 
-		do_action( 'ai_search_schema_wizard_step_completed', $step, $sanitized_data );
+		do_action( 'avc_ais_wizard_step_completed', $step, $sanitized_data );
 
 		// 営業時間ステップ（最後のデータ入力ステップ）完了時にウィザードを完了としてマーク.
 		if ( 'hours' === $step ) {
@@ -462,7 +462,7 @@ class Wizard {
 	 * Ajax: Skip step.
 	 */
 	public function ajax_skip_step() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -492,7 +492,7 @@ class Wizard {
 	 * Ajax: Complete wizard.
 	 */
 	public function ajax_complete() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -512,7 +512,7 @@ class Wizard {
 	 * Ajax: Reset wizard.
 	 */
 	public function ajax_reset() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -534,7 +534,7 @@ class Wizard {
 	 * Ajax: Import from other plugins.
 	 */
 	public function ajax_import() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -559,7 +559,7 @@ class Wizard {
 			$this->save_to_settings( $step, $data );
 		}
 
-		do_action( 'ai_search_schema_wizard_import_completed', $source, $imported_data );
+		do_action( 'avc_ais_wizard_import_completed', $source, $imported_data );
 
 		wp_send_json_success(
 			array(
@@ -784,13 +784,13 @@ class Wizard {
 	/**
 	 * Save wizard data to main plugin settings.
 	 *
-	 * Normalizes data from sanitize_step_data() and saves to ai_search_schema_options.
+	 * Normalizes data from sanitize_step_data() and saves to avc_ais_options.
 	 *
 	 * @param string $step Step slug.
 	 * @param array  $data Sanitized data.
 	 */
 	private function save_to_settings( $step, $data ) {
-		$settings = get_option( 'ai_search_schema_options', array() );
+		$settings = get_option( 'avc_ais_options', array() );
 
 		switch ( $step ) {
 			case 'basics':
@@ -838,7 +838,7 @@ class Wizard {
 			case 'api-key':
 				// Save API key to separate option (not in main settings array).
 				if ( ! empty( $data['gmaps_api_key'] ) ) {
-					update_option( 'ai_search_schema_gmaps_api_key', $data['gmaps_api_key'], false );
+					update_option( 'avc_ais_gmaps_api_key', $data['gmaps_api_key'], false );
 				}
 				return; // Return early as we don't need to update main settings.
 
@@ -900,7 +900,7 @@ class Wizard {
 				break;
 		}
 
-		update_option( 'ai_search_schema_options', $settings );
+		update_option( 'avc_ais_options', $settings );
 	}
 
 	/**
@@ -910,7 +910,7 @@ class Wizard {
 	 * as template functions like is_404() don't work in AJAX context.
 	 */
 	public function ajax_get_schema() {
-		check_ajax_referer( 'ai_search_schema_wizard_nonce', 'nonce' );
+		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
@@ -919,10 +919,10 @@ class Wizard {
 		try {
 			// 依存クラスを読み込み.
 			if ( ! class_exists( '\AI_Search_Schema_Settings' ) ) {
-				require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-settings.php';
+				require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-settings.php';
 			}
 			if ( ! class_exists( '\AI_Search_Schema_OpeningHoursBuilder' ) ) {
-				require_once AI_SEARCH_SCHEMA_DIR . 'src/Schema/class-ai-search-schema-openinghoursbuilder.php';
+				require_once AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-openinghoursbuilder.php';
 			}
 
 			// 設定を正規化.

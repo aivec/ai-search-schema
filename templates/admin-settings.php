@@ -12,6 +12,10 @@
  * @package AI_Search_Schema
  */
 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 $logo_url              = ! empty( $options['logo_url'] ) ? esc_url( $options['logo_url'] ) : '';
 $logo_id               = ! empty( $options['logo_id'] ) ? absint( $options['logo_id'] ) : 0;
 $lb_image_url          = ! empty( $options['lb_image_url'] ) ? esc_url( $options['lb_image_url'] ) : '';
@@ -400,11 +404,11 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<div class="ais-field ais-field--radios">
 							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'ai-search-schema' ); ?><?php ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'ai-search-schema' ) ); ?></span>
 							<label class="ais-radio">
-								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="ais" <?php checked( $options['ai_search_schema_priority'], 'ais' ); ?> />
+								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_priority]" value="ais" <?php checked( $options['avc_ais_priority'], 'ais' ); ?> />
 								<span><?php esc_html_e( 'Use AI Search Schema output (disable other plugins)', 'ai-search-schema' ); ?></span>
 							</label>
 							<label class="ais-radio">
-								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_priority]" value="external" <?php checked( $options['ai_search_schema_priority'], 'external' ); ?> />
+								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_priority]" value="external" <?php checked( $options['avc_ais_priority'], 'external' ); ?> />
 								<span><?php esc_html_e( 'Prefer external SEO plugin schema', 'ai-search-schema' ); ?></span>
 							</label>
 						</div>
@@ -427,12 +431,12 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					<div class="ais-field ais-field--toggle">
 						<span class="ais-field__label"><?php esc_html_e( 'Breadcrumbs', 'ai-search-schema' ); ?></span>
 						<label class="ais-toggle" for="ais-breadcrumbs-schema">
-							<input id="ais-breadcrumbs-schema" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_breadcrumbs_schema_enabled]" value="1" <?php checked( true, ! empty( $options['ai_search_schema_breadcrumbs_schema_enabled'] ) ); ?> />
+							<input id="ais-breadcrumbs-schema" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_breadcrumbs_schema_enabled]" value="1" <?php checked( true, ! empty( $options['avc_ais_breadcrumbs_schema_enabled'] ) ); ?> />
 							<span><?php esc_html_e( 'Include BreadcrumbList in JSON-LD output', 'ai-search-schema' ); ?></span>
 						</label>
 						<p class="ais-field__description ais-field__description--inline"><?php esc_html_e( 'ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO.', 'ai-search-schema' ); ?></p>
 						<label class="ais-toggle" for="ais-breadcrumbs-html">
-							<input id="ais-breadcrumbs-html" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[ai_search_schema_breadcrumbs_html_enabled]" value="1" <?php checked( true, ! empty( $options['ai_search_schema_breadcrumbs_html_enabled'] ) ); ?> />
+							<input id="ais-breadcrumbs-html" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_breadcrumbs_html_enabled]" value="1" <?php checked( true, ! empty( $options['avc_ais_breadcrumbs_html_enabled'] ) ); ?> />
 							<span><?php esc_html_e( 'Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()', 'ai-search-schema' ); ?></span>
 						</label>
 						<p class="ais-field__description"><?php esc_html_e( 'ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme already has breadcrumbs.', 'ai-search-schema' ); ?></p>
@@ -921,17 +925,6 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					<p><?php esc_html_e( 'Check your schema readiness. This diagnostic validates required fields and highlights issues that may prevent rich results or AI visibility.', 'ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
-					<style>
-						.ais-diagnostic-list{display:grid;gap:12px}
-						.ais-diagnostic-group{border:1px solid #e4e7eb;border-radius:12px;padding:12px}
-						.ais-diagnostic-title{margin:0 0 8px;font-weight:600;font-size:14px}
-						.ais-diagnostic-item{display:flex;align-items:center;gap:8px;margin:6px 0}
-						.ais-status-badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}
-						.ais-status-ok{background:#e6f4ea;color:#1a7f37}
-						.ais-status-info{background:#e8f4fd;color:#0969da}
-						.ais-status-warning{background:#fff4e5;color:#b06100}
-						.ais-status-error{background:#fdecea;color:#b3261e}
-					</style>
 					<div class="ais-diagnostic-list">
 						<?php if ( ! empty( $diagnostics['groups'] ) ) : ?>
 							<?php foreach ( $diagnostics['groups'] as $group ) : ?>
@@ -982,7 +975,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<div class="ais-card__body">
 					<?php
-					require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+					require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 					$llms_txt_instance = AI_Search_Schema_Llms_Txt::init();
 					$llms_txt_enabled  = $llms_txt_instance->is_enabled();
 					$llms_txt_content  = $llms_txt_instance->get_content();
@@ -1028,7 +1021,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<div class="ais-card__body">
 					<?php
-					require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-license.php';
+					require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-license.php';
 					$license_manager = AI_Search_Schema_License::init();
 					$license_key     = $license_manager->get_license_key();
 					$license_status  = $license_manager->get_license_status();
@@ -1147,48 +1140,6 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 	<span class="dashicons dashicons-clipboard"></span>
 	<span class="ais-dev-label"><?php esc_html_e( 'Test Manager', 'ai-search-schema' ); ?></span>
 </a>
-<style>
-.ais-dev-test-manager-link {
-	position: fixed;
-	bottom: 20px;
-	right: 20px;
-	display: flex;
-	align-items: center;
-	gap: 8px;
-	padding: 10px 16px;
-	background: #1e1e1e;
-	color: #fff;
-	border-radius: 4px;
-	text-decoration: none;
-	font-size: 13px;
-	font-weight: 500;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-	z-index: 9999;
-	transition: background 0.2s, transform 0.2s;
-}
-.ais-dev-test-manager-link:hover {
-	background: #2271b1;
-	color: #fff;
-	transform: translateY(-2px);
-}
-.ais-dev-test-manager-link .dashicons {
-	font-size: 18px;
-	width: 18px;
-	height: 18px;
-}
-.ais-dev-test-manager-link::before {
-	content: 'DEV';
-	position: absolute;
-	top: -8px;
-	left: -8px;
-	background: #d63638;
-	color: #fff;
-	font-size: 9px;
-	font-weight: 700;
-	padding: 2px 5px;
-	border-radius: 3px;
-}
-</style>
 <?php endif; ?>
 
 <?php /* phpcs:enable WordPress.Files.LineLength.TooLong */

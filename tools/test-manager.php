@@ -53,16 +53,16 @@ if ( ! current_user_can( 'manage_options' ) ) {
 
 // Nonceチェック（POST時）
 if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
-	$nonce = isset( $_POST['ai_search_schema_test_nonce'] )
-		? sanitize_text_field( wp_unslash( $_POST['ai_search_schema_test_nonce'] ) )
+	$nonce = isset( $_POST['avc_ais_test_nonce'] )
+		? sanitize_text_field( wp_unslash( $_POST['avc_ais_test_nonce'] ) )
 		: '';
-	if ( ! wp_verify_nonce( $nonce, 'ai_search_schema_test_manager' ) ) {
+	if ( ! wp_verify_nonce( $nonce, 'avc_ais_test_manager' ) ) {
 		wp_die( esc_html__( 'Security check failed.', 'ai-search-schema' ) );
 	}
 }
 
 // テストデータの保存/読み込み
-$test_data_option = 'ai_search_schema_test_data';
+$test_data_option = 'avc_ais_test_data';
 $test_data        = get_option( $test_data_option, array() );
 
 // AJAXハンドラー：テストデータ保存
@@ -238,12 +238,12 @@ if ( file_exists( $test_spec_file ) ) {
 }
 
 // プラグインバージョン取得
-$plugin_version = defined( 'AI_SEARCH_SCHEMA_VERSION' ) ? AI_SEARCH_SCHEMA_VERSION : '0.1.0';
+$plugin_version = defined( 'AVC_AIS_VERSION' ) ? AVC_AIS_VERSION : '0.1.0';
 
 // 設定ページURL
 $settings_url     = admin_url( 'options-general.php?page=ai-search-schema' );
 $rich_results_url = 'https://search.google.com/test/rich-results?url=' . rawurlencode( home_url() );
-$nonce_value      = wp_create_nonce( 'ai_search_schema_test_manager' );
+$nonce_value      = wp_create_nonce( 'avc_ais_test_manager' );
 $test_spec_json   = wp_json_encode( $test_spec );
 // 空配列の場合はオブジェクトとして出力（JSで文字列キーが使えるようにするため）
 $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_data );
@@ -948,7 +948,7 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 			if (!file) return;
 			const formData = new FormData();
 			formData.append('action', 'upload_screenshot');
-			formData.append('ai_search_schema_test_nonce', nonce);
+			formData.append('avc_ais_test_nonce', nonce);
 			formData.append('screenshot', file);
 
 			try {
@@ -1012,7 +1012,7 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 		async function saveAllData() {
 			const formData = new FormData();
 			formData.append('action', 'save_test_data');
-			formData.append('ai_search_schema_test_nonce', nonce);
+			formData.append('avc_ais_test_nonce', nonce);
 			formData.append('test_data', JSON.stringify(testData));
 			try {
 				const response = await fetch(window.location.href, {
@@ -1170,7 +1170,7 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 
 			const formData = new FormData();
 			formData.append('action', 'auto_judge');
-			formData.append('ai_search_schema_test_nonce', nonce);
+			formData.append('avc_ais_test_nonce', nonce);
 			formData.append('test_id', currentAutoJudgeTestId);
 			formData.append('json_ld', jsonLd);
 

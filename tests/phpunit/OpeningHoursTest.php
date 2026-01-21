@@ -38,7 +38,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 
 		update_post_meta(
 			$this->page_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			array( 'page_type' => 'WebPage' )
 		);
 
@@ -52,7 +52,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 	 * テスト後のクリーンアップ。
 	 */
 	protected function tearDown(): void {
-		delete_option( 'ai_search_schema_options' );
+		delete_option( 'avc_ais_options' );
 		parent::tearDown();
 	}
 
@@ -61,7 +61,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 	 */
 	public function test_opening_hours_specification_is_generated() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'  => 'Test Business',
 				'entity_type'   => 'LocalBusiness',
@@ -120,7 +120,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 	 */
 	public function test_incomplete_opening_hours_are_skipped() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'  => 'Test Business',
 				'entity_type'   => 'LocalBusiness',
@@ -177,7 +177,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 	 */
 	public function test_empty_opening_hours_not_output() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'  => 'Test Business',
 				'entity_type'   => 'LocalBusiness',
@@ -228,7 +228,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		}
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'  => 'Test Business',
 				'entity_type'   => 'LocalBusiness',

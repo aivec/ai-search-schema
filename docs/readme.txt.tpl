@@ -1,10 +1,10 @@
-=== AI Search Schema ===
+=== Aivec AI Search Schema ===
 Contributors: Aivec LLC
 Tags: schema, seo, structured-data, ai-search, local-seo, breadcrumbs, faq, llms-txt
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.0.9-dev
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 

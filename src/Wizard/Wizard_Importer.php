@@ -42,7 +42,7 @@ class Wizard_Importer {
 			),
 		);
 
-		$this->sources = apply_filters( 'ai_search_schema_wizard_import_sources', $this->sources );
+		$this->sources = apply_filters( 'avc_ais_wizard_import_sources', $this->sources );
 	}
 
 	/**

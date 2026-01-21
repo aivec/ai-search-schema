@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$options     = get_option( 'ai_search_schema_options', array() );
+$options     = get_option( 'avc_ais_options', array() );
 $entity_type = $options['entity_type'] ?? '';
 
 // Site type options with icons (Organization and LocalBusiness only for schema compatibility).

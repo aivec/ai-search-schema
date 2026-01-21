@@ -29,7 +29,7 @@ class AI_Search_Schema_ArticleSchema_Unit_Test extends WP_UnitTestCase {
 
 		update_post_meta(
 			$this->post_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			array(
 				'page_type' => 'Article',
 			)
@@ -50,15 +50,15 @@ class AI_Search_Schema_ArticleSchema_Unit_Test extends WP_UnitTestCase {
 		);
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'                   => 'Article Co',
 				'logo_url'                       => 'http://example.com/logo.png',
 				'logo_id'                        => 100,
 				'site_url'                       => 'http://example.com',
 				'languages'                      => array( 'en' ),
-				'ai_search_schema_priority'            => 'ais',
-				'ai_search_schema_breadcrumbs_schema_enabled' => true,
+				'avc_ais_priority'            => 'ais',
+				'avc_ais_breadcrumbs_schema_enabled' => true,
 			)
 		);
 
@@ -68,7 +68,7 @@ class AI_Search_Schema_ArticleSchema_Unit_Test extends WP_UnitTestCase {
 	public function test_article_schema_fields_present() {
 		$resolver = new AI_Search_Schema_ContentResolver();
 		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
-		$schema   = $builder->build( get_option( 'ai_search_schema_options' ) );
+		$schema   = $builder->build( get_option( 'avc_ais_options' ) );
 
 		$article = $this->find_by_type( $schema['@graph'], 'Article' );
 

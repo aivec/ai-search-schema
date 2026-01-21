@@ -55,7 +55,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			}
 		}
 
-		delete_option( 'ai_search_schema_options' );
+		delete_option( 'avc_ais_options' );
 	}
 
 	/**
@@ -63,11 +63,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_suppress_competing_plugins_when_priority_is_avc() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 
@@ -92,11 +92,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_no_suppression_when_priority_is_external() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'external',
+				'avc_ais_priority'  => 'external',
 			)
 		);
 
@@ -116,11 +116,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_suppress_filter_structure() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 
@@ -146,11 +146,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_double_suppression_is_prevented() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 
@@ -173,7 +173,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_default_schema_priority_behavior() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name' => 'Test Company',
 				'entity_type'  => 'Organization',
@@ -197,7 +197,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	public function test_competing_schema_patterns_filter() {
 		// カスタムパターンを追加するフィルター.
 		add_filter(
-			'ai_search_schema_competing_patterns',
+			'avc_ais_competing_patterns',
 			function ( $patterns ) {
 				$patterns[] = 'custom_plugin_schema';
 				return $patterns;
@@ -205,18 +205,18 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 		);
 
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 
 		$this->schema = AI_Search_Schema::init();
 
 		// フィルターが適用可能な状態になっていることを確認.
-		$patterns = apply_filters( 'ai_search_schema_competing_patterns', array() );
+		$patterns = apply_filters( 'avc_ais_competing_patterns', array() );
 		$this->assertContains( 'custom_plugin_schema', $patterns );
 	}
 
@@ -225,11 +225,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_yoast_filter_returns_false() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 
@@ -247,11 +247,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	 */
 	public function test_rank_math_filter_returns_empty_array() {
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			array(
 				'company_name'         => 'Test Company',
 				'entity_type'          => 'Organization',
-				'ai_search_schema_priority'  => 'ais',
+				'avc_ais_priority'  => 'ais',
 			)
 		);
 

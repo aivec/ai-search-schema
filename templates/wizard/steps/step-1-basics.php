@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$options   = get_option( 'ai_search_schema_options', array() );
+$options   = get_option( 'avc_ais_options', array() );
 $site_name = $options['site_name'] ?? get_bloginfo( 'name' );
 $site_desc = $options['site_description'] ?? get_bloginfo( 'description' );
 $site_logo = $options['logo_url'] ?? '';

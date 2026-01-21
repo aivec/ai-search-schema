@@ -27,27 +27,27 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 
 		// Set up the default options.
 		update_option(
-			'ai_search_schema_options',
+			'avc_ais_options',
 			[
 				'company_name'                   => 'Test Company',
 				'site_url'                       => 'http://example.com',
 				'languages'                      => ['en'],
-				'ai_search_schema_priority'            => 'ais',
-				'ai_search_schema_breadcrumbs_schema_enabled' => true,
+				'avc_ais_priority'            => 'ais',
+				'avc_ais_breadcrumbs_schema_enabled' => true,
 			]
 		);
 	}
 
 	protected function tearDown(): void {
 		wp_delete_post( $this->post_id, true );
-		delete_option( 'ai_search_schema_options' );
+		delete_option( 'avc_ais_options' );
 		parent::tearDown();
 	}
 
 	public function test_faqpage_schema_not_generated_when_disabled() {
 		update_post_meta(
 			$this->post_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			[
 				'page_type'          => 'FAQPage',
 				'faq_question_class' => 'faq-question',
@@ -56,7 +56,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 		);
 
 		// Disable FAQ via content_type_settings.
-		$options = get_option( 'ai_search_schema_options' );
+		$options = get_option( 'avc_ais_options' );
 		$options['content_type_settings'] = [
 			'post_types' => [
 				'post' => [
@@ -64,7 +64,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 				],
 			],
 		];
-		update_option( 'ai_search_schema_options', $options );
+		update_option( 'avc_ais_options', $options );
 
 		$context = [
 			'post_id'   => $this->post_id,
@@ -77,7 +77,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
-			get_option( 'ai_search_schema_options' )
+			get_option( 'avc_ais_options' )
 		);
 
 		$this->assertEmpty( $schema );
@@ -93,7 +93,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
-			get_option( 'ai_search_schema_options' )
+			get_option( 'avc_ais_options' )
 		);
 
 		$this->assertEmpty( $schema );
@@ -102,7 +102,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_faqpage_schema_not_generated_without_classes() {
 		update_post_meta(
 			$this->post_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			[
 				'page_type' => 'FAQPage',
 				// Missing faq_question_class and faq_answer_class.
@@ -120,7 +120,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
-			get_option( 'ai_search_schema_options' )
+			get_option( 'avc_ais_options' )
 		);
 
 		$this->assertEmpty( $schema );
@@ -129,7 +129,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_faqpage_schema_not_generated_with_only_question_class() {
 		update_post_meta(
 			$this->post_id,
-			'_ai_search_schema_meta',
+			'_avc_ais_meta',
 			[
 				'page_type'          => 'FAQPage',
 				'faq_question_class' => 'faq-question',
@@ -148,7 +148,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
-			get_option( 'ai_search_schema_options' )
+			get_option( 'avc_ais_options' )
 		);
 
 		$this->assertEmpty( $schema );
@@ -160,8 +160,8 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$options = [
-			'ai_search_schema_breadcrumbs_schema_enabled' => true,
-			'ai_search_schema_priority'            => 'ais',
+			'avc_ais_breadcrumbs_schema_enabled' => true,
+			'avc_ais_priority'            => 'ais',
 		];
 		$context = [
 			'post_type' => 'page',
@@ -181,7 +181,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$options = [
-			'ai_search_schema_breadcrumbs_schema_enabled' => true,
+			'avc_ais_breadcrumbs_schema_enabled' => true,
 			'content_type_settings'          => [
 				'post_types' => [
 					'post' => [
@@ -205,7 +205,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 		$method->setAccessible( true );
 
 		$options = [
-			'ai_search_schema_breadcrumbs_schema_enabled' => true,
+			'avc_ais_breadcrumbs_schema_enabled' => true,
 			'content_type_settings'          => [
 				'taxonomies' => [
 					'category' => [

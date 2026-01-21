@@ -34,7 +34,7 @@ class AI_Search_Schema_Generation_Test extends WP_UnitTestCase {
 
         update_post_meta(
             $this->post_id,
-            '_ai_search_schema_meta',
+            '_avc_ais_meta',
             [
                 'page_type' => 'Article',
             ]
@@ -57,7 +57,7 @@ class AI_Search_Schema_Generation_Test extends WP_UnitTestCase {
         );
 
         update_option(
-            'ai_search_schema_options',
+            'avc_ais_options',
             [
                 'company_name'                  => 'Test Company',
                 'logo_url'                     => 'http://example.com/logo.png',
@@ -65,9 +65,9 @@ class AI_Search_Schema_Generation_Test extends WP_UnitTestCase {
                 'site_url'                     => 'http://example.com',
                 'languages'                    => ['ja'],
                 'content_model'                => 'WebPage',
-                'ai_search_schema_priority'          => 'ais',
-                'ai_search_schema_breadcrumbs_schema_enabled' => true,
-                'ai_search_schema_breadcrumbs_html_enabled'   => false,
+                'avc_ais_priority'          => 'ais',
+                'avc_ais_breadcrumbs_schema_enabled' => true,
+                'avc_ais_breadcrumbs_html_enabled'   => false,
             ]
         );
 

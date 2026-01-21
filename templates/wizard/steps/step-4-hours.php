@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$options = get_option( 'ai_search_schema_options', array() );
+$options = get_option( 'avc_ais_options', array() );
 
 // Days of the week.
 $days = array(

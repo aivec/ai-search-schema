@@ -454,7 +454,7 @@ class AI_Search_Schema_GraphBuilder {
 
 	private function determine_content_schema_type( $options, array $context ) {
 		$meta         = ! empty( $context['post_id'] )
-			? get_post_meta( $context['post_id'], '_ai_search_schema_meta', true )
+			? get_post_meta( $context['post_id'], '_avc_ais_meta', true )
 			: array();
 		$page_type    = ( is_array( $meta ) && ! empty( $meta['page_type'] ) )
 			? $meta['page_type']
@@ -481,8 +481,8 @@ class AI_Search_Schema_GraphBuilder {
 
 	private function get_context_override( array $options, array $context ) {
 		$global_breadcrumbs = true;
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $options ) ) {
-			$global_breadcrumbs = (bool) $options['ai_search_schema_breadcrumbs_schema_enabled'];
+		if ( array_key_exists( 'avc_ais_breadcrumbs_schema_enabled', $options ) ) {
+			$global_breadcrumbs = (bool) $options['avc_ais_breadcrumbs_schema_enabled'];
 		} elseif ( array_key_exists( 'enable_breadcrumbs', $options ) ) {
 			$global_breadcrumbs = (bool) $options['enable_breadcrumbs'];
 		}
@@ -491,7 +491,7 @@ class AI_Search_Schema_GraphBuilder {
 			'schema_type'         => 'auto',
 			'breadcrumbs_enabled' => $global_breadcrumbs,
 			'faq_enabled'         => true,
-			'schema_priority'     => $options['ai_search_schema_priority'] ?? 'avc',
+			'schema_priority'     => $options['avc_ais_priority'] ?? 'avc',
 		);
 
 		$settings = isset( $options['content_type_settings'] ) && is_array( $options['content_type_settings'] )

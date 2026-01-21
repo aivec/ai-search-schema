@@ -478,7 +478,7 @@ class WizardImporterTest extends WP_UnitTestCase {
 	 */
 	public function test_import_sources_filter() {
 		add_filter(
-			'ai_search_schema_wizard_import_sources',
+			'avc_ais_wizard_import_sources',
 			function ( $sources ) {
 				$sources['custom'] = array(
 					'name'     => 'Custom Plugin',
@@ -497,7 +497,7 @@ class WizardImporterTest extends WP_UnitTestCase {
 		$this->assertTrue( $sources['custom']['detected'] );
 
 		// フィルターをクリア.
-		remove_all_filters( 'ai_search_schema_wizard_import_sources' );
+		remove_all_filters( 'avc_ais_wizard_import_sources' );
 	}
 
 	// =========================================================================

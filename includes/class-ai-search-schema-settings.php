@@ -6,8 +6,8 @@
  * 設定項目の保存や表示を行います。
  */
 class AI_Search_Schema_Settings {
-	private const OPTION_NAME                = 'ai_search_schema_options';
-	private const OPTION_GMAPS_KEY           = 'ai_search_schema_gmaps_api_key';
+	private const OPTION_NAME                = 'avc_ais_options';
+	private const OPTION_GMAPS_KEY           = 'avc_ais_gmaps_api_key';
 	private const GEOCODE_RATE_LIMIT_SECONDS = 10;
 
 	/**
@@ -37,9 +37,9 @@ class AI_Search_Schema_Settings {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
-		add_action( 'wp_ajax_ai_search_schema_geocode', array( $this, 'handle_geocode_request' ) );
-		add_action( 'wp_ajax_ai_search_schema_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
-		add_action( 'wp_ajax_ai_search_schema_save_llms_txt', array( $this, 'handle_save_llms_txt' ) );
+		add_action( 'wp_ajax_avc_ais_geocode', array( $this, 'handle_geocode_request' ) );
+		add_action( 'wp_ajax_avc_ais_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
+		add_action( 'wp_ajax_avc_ais_save_llms_txt', array( $this, 'handle_save_llms_txt' ) );
 	}
 
 	/**
@@ -103,21 +103,50 @@ class AI_Search_Schema_Settings {
 
 		wp_enqueue_media();
 
-		$style_path    = AI_SEARCH_SCHEMA_DIR . 'assets/dist/css/admin.min.css';
-		$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : AI_SEARCH_SCHEMA_VERSION;
+		$style_path    = AVC_AIS_DIR . 'assets/dist/css/admin.min.css';
+		$style_version = file_exists( $style_path ) ? filemtime( $style_path ) : AVC_AIS_VERSION;
 		wp_enqueue_style(
 			'ais-admin',
-			AI_SEARCH_SCHEMA_URL . 'assets/dist/css/admin.min.css',
+			AVC_AIS_URL . 'assets/dist/css/admin.min.css',
 			array(),
 			$style_version
 		);
 
-		$script_path    = AI_SEARCH_SCHEMA_DIR . 'assets/js/admin-settings.js';
-		$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : AI_SEARCH_SCHEMA_VERSION;
+		// Diagnostic styles (moved from inline to enqueue).
+		$diagnostic_css  = '.ais-diagnostic-list{display:grid;gap:12px}';
+		$diagnostic_css .= '.ais-diagnostic-group{border:1px solid #e4e7eb;border-radius:12px;padding:12px}';
+		$diagnostic_css .= '.ais-diagnostic-title{margin:0 0 8px;font-weight:600;font-size:14px}';
+		$diagnostic_css .= '.ais-diagnostic-item{display:flex;align-items:center;gap:8px;margin:6px 0}';
+		$diagnostic_css .= '.ais-status-badge{display:inline-flex;align-items:center;';
+		$diagnostic_css .= 'padding:2px 8px;border-radius:999px;font-size:12px;font-weight:600}';
+		$diagnostic_css .= '.ais-status-ok{background:#e6f4ea;color:#1a7f37}';
+		$diagnostic_css .= '.ais-status-info{background:#e8f4fd;color:#0969da}';
+		$diagnostic_css .= '.ais-status-warning{background:#fff4e5;color:#b06100}';
+		$diagnostic_css .= '.ais-status-error{background:#fdecea;color:#b3261e}';
+		wp_add_inline_style( 'ais-admin', $diagnostic_css );
+
+		// Dev mode test manager link styles.
+		if ( defined( 'WP_DEBUG' ) && WP_DEBUG ) {
+			$dev_css  = '.ais-dev-test-manager-link{position:fixed;bottom:20px;right:20px;';
+			$dev_css .= 'display:flex;align-items:center;gap:8px;padding:10px 16px;';
+			$dev_css .= 'background:#1e1e1e;color:#fff;border-radius:4px;text-decoration:none;';
+			$dev_css .= 'font-size:13px;font-weight:500;box-shadow:0 2px 8px rgba(0,0,0,0.2);';
+			$dev_css .= 'z-index:9999;transition:background 0.2s,transform 0.2s}';
+			$dev_css .= '.ais-dev-test-manager-link:hover{background:#2271b1;color:#fff;';
+			$dev_css .= 'transform:translateY(-2px)}';
+			$dev_css .= '.ais-dev-test-manager-link .dashicons{font-size:18px;width:18px;height:18px}';
+			$dev_css .= '.ais-dev-test-manager-link::before{content:"DEV";position:absolute;';
+			$dev_css .= 'top:-8px;left:-8px;background:#d63638;color:#fff;font-size:9px;';
+			$dev_css .= 'font-weight:700;padding:2px 5px;border-radius:3px}';
+			wp_add_inline_style( 'ais-admin', $dev_css );
+		}
+
+		$script_path    = AVC_AIS_DIR . 'assets/js/admin-settings.js';
+		$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : AVC_AIS_VERSION;
 
 		wp_enqueue_script(
 			'ais-settings',
-			AI_SEARCH_SCHEMA_URL . 'assets/js/admin-settings.js',
+			AVC_AIS_URL . 'assets/js/admin-settings.js',
 			array( 'jquery' ),
 			$script_version,
 			true
@@ -134,7 +163,7 @@ class AI_Search_Schema_Settings {
 				/* translators: %s is the language label. */
 				'i18nLanguageRemove'        => __( 'Remove "%s"', 'ai-search-schema' ),
 				'ajaxUrl'                   => admin_url( 'admin-ajax.php' ),
-				'geocodeNonce'              => wp_create_nonce( 'ai_search_schema_geocode' ),
+				'geocodeNonce'              => wp_create_nonce( 'avc_ais_geocode' ),
 				'i18nGeocodeReady'          => __( 'Fetch coordinates from address', 'ai-search-schema' ),
 				'i18nGeocodeWorking'        => __( 'Fetching...', 'ai-search-schema' ),
 				'i18nGeocodeSuccess'        => __( 'Latitude and longitude updated.', 'ai-search-schema' ),
@@ -146,15 +175,15 @@ class AI_Search_Schema_Settings {
 				'i18nEntityHelpOrg'         => __( 'The primary role of this site is defined as an "Organization". You can also enter headquarters or branch office information in the "Local details & hours" section below to associate your organization with a physical location and enhance visibility in local search results.', 'ai-search-schema' ),
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
 				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'ai-search-schema' ),
-				'llmsTxtNonce'              => wp_create_nonce( 'ai_search_schema_regenerate_llms_txt' ),
-				'llmsTxtSaveNonce'          => wp_create_nonce( 'ai_search_schema_save_llms_txt' ),
+				'llmsTxtNonce'              => wp_create_nonce( 'avc_ais_regenerate_llms_txt' ),
+				'llmsTxtSaveNonce'          => wp_create_nonce( 'avc_ais_save_llms_txt' ),
 				'i18nLlmsTxtRegenerating'   => __( 'Regenerating...', 'ai-search-schema' ),
 				'i18nLlmsTxtRegenerate'     => __( 'Regenerate from site data', 'ai-search-schema' ),
 				'i18nLlmsTxtSaving'         => __( 'Saving...', 'ai-search-schema' ),
 				'i18nLlmsTxtSave'           => __( 'Save edits', 'ai-search-schema' ),
 				'i18nLlmsTxtSaved'          => __( 'Saved!', 'ai-search-schema' ),
 				// License strings.
-				'licenseNonce'              => wp_create_nonce( 'ai_search_schema_license' ),
+				'licenseNonce'              => wp_create_nonce( 'avc_ais_license' ),
 				'i18nLicenseActivating'     => __( 'Activating...', 'ai-search-schema' ),
 				'i18nLicenseDeactivating'   => __( 'Deactivating...', 'ai-search-schema' ),
 				'i18nLicenseActivate'       => __( 'Activate', 'ai-search-schema' ),
@@ -180,10 +209,10 @@ class AI_Search_Schema_Settings {
 			 *
 			 * @param bool $bypass_nonce nonceチェックをスキップするかどうか。デフォルトfalse。
 			 */
-			$bypass_nonce = apply_filters( 'ai_search_schema_bypass_geocode_nonce', false );
+			$bypass_nonce = apply_filters( 'avc_ais_bypass_geocode_nonce', false );
 		}
 		if ( ! $bypass_nonce ) {
-			check_ajax_referer( 'ai_search_schema_geocode', 'nonce' );
+			check_ajax_referer( 'avc_ais_geocode', 'nonce' );
 		}
 
 		if ( ! current_user_can( 'manage_options' ) ) {
@@ -259,7 +288,7 @@ class AI_Search_Schema_Settings {
 	 * AJAX handler for regenerating llms.txt content.
 	 */
 	public function handle_regenerate_llms_txt() {
-		check_ajax_referer( 'ai_search_schema_regenerate_llms_txt', 'nonce' );
+		check_ajax_referer( 'avc_ais_regenerate_llms_txt', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			$this->respond_json(
@@ -271,7 +300,7 @@ class AI_Search_Schema_Settings {
 			);
 		}
 
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		$llms_txt = AI_Search_Schema_Llms_Txt::init();
 		$content  = $llms_txt->reset_content();
 
@@ -288,7 +317,7 @@ class AI_Search_Schema_Settings {
 	 * AJAX handler for saving llms.txt content.
 	 */
 	public function handle_save_llms_txt() {
-		check_ajax_referer( 'ai_search_schema_save_llms_txt', 'nonce' );
+		check_ajax_referer( 'avc_ais_save_llms_txt', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			$this->respond_json(
@@ -302,7 +331,7 @@ class AI_Search_Schema_Settings {
 
 		$content = isset( $_POST['content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['content'] ) ) : '';
 
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		$llms_txt = AI_Search_Schema_Llms_Txt::init();
 
 		if ( ! empty( $content ) ) {
@@ -336,11 +365,11 @@ class AI_Search_Schema_Settings {
 			}
 		}
 		/**
-		 * フィルター: ai_search_schema_google_maps_api_key
+		 * フィルター: avc_ais_google_maps_api_key
 		 *
 		 * @param string $key 現在のAPIキー
 		 */
-		return (string) apply_filters( 'ai_search_schema_google_maps_api_key', sanitize_text_field( (string) $key ) );
+		return (string) apply_filters( 'avc_ais_google_maps_api_key', sanitize_text_field( (string) $key ) );
 	}
 
 	/**
@@ -366,7 +395,7 @@ class AI_Search_Schema_Settings {
 				'timeout'     => 12,
 				'redirection' => 2,
 				'headers'     => array(
-					'User-Agent' => 'AI-Search-Schema/' . AI_SEARCH_SCHEMA_VERSION . ' (' . home_url( '/' ) . ')',
+					'User-Agent' => 'AI-Search-Schema/' . AVC_AIS_VERSION . ' (' . home_url( '/' ) . ')',
 				),
 			)
 		);
@@ -380,18 +409,18 @@ class AI_Search_Schema_Settings {
 
 		if ( 200 !== $code || empty( $body ) ) {
 			return new \WP_Error(
-				'ai_search_schema_geocode_http_error',
+				'avc_ais_geocode_http_error',
 				__( 'The geocoding API returned an error.', 'ai-search-schema' )
 			);
 		}
 
 		if ( isset( $body['error_message'] ) ) {
-			return new \WP_Error( 'ai_search_schema_geocode_api_error', $body['error_message'] );
+			return new \WP_Error( 'avc_ais_geocode_api_error', $body['error_message'] );
 		}
 
 		if ( empty( $body['results'][0]['geometry']['location'] ) ) {
 			return new \WP_Error(
-				'ai_search_schema_geocode_not_found',
+				'avc_ais_geocode_not_found',
 				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
 			);
 		}
@@ -528,7 +557,7 @@ class AI_Search_Schema_Settings {
 			array(
 				'timeout' => 15,
 				'headers' => array(
-					'User-Agent' => 'AI-Search-Schema/' . AI_SEARCH_SCHEMA_VERSION . ' (' . home_url( '/' ) . ')',
+					'User-Agent' => 'AI-Search-Schema/' . AVC_AIS_VERSION . ' (' . home_url( '/' ) . ')',
 				),
 			)
 		);
@@ -540,7 +569,7 @@ class AI_Search_Schema_Settings {
 		$code = wp_remote_retrieve_response_code( $response );
 		if ( $code < 200 || $code >= 300 ) {
 			return new \WP_Error(
-				'ai_search_schema_geocode_http_error',
+				'avc_ais_geocode_http_error',
 				__( 'The geocoding API returned an error.', 'ai-search-schema' )
 			);
 		}
@@ -550,7 +579,7 @@ class AI_Search_Schema_Settings {
 
 		if ( empty( $data ) || empty( $data[0]['lat'] ) || empty( $data[0]['lon'] ) ) {
 			return new \WP_Error(
-				'ai_search_schema_geocode_not_found',
+				'avc_ais_geocode_not_found',
 				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
 			);
 		}
@@ -588,8 +617,8 @@ class AI_Search_Schema_Settings {
 		$schema_priority_choices = $this->get_schema_priority_choices();
 		$diagnostics             = $this->get_diagnostics_report( $options );
 		$is_dev_mode             = $this->is_dev_mode();
-		$test_manager_url        = $is_dev_mode ? AI_SEARCH_SCHEMA_URL . 'tools/test-manager.php' : '';
-		$template                = AI_SEARCH_SCHEMA_DIR . 'templates/admin-settings.php';
+		$test_manager_url        = $is_dev_mode ? AVC_AIS_URL . 'tools/test-manager.php' : '';
+		$template                = AVC_AIS_DIR . 'templates/admin-settings.php';
 
 		if ( file_exists( $template ) ) {
 			include $template;
@@ -610,7 +639,7 @@ class AI_Search_Schema_Settings {
 	 * @return bool True if dev mode is active.
 	 */
 	public function is_dev_mode() {
-		return file_exists( AI_SEARCH_SCHEMA_DIR . 'tools/test-manager.php' );
+		return file_exists( AVC_AIS_DIR . 'tools/test-manager.php' );
 	}
 
 	/**
@@ -786,29 +815,29 @@ class AI_Search_Schema_Settings {
 		$output['accepts_reservations']              = ! empty( $input['accepts_reservations'] );
 		$output['skip_local_business_if_incomplete'] = ! empty( $input['skip_local_business_if_incomplete'] );
 
-			$priority_value = isset( $input['ai_search_schema_priority'] ) ?
-				sanitize_text_field( $input['ai_search_schema_priority'] ) :
+			$priority_value = isset( $input['avc_ais_priority'] ) ?
+				sanitize_text_field( $input['avc_ais_priority'] ) :
 				'ais';
 		if ( ! in_array( $priority_value, array( 'ais', 'external' ), true ) ) {
 			$priority_value = 'ais';
 		}
-		$output['ai_search_schema_priority'] = $priority_value;
+		$output['avc_ais_priority'] = $priority_value;
 
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $input ) ) {
-			$breadcrumbs_schema_enabled = ! empty( $input['ai_search_schema_breadcrumbs_schema_enabled'] );
+		if ( array_key_exists( 'avc_ais_breadcrumbs_schema_enabled', $input ) ) {
+			$breadcrumbs_schema_enabled = ! empty( $input['avc_ais_breadcrumbs_schema_enabled'] );
 		} else {
 			$breadcrumbs_schema_enabled = ! empty( $input['enable_breadcrumbs'] );
 		}
 
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_html_enabled', $input ) ) {
-			$breadcrumbs_html_enabled = ! empty( $input['ai_search_schema_breadcrumbs_html_enabled'] );
+		if ( array_key_exists( 'avc_ais_breadcrumbs_html_enabled', $input ) ) {
+			$breadcrumbs_html_enabled = ! empty( $input['avc_ais_breadcrumbs_html_enabled'] );
 		} else {
 			$breadcrumbs_html_enabled = ! empty( $input['enable_breadcrumbs'] );
 		}
 
-		$output['ai_search_schema_breadcrumbs_schema_enabled'] = $breadcrumbs_schema_enabled;
-		$output['ai_search_schema_breadcrumbs_html_enabled']   = $breadcrumbs_html_enabled;
-		$output['enable_breadcrumbs']                          = $breadcrumbs_schema_enabled;
+		$output['avc_ais_breadcrumbs_schema_enabled'] = $breadcrumbs_schema_enabled;
+		$output['avc_ais_breadcrumbs_html_enabled']   = $breadcrumbs_html_enabled;
+		$output['enable_breadcrumbs']                 = $breadcrumbs_schema_enabled;
 
 		$social_links = array();
 		if ( ! empty( $input['social_links'] ) && is_array( $input['social_links'] ) ) {
@@ -869,7 +898,7 @@ class AI_Search_Schema_Settings {
 			? sanitize_textarea_field( $input['llms_txt_content'] )
 			: '';
 
-		require_once AI_SEARCH_SCHEMA_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
 		$llms_txt = AI_Search_Schema_Llms_Txt::init();
 		$llms_txt->set_enabled( $llms_txt_enabled );
 		if ( ! empty( $llms_txt_content ) ) {
@@ -906,31 +935,31 @@ class AI_Search_Schema_Settings {
 		$translate_labels = $this->should_translate_labels();
 
 		$defaults = array(
-			'company_name'                                => '',
-			'logo_id'                                     => 0,
-			'logo_url'                                    => '',
-			'lb_image_id'                                 => 0,
-			'lb_image_url'                                => '',
-			'store_image_id'                              => 0,
-			'store_image_url'                             => '',
-			'phone'                                       => '',
-			'country_code'                                => $this->get_default_country( $translate_labels ),
-			'languages'                                   => array( $this->get_default_language( $translate_labels ) ),
-			'language'                                    => $this->get_default_language( $translate_labels ),
-			'site_name'                                   => get_bloginfo( 'name' ),
-			'site_url'                                    => get_site_url(),
-			'entity_type'                                 => 'Organization',
-			'publisher_entity'                            => 'Organization',
-			'business_type'                               => 'LocalBusiness',
-			'lb_subtype'                                  => 'LocalBusiness',
-			'ai_search_schema_priority'                   => 'ais',
-			'ai_search_schema_breadcrumbs_schema_enabled' => true,
-			'ai_search_schema_breadcrumbs_html_enabled'   => false,
-			'enable_breadcrumbs'                          => false,
-			'local_business_label'                        => '',
-			'localbusiness_address_locality'              => '',
-			'localbusiness_street_address'                => '',
-			'address'                                     => array(
+			'company_name'                       => '',
+			'logo_id'                            => 0,
+			'logo_url'                           => '',
+			'lb_image_id'                        => 0,
+			'lb_image_url'                       => '',
+			'store_image_id'                     => 0,
+			'store_image_url'                    => '',
+			'phone'                              => '',
+			'country_code'                       => $this->get_default_country( $translate_labels ),
+			'languages'                          => array( $this->get_default_language( $translate_labels ) ),
+			'language'                           => $this->get_default_language( $translate_labels ),
+			'site_name'                          => get_bloginfo( 'name' ),
+			'site_url'                           => get_site_url(),
+			'entity_type'                        => 'Organization',
+			'publisher_entity'                   => 'Organization',
+			'business_type'                      => 'LocalBusiness',
+			'lb_subtype'                         => 'LocalBusiness',
+			'avc_ais_priority'                   => 'ais',
+			'avc_ais_breadcrumbs_schema_enabled' => true,
+			'avc_ais_breadcrumbs_html_enabled'   => false,
+			'enable_breadcrumbs'                 => false,
+			'local_business_label'               => '',
+			'localbusiness_address_locality'     => '',
+			'localbusiness_street_address'       => '',
+			'address'                            => array(
 				'postal_code'    => '',
 				'prefecture'     => '',
 				'prefecture_iso' => '',
@@ -941,23 +970,23 @@ class AI_Search_Schema_Settings {
 				'address_line'   => '',
 				'country'        => 'JP',
 			),
-			'geo'                                         => array(
+			'geo'                                => array(
 				'latitude'  => '',
 				'longitude' => '',
 			),
-			'has_map_enabled'                             => false,
-			'skip_local_business_if_incomplete'           => false,
-			'holiday_enabled'                             => true,
-			'holiday_mode'                                => 'custom',
-			'holiday_slots'                               => array(),
-			'price_range'                                 => '',
-			'payment_accepted'                            => '',
-			'accepts_reservations'                        => false,
-			'social_links'                                => array(),
-			'content_model'                               => 'WebPage',
-			'opening_hours_raw'                           => '',
-			'opening_hours'                               => array(),
-			'content_type_settings'                       => array(),
+			'has_map_enabled'                    => false,
+			'skip_local_business_if_incomplete'  => false,
+			'holiday_enabled'                    => true,
+			'holiday_mode'                       => 'custom',
+			'holiday_slots'                      => array(),
+			'price_range'                        => '',
+			'payment_accepted'                   => '',
+			'accepts_reservations'               => false,
+			'social_links'                       => array(),
+			'content_model'                      => 'WebPage',
+			'opening_hours_raw'                  => '',
+			'opening_hours'                      => array(),
+			'content_type_settings'              => array(),
 		);
 
 		$options = get_option( self::OPTION_NAME, array() );
@@ -987,19 +1016,19 @@ class AI_Search_Schema_Settings {
 			$merged['social_links'] = array();
 		}
 
-		if ( ! array_key_exists( 'ai_search_schema_priority', $merged ) ) {
-			$merged['ai_search_schema_priority'] = 'ais';
+		if ( ! array_key_exists( 'avc_ais_priority', $merged ) ) {
+			$merged['avc_ais_priority'] = 'ais';
 		}
 
-		if ( ! array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $merged ) ) {
-			$merged['ai_search_schema_breadcrumbs_schema_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
+		if ( ! array_key_exists( 'avc_ais_breadcrumbs_schema_enabled', $merged ) ) {
+			$merged['avc_ais_breadcrumbs_schema_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
 		}
 
-		if ( ! array_key_exists( 'ai_search_schema_breadcrumbs_html_enabled', $merged ) ) {
-			$merged['ai_search_schema_breadcrumbs_html_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
+		if ( ! array_key_exists( 'avc_ais_breadcrumbs_html_enabled', $merged ) ) {
+			$merged['avc_ais_breadcrumbs_html_enabled'] = ! empty( $merged['enable_breadcrumbs'] );
 		}
 
-		$merged['enable_breadcrumbs'] = (bool) $merged['ai_search_schema_breadcrumbs_schema_enabled'];
+		$merged['enable_breadcrumbs'] = (bool) $merged['avc_ais_breadcrumbs_schema_enabled'];
 		if ( ! is_array( $merged['address'] ) ) {
 			$merged['address'] = $defaults['address'];
 		}
@@ -1694,7 +1723,7 @@ class AI_Search_Schema_Settings {
 	 * @return array
 	 */
 	public function get_diagnostics_report( array $options ) {
-		$cache_key = 'ai_search_schema_diag_' . md5( wp_json_encode( $options ) );
+		$cache_key = 'avc_ais_diag_' . md5( wp_json_encode( $options ) );
 		$cached    = get_transient( $cache_key );
 		if ( $cached && is_array( $cached ) ) {
 			return $cached;
@@ -2242,7 +2271,7 @@ class AI_Search_Schema_Settings {
 						? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
 						: 'anon'
 				);
-		$cache_key      = 'ai_search_schema_geocode_' . md5( $identifier );
+		$cache_key      = 'avc_ais_geocode_' . md5( $identifier );
 		$now            = time();
 		$last           = (int) get_transient( $cache_key );
 
@@ -2263,7 +2292,7 @@ class AI_Search_Schema_Settings {
 	 * @return void
 	 */
 	private function respond_json( bool $success, array $data, int $status = 200 ): void {
-		if ( has_action( 'ai_search_schema_json_responder' ) ) {
+		if ( has_action( 'avc_ais_json_responder' ) ) {
 			/**
 			 * テスト等で wp_send_json_* を差し替えたい場合に使用する。
 			 *
@@ -2271,7 +2300,7 @@ class AI_Search_Schema_Settings {
 			 * @param array $data    レスポンスデータ。
 			 * @param int   $status  ステータスコード。
 			 */
-			do_action( 'ai_search_schema_json_responder', $success, $data, $status );
+			do_action( 'avc_ais_json_responder', $success, $data, $status );
 			return;
 		}
 

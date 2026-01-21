@@ -13,7 +13,7 @@ class AI_Search_Schema_Type_FAQPage {
 			return array();
 		}
 
-		$meta = get_post_meta( $context['post_id'], '_ai_search_schema_meta', true );
+		$meta = get_post_meta( $context['post_id'], '_avc_ais_meta', true );
 		if ( ! is_array( $meta ) ) {
 			return array();
 		}
@@ -78,8 +78,8 @@ class AI_Search_Schema_Type_FAQPage {
 
 	private static function get_context_override( array $options, array $context ) {
 		$global_breadcrumbs = true;
-		if ( array_key_exists( 'ai_search_schema_breadcrumbs_schema_enabled', $options ) ) {
-			$global_breadcrumbs = (bool) $options['ai_search_schema_breadcrumbs_schema_enabled'];
+		if ( array_key_exists( 'avc_ais_breadcrumbs_schema_enabled', $options ) ) {
+			$global_breadcrumbs = (bool) $options['avc_ais_breadcrumbs_schema_enabled'];
 		} elseif ( array_key_exists( 'enable_breadcrumbs', $options ) ) {
 			$global_breadcrumbs = (bool) $options['enable_breadcrumbs'];
 		}
@@ -88,7 +88,7 @@ class AI_Search_Schema_Type_FAQPage {
 			'schema_type'         => 'auto',
 			'breadcrumbs_enabled' => $global_breadcrumbs,
 			'faq_enabled'         => true,
-			'schema_priority'     => $options['ai_search_schema_priority'] ?? 'avc',
+			'schema_priority'     => $options['avc_ais_priority'] ?? 'avc',
 		);
 
 		$settings = isset( $options['content_type_settings'] ) && is_array( $options['content_type_settings'] )
