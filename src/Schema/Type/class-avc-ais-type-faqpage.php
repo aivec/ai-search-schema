@@ -2,7 +2,7 @@
 /**
  * FAQPage スキーマ生成クラス。
  */
-class AI_Search_Schema_Type_FAQPage {
+class AVC_AIS_Type_FAQPage {
 	public static function build( array $context, $language_value, $webpage_id, array $options ) {
 		$override = self::get_context_override( $options, $context );
 		if ( empty( $override['faq_enabled'] ) ) {
@@ -29,7 +29,7 @@ class AI_Search_Schema_Type_FAQPage {
 			return array();
 		}
 
-		$extractor = new AI_Search_Schema_Faq_Extractor();
+		$extractor = new AVC_AIS_Faq_Extractor();
 		$faqs      = $extractor->extract_faqs( $question_class, $answer_class );
 		if ( empty( $faqs ) ) {
 			return array();

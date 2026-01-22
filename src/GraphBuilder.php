@@ -6,9 +6,9 @@ namespace Aivec\AiSearchSchema;
 /**
  * レガシー GraphBuilder を PSR-4 名前空間から利用するためのラッパー。
  */
-if ( ! class_exists( '\AI_Search_Schema_GraphBuilder' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-graphbuilder.php';
+if ( ! class_exists( '\AVC_AIS_GraphBuilder' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/class-avc-ais-graphbuilder.php';
 }
 
-class GraphBuilder extends \AI_Search_Schema_GraphBuilder {
+class GraphBuilder extends \AVC_AIS_GraphBuilder {
 }

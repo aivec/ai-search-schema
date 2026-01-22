@@ -35,7 +35,7 @@ class WizardTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 
 		// テスト用ユーザーを作成してログイン状態にする.
 		$this->user_id = self::factory()->user->create( array( 'role' => 'administrator' ) );

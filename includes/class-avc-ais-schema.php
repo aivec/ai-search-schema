@@ -1,6 +1,6 @@
 <?php
 /**
- * AI_Search_Schema クラス
+ * AVC_AIS_Schema クラス
  *
  * JSON-LD スキーマを生成するクラスで、共通 @graph やページ別のスキーマを出力します。
  *
@@ -11,16 +11,16 @@
  * 目印付きスクリプト（class="ai-search-schema-graph" / data-ai-search-schema="1"）だけ残すポリシー。
  *
  */
-class AI_Search_Schema {
+class AVC_AIS_Schema {
 	/**
-	 * @var AI_Search_Schema|null
+	 * @var AVC_AIS_Schema|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * 初期化
 	 *
-	 * @return AI_Search_Schema
+	 * @return AVC_AIS_Schema
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
@@ -45,7 +45,7 @@ class AI_Search_Schema {
 	 * @return array
 	 */
 	private function get_normalized_options() {
-		return AI_Search_Schema_Settings::init()->get_options();
+		return AVC_AIS_Settings::init()->get_options();
 	}
 
 	/**
@@ -137,7 +137,7 @@ class AI_Search_Schema {
 			return;
 		}
 
-		$validator  = new AI_Search_Schema_Validator();
+		$validator  = new AVC_AIS_Validator();
 		$validation = $validator->validate( $schema_data );
 
 		if ( $this->local_business_suppressed ) {
@@ -158,7 +158,7 @@ class AI_Search_Schema {
 			$this->clear_validation_errors();
 			$clean_schema = $this->remove_null_values( $validation['schema'] );
 			if ( ! empty( $clean_schema ) ) {
-				$output = new AI_Search_Schema_Output( $validator );
+				$output = new AVC_AIS_Output( $validator );
 				$output->print( $clean_schema, true );
 			}
 			return;
@@ -174,8 +174,8 @@ class AI_Search_Schema {
 	 */
 	private function generate_schema() {
 		$options  = $this->get_normalized_options();
-		$resolver = new AI_Search_Schema_ContentResolver();
-		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
+		$resolver = new AVC_AIS_ContentResolver();
+		$builder  = new AVC_AIS_GraphBuilder( $resolver );
 
 		$schema                              = $builder->build( $options );
 		$this->local_business_suppressed     = $builder->was_local_business_suppressed();
@@ -747,7 +747,7 @@ class AI_Search_Schema {
 
 					$prefecture_iso = ! empty( $address['prefecture_iso'] )
 							? $address['prefecture_iso']
-							: AI_Search_Schema_Prefectures::get_iso_code( $address['prefecture'] );
+							: AVC_AIS_Prefectures::get_iso_code( $address['prefecture'] );
 
 			$areas = array(
 				array(
@@ -1536,7 +1536,7 @@ class AI_Search_Schema {
 			return array();
 		}
 
-		$extractor = new AI_Search_Schema_Faq_Extractor();
+		$extractor = new AVC_AIS_Faq_Extractor();
 		$faqs      = $extractor->extract_faqs( $question_class, $answer_class );
 		if ( empty( $faqs ) ) {
 			return array();
@@ -2515,4 +2515,4 @@ class AI_Search_Schema {
 	}
 }
 
-add_action( 'plugins_loaded', array( 'AI_Search_Schema', 'bootstrap_competing_schema_control' ), 20 );
+add_action( 'plugins_loaded', array( 'AVC_AIS_Schema', 'bootstrap_competing_schema_control' ), 20 );

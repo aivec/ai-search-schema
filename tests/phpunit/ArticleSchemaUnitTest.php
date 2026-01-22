@@ -5,7 +5,7 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_ArticleSchema_Unit_Test extends WP_UnitTestCase {
+class AVC_AIS_ArticleSchema_Unit_Test extends WP_UnitTestCase {
 	private int $post_id;
 	private int $author_id;
 
@@ -66,8 +66,8 @@ class AI_Search_Schema_ArticleSchema_Unit_Test extends WP_UnitTestCase {
 	}
 
 	public function test_article_schema_fields_present() {
-		$resolver = new AI_Search_Schema_ContentResolver();
-		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
+		$resolver = new AVC_AIS_ContentResolver();
+		$builder  = new AVC_AIS_GraphBuilder( $resolver );
 		$schema   = $builder->build( get_option( 'avc_ais_options' ) );
 
 		$article = $this->find_by_type( $schema['@graph'], 'Article' );

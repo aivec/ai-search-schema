@@ -10,7 +10,7 @@
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * AI_Search_Schema_Breadcrumbs クラスのテスト。
+ * AVC_AIS_Breadcrumbs クラスのテスト。
  */
 class BreadcrumbsTest extends WP_UnitTestCase {
 
@@ -54,7 +54,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 
 		// テスト用投稿を作成.
 		$this->post_id = self::factory()->post->create(
@@ -101,7 +101,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		);
 
 		// シングルトンインスタンスをリセット.
-		$reflection = new ReflectionClass( 'AI_Search_Schema_Breadcrumbs' );
+		$reflection = new ReflectionClass( 'AVC_AIS_Breadcrumbs' );
 		$property   = $reflection->getProperty( 'instance' );
 		$property->setAccessible( true );
 		$property->setValue( null, null );
@@ -130,11 +130,11 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * シングルトン初期化をテスト。
 	 */
 	public function test_init_returns_singleton() {
-		$instance1 = AI_Search_Schema_Breadcrumbs::init();
-		$instance2 = AI_Search_Schema_Breadcrumbs::init();
+		$instance1 = AVC_AIS_Breadcrumbs::init();
+		$instance2 = AVC_AIS_Breadcrumbs::init();
 
 		$this->assertSame( $instance1, $instance2 );
-		$this->assertInstanceOf( AI_Search_Schema_Breadcrumbs::class, $instance1 );
+		$this->assertInstanceOf( AVC_AIS_Breadcrumbs::class, $instance1 );
 	}
 
 	// =========================================================================
@@ -145,7 +145,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * 投稿ページのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_single_post() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'    => 'post',
@@ -171,7 +171,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * 階層ページのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_hierarchical_page() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'    => 'page',
@@ -200,7 +200,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * カテゴリアーカイブのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_category_archive() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 		$term        = get_term( $this->category_id );
 
 		$context = array(
@@ -229,7 +229,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * 検索結果ページのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_search_page() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'  => 'search',
@@ -249,7 +249,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * 著者アーカイブのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_author_archive() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'  => 'author',
@@ -268,7 +268,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * トップページのパンくず生成をテスト（空配列）。
 	 */
 	public function test_get_items_for_front_page_returns_empty() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'  => 'front_page',
@@ -286,7 +286,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * キャッシュ機能をテスト。
 	 */
 	public function test_get_items_caches_result() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		// 最初の呼び出し（コンテキストなし）.
 		$context1 = array(
@@ -319,7 +319,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 			}
 		);
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'    => 'post',
@@ -356,7 +356,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 			}
 		);
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'    => 'post',
@@ -390,7 +390,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		// シングル投稿ページとしてセットアップ.
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -418,7 +418,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -431,7 +431,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * render_block の出力をテスト。
 	 */
 	public function test_render_block_outputs_div() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->render_block();
@@ -444,7 +444,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * close_block の出力をテスト。
 	 */
 	public function test_close_block_outputs_closing_div() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->close_block();
@@ -472,7 +472,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -494,7 +494,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -532,7 +532,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -571,7 +571,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();
@@ -594,7 +594,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		);
 		$tag    = get_term( $tag_id, 'post_tag' );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'  => 'tag',
@@ -614,7 +614,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 	 * ブログホームのパンくず生成をテスト。
 	 */
 	public function test_get_items_for_blog_home() {
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		$context = array(
 			'type'  => 'blog_home',
@@ -638,7 +638,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $this->post_id ) );
 
-		$breadcrumbs = new AI_Search_Schema_Breadcrumbs();
+		$breadcrumbs = new AVC_AIS_Breadcrumbs();
 
 		ob_start();
 		$breadcrumbs->output_breadcrumbs();

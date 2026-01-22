@@ -4,7 +4,7 @@
  *
  * このクラスは、指定されたクラス名から質問と回答を取得します。
  */
-class AI_Search_Schema_Faq_Extractor {
+class AVC_AIS_Faq_Extractor {
 
 	/**
 	 * FAQを抽出する

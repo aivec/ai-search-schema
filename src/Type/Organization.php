@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_Organization' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-organization.php';
+if ( ! class_exists( '\AVC_AIS_Type_Organization' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-organization.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_Organization` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_Organization` を PSR-4 で扱うためのラッパー。
  */
-class Organization extends \AI_Search_Schema_Type_Organization {
+class Organization extends \AVC_AIS_Type_Organization {
 }

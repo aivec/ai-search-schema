@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_LocalBusiness_Test extends WP_UnitTestCase {
+class AVC_AIS_LocalBusiness_Test extends WP_UnitTestCase {
     private int $page_id;
 
     protected function setUp(): void {
@@ -52,7 +52,7 @@ class AI_Search_Schema_LocalBusiness_Test extends WP_UnitTestCase {
             ]
         );
 
-        $ref = new ReflectionProperty(AI_Search_Schema::class, 'instance');
+        $ref = new ReflectionProperty(AVC_AIS_Schema::class, 'instance');
         $ref->setAccessible(true);
         $ref->setValue(null, null);
 
@@ -60,7 +60,7 @@ class AI_Search_Schema_LocalBusiness_Test extends WP_UnitTestCase {
     }
 
     public function test_local_business_contains_geo_coordinates() {
-        $schema = AI_Search_Schema::init();
+        $schema = AVC_AIS_Schema::init();
 
         ob_start();
         $schema->output_json_ld();

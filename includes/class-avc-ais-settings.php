@@ -1,24 +1,24 @@
 <?php
 /**
- * AI_Search_Schema_Settings クラス
+ * AVC_AIS_Settings クラス
  *
  * プラグインの一般設定を管理するクラスです。
  * 設定項目の保存や表示を行います。
  */
-class AI_Search_Schema_Settings {
+class AVC_AIS_Settings {
 	private const OPTION_NAME                = 'avc_ais_options';
 	private const OPTION_GMAPS_KEY           = 'avc_ais_gmaps_api_key';
 	private const GEOCODE_RATE_LIMIT_SECONDS = 10;
 
 	/**
-	 * @var AI_Search_Schema_Settings|null
+	 * @var AVC_AIS_Settings|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * 初期化
 	 *
-	 * @return AI_Search_Schema_Settings
+	 * @return AVC_AIS_Settings
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
@@ -160,7 +160,7 @@ class AI_Search_Schema_Settings {
 			array(
 				'socialOptions'             => $this->get_social_network_choices(),
 				'languageOptions'           => $this->get_language_choices(),
-				/* translators: %s is the language label. */
+				/* translators: %s: The language label shown as a tag. */
 				'i18nLanguageRemove'        => __( 'Remove "%s"', 'ai-search-schema' ),
 				'ajaxUrl'                   => admin_url( 'admin-ajax.php' ),
 				'geocodeNonce'              => wp_create_nonce( 'avc_ais_geocode' ),
@@ -300,8 +300,8 @@ class AI_Search_Schema_Settings {
 			);
 		}
 
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		$llms_txt = AVC_AIS_Llms_Txt::init();
 		$content  = $llms_txt->reset_content();
 
 		$this->respond_json(
@@ -331,8 +331,8 @@ class AI_Search_Schema_Settings {
 
 		$content = isset( $_POST['content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['content'] ) ) : '';
 
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		$llms_txt = AVC_AIS_Llms_Txt::init();
 
 		if ( ! empty( $content ) ) {
 			$llms_txt->save_content( $content );
@@ -607,7 +607,7 @@ class AI_Search_Schema_Settings {
 		$language_choices        = $this->get_language_choices();
 		$country_choices         = $this->get_country_choices();
 		$weekday_choices         = $this->get_weekday_choices();
-		$prefecture_choices      = AI_Search_Schema_Prefectures::get_prefecture_choices();
+		$prefecture_choices      = AVC_AIS_Prefectures::get_prefecture_choices();
 		$gmaps_api_key_set       = ! empty( $this->get_google_maps_api_key() );
 		$content_type_settings   = $options['content_type_settings'] ?? array();
 		$content_type_post_types = $this->get_configurable_post_types();
@@ -730,7 +730,7 @@ class AI_Search_Schema_Settings {
 		$output['local_business_label'] = sanitize_text_field( $input['local_business_label'] ?? '' );
 
 		$address             = $input['address'] ?? array();
-		$prefecture_choices  = AI_Search_Schema_Prefectures::get_prefecture_choices();
+		$prefecture_choices  = AVC_AIS_Prefectures::get_prefecture_choices();
 		$prefecture          = sanitize_text_field( $address['prefecture'] ?? '' );
 		$legacy_region_value = sanitize_text_field( $address['region'] ?? '' );
 		if ( '' === $prefecture && isset( $prefecture_choices[ $legacy_region_value ] ) ) {
@@ -739,7 +739,7 @@ class AI_Search_Schema_Settings {
 		if ( '' !== $prefecture && ! isset( $prefecture_choices[ $prefecture ] ) ) {
 			$prefecture = '';
 		}
-		$prefecture_iso = AI_Search_Schema_Prefectures::get_iso_code( $prefecture );
+		$prefecture_iso = AVC_AIS_Prefectures::get_iso_code( $prefecture );
 		$country        = strtoupper( sanitize_text_field( $address['country'] ?? 'JP' ) );
 		if ( '' === $country ) {
 			$country = 'JP';
@@ -898,8 +898,8 @@ class AI_Search_Schema_Settings {
 			? sanitize_textarea_field( $input['llms_txt_content'] )
 			: '';
 
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		$llms_txt = AI_Search_Schema_Llms_Txt::init();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		$llms_txt = AVC_AIS_Llms_Txt::init();
 		$llms_txt->set_enabled( $llms_txt_enabled );
 		if ( ! empty( $llms_txt_content ) ) {
 			$llms_txt->save_content( $llms_txt_content );
@@ -1086,7 +1086,7 @@ class AI_Search_Schema_Settings {
 			! empty( $merged['address']['region'] )
 			&& empty( $merged['address']['prefecture'] )
 		) {
-			$choices = AI_Search_Schema_Prefectures::get_prefecture_choices();
+			$choices = AVC_AIS_Prefectures::get_prefecture_choices();
 			if ( isset( $choices[ $merged['address']['region'] ] ) ) {
 				$merged['address']['prefecture'] = $merged['address']['region'];
 			}
@@ -1122,7 +1122,7 @@ class AI_Search_Schema_Settings {
 				! empty( $merged['address']['prefecture'] )
 				&& empty( $merged['address']['prefecture_iso'] )
 			) {
-			$merged['address']['prefecture_iso'] = AI_Search_Schema_Prefectures::get_iso_code(
+			$merged['address']['prefecture_iso'] = AVC_AIS_Prefectures::get_iso_code(
 				$merged['address']['prefecture']
 			);
 		}
@@ -2059,8 +2059,8 @@ class AI_Search_Schema_Settings {
 				'type'  => 'page',
 			);
 
-		$breadcrumbs = class_exists( 'AI_Search_Schema_Breadcrumbs' )
-			? AI_Search_Schema_Breadcrumbs::init()->get_items( $context )
+		$breadcrumbs = class_exists( 'AVC_AIS_Breadcrumbs' )
+			? AVC_AIS_Breadcrumbs::init()->get_items( $context )
 			: array();
 
 		$items[] = $this->make_item(

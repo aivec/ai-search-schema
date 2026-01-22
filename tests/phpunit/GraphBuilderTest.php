@@ -5,7 +5,7 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_GraphBuilder_Test extends WP_UnitTestCase {
+class AVC_AIS_GraphBuilder_Test extends WP_UnitTestCase {
 	public function test_build_includes_basic_nodes() {
 		$options = array(
 			'company_name' => 'Graph Co',
@@ -14,8 +14,8 @@ class AI_Search_Schema_GraphBuilder_Test extends WP_UnitTestCase {
 			'entity_type'  => 'Organization',
 		);
 
-		$resolver = new AI_Search_Schema_ContentResolver();
-		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
+		$resolver = new AVC_AIS_ContentResolver();
+		$builder  = new AVC_AIS_GraphBuilder( $resolver );
 		$schema   = $builder->build( $options );
 
 		$this->assertArrayHasKey( '@graph', $schema );
@@ -39,8 +39,8 @@ class AI_Search_Schema_GraphBuilder_Test extends WP_UnitTestCase {
 			),
 		);
 
-		$resolver = new AI_Search_Schema_ContentResolver();
-		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
+		$resolver = new AVC_AIS_ContentResolver();
+		$builder  = new AVC_AIS_GraphBuilder( $resolver );
 		$schema   = $builder->build( $options );
 
 		$this->assertNotEmpty( $this->find_by_type( $schema['@graph'], 'LocalBusiness' ) );

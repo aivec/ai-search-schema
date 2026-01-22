@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_FAQPage' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-faqpage.php';
+if ( ! class_exists( '\AVC_AIS_Type_FAQPage' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-faqpage.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_FAQPage` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_FAQPage` を PSR-4 で扱うためのラッパー。
  */
-class FaqPage extends \AI_Search_Schema_Type_FAQPage {
+class FaqPage extends \AVC_AIS_Type_FAQPage {
 }

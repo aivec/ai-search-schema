@@ -2,7 +2,7 @@
 /**
  * WebPage ノードを生成するクラス。
  */
-class AI_Search_Schema_Type_WebPage {
+class AVC_AIS_Type_WebPage {
 	public static function build( array $context, array $ids, $language, array $types, array $primary_image ) {
 		if ( empty( $context['url'] ) ) {
 			return array();

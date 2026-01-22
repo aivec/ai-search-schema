@@ -2,7 +2,7 @@
 /**
  * ItemList スキーマ生成クラス。
  */
-class AI_Search_Schema_Type_ItemList {
+class AVC_AIS_Type_ItemList {
 	public static function build( $id, array $items ) {
 		$list_items = array();
 		foreach ( $items as $item ) {

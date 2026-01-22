@@ -2,7 +2,7 @@
 /**
  * LocalBusiness ノードを生成するクラス。
  */
-class AI_Search_Schema_Type_LocalBusiness {
+class AVC_AIS_Type_LocalBusiness {
 	/**
 	 * LocalBusiness ノードを構築
 	 *

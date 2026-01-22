@@ -31,7 +31,7 @@ class QAPageSchemaTest extends WP_UnitTestCase {
 			'title'   => 'How do I configure the plugin?',
 		];
 
-		$schema = AI_Search_Schema_Type_QAPage::build(
+		$schema = AVC_AIS_Type_QAPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage'
@@ -69,7 +69,7 @@ class QAPageSchemaTest extends WP_UnitTestCase {
 			'title'   => 'What is AEO?',
 		];
 
-		$schema = AI_Search_Schema_Type_QAPage::build(
+		$schema = AVC_AIS_Type_QAPage::build(
 			$context,
 			'ja-JP',
 			'http://example.com/#webpage'
@@ -86,7 +86,7 @@ class QAPageSchemaTest extends WP_UnitTestCase {
 			'title' => 'Is this plugin free?',
 		];
 
-		$schema = AI_Search_Schema_Type_QAPage::build(
+		$schema = AVC_AIS_Type_QAPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage'
@@ -102,7 +102,7 @@ class QAPageSchemaTest extends WP_UnitTestCase {
 			'title'   => 'How do I configure the plugin?',
 		];
 
-		$schema = AI_Search_Schema_Type_QAPage::build(
+		$schema = AVC_AIS_Type_QAPage::build(
 			$context,
 			'',
 			'http://example.com/#webpage'
@@ -118,7 +118,7 @@ class QAPageSchemaTest extends WP_UnitTestCase {
 			'title'   => 'How do I configure the plugin?',
 		];
 
-		$schema = AI_Search_Schema_Type_QAPage::build(
+		$schema = AVC_AIS_Type_QAPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage'

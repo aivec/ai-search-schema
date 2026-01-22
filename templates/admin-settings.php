@@ -9,7 +9,7 @@
  * @var array $content_models
  * @var bool $gmaps_api_key_set
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -437,7 +437,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<p class="ais-field__description ais-field__description--inline"><?php esc_html_e( 'ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO.', 'ai-search-schema' ); ?></p>
 						<label class="ais-toggle" for="ais-breadcrumbs-html">
 							<input id="ais-breadcrumbs-html" type="checkbox" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_breadcrumbs_html_enabled]" value="1" <?php checked( true, ! empty( $options['avc_ais_breadcrumbs_html_enabled'] ) ); ?> />
-							<span><?php esc_html_e( 'Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()', 'ai-search-schema' ); ?></span>
+							<span><?php esc_html_e( 'Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()', 'ai-search-schema' ); ?></span>
 						</label>
 						<p class="ais-field__description"><?php esc_html_e( 'ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme already has breadcrumbs.', 'ai-search-schema' ); ?></p>
 					</div>
@@ -975,8 +975,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<div class="ais-card__body">
 					<?php
-					require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-					$llms_txt_instance = AI_Search_Schema_Llms_Txt::init();
+					require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+					$llms_txt_instance = AVC_AIS_Llms_Txt::init();
 					$llms_txt_enabled  = $llms_txt_instance->is_enabled();
 					$llms_txt_content  = $llms_txt_instance->get_content();
 					$llms_txt_url      = home_url( '/llms.txt' );
@@ -1021,8 +1021,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 				<div class="ais-card__body">
 					<?php
-					require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-license.php';
-					$license_manager = AI_Search_Schema_License::init();
+					require_once AVC_AIS_DIR . 'includes/class-avc-ais-license.php';
+					$license_manager = AVC_AIS_License::init();
 					$license_key     = $license_manager->get_license_key();
 					$license_status  = $license_manager->get_license_status();
 					$status_label    = $license_manager->get_status_label();

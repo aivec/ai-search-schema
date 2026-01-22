@@ -28,7 +28,7 @@ class WizardImporterTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 		$this->importer          = new Wizard_Importer();
 	}
 

@@ -1,20 +1,20 @@
 <?php
 /* phpcs:disable WordPress.Files.LineLength.TooLong */
 /**
- * AI_Search_Schema_MetaBox クラス
+ * AVC_AIS_MetaBox クラス
  *
  * 投稿や固定ページにメタボックスを追加し、AEOスキーマに関連する設定を行うクラスです。
  */
-class AI_Search_Schema_MetaBox {
+class AVC_AIS_MetaBox {
 	/**
-	 * @var AI_Search_Schema_MetaBox|null
+	 * @var AVC_AIS_MetaBox|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * 初期化
 	 *
-	 * @return AI_Search_Schema_MetaBox
+	 * @return AVC_AIS_MetaBox
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {

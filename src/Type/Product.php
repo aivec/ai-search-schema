@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_Product' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-product.php';
+if ( ! class_exists( '\AVC_AIS_Type_Product' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-product.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_Product` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_Product` を PSR-4 で扱うためのラッパー。
  */
-class Product extends \AI_Search_Schema_Type_Product {
+class Product extends \AVC_AIS_Type_Product {
 }

@@ -13,16 +13,16 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
         wp_set_current_user($this->admin_id);
         $this->nonce = wp_create_nonce('avc_ais_meta_nonce');
 
-        AI_Search_Schema_TEST_Env::$current_post_id = 0;
-        AI_Search_Schema_TEST_Env::$posts          = [];
-        AI_Search_Schema_TEST_Env::$post_meta      = [];
-        AI_Search_Schema_TEST_Env::$options        = [];
-        AI_Search_Schema_TEST_Env::$thumbnails     = [];
-        AI_Search_Schema_TEST_Env::$attachments    = [];
-        AI_Search_Schema_TEST_Env::$transients     = [];
-        AI_Search_Schema_TEST_Env::$autosaves      = [];
-        AI_Search_Schema_TEST_Env::$revisions      = [];
-        AI_Search_Schema_TEST_Env::$capabilities   = [
+        AVC_AIS_TEST_Env::$current_post_id = 0;
+        AVC_AIS_TEST_Env::$posts          = [];
+        AVC_AIS_TEST_Env::$post_meta      = [];
+        AVC_AIS_TEST_Env::$options        = [];
+        AVC_AIS_TEST_Env::$thumbnails     = [];
+        AVC_AIS_TEST_Env::$attachments    = [];
+        AVC_AIS_TEST_Env::$transients     = [];
+        AVC_AIS_TEST_Env::$autosaves      = [];
+        AVC_AIS_TEST_Env::$revisions      = [];
+        AVC_AIS_TEST_Env::$capabilities   = [
             'manage_options' => true,
             'edit_post'      => true,
         ];
@@ -66,7 +66,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
             ],
         ];
 
-        $metabox = new AI_Search_Schema_MetaBox();
+        $metabox = new AVC_AIS_MetaBox();
         $metabox->save_meta_box($autosave_id);
 
         $meta = get_post_meta($post_id, '_avc_ais_meta', true);
@@ -98,7 +98,7 @@ class MetaBoxSaveTest extends WP_UnitTestCase {
             ],
         ];
 
-        $metabox = new AI_Search_Schema_MetaBox();
+        $metabox = new AVC_AIS_MetaBox();
         $metabox->save_meta_box($post_id);
 
         $meta = get_post_meta($post_id, '_avc_ais_meta', true);

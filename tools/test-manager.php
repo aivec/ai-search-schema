@@ -4,7 +4,7 @@
  *
  * WordPress管理画面に統合されたテスト実行・スクリーンショット管理ツール
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  * @subpackage Tools
  */
 
@@ -153,7 +153,7 @@ if ( 'upload_screenshot' === $post_action ) {
 // AJAXハンドラー：自動判定
 if ( 'auto_judge' === $post_action ) {
 	// Diagnostic Evaluator をロード
-	$evaluator_file = dirname( __DIR__ ) . '/includes/class-ai-search-schema-diagnostic-evaluator.php';
+	$evaluator_file = dirname( __DIR__ ) . '/includes/class-avc-ais-diagnostic-evaluator.php';
 	if ( file_exists( $evaluator_file ) ) {
 		require_once $evaluator_file;
 	}
@@ -182,7 +182,7 @@ if ( 'auto_judge' === $post_action ) {
 	}
 
 	// Evaluatorが利用可能か確認
-	if ( ! class_exists( 'AI_Search_Schema_Diagnostic_Evaluator' ) ) {
+	if ( ! class_exists( 'AVC_AIS_Diagnostic_Evaluator' ) ) {
 		wp_send_json_error(
 			array( 'message' => __( 'Diagnostic evaluator not available.', 'ai-search-schema' ) )
 		);
@@ -202,7 +202,7 @@ if ( 'auto_judge' === $post_action ) {
 	);
 
 	// 判定実行
-	$result = AI_Search_Schema_Diagnostic_Evaluator::evaluate( $eval_spec, $json_ld_raw );
+	$result = AVC_AIS_Diagnostic_Evaluator::evaluate( $eval_spec, $json_ld_raw );
 
 	// ステータスをレガシー形式にマップ（UI互換性）
 	$status_map = array(

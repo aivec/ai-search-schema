@@ -43,7 +43,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		);
 
 		// シングルトンをリセット.
-		$ref = new ReflectionProperty( AI_Search_Schema::class, 'instance' );
+		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'instance' );
 		$ref->setAccessible( true );
 		$ref->setValue( null, null );
 	}
@@ -95,7 +95,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		);
 
 		$this->go_to( get_permalink( $this->page_id ) );
-		$schema = AI_Search_Schema::init();
+		$schema = AVC_AIS_Schema::init();
 
 		ob_start();
 		$schema->output_json_ld();
@@ -158,7 +158,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		);
 
 		$this->go_to( get_permalink( $this->page_id ) );
-		$schema = AI_Search_Schema::init();
+		$schema = AVC_AIS_Schema::init();
 
 		ob_start();
 		$schema->output_json_ld();
@@ -199,7 +199,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		);
 
 		$this->go_to( get_permalink( $this->page_id ) );
-		$schema = AI_Search_Schema::init();
+		$schema = AVC_AIS_Schema::init();
 
 		ob_start();
 		$schema->output_json_ld();
@@ -250,7 +250,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 		);
 
 		$this->go_to( get_permalink( $this->page_id ) );
-		$schema = AI_Search_Schema::init();
+		$schema = AVC_AIS_Schema::init();
 
 		ob_start();
 		$schema->output_json_ld();

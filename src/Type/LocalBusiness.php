@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_LocalBusiness' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-localbusiness.php';
+if ( ! class_exists( '\AVC_AIS_Type_LocalBusiness' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-localbusiness.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_LocalBusiness` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_LocalBusiness` を PSR-4 で扱うためのラッパー。
  */
-class LocalBusiness extends \AI_Search_Schema_Type_LocalBusiness {
+class LocalBusiness extends \AVC_AIS_Type_LocalBusiness {
 }

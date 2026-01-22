@@ -5,9 +5,9 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_Validator_Test extends WP_UnitTestCase {
+class AVC_AIS_Validator_Test extends WP_UnitTestCase {
     public function test_article_validation_requires_fields() {
-        $validator = new AI_Search_Schema_Validator();
+        $validator = new AVC_AIS_Validator();
         $result = $validator->validate([
             '@type' => 'Article',
         ]);
@@ -19,7 +19,7 @@ class AI_Search_Schema_Validator_Test extends WP_UnitTestCase {
     }
 
     public function test_local_business_requires_address_fields() {
-        $validator = new AI_Search_Schema_Validator();
+        $validator = new AVC_AIS_Validator();
         $result = $validator->validate([
             '@type' => 'LocalBusiness',
         ]);
@@ -30,7 +30,7 @@ class AI_Search_Schema_Validator_Test extends WP_UnitTestCase {
     }
 
     public function test_local_business_passes_with_required_fields() {
-        $validator = new AI_Search_Schema_Validator();
+        $validator = new AVC_AIS_Validator();
         $result = $validator->validate([
             '@type' => 'LocalBusiness',
             'name' => 'Example Store',
@@ -49,7 +49,7 @@ class AI_Search_Schema_Validator_Test extends WP_UnitTestCase {
     }
 
     public function test_graph_validation_aggregates_errors() {
-        $validator = new AI_Search_Schema_Validator();
+        $validator = new AVC_AIS_Validator();
         $result = $validator->validate([
             '@context' => 'https://schema.org',
             '@graph' => [

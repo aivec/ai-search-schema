@@ -9,7 +9,7 @@ if (!defined('MINUTE_IN_SECONDS')) {
     define('MINUTE_IN_SECONDS', 60);
 }
 
-class AI_Search_Schema_TEST_Env {
+class AVC_AIS_TEST_Env {
     public static $current_post_id = 0;
     public static $posts = [];
     public static $post_meta = [];
@@ -170,13 +170,13 @@ if (!function_exists('esc_url_raw')) {
 
 if (!function_exists('get_option')) {
     function get_option($name, $default = false) {
-        return AI_Search_Schema_TEST_Env::$options[$name] ?? $default;
+        return AVC_AIS_TEST_Env::$options[$name] ?? $default;
     }
 }
 
 if (!function_exists('get_post_meta')) {
     function get_post_meta($post_id, $key = '', $single = false) {
-        $value = AI_Search_Schema_TEST_Env::$post_meta[$post_id][$key] ?? ($single ? '' : []);
+        $value = AVC_AIS_TEST_Env::$post_meta[$post_id][$key] ?? ($single ? '' : []);
         if ($single) {
             return $value;
         }
@@ -186,39 +186,39 @@ if (!function_exists('get_post_meta')) {
 
 if (!function_exists('update_post_meta')) {
     function update_post_meta($post_id, $key, $value) {
-        AI_Search_Schema_TEST_Env::$post_meta[$post_id][$key] = $value;
+        AVC_AIS_TEST_Env::$post_meta[$post_id][$key] = $value;
         return true;
     }
 }
 
 if (!function_exists('get_the_ID')) {
     function get_the_ID() {
-        return AI_Search_Schema_TEST_Env::$current_post_id;
+        return AVC_AIS_TEST_Env::$current_post_id;
     }
 }
 
 if (!function_exists('get_queried_object_id')) {
     function get_queried_object_id() {
-        return AI_Search_Schema_TEST_Env::$current_post_id ?: 0;
+        return AVC_AIS_TEST_Env::$current_post_id ?: 0;
     }
 }
 
 if (!function_exists('get_queried_object')) {
     function get_queried_object() {
-        return AI_Search_Schema_TEST_Env::$queried_object;
+        return AVC_AIS_TEST_Env::$queried_object;
     }
 }
 
 if (!function_exists('get_post')) {
     function get_post($post_id) {
-        return AI_Search_Schema_TEST_Env::$posts[$post_id] ?? null;
+        return AVC_AIS_TEST_Env::$posts[$post_id] ?? null;
     }
 }
 
 if (!function_exists('get_post_type')) {
     function get_post_type($post_id = 0) {
-        $post_id = $post_id ?: AI_Search_Schema_TEST_Env::$current_post_id;
-        $post = AI_Search_Schema_TEST_Env::$posts[$post_id] ?? null;
+        $post_id = $post_id ?: AVC_AIS_TEST_Env::$current_post_id;
+        $post = AVC_AIS_TEST_Env::$posts[$post_id] ?? null;
         return $post->post_type ?? 'post';
     }
 }
@@ -231,8 +231,8 @@ if (!function_exists('get_post_ancestors')) {
 
 if (!function_exists('get_the_title')) {
     function get_the_title($post_id = 0) {
-        $post_id = $post_id ?: AI_Search_Schema_TEST_Env::$current_post_id;
-        return AI_Search_Schema_TEST_Env::$posts[$post_id]->post_title ?? '';
+        $post_id = $post_id ?: AVC_AIS_TEST_Env::$current_post_id;
+        return AVC_AIS_TEST_Env::$posts[$post_id]->post_title ?? '';
     }
 }
 
@@ -278,37 +278,37 @@ if (!function_exists('get_the_modified_date')) {
 
 if (!function_exists('has_post_thumbnail')) {
     function has_post_thumbnail($post_id = 0) {
-        return isset(AI_Search_Schema_TEST_Env::$thumbnails[$post_id]);
+        return isset(AVC_AIS_TEST_Env::$thumbnails[$post_id]);
     }
 }
 
 if (!function_exists('get_post_thumbnail_id')) {
     function get_post_thumbnail_id($post_id) {
-        return AI_Search_Schema_TEST_Env::$thumbnails[$post_id]['id'] ?? null;
+        return AVC_AIS_TEST_Env::$thumbnails[$post_id]['id'] ?? null;
     }
 }
 
 if (!function_exists('wp_get_attachment_image_src')) {
     function wp_get_attachment_image_src($attachment_id, $size = 'full') {
-        if (!isset(AI_Search_Schema_TEST_Env::$attachments[$attachment_id])) {
+        if (!isset(AVC_AIS_TEST_Env::$attachments[$attachment_id])) {
             return false;
         }
 
-        $data = AI_Search_Schema_TEST_Env::$attachments[$attachment_id];
+        $data = AVC_AIS_TEST_Env::$attachments[$attachment_id];
         return [$data['url'], $data['width'], $data['height'], true];
     }
 }
 
 if (!function_exists('wp_get_attachment_url')) {
     function wp_get_attachment_url($attachment_id = 0) {
-        return AI_Search_Schema_TEST_Env::$attachments[$attachment_id]['url'] ?? '';
+        return AVC_AIS_TEST_Env::$attachments[$attachment_id]['url'] ?? '';
     }
 }
 
 if (!function_exists('get_the_excerpt')) {
     function get_the_excerpt($post_id = 0) {
-        $post_id = $post_id ?: AI_Search_Schema_TEST_Env::$current_post_id;
-        return AI_Search_Schema_TEST_Env::$posts[$post_id]->post_excerpt ?? '';
+        $post_id = $post_id ?: AVC_AIS_TEST_Env::$current_post_id;
+        return AVC_AIS_TEST_Env::$posts[$post_id]->post_excerpt ?? '';
     }
 }
 
@@ -357,7 +357,7 @@ if (!function_exists('get_bloginfo')) {
 
 if (!function_exists('get_permalink')) {
     function get_permalink($post_id = 0) {
-        $post_id = $post_id ?: AI_Search_Schema_TEST_Env::$current_post_id;
+        $post_id = $post_id ?: AVC_AIS_TEST_Env::$current_post_id;
         return 'http://example.com/post/' . $post_id;
     }
 }
@@ -413,8 +413,8 @@ if (!function_exists('is_taxonomy_hierarchical')) {
 
 if (!function_exists('wp_remote_get')) {
     function wp_remote_get($url, $args = array()) {
-        if (isset(AI_Search_Schema_TEST_Env::$http_handler) && is_callable(AI_Search_Schema_TEST_Env::$http_handler)) {
-            return call_user_func(AI_Search_Schema_TEST_Env::$http_handler, $url, $args);
+        if (isset(AVC_AIS_TEST_Env::$http_handler) && is_callable(AVC_AIS_TEST_Env::$http_handler)) {
+            return call_user_func(AVC_AIS_TEST_Env::$http_handler, $url, $args);
         }
         return array(
             'response' => array('code' => 200),
@@ -443,7 +443,7 @@ if (!function_exists('get_locale')) {
 
 if (!function_exists('set_transient')) {
     function set_transient($key, $value, $expiration) {
-        AI_Search_Schema_TEST_Env::$transients[$key] = array(
+        AVC_AIS_TEST_Env::$transients[$key] = array(
             'value' => $value,
             'expires' => time() + (int) $expiration,
         );
@@ -453,12 +453,12 @@ if (!function_exists('set_transient')) {
 
 if (!function_exists('get_transient')) {
     function get_transient($key) {
-        if (!isset(AI_Search_Schema_TEST_Env::$transients[$key])) {
+        if (!isset(AVC_AIS_TEST_Env::$transients[$key])) {
             return false;
         }
-        $entry = AI_Search_Schema_TEST_Env::$transients[$key];
+        $entry = AVC_AIS_TEST_Env::$transients[$key];
         if ($entry['expires'] < time()) {
-            unset(AI_Search_Schema_TEST_Env::$transients[$key]);
+            unset(AVC_AIS_TEST_Env::$transients[$key]);
             return false;
         }
         return $entry['value'];
@@ -467,7 +467,7 @@ if (!function_exists('get_transient')) {
 
 if (!function_exists('delete_transient')) {
     function delete_transient($key) {
-        unset(AI_Search_Schema_TEST_Env::$transients[$key]);
+        unset(AVC_AIS_TEST_Env::$transients[$key]);
         return true;
     }
 }
@@ -486,19 +486,19 @@ if (!function_exists('is_admin')) {
 
 if (!function_exists('current_user_can')) {
     function current_user_can($capability, ...$args) {
-        return !empty(AI_Search_Schema_TEST_Env::$capabilities[$capability]);
+        return !empty(AVC_AIS_TEST_Env::$capabilities[$capability]);
     }
 }
 
 if (!function_exists('wp_is_post_autosave')) {
     function wp_is_post_autosave($post_id) {
-        return !empty(AI_Search_Schema_TEST_Env::$autosaves[$post_id]);
+        return !empty(AVC_AIS_TEST_Env::$autosaves[$post_id]);
     }
 }
 
 if (!function_exists('wp_is_post_revision')) {
     function wp_is_post_revision($post_id) {
-        return !empty(AI_Search_Schema_TEST_Env::$revisions[$post_id]);
+        return !empty(AVC_AIS_TEST_Env::$revisions[$post_id]);
     }
 }
 
@@ -580,8 +580,8 @@ if (!function_exists('is_page')) {
     }
 }
 
-if (!class_exists('AI_Search_Schema_TEST_JSON_Response')) {
-    class AI_Search_Schema_TEST_JSON_Response extends Exception {
+if (!class_exists('AVC_AIS_TEST_JSON_Response')) {
+    class AVC_AIS_TEST_JSON_Response extends Exception {
         public $success;
         public $data;
         public $status;
@@ -597,13 +597,13 @@ if (!class_exists('AI_Search_Schema_TEST_JSON_Response')) {
 
 if (!function_exists('wp_send_json_success')) {
     function wp_send_json_success($data = null, $status_code = null) {
-        throw new AI_Search_Schema_TEST_JSON_Response(true, $data, $status_code ?? 200);
+        throw new AVC_AIS_TEST_JSON_Response(true, $data, $status_code ?? 200);
     }
 }
 
 if (!function_exists('wp_send_json_error')) {
     function wp_send_json_error($data = null, $status_code = null) {
-        throw new AI_Search_Schema_TEST_JSON_Response(false, $data, $status_code ?? 400);
+        throw new AVC_AIS_TEST_JSON_Response(false, $data, $status_code ?? 400);
     }
 }
 
@@ -621,14 +621,14 @@ if (!function_exists('wp_verify_nonce')) {
 
 if (!function_exists('update_option')) {
     function update_option($name, $value, $autoload = null) {
-        AI_Search_Schema_TEST_Env::$options[$name] = $value;
+        AVC_AIS_TEST_Env::$options[$name] = $value;
         return true;
     }
 }
 
 if (!function_exists('delete_option')) {
     function delete_option($name) {
-        unset(AI_Search_Schema_TEST_Env::$options[$name]);
+        unset(AVC_AIS_TEST_Env::$options[$name]);
         return true;
     }
 }
@@ -636,7 +636,7 @@ if (!function_exists('delete_option')) {
 if (!function_exists('get_user_meta')) {
     function get_user_meta($user_id, $key = '', $single = false) {
         $meta_key = "user_{$user_id}_{$key}";
-        $value = AI_Search_Schema_TEST_Env::$options[$meta_key] ?? ($single ? '' : array());
+        $value = AVC_AIS_TEST_Env::$options[$meta_key] ?? ($single ? '' : array());
         return $single ? $value : (array) $value;
     }
 }
@@ -644,7 +644,7 @@ if (!function_exists('get_user_meta')) {
 if (!function_exists('update_user_meta')) {
     function update_user_meta($user_id, $key, $value) {
         $meta_key = "user_{$user_id}_{$key}";
-        AI_Search_Schema_TEST_Env::$options[$meta_key] = $value;
+        AVC_AIS_TEST_Env::$options[$meta_key] = $value;
         return true;
     }
 }
@@ -652,7 +652,7 @@ if (!function_exists('update_user_meta')) {
 if (!function_exists('delete_user_meta')) {
     function delete_user_meta($user_id, $key) {
         $meta_key = "user_{$user_id}_{$key}";
-        unset(AI_Search_Schema_TEST_Env::$options[$meta_key]);
+        unset(AVC_AIS_TEST_Env::$options[$meta_key]);
         return true;
     }
 }

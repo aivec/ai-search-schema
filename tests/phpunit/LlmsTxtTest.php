@@ -2,20 +2,20 @@
 /**
  * Tests for llms.txt functionality.
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  */
 
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * Test class for AI_Search_Schema_Llms_Txt.
+ * Test class for AVC_AIS_Llms_Txt.
  */
 class LlmsTxtTest extends WP_UnitTestCase {
 
 	/**
 	 * Instance of the llms.txt class.
 	 *
-	 * @var AI_Search_Schema_Llms_Txt
+	 * @var AVC_AIS_Llms_Txt
 	 */
 	private $llms;
 
@@ -24,27 +24,27 @@ class LlmsTxtTest extends WP_UnitTestCase {
 	 */
 	public function set_up() {
 		parent::set_up();
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
 
 		// Reset singleton for clean tests.
-		$reflection = new ReflectionClass( 'AI_Search_Schema_Llms_Txt' );
+		$reflection = new ReflectionClass( 'AVC_AIS_Llms_Txt' );
 		$instance   = $reflection->getProperty( 'instance' );
 		$instance->setAccessible( true );
 		$instance->setValue( null, null );
 
-		$this->llms = AI_Search_Schema_Llms_Txt::init();
+		$this->llms = AVC_AIS_Llms_Txt::init();
 
 		// Clean up options.
-		delete_option( AI_Search_Schema_Llms_Txt::OPTION_NAME );
-		delete_option( AI_Search_Schema_Llms_Txt::OPTION_ENABLED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_ENABLED );
 	}
 
 	/**
 	 * Tear down test fixtures.
 	 */
 	public function tear_down() {
-		delete_option( AI_Search_Schema_Llms_Txt::OPTION_NAME );
-		delete_option( AI_Search_Schema_Llms_Txt::OPTION_ENABLED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_ENABLED );
 		parent::tear_down();
 	}
 
@@ -148,7 +148,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 	 */
 	public function test_get_content_returns_default_when_empty() {
 		// Ensure option is empty.
-		delete_option( AI_Search_Schema_Llms_Txt::OPTION_NAME );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
 
 		$content = $this->llms->get_content();
 
@@ -210,7 +210,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 		$malicious_content = "<script>alert('xss')</script># Safe Content\n\n> Description";
 
 		$this->llms->save_content( $malicious_content );
-		$saved_content = get_option( AI_Search_Schema_Llms_Txt::OPTION_NAME );
+		$saved_content = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
 
 		// Script tag should be stripped.
 		$this->assertStringNotContainsString( '<script>', $saved_content );

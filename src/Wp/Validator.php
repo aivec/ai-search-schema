@@ -6,9 +6,9 @@ namespace Aivec\AiSearchSchema\Wp;
 /**
  * レガシー Validator (AEO 用) を PSR-4 名前空間から利用するためのラッパー。
  */
-if ( ! class_exists( '\AI_Search_Schema_Validator' ) ) {
-	require_once \AVC_AIS_DIR . 'includes/class-ai-search-schema-validator.php';
+if ( ! class_exists( '\AVC_AIS_Validator' ) ) {
+	require_once \AVC_AIS_DIR . 'src/Schema/class-avc-ais-validator.php';
 }
 
-class Validator extends \AI_Search_Schema_Validator {
+class Validator extends \AVC_AIS_Validator {
 }

@@ -2,7 +2,7 @@
 /**
  * CollectionPage スキーマ生成クラス。
  */
-class AI_Search_Schema_Type_CollectionPage {
+class AVC_AIS_Type_CollectionPage {
 	public static function build( array $context, array $has_part ) {
 		if ( empty( $has_part ) ) {
 			return array();
