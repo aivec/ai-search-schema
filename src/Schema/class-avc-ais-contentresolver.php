@@ -2,7 +2,7 @@
 /**
  * ページコンテキストやコンテンツ種別の解決を担当するクラス。
  */
-class AI_Search_Schema_ContentResolver {
+class AVC_AIS_ContentResolver {
 	/**
 	 * サイトURLを正規化
 	 *

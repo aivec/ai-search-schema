@@ -4,14 +4,14 @@
  *
  * Generates and serves llms.txt file to help AI systems understand site structure.
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  * @see https://llmstxt.org/
  */
 
 /**
- * AI_Search_Schema_Llms_Txt class
+ * AVC_AIS_Llms_Txt class
  */
-class AI_Search_Schema_Llms_Txt {
+class AVC_AIS_Llms_Txt {
 
 	/**
 	 * Option name for stored content.
@@ -26,14 +26,14 @@ class AI_Search_Schema_Llms_Txt {
 	/**
 	 * Singleton instance.
 	 *
-	 * @var AI_Search_Schema_Llms_Txt|null
+	 * @var AVC_AIS_Llms_Txt|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * Get singleton instance.
 	 *
-	 * @return AI_Search_Schema_Llms_Txt
+	 * @return AVC_AIS_Llms_Txt
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {

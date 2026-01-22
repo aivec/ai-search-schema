@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_QAPage' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-qapage.php';
+if ( ! class_exists( '\AVC_AIS_Type_QAPage' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-qapage.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_QAPage` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_QAPage` を PSR-4 で扱うためのラッパー。
  */
-class QaPage extends \AI_Search_Schema_Type_QAPage {
+class QaPage extends \AVC_AIS_Type_QAPage {
 }

@@ -11,14 +11,14 @@
 require_once __DIR__ . '/bootstrap.php';
 
 /**
- * AI_Search_Schema_Settings クラスのテスト。
+ * AVC_AIS_Settings クラスのテスト。
  */
 class SettingsTest extends WP_UnitTestCase {
 
 	/**
 	 * Settings インスタンス。
 	 *
-	 * @var AI_Search_Schema_Settings
+	 * @var AVC_AIS_Settings
 	 */
 	private $settings;
 
@@ -27,15 +27,15 @@ class SettingsTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
-		$this->settings          = new AI_Search_Schema_Settings();
+		AVC_AIS_TEST_Env::$options = array();
+		$this->settings          = new AVC_AIS_Settings();
 	}
 
 	/**
 	 * テスト後のクリーンアップ。
 	 */
 	protected function tearDown(): void {
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 		parent::tearDown();
 	}
 
@@ -861,7 +861,7 @@ class SettingsTest extends WP_UnitTestCase {
 	 * get_options が壊れたオプションデータを処理できることをテスト。
 	 */
 	public function test_get_options_handles_corrupted_data() {
-		AI_Search_Schema_TEST_Env::$options['avc_ais_options'] = 'not an array';
+		AVC_AIS_TEST_Env::$options['avc_ais_options'] = 'not an array';
 
 		$options = $this->settings->get_options();
 

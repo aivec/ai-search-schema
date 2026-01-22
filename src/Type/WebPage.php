@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_WebPage' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-webpage.php';
+if ( ! class_exists( '\AVC_AIS_Type_WebPage' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-webpage.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_WebPage` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_WebPage` を PSR-4 で扱うためのラッパー。
  */
-class WebPage extends \AI_Search_Schema_Type_WebPage {
+class WebPage extends \AVC_AIS_Type_WebPage {
 }

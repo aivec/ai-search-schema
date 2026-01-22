@@ -2,7 +2,7 @@
 /**
  * Organization ノードを生成するクラス。
  */
-class AI_Search_Schema_Type_Organization {
+class AVC_AIS_Type_Organization {
 	/**
 	 * Organization ノードを構築
 	 *

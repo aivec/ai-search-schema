@@ -18,7 +18,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	/**
 	 * スキーマインスタンス。
 	 *
-	 * @var AI_Search_Schema
+	 * @var AVC_AIS_Schema
 	 */
 	private $schema;
 
@@ -28,13 +28,13 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 	protected function setUp(): void {
 		parent::setUp();
 
-		// AI_Search_Schema_Settings シングルトンをリセット.
-		$settings_ref = new ReflectionProperty( AI_Search_Schema_Settings::class, 'instance' );
+		// AVC_AIS_Settings シングルトンをリセット.
+		$settings_ref = new ReflectionProperty( AVC_AIS_Settings::class, 'instance' );
 		$settings_ref->setAccessible( true );
 		$settings_ref->setValue( null, null );
 
-		// AI_Search_Schema シングルトンをリセット.
-		$ref = new ReflectionProperty( AI_Search_Schema::class, 'instance' );
+		// AVC_AIS_Schema シングルトンをリセット.
+		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'instance' );
 		$ref->setAccessible( true );
 		$ref->setValue( null, null );
 
@@ -71,7 +71,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// Yoast SEO フィルターが登録されていることを確認.
@@ -100,11 +100,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// suppressing_external_schema フラグが false であることを確認.
-		$ref = new ReflectionProperty( AI_Search_Schema::class, 'suppressing_external_schema' );
+		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'suppressing_external_schema' );
 		$ref->setAccessible( true );
 		$is_suppressing = $ref->getValue( $this->schema );
 
@@ -124,11 +124,11 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// external_schema_filters プロパティを確認.
-		$ref = new ReflectionProperty( AI_Search_Schema::class, 'external_schema_filters' );
+		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'external_schema_filters' );
 		$ref->setAccessible( true );
 		$filters = $ref->getValue( $this->schema );
 
@@ -154,14 +154,14 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 
 		// 2回呼び出し.
 		$this->schema->maybe_toggle_competing_schema_plugins();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// suppressing_external_schema フラグを確認.
-		$ref = new ReflectionProperty( AI_Search_Schema::class, 'suppressing_external_schema' );
+		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'suppressing_external_schema' );
 		$ref->setAccessible( true );
 		$is_suppressing = $ref->getValue( $this->schema );
 
@@ -181,7 +181,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// デフォルトは 'ais' なので抑止されるはず.
@@ -213,7 +213,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 
 		// フィルターが適用可能な状態になっていることを確認.
 		$patterns = apply_filters( 'avc_ais_competing_patterns', array() );
@@ -233,7 +233,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// wpseo_json_ld_output フィルターを適用.
@@ -255,7 +255,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 			)
 		);
 
-		$this->schema = AI_Search_Schema::init();
+		$this->schema = AVC_AIS_Schema::init();
 		$this->schema->maybe_toggle_competing_schema_plugins();
 
 		// rank_math/json_ld フィルターを適用.

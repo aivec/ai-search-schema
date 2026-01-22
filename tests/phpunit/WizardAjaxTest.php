@@ -51,7 +51,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 
 		// 管理者ユーザーを作成.
 		$this->admin_user_id = self::factory()->user->create( array( 'role' => 'administrator' ) );

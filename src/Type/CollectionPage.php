@@ -7,12 +7,12 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
-if ( ! class_exists( '\AI_Search_Schema_Type_CollectionPage' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-type-collectionpage.php';
+if ( ! class_exists( '\AVC_AIS_Type_CollectionPage' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-collectionpage.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Type_CollectionPage` を PSR-4 で扱うためのラッパー。
+ * レガシー `AVC_AIS_Type_CollectionPage` を PSR-4 で扱うためのラッパー。
  */
-class CollectionPage extends \AI_Search_Schema_Type_CollectionPage {
+class CollectionPage extends \AVC_AIS_Type_CollectionPage {
 }

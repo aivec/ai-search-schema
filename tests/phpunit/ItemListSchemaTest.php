@@ -24,7 +24,7 @@ class ItemListSchemaTest extends WP_UnitTestCase {
 			],
 		];
 
-		$schema = AI_Search_Schema_Type_ItemList::build( 'http://example.com/#itemlist', $items );
+		$schema = AVC_AIS_Type_ItemList::build( 'http://example.com/#itemlist', $items );
 
 		$this->assertSame( 'ItemList', $schema['@type'] );
 		$this->assertSame( 'http://example.com/#itemlist', $schema['@id'] );
@@ -44,7 +44,7 @@ class ItemListSchemaTest extends WP_UnitTestCase {
 	}
 
 	public function test_itemlist_schema_with_empty_items() {
-		$schema = AI_Search_Schema_Type_ItemList::build( 'http://example.com/#itemlist', [] );
+		$schema = AVC_AIS_Type_ItemList::build( 'http://example.com/#itemlist', [] );
 
 		$this->assertSame( 'ItemList', $schema['@type'] );
 		$this->assertEmpty( $schema['itemListElement'] );
@@ -59,7 +59,7 @@ class ItemListSchemaTest extends WP_UnitTestCase {
 			],
 		];
 
-		$schema = AI_Search_Schema_Type_ItemList::build( 'http://example.com/#itemlist', $items );
+		$schema = AVC_AIS_Type_ItemList::build( 'http://example.com/#itemlist', $items );
 
 		$this->assertCount( 1, $schema['itemListElement'] );
 		$this->assertSame( 'Only Item', $schema['itemListElement'][0]['name'] );

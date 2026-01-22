@@ -3,7 +3,7 @@
  * Plugin Name: Aivec AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version:           1.1.0
+ * Version:           1.1.1
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Aivec LLC
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'AVC_AIS_VERSION', '1.1.0' );
+define( 'AVC_AIS_VERSION', '1.1.1' );
 define( 'AVC_AIS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AVC_AIS_URL', plugin_dir_url( __FILE__ ) );
 define( 'AVC_AIS_FILE', __FILE__ );
@@ -79,18 +79,20 @@ if ( file_exists( $ais_autoloader ) ) {
 				return;
 			}
 
-			// Legacy global classes (AI_Search_Schema_*).
-			$legacy_prefix = 'AI_Search_Schema_';
+			// Legacy global classes (AVC_AIS_*).
+			$legacy_prefix = 'AVC_AIS_';
 			if ( strpos( $class_name, $legacy_prefix ) === 0 ) {
 				$relative = substr( $class_name, strlen( $legacy_prefix ) );
 				$slug     = strtolower( str_replace( '_', '-', $relative ) );
 
-				if ( strpos( $relative, 'Type_' ) === 0 ) {
-					$file = AVC_AIS_DIR . 'src/Schema/Type/class-ai-search-schema-' . $slug . '.php';
+				if ( 'Schema' === $relative ) {
+					$file = AVC_AIS_DIR . 'includes/class-avc-ais-schema.php';
+				} elseif ( strpos( $relative, 'Type_' ) === 0 ) {
+					$file = AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-' . $slug . '.php';
 				} elseif ( strpos( $relative, 'Adapter_' ) === 0 ) {
-					$file = AVC_AIS_DIR . 'src/Schema/Adapter/class-ai-search-schema-' . $slug . '.php';
+					$file = AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-' . $slug . '.php';
 				} else {
-					$file = AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-' . $slug . '.php';
+					$file = AVC_AIS_DIR . 'src/Schema/class-avc-ais-' . $slug . '.php';
 				}
 
 				if ( file_exists( $file ) ) {
@@ -99,7 +101,7 @@ if ( file_exists( $ais_autoloader ) ) {
 				}
 
 				// Fallback to includes/ directory.
-				$includes_file = AVC_AIS_DIR . 'includes/class-ai-search-schema-' . $slug . '.php';
+				$includes_file = AVC_AIS_DIR . 'includes/class-avc-ais-' . $slug . '.php';
 				if ( file_exists( $includes_file ) ) {
 					require $includes_file;
 				}
@@ -108,15 +110,32 @@ if ( file_exists( $ais_autoloader ) ) {
 	);
 }
 
-$ais_plugin = new \Aivec\AiSearchSchema\Plugin();
-$ais_plugin->register();
+/**
+ * Plugin entrypoint.
+ *
+ * @return \Aivec\AiSearchSchema\Plugin
+ */
+if ( ! function_exists( 'avc_ais_init' ) ) {
+	function avc_ais_init() {
+		static $plugin = null;
+
+		if ( null === $plugin ) {
+			$plugin = new \Aivec\AiSearchSchema\Plugin();
+			$plugin->register();
+		}
+
+		return $plugin;
+	}
+}
+
+avc_ais_init();
 
 // Initialize llms.txt generator.
 add_action(
 	'init',
 	static function () {
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		AI_Search_Schema_Llms_Txt::init();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		AVC_AIS_Llms_Txt::init();
 	},
 	5
 );
@@ -125,9 +144,9 @@ add_action(
 add_action(
 	'init',
 	static function () {
-		if ( ! class_exists( 'AI_Search_Schema_Pro_Features' ) ) {
-			require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-pro-features.php';
-			AI_Search_Schema_Pro_Features::init();
+		if ( ! class_exists( 'AVC_AIS_Pro_Features' ) ) {
+			require_once AVC_AIS_DIR . 'includes/class-avc-ais-pro-features.php';
+			AVC_AIS_Pro_Features::init();
 		}
 	},
 	10
@@ -143,8 +162,8 @@ register_activation_hook(
 		}
 
 		// Flush rewrite rules for llms.txt.
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		AI_Search_Schema_Llms_Txt::activate();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		AVC_AIS_Llms_Txt::activate();
 	}
 );
 
@@ -152,8 +171,8 @@ register_activation_hook(
 register_deactivation_hook(
 	__FILE__,
 	static function () {
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-llms-txt.php';
-		AI_Search_Schema_Llms_Txt::deactivate();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+		AVC_AIS_Llms_Txt::deactivate();
 	}
 );
 

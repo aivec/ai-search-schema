@@ -8,7 +8,7 @@
 /**
  * 都道府県とISOコードを提供するユーティリティ.
  */
-class AI_Search_Schema_Prefectures {
+class AVC_AIS_Prefectures {
 
 	/**
 	 * 都道府県リスト.

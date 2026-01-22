@@ -22,7 +22,7 @@
  * - Consistency across fields?
  * - If not met: WARNING (default), ERROR only if errorOnFail=true
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  * @subpackage Includes
  */
 
@@ -33,7 +33,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Diagnostic Evaluator Class
  */
-class AI_Search_Schema_Diagnostic_Evaluator {
+class AVC_AIS_Diagnostic_Evaluator {
 
 	/**
 	 * Status constants

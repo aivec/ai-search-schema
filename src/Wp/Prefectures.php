@@ -6,12 +6,12 @@
 
 namespace Aivec\AiSearchSchema\Wp;
 
-if ( ! class_exists( '\AI_Search_Schema_Prefectures' ) ) {
-	require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-prefectures.php';
+if ( ! class_exists( '\AVC_AIS_Prefectures' ) ) {
+	require_once AVC_AIS_DIR . 'includes/class-avc-ais-prefectures.php';
 }
 
 /**
- * レガシー `AI_Search_Schema_Prefectures` を PSR-4 で扱うためのラッパークラス。
+ * レガシー `AVC_AIS_Prefectures` を PSR-4 で扱うためのラッパークラス。
  */
-class Prefectures extends \AI_Search_Schema_Prefectures {
+class Prefectures extends \AVC_AIS_Prefectures {
 }

@@ -29,7 +29,7 @@ class PluginTest extends WP_UnitTestCase {
 	 */
 	protected function setUp(): void {
 		parent::setUp();
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 		$this->plugin            = new Plugin();
 	}
 
@@ -37,7 +37,7 @@ class PluginTest extends WP_UnitTestCase {
 	 * テスト後のクリーンアップ。
 	 */
 	protected function tearDown(): void {
-		AI_Search_Schema_TEST_Env::$options = array();
+		AVC_AIS_TEST_Env::$options = array();
 		parent::tearDown();
 	}
 
@@ -190,7 +190,7 @@ class PluginTest extends WP_UnitTestCase {
 		$this->plugin->bootstrap();
 
 		// 依存クラスが読み込まれることを確認.
-		$this->assertTrue( class_exists( 'AI_Search_Schema_Prefectures' ) );
+		$this->assertTrue( class_exists( 'AVC_AIS_Prefectures' ) );
 	}
 
 	/**
@@ -219,7 +219,7 @@ class PluginTest extends WP_UnitTestCase {
 		$method->invoke( $this->plugin );
 
 		// ファイルが読み込まれたことを確認.
-		$this->assertTrue( class_exists( 'AI_Search_Schema_Prefectures' ) );
+		$this->assertTrue( class_exists( 'AVC_AIS_Prefectures' ) );
 	}
 
 	/**
@@ -360,7 +360,7 @@ class PluginTest extends WP_UnitTestCase {
 	public function test_dependency_files_exist() {
 		$files = array(
 			'includes/functions.php',
-			'includes/class-ai-search-schema-prefectures.php',
+			'includes/class-avc-ais-prefectures.php',
 		);
 
 		foreach ( $files as $file ) {

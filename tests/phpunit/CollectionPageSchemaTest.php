@@ -26,7 +26,7 @@ class CollectionPageSchemaTest extends WP_UnitTestCase {
 			],
 		];
 
-		$schema = AI_Search_Schema_Type_CollectionPage::build( $context, $has_part );
+		$schema = AVC_AIS_Type_CollectionPage::build( $context, $has_part );
 
 		$this->assertSame( 'CollectionPage', $schema['@type'] );
 		$this->assertSame( 'http://example.com/category/tutorials/#collection', $schema['@id'] );
@@ -42,7 +42,7 @@ class CollectionPageSchemaTest extends WP_UnitTestCase {
 			'title' => 'Empty Category',
 		];
 
-		$schema = AI_Search_Schema_Type_CollectionPage::build( $context, [] );
+		$schema = AVC_AIS_Type_CollectionPage::build( $context, [] );
 
 		$this->assertEmpty( $schema );
 	}
@@ -62,7 +62,7 @@ class CollectionPageSchemaTest extends WP_UnitTestCase {
 			],
 		];
 
-		$schema = AI_Search_Schema_Type_CollectionPage::build( $context, $has_part );
+		$schema = AVC_AIS_Type_CollectionPage::build( $context, $has_part );
 
 		$this->assertSame( 'CollectionPage', $schema['@type'] );
 		$this->assertCount( 1, $schema['hasPart'] );

@@ -5,9 +5,9 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_ValidatorEnhanced_Test extends WP_UnitTestCase {
+class AVC_AIS_ValidatorEnhanced_Test extends WP_UnitTestCase {
 	public function test_product_requires_brand_and_offer_fields() {
-		$validator = new AI_Search_Schema_Validator();
+		$validator = new AVC_AIS_Validator();
 		$result    = $validator->validate(
 			array(
 				'@context' => 'https://schema.org',
@@ -31,7 +31,7 @@ class AI_Search_Schema_ValidatorEnhanced_Test extends WP_UnitTestCase {
 	}
 
 	public function test_localbusiness_requires_phone_and_address() {
-		$validator = new AI_Search_Schema_Validator();
+		$validator = new AVC_AIS_Validator();
 		$result    = $validator->validate(
 			array(
 				'@graph' => array(

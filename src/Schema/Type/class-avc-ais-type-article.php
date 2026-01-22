@@ -2,7 +2,7 @@
 /**
  * Article系スキーマを生成するクラス。
  */
-class AI_Search_Schema_Type_Article {
+class AVC_AIS_Type_Article {
 	public static function build(
 		$post_id = null,
 		$options = array(),

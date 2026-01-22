@@ -918,15 +918,15 @@ class Wizard {
 
 		try {
 			// 依存クラスを読み込み.
-			if ( ! class_exists( '\AI_Search_Schema_Settings' ) ) {
-				require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-settings.php';
+			if ( ! class_exists( '\AVC_AIS_Settings' ) ) {
+				require_once AVC_AIS_DIR . 'includes/class-avc-ais-settings.php';
 			}
-			if ( ! class_exists( '\AI_Search_Schema_OpeningHoursBuilder' ) ) {
-				require_once AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-openinghoursbuilder.php';
+			if ( ! class_exists( '\AVC_AIS_OpeningHoursBuilder' ) ) {
+				require_once AVC_AIS_DIR . 'src/Schema/class-avc-ais-openinghoursbuilder.php';
 			}
 
 			// 設定を正規化.
-			$options = \AI_Search_Schema_Settings::init()->get_options();
+			$options = \AVC_AIS_Settings::init()->get_options();
 
 			// プレビュー用の簡易スキーマを構築.
 			$schema = $this->build_preview_schema( $options );
@@ -1108,8 +1108,8 @@ class Wizard {
 		}
 
 		// Opening hours.
-		if ( class_exists( '\AI_Search_Schema_OpeningHoursBuilder' ) ) {
-			$hours = \AI_Search_Schema_OpeningHoursBuilder::build( $options );
+		if ( class_exists( '\AVC_AIS_OpeningHoursBuilder' ) ) {
+			$hours = \AVC_AIS_OpeningHoursBuilder::build( $options );
 			if ( ! empty( $hours ) ) {
 				$lb['openingHoursSpecification'] = $hours;
 			}

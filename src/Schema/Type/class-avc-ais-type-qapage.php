@@ -2,7 +2,7 @@
 /**
  * QAPage スキーマ生成クラス。
  */
-class AI_Search_Schema_Type_QAPage {
+class AVC_AIS_Type_QAPage {
 	public static function build( array $context, $language_value, $webpage_id ) {
 		$answer_text = '';
 		if ( ! empty( $context['post_id'] ) ) {

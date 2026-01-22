@@ -40,7 +40,7 @@ if ( ! function_exists( 'get_woocommerce_currency' ) ) {
 	}
 }
 
-class AI_Search_Schema_ProductSchema_Test extends WP_UnitTestCase {
+class AVC_AIS_ProductSchema_Test extends WP_UnitTestCase {
 	private int $product_id;
 
 	protected function setUp(): void {
@@ -102,8 +102,8 @@ class AI_Search_Schema_ProductSchema_Test extends WP_UnitTestCase {
 	}
 
 	public function test_product_schema_contains_woocommerce_data() {
-		$resolver = new AI_Search_Schema_ContentResolver();
-		$builder  = new AI_Search_Schema_GraphBuilder( $resolver );
+		$resolver = new AVC_AIS_ContentResolver();
+		$builder  = new AVC_AIS_GraphBuilder( $resolver );
 		$schema   = $builder->build( get_option( 'avc_ais_options' ) );
 
 		$product = $this->find_by_type( $schema['@graph'], 'Product' );

@@ -2,13 +2,13 @@
 /**
  * JSON-LD 出力を担当するクラス。
  */
-class AI_Search_Schema_Output {
+class AVC_AIS_Output {
 	/**
-	 * @var AI_Search_Schema_Validator
+	 * @var AVC_AIS_Validator
 	 */
 	private $validator;
 
-	public function __construct( AI_Search_Schema_Validator $validator ) {
+	public function __construct( AVC_AIS_Validator $validator ) {
 		$this->validator = $validator;
 	}
 

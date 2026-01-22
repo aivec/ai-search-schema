@@ -1,12 +1,12 @@
 <?php
 /**
- * AI_Search_Schema_Breadcrumbs クラス
+ * AVC_AIS_Breadcrumbs クラス
  *
  * このクラスは、パンくずリストを生成し、サイト内のナビゲーションを提供します。
  */
-class AI_Search_Schema_Breadcrumbs {
+class AVC_AIS_Breadcrumbs {
 	/**
-	 * @var AI_Search_Schema_Breadcrumbs|null
+	 * @var AVC_AIS_Breadcrumbs|null
 	 */
 	private static $instance = null;
 	/**
@@ -17,7 +17,7 @@ class AI_Search_Schema_Breadcrumbs {
 	/**
 	 * 初期化
 	 *
-	 * @return AI_Search_Schema_Breadcrumbs
+	 * @return AVC_AIS_Breadcrumbs
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
@@ -185,7 +185,7 @@ class AI_Search_Schema_Breadcrumbs {
 		}
 
 		if ( $should_cache ) {
-			$resolver = new AI_Search_Schema_ContentResolver();
+			$resolver = new AVC_AIS_ContentResolver();
 			$context  = $resolver->resolve_page_context();
 		}
 

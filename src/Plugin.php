@@ -92,7 +92,7 @@ class Plugin {
 		$includes = array(
 			// Core utilities.
 			'includes/functions.php',
-			'includes/class-ai-search-schema-prefectures.php',
+			'includes/class-avc-ais-prefectures.php',
 		);
 
 		foreach ( $includes as $relative_path ) {

@@ -73,7 +73,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			'post_type' => 'post',
 		];
 
-		$schema = AI_Search_Schema_Type_FAQPage::build(
+		$schema = AVC_AIS_Type_FAQPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
@@ -89,7 +89,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			'title' => 'FAQ Page',
 		];
 
-		$schema = AI_Search_Schema_Type_FAQPage::build(
+		$schema = AVC_AIS_Type_FAQPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
@@ -116,7 +116,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			'post_type' => 'post',
 		];
 
-		$schema = AI_Search_Schema_Type_FAQPage::build(
+		$schema = AVC_AIS_Type_FAQPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
@@ -144,7 +144,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 			'post_type' => 'post',
 		];
 
-		$schema = AI_Search_Schema_Type_FAQPage::build(
+		$schema = AVC_AIS_Type_FAQPage::build(
 			$context,
 			'en-US',
 			'http://example.com/#webpage',
@@ -155,7 +155,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	}
 
 	public function test_get_context_override_returns_defaults() {
-		$reflection = new ReflectionClass( AI_Search_Schema_Type_FAQPage::class );
+		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
 		$method->setAccessible( true );
 
@@ -176,7 +176,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	}
 
 	public function test_get_context_override_with_post_type_settings() {
-		$reflection = new ReflectionClass( AI_Search_Schema_Type_FAQPage::class );
+		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
 		$method->setAccessible( true );
 
@@ -200,7 +200,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	}
 
 	public function test_get_context_override_with_taxonomy_settings() {
-		$reflection = new ReflectionClass( AI_Search_Schema_Type_FAQPage::class );
+		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
 		$method->setAccessible( true );
 
@@ -224,7 +224,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	}
 
 	public function test_get_context_override_with_enable_breadcrumbs_fallback() {
-		$reflection = new ReflectionClass( AI_Search_Schema_Type_FAQPage::class );
+		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
 		$method->setAccessible( true );
 

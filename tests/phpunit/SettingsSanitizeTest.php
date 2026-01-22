@@ -1,14 +1,14 @@
 <?php
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_Settings_Sanitize_Test extends WP_UnitTestCase {
+class AVC_AIS_Settings_Sanitize_Test extends WP_UnitTestCase {
     protected function setUp(): void {
         parent::setUp();
-        AI_Search_Schema_TEST_Env::$options = array();
+        AVC_AIS_TEST_Env::$options = array();
     }
 
     public function test_sanitize_normalizes_languages_and_social_links() {
-        $settings = new AI_Search_Schema_Settings();
+        $settings = new AVC_AIS_Settings();
 
         $input = array(
             'languages' => array('foo', 'en', 'ja', 'en'),
@@ -49,7 +49,7 @@ class AI_Search_Schema_Settings_Sanitize_Test extends WP_UnitTestCase {
     }
 
     public function test_legacy_has_map_respects_boolean_values() {
-        $settings = new AI_Search_Schema_Settings();
+        $settings = new AVC_AIS_Settings();
 
         $disabled = $settings->sanitize_options(array('has_map' => '0'));
         $this->assertFalse($disabled['has_map_enabled']);
@@ -59,7 +59,7 @@ class AI_Search_Schema_Settings_Sanitize_Test extends WP_UnitTestCase {
     }
 
     public function test_legacy_has_map_ignores_unknown_values() {
-        $settings = new AI_Search_Schema_Settings();
+        $settings = new AVC_AIS_Settings();
 
         $result = $settings->sanitize_options(array('has_map' => 'banana'));
 

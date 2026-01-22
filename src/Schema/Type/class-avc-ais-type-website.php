@@ -2,7 +2,7 @@
 /**
  * WebSite ノードを生成するクラス。
  */
-class AI_Search_Schema_Type_WebSite {
+class AVC_AIS_Type_WebSite {
 	public static function build( array $options, array $ids, $site_url, $language, $publisher_id ) {
 		$site_name = ! empty( $options['site_name'] ) ? $options['site_name'] : get_bloginfo( 'name' );
 		$website   = array(

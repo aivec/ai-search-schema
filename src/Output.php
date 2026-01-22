@@ -6,9 +6,9 @@ namespace Aivec\AiSearchSchema;
 /**
  * レガシー Output を PSR-4 名前空間から利用するためのラッパー。
  */
-if ( ! class_exists( '\AI_Search_Schema_Output' ) ) {
-	require_once AVC_AIS_DIR . 'src/Schema/class-ai-search-schema-output.php';
+if ( ! class_exists( '\AVC_AIS_Output' ) ) {
+	require_once AVC_AIS_DIR . 'src/Schema/class-avc-ais-output.php';
 }
 
-class Output extends \AI_Search_Schema_Output {
+class Output extends \AVC_AIS_Output {
 }

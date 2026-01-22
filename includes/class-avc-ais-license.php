@@ -1,6 +1,6 @@
 <?php
 /**
- * AI_Search_Schema_License クラス
+ * AVC_AIS_License クラス
  *
  * Pro版のライセンス管理を行うクラスです。
  * ライセンスキーの検証・保存・ステータス管理を行います。
@@ -22,14 +22,14 @@
  * Note: The free version does not make any external API calls.
  * The validate() method currently returns a stub response.
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  * @since 0.10.0
  */
 
 /**
  * License management class for AI Search Schema Pro.
  */
-class AI_Search_Schema_License {
+class AVC_AIS_License {
 
 	/**
 	 * Option name for license data.
@@ -44,7 +44,7 @@ class AI_Search_Schema_License {
 	/**
 	 * Singleton instance.
 	 *
-	 * @var AI_Search_Schema_License|null
+	 * @var AVC_AIS_License|null
 	 */
 	private static $instance = null;
 
@@ -58,7 +58,7 @@ class AI_Search_Schema_License {
 	/**
 	 * Initialize the license manager.
 	 *
-	 * @return AI_Search_Schema_License
+	 * @return AVC_AIS_License
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {

@@ -1,10 +1,10 @@
 <?php
 /**
- * AI_Search_Schema_Helpers クラス
+ * AVC_AIS_Helpers クラス
  *
  * プラグイン内で共通して使用されるヘルパー関数を提供します。
  */
-class AI_Search_Schema_Helpers {
+class AVC_AIS_Helpers {
 
 	/**
 	 * サニタイズされたテキストを取得します。

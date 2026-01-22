@@ -1,37 +1,37 @@
 <?php
 /**
- * AI_Search_Schema_Pro_Features クラス
+ * AVC_AIS_Pro_Features クラス
  *
  * Pro版の機能を管理するクラスです。
  * ライセンスが有効な場合にのみPro機能を有効化します。
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  * @since 0.10.0
  */
 
 /**
  * Pro features management class for AI Search Schema.
  */
-class AI_Search_Schema_Pro_Features {
+class AVC_AIS_Pro_Features {
 
 	/**
 	 * Singleton instance.
 	 *
-	 * @var AI_Search_Schema_Pro_Features|null
+	 * @var AVC_AIS_Pro_Features|null
 	 */
 	private static $instance = null;
 
 	/**
 	 * License manager instance.
 	 *
-	 * @var AI_Search_Schema_License|null
+	 * @var AVC_AIS_License|null
 	 */
 	private $license = null;
 
 	/**
 	 * Initialize the Pro features manager.
 	 *
-	 * @return AI_Search_Schema_Pro_Features
+	 * @return AVC_AIS_Pro_Features
 	 */
 	public static function init() {
 		if ( null === self::$instance ) {
@@ -44,8 +44,8 @@ class AI_Search_Schema_Pro_Features {
 	 * Constructor.
 	 */
 	private function __construct() {
-		require_once AVC_AIS_DIR . 'includes/class-ai-search-schema-license.php';
-		$this->license = AI_Search_Schema_License::init();
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-license.php';
+		$this->license = AVC_AIS_License::init();
 
 		// Register Pro features hooks if license is valid.
 		if ( $this->is_pro_active() ) {
@@ -70,7 +70,7 @@ class AI_Search_Schema_Pro_Features {
 	/**
 	 * Get the license manager instance.
 	 *
-	 * @return AI_Search_Schema_License License manager.
+	 * @return AVC_AIS_License License manager.
 	 */
 	public function get_license() {
 		return $this->license;

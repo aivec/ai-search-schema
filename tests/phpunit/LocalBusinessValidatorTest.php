@@ -5,9 +5,9 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_LocalBusinessValidator_Test extends WP_UnitTestCase {
+class AVC_AIS_LocalBusinessValidator_Test extends WP_UnitTestCase {
 	public function test_local_business_valid_when_required_fields_present() {
-		$validator = new AI_Search_Schema_Validator();
+		$validator = new AVC_AIS_Validator();
 		$result    = $validator->validate(
 			array(
 				'@graph' => array(

@@ -2,7 +2,7 @@
 /**
  * Product スキーマ生成クラス（最低限のプレースホルダー）。
  */
-class AI_Search_Schema_Type_Product {
+class AVC_AIS_Type_Product {
 	public static function build(
 		array $context,
 		$language_value,

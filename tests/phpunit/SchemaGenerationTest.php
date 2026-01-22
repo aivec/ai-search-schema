@@ -5,9 +5,9 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_Generation_Test extends WP_UnitTestCase {
+class AVC_AIS_Generation_Test extends WP_UnitTestCase {
     /**
-     * @var AI_Search_Schema
+     * @var AVC_AIS_Schema
      */
     private $schema;
     private int $post_id;
@@ -71,12 +71,12 @@ class AI_Search_Schema_Generation_Test extends WP_UnitTestCase {
             ]
         );
 
-        $ref = new ReflectionProperty(AI_Search_Schema::class, 'instance');
+        $ref = new ReflectionProperty(AVC_AIS_Schema::class, 'instance');
         $ref->setAccessible(true);
         $ref->setValue(null, null);
 
         $this->go_to( get_permalink( $this->post_id ) );
-        $this->schema = AI_Search_Schema::init();
+        $this->schema = AVC_AIS_Schema::init();
     }
 
     public function test_article_schema_is_generated() {

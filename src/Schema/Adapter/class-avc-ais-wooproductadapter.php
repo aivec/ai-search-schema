@@ -2,7 +2,7 @@
 /**
  * WooCommerce 連携で Product スキーマを生成するアダプタ。
  */
-class AI_Search_Schema_WooProductAdapter {
+class AVC_AIS_WooProductAdapter {
 	/**
 	 * WooCommerce が利用可能か。
 	 *

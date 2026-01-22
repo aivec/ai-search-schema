@@ -5,9 +5,9 @@
 
 require_once __DIR__ . '/bootstrap.php';
 
-class AI_Search_Schema_ContentResolver_Test extends WP_UnitTestCase {
+class AVC_AIS_ContentResolver_Test extends WP_UnitTestCase {
 	public function test_normalize_site_url_trims_and_slash() {
-		$resolver = new AI_Search_Schema_ContentResolver();
+		$resolver = new AVC_AIS_ContentResolver();
 		$url      = $resolver->normalize_site_url(
 			array(
 				'site_url' => ' http://example.com/path ',
@@ -28,7 +28,7 @@ class AI_Search_Schema_ContentResolver_Test extends WP_UnitTestCase {
 
 		$this->go_to( get_permalink( $post_id ) );
 
-		$resolver = new AI_Search_Schema_ContentResolver();
+		$resolver = new AVC_AIS_ContentResolver();
 		$context  = $resolver->resolve_page_context();
 
 		$this->assertSame( $post_id, $context['post_id'] );

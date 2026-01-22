@@ -4,13 +4,13 @@
  *
  * GraphBuilder から営業時間ロジックを分離し、単一責任の原則に従う。
  *
- * @package AI_Search_Schema
+ * @package AVC_AIS_Schema
  */
 
 /**
  * 営業時間スキーマを構築するクラス。
  */
-class AI_Search_Schema_OpeningHoursBuilder {
+class AVC_AIS_OpeningHoursBuilder {
 
 	/**
 	 * 営業時間オプションから OpeningHoursSpecification スキーマを生成する。

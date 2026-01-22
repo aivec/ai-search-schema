@@ -2,16 +2,16 @@
 /**
  * グラフ生成と共通ヘルパーを担当するクラス。
  */
-class AI_Search_Schema_GraphBuilder {
+class AVC_AIS_GraphBuilder {
 	/**
-	 * @var AI_Search_Schema_ContentResolver
+	 * @var AVC_AIS_ContentResolver
 	 */
 	private $resolver;
 
 	/**
-	 * @param AI_Search_Schema_ContentResolver $resolver
+	 * @param AVC_AIS_ContentResolver $resolver
 	 */
-	public function __construct( AI_Search_Schema_ContentResolver $resolver ) {
+	public function __construct( AVC_AIS_ContentResolver $resolver ) {
 		$this->resolver = $resolver;
 	}
 
@@ -84,7 +84,7 @@ class AI_Search_Schema_GraphBuilder {
 		$social_urls = $this->build_social_urls( $options['social_links'] ?? array() );
 
 		$organization = $show_org
-			? AI_Search_Schema_Type_Organization::build( $options, $ids, $site_url, $social_urls )
+			? AVC_AIS_Type_Organization::build( $options, $ids, $site_url, $social_urls )
 			: array();
 
 		$local_business     = array();
@@ -94,7 +94,7 @@ class AI_Search_Schema_GraphBuilder {
 			$this->local_business_suppressed = true;
 			$local_business                  = array();
 		} else {
-			$local_business = AI_Search_Schema_Type_LocalBusiness::build(
+			$local_business = AVC_AIS_Type_LocalBusiness::build(
 				$options,
 				$ids,
 				$site_url,
@@ -112,7 +112,7 @@ class AI_Search_Schema_GraphBuilder {
 			$graph[] = $organization;
 		}
 
-		$logo = AI_Search_Schema_Type_Organization::build_logo( $options, $ids );
+		$logo = AVC_AIS_Type_Organization::build_logo( $options, $ids );
 		if ( ! empty( $logo ) ) {
 			$graph[] = $logo;
 		}
@@ -120,7 +120,7 @@ class AI_Search_Schema_GraphBuilder {
 		if ( ! empty( $local_business ) ) {
 			$graph[] = $local_business;
 
-			$lb_image = AI_Search_Schema_Type_LocalBusiness::build_image( $options, $ids );
+			$lb_image = AVC_AIS_Type_LocalBusiness::build_image( $options, $ids );
 			if ( ! empty( $lb_image ) ) {
 				$graph[] = $lb_image;
 			}
@@ -133,7 +133,7 @@ class AI_Search_Schema_GraphBuilder {
 			$publisher_id = $ids['local_business'];
 		}
 
-		$website = AI_Search_Schema_Type_WebSite::build( $options, $ids, $site_url, $language, $publisher_id );
+		$website = AVC_AIS_Type_WebSite::build( $options, $ids, $site_url, $language, $publisher_id );
 		if ( ! empty( $website ) ) {
 			$graph[] = $website;
 		}
@@ -159,7 +159,7 @@ class AI_Search_Schema_GraphBuilder {
 		}
 
 		$context  = $this->resolver->resolve_page_context();
-		$web_page = AI_Search_Schema_Type_WebPage::build(
+		$web_page = AVC_AIS_Type_WebPage::build(
 			$context,
 			$ids,
 			$language,
@@ -217,7 +217,7 @@ class AI_Search_Schema_GraphBuilder {
 
 		$article_like = array( 'Article', 'NewsArticle', 'BlogPosting' );
 		if ( in_array( $schema_type, $article_like, true ) ) {
-			return AI_Search_Schema_Type_Article::build(
+			return AVC_AIS_Type_Article::build(
 				$context['post_id'] ?? null,
 				$options,
 				$language,
@@ -229,18 +229,18 @@ class AI_Search_Schema_GraphBuilder {
 		}
 
 		if ( 'FAQPage' === $schema_type ) {
-			return AI_Search_Schema_Type_FAQPage::build( $context, $language, $webpage_id, $options );
+			return AVC_AIS_Type_FAQPage::build( $context, $language, $webpage_id, $options );
 		}
 
 		if ( 'QAPage' === $schema_type ) {
-			return AI_Search_Schema_Type_QAPage::build( $context, $language, $webpage_id );
+			return AVC_AIS_Type_QAPage::build( $context, $language, $webpage_id );
 		}
 
 		if ( 'Product' === $schema_type ) {
-			$adapter = class_exists( 'AI_Search_Schema_WooProductAdapter' )
-				? new AI_Search_Schema_WooProductAdapter()
+			$adapter = class_exists( 'AVC_AIS_WooProductAdapter' )
+				? new AVC_AIS_WooProductAdapter()
 				: null;
-			return AI_Search_Schema_Type_Product::build(
+			return AVC_AIS_Type_Product::build(
 				$context,
 				$language,
 				$webpage_id,
@@ -369,7 +369,7 @@ class AI_Search_Schema_GraphBuilder {
 		if ( ! empty( $address['prefecture'] ) ) {
 			$prefecture_iso = ! empty( $address['prefecture_iso'] )
 				? $address['prefecture_iso']
-				: AI_Search_Schema_Prefectures::get_iso_code( $address['prefecture'] );
+				: AVC_AIS_Prefectures::get_iso_code( $address['prefecture'] );
 
 			$prefecture = array(
 				'@type' => 'AdministrativeArea',
@@ -449,7 +449,7 @@ class AI_Search_Schema_GraphBuilder {
 	 * @return array OpeningHoursSpecification スキーマの配列。
 	 */
 	private function get_opening_hours( $options ) {
-		return AI_Search_Schema_OpeningHoursBuilder::build( $options );
+		return AVC_AIS_OpeningHoursBuilder::build( $options );
 	}
 
 	private function determine_content_schema_type( $options, array $context ) {
@@ -515,7 +515,7 @@ class AI_Search_Schema_GraphBuilder {
 			return array();
 		}
 
-		$breadcrumb_items = AI_Search_Schema_Breadcrumbs::init()->get_items( $context );
+		$breadcrumb_items = AVC_AIS_Breadcrumbs::init()->get_items( $context );
 		if ( empty( $breadcrumb_items ) ) {
 			return array();
 		}
@@ -582,7 +582,7 @@ class AI_Search_Schema_GraphBuilder {
 			return array();
 		}
 
-		return AI_Search_Schema_Type_ItemList::build( $context['url'] . '#itemlist', $items );
+		return AVC_AIS_Type_ItemList::build( $context['url'] . '#itemlist', $items );
 	}
 
 	private function get_featured_image_object( $post_id ) {
