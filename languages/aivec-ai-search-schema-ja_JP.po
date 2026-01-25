@@ -27,7 +27,7 @@ msgstr ""
 #: aivec-ai-search-schema.php
 #, fuzzy
 msgid "Aivec AI Search Schema"
-msgstr "AI Search Schema"
+msgstr "Aivec AI Search Schema"
 
 #. Plugin URI of the plugin
 #: aivec-ai-search-schema.php
@@ -188,7 +188,7 @@ msgstr "未使用"
 #: includes/class-avc-ais-metabox.php:50 includes/class-avc-ais-metabox.php:77
 #: includes/class-avc-ais-settings.php:68 src/Wizard/Wizard.php:222
 msgid "AI Search Schema"
-msgstr "AI Search Schema"
+msgstr "Aivec AI Search Schema"
 
 #: dist/includes/class-avc-ais-metabox.php:80
 #: includes/class-avc-ais-metabox.php:80
@@ -378,7 +378,7 @@ msgstr "検索結果"
 #: includes/class-avc-ais-schema.php:2473
 #: includes/class-avc-ais-schema.php:2514
 msgid "AI Search Schema – Development Mode Warning"
-msgstr "AI Search Schema – 開発モード警告"
+msgstr "Aivec AI Search Schema – 開発モード警告"
 
 #: dist/includes/class-avc-ais-schema.php:2477
 #: dist/includes/class-avc-ais-schema.php:2517
@@ -408,7 +408,7 @@ msgstr "この警告はWP_DEBUG = trueのときのみ表示されます。"
 #: includes/class-avc-ais-settings.php:79 templates/admin-settings.php:137
 #: templates/admin-settings.php:142
 msgid "AI Search Schema Settings"
-msgstr "AI Search Schema 設定"
+msgstr "Aivec AI Search Schema 設定"
 
 #: dist/includes/class-avc-ais-settings.php:80
 #: includes/class-avc-ais-settings.php:80
@@ -777,7 +777,7 @@ msgstr "アイテムリスト"
 #: dist/includes/class-avc-ais-settings.php:1625
 #: includes/class-avc-ais-settings.php:1625
 msgid "AVC schema priority (suppress other plugins)"
-msgstr "AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
+msgstr "Aivec AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
 
 #: dist/includes/class-avc-ais-settings.php:1626
 #: includes/class-avc-ais-settings.php:1626
@@ -1230,7 +1230,7 @@ msgstr "完了"
 #: dist/templates/wizard/wizard-page.php:24 src/Wizard/Wizard.php:130
 #: src/Wizard/Wizard.php:148 templates/wizard/wizard-page.php:24
 msgid "AI Search Schema Setup"
-msgstr "AI Search Schema セットアップ"
+msgstr "Aivec AI Search Schema セットアップ"
 
 #: dist/src/Wizard/Wizard.php:131 src/Wizard/Wizard.php:131
 msgid "Setup Wizard"
@@ -1794,7 +1794,7 @@ msgstr "外部優先が選択されると、このプラグインはJSON-LDの�
 
 #: dist/templates/admin-settings.php:408 templates/admin-settings.php:408
 msgid "Use AI Search Schema output (disable other plugins)"
-msgstr "AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
+msgstr "Aivec AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
 
 #: dist/templates/admin-settings.php:412 templates/admin-settings.php:412
 msgid "Prefer external SEO plugin schema"
@@ -2423,7 +2423,7 @@ msgstr "ライセンス"
 
 #: dist/templates/admin-settings.php:1020 templates/admin-settings.php:1020
 msgid "Manage your AI Search Schema Pro license."
-msgstr "AI Search Schema Proライセンスを管理します。"
+msgstr "Aivec AI Search Schema Proライセンスを管理します。"
 
 #: dist/templates/admin-settings.php:1034 templates/admin-settings.php:1034
 msgid "Status:"
@@ -3108,7 +3108,7 @@ msgstr "スキップ"
 #: dist/templates/wizard/steps/welcome.php:34
 #: templates/wizard/steps/welcome.php:34
 msgid "Welcome to AI Search Schema"
-msgstr "AI Search Schema へようこそ"
+msgstr "Aivec AI Search Schema へようこそ"
 
 #: dist/templates/wizard/steps/welcome.php:38
 #: templates/wizard/steps/welcome.php:38
@@ -3193,7 +3193,7 @@ msgstr "設定テンプレートが見つかりませんでした。"
 #: dist/templates/wizard/wizard-page.php:78 templates/wizard/wizard-page.php:78
 #, php-format
 msgid "AI Search Schema v%s"
-msgstr "AI Search Schema v%s"
+msgstr "Aivec AI Search Schema v%s"
 
 #: tools/test-manager.php:48
 #, fuzzy

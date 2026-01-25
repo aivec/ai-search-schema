@@ -90,7 +90,8 @@ if ( file_exists( $ais_autoloader ) ) {
 				} elseif ( strpos( $relative, 'Type_' ) === 0 ) {
 					$file = AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-' . $slug . '.php';
 				} elseif ( strpos( $relative, 'Adapter_' ) === 0 ) {
-					$file = AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-' . $slug . '.php';
+					$adapter_slug = strtolower( str_replace( '_', '-', substr( $relative, strlen( 'Adapter_' ) ) ) );
+					$file         = AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-' . $adapter_slug . '.php';
 				} else {
 					$file = AVC_AIS_DIR . 'src/Schema/class-avc-ais-' . $slug . '.php';
 				}
