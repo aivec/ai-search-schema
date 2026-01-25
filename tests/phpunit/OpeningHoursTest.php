@@ -276,7 +276,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 	 * @return array|null JSON-LDデータ.
 	 */
 	private function extract_json_ld( $output ) {
-		if ( ! preg_match( '/<script[^>]+class="ai-search-schema"[^>]*>(.*)<\/script>/s', $output, $matches ) ) {
+		if ( ! preg_match( '/<script[^>]+class="[^"]*avc-ais-schema[^"]*"[^>]*>(.*)<\/script>/s', $output, $matches ) ) {
 			return null;
 		}
 		return json_decode( html_entity_decode( trim( $matches[1] ) ), true );

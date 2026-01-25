@@ -113,11 +113,11 @@ class AVC_AIS_ContentResolver {
 			if ( $query ) {
 				$context['title'] = sprintf(
 					/* translators: %s: search query string. */
-					__( 'Search results for "%s"', 'ai-search-schema' ),
+					__( 'Search results for "%s"', 'aivec-ai-search-schema' ),
 					$query
 				);
 			} else {
-				$context['title'] = __( 'Search results', 'ai-search-schema' );
+				$context['title'] = __( 'Search results', 'aivec-ai-search-schema' );
 			}
 			$search_link       = get_search_link( $query );
 			$context['url']    = is_wp_error( $search_link ) ? $this->get_current_url() : $search_link;

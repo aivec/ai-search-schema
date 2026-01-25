@@ -12,12 +12,12 @@ const DIST = 'dist';
 const SRC = 'scss';
 const BUNDLE_DIR = 'bundled';
 const PACKAGE_FOLDER = 'ai-search-schema';
-const PLUGIN_FILE = 'ai-search-schema.php';
+const PLUGIN_FILE = 'aivec-ai-search-schema.php';
 
 const paths = {
   scss: `${SRC}/**/*.scss`,
   copy: [
-    'ai-search-schema.php',
+    'aivec-ai-search-schema.php',
     'includes/**/*',
     'src/**/*',
     'templates/**/*',

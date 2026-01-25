@@ -31,11 +31,11 @@ foreach ( $sources as $source ) {
 		</div>
 
 		<h1 class="ais-wizard-welcome__title">
-			<?php esc_html_e( 'Welcome to AI Search Schema', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Welcome to AI Search Schema', 'aivec-ai-search-schema' ); ?>
 		</h1>
 
 		<p class="ais-wizard-welcome__description">
-			<?php esc_html_e( 'Get your site optimized for Google search in just 5 minutes. This wizard will guide you through the essential settings.', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Get your site optimized for Google search in just 5 minutes. This wizard will guide you through the essential settings.', 'aivec-ai-search-schema' ); ?>
 		</p>
 
 		<div class="ais-wizard-welcome__preview">
@@ -49,23 +49,23 @@ foreach ( $sources as $source ) {
 							<path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#ea4335"/>
 						</svg>
 					</span>
-					<span class="ais-wizard-preview-card__title"><?php esc_html_e( 'Google Search Preview', 'ai-search-schema' ); ?></span>
+					<span class="ais-wizard-preview-card__title"><?php esc_html_e( 'Google Search Preview', 'aivec-ai-search-schema' ); ?></span>
 				</div>
 				<div class="ais-wizard-preview-card__content">
 					<div class="ais-wizard-preview-card__result">
 						<div class="ais-wizard-preview-card__result-title">
-							<?php echo esc_html( get_bloginfo( 'name' ) ); ?> - <?php esc_html_e( 'Your City', 'ai-search-schema' ); ?>
+							<?php echo esc_html( get_bloginfo( 'name' ) ); ?> - <?php esc_html_e( 'Your City', 'aivec-ai-search-schema' ); ?>
 						</div>
 						<div class="ais-wizard-preview-card__result-meta">
 							<span class="ais-wizard-preview-card__stars">★★★★☆</span>
 							<span>4.2 (123)</span>
 							<span>·</span>
-							<span><?php esc_html_e( 'Business', 'ai-search-schema' ); ?></span>
+							<span><?php esc_html_e( 'Business', 'aivec-ai-search-schema' ); ?></span>
 						</div>
 						<div class="ais-wizard-preview-card__result-status">
-							<span class="ais-wizard-preview-card__open"><?php esc_html_e( 'Open', 'ai-search-schema' ); ?></span>
+							<span class="ais-wizard-preview-card__open"><?php esc_html_e( 'Open', 'aivec-ai-search-schema' ); ?></span>
 							<span>·</span>
-							<span><?php esc_html_e( 'Closes at 6:00 PM', 'ai-search-schema' ); ?></span>
+							<span><?php esc_html_e( 'Closes at 6:00 PM', 'aivec-ai-search-schema' ); ?></span>
 						</div>
 					</div>
 				</div>
@@ -77,7 +77,7 @@ foreach ( $sources as $source ) {
 				<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 					<path d="M19.14 12.94c.04-.31.06-.63.06-.94 0-.31-.02-.63-.06-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.04.31-.06.63-.06.94s.02.63.06.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
 				</svg>
-				<?php esc_html_e( 'Get Started', 'ai-search-schema' ); ?>
+				<?php esc_html_e( 'Get Started', 'aivec-ai-search-schema' ); ?>
 			</a>
 
 			<?php if ( $has_importable ) : ?>
@@ -85,14 +85,14 @@ foreach ( $sources as $source ) {
 					<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 						<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
 					</svg>
-					<?php esc_html_e( 'Import from another plugin', 'ai-search-schema' ); ?>
+					<?php esc_html_e( 'Import from another plugin', 'aivec-ai-search-schema' ); ?>
 				</button>
 			<?php endif; ?>
 		</div>
 
 		<div class="ais-wizard-welcome__skip">
-			<a href="<?php echo esc_url( admin_url( 'options-general.php?page=ai-search-schema' ) ); ?>">
-				<?php esc_html_e( 'Set up later', 'ai-search-schema' ); ?> →
+			<a href="<?php echo esc_url( admin_url( 'options-general.php?page=aivec-ai-search-schema' ) ); ?>">
+				<?php esc_html_e( 'Set up later', 'aivec-ai-search-schema' ); ?> →
 			</a>
 		</div>
 	</div>
@@ -102,7 +102,7 @@ foreach ( $sources as $source ) {
 		<div class="ais-wizard-modal" id="ais-wizard-import-modal" style="display: none;">
 			<div class="ais-wizard-modal__backdrop"></div>
 			<div class="ais-wizard-modal__content">
-				<button type="button" class="ais-wizard-modal__close" aria-label="<?php esc_attr_e( 'Close', 'ai-search-schema' ); ?>">
+				<button type="button" class="ais-wizard-modal__close" aria-label="<?php esc_attr_e( 'Close', 'aivec-ai-search-schema' ); ?>">
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
 						<path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
 					</svg>
@@ -112,11 +112,11 @@ foreach ( $sources as $source ) {
 					<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
 						<path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
 					</svg>
-					<?php esc_html_e( 'Import Existing Settings', 'ai-search-schema' ); ?>
+					<?php esc_html_e( 'Import Existing Settings', 'aivec-ai-search-schema' ); ?>
 				</h2>
 
 				<p class="ais-wizard-modal__description">
-					<?php esc_html_e( 'We detected these SEO plugins. You can import their settings to get started quickly.', 'ai-search-schema' ); ?>
+					<?php esc_html_e( 'We detected these SEO plugins. You can import their settings to get started quickly.', 'aivec-ai-search-schema' ); ?>
 				</p>
 
 				<div class="ais-wizard-import-sources">
@@ -150,12 +150,12 @@ foreach ( $sources as $source ) {
 								</div>
 								<div class="ais-wizard-import-source__actions">
 									<button type="button" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-btn--small ais-wizard-import-btn" data-source="<?php echo esc_attr( $source_key ); ?>">
-										<?php esc_html_e( 'Import', 'ai-search-schema' ); ?>
+										<?php esc_html_e( 'Import', 'aivec-ai-search-schema' ); ?>
 									</button>
 								</div>
 							<?php elseif ( ! $source['detected'] ) : ?>
 								<div class="ais-wizard-import-source__not-found">
-									<?php esc_html_e( 'Not detected', 'ai-search-schema' ); ?>
+									<?php esc_html_e( 'Not detected', 'aivec-ai-search-schema' ); ?>
 								</div>
 							<?php endif; ?>
 						</div>
@@ -164,7 +164,7 @@ foreach ( $sources as $source ) {
 
 				<div class="ais-wizard-modal__footer">
 					<a href="<?php echo esc_url( add_query_arg( 'step', 'basics' ) ); ?>" class="ais-wizard-btn ais-wizard-btn--text">
-						<?php esc_html_e( 'Continue without importing', 'ai-search-schema' ); ?> →
+						<?php esc_html_e( 'Continue without importing', 'aivec-ai-search-schema' ); ?> →
 					</a>
 				</div>
 			</div>

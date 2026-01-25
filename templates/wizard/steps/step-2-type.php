@@ -14,26 +14,26 @@ $entity_type = $options['entity_type'] ?? '';
 // Site type options with icons (Organization and LocalBusiness only for schema compatibility).
 $site_types = array(
 	'LocalBusiness' => array(
-		'label'       => __( 'Local Business', 'ai-search-schema' ),
-		'description' => __( 'Physical store, restaurant, service provider with a location', 'ai-search-schema' ),
+		'label'       => __( 'Local Business', 'aivec-ai-search-schema' ),
+		'description' => __( 'Physical store, restaurant, service provider with a location', 'aivec-ai-search-schema' ),
 		'icon'        => '<path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>',
-		'examples'    => __( 'e.g., Café, Beauty Salon, Clinic', 'ai-search-schema' ),
+		'examples'    => __( 'e.g., Café, Beauty Salon, Clinic', 'aivec-ai-search-schema' ),
 	),
 	'Organization'  => array(
-		'label'       => __( 'Organization / Company', 'ai-search-schema' ),
-		'description' => __( 'Corporate website, non-profit, educational institution, personal blog, online service', 'ai-search-schema' ),
+		'label'       => __( 'Organization / Company', 'aivec-ai-search-schema' ),
+		'description' => __( 'Corporate website, non-profit, educational institution, personal blog, online service', 'aivec-ai-search-schema' ),
 		'icon'        => '<path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>',
-		'examples'    => __( 'e.g., Corporation, NPO, Blog, News site', 'ai-search-schema' ),
+		'examples'    => __( 'e.g., Corporation, NPO, Blog, News site', 'aivec-ai-search-schema' ),
 	),
 );
 ?>
 <div class="ais-wizard-step ais-wizard-step--type">
 	<div class="ais-wizard-step__header">
 		<h1 class="ais-wizard-step__title">
-			<?php esc_html_e( 'What type of site is this?', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'What type of site is this?', 'aivec-ai-search-schema' ); ?>
 		</h1>
 		<p class="ais-wizard-step__description">
-			<?php esc_html_e( 'Select the option that best describes your website. This helps search engines understand your content.', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Select the option that best describes your website. This helps search engines understand your content.', 'aivec-ai-search-schema' ); ?>
 		</p>
 	</div>
 
@@ -79,10 +79,10 @@ $site_types = array(
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
 			</svg>
-			<?php esc_html_e( 'Back', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Back', 'aivec-ai-search-schema' ); ?>
 		</a>
 		<button type="button" class="ais-wizard-btn ais-wizard-btn--primary ais-wizard-next-btn" data-next="api-key" id="ais-wizard-type-next" disabled>
-			<?php esc_html_e( 'Continue', 'ai-search-schema' ); ?>
+			<?php esc_html_e( 'Continue', 'aivec-ai-search-schema' ); ?>
 			<svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
 				<path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
 			</svg>

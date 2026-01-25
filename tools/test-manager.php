@@ -45,8 +45,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 // 権限チェック
 if ( ! current_user_can( 'manage_options' ) ) {
 	wp_die(
-		esc_html__( 'You do not have sufficient permissions to access this page.', 'ai-search-schema' ),
-		esc_html__( 'Access Denied', 'ai-search-schema' ),
+		esc_html__( 'You do not have sufficient permissions to access this page.', 'aivec-ai-search-schema' ),
+		esc_html__( 'Access Denied', 'aivec-ai-search-schema' ),
 		array( 'response' => 403 )
 	);
 }
@@ -57,7 +57,7 @@ if ( isset( $_SERVER['REQUEST_METHOD'] ) && 'POST' === $_SERVER['REQUEST_METHOD'
 		? sanitize_text_field( wp_unslash( $_POST['avc_ais_test_nonce'] ) )
 		: '';
 	if ( ! wp_verify_nonce( $nonce, 'avc_ais_test_manager' ) ) {
-		wp_die( esc_html__( 'Security check failed.', 'ai-search-schema' ) );
+		wp_die( esc_html__( 'Security check failed.', 'aivec-ai-search-schema' ) );
 	}
 }
 
@@ -77,11 +77,11 @@ if ( 'save_test_data' === $post_action ) {
 	if ( JSON_ERROR_NONE === json_last_error() && is_array( $decoded ) ) {
 		update_option( $test_data_option, $decoded );
 		wp_send_json_success(
-			array( 'message' => __( 'Data saved successfully.', 'ai-search-schema' ) )
+			array( 'message' => __( 'Data saved successfully.', 'aivec-ai-search-schema' ) )
 		);
 	} else {
 		wp_send_json_error(
-			array( 'message' => __( 'Invalid JSON data.', 'ai-search-schema' ) )
+			array( 'message' => __( 'Invalid JSON data.', 'aivec-ai-search-schema' ) )
 		);
 	}
 
@@ -130,20 +130,20 @@ if ( 'upload_screenshot' === $post_action ) {
 
 				wp_send_json_success(
 					array(
-						'message'       => __( 'Screenshot uploaded.', 'ai-search-schema' ),
+						'message'       => __( 'Screenshot uploaded.', 'aivec-ai-search-schema' ),
 						'attachment_id' => $attach_id,
 						'url'           => $uploaded['url'],
 					)
 				);
 			} else {
 				wp_send_json_error(
-					array( 'message' => __( 'Failed to create attachment.', 'ai-search-schema' ) )
+					array( 'message' => __( 'Failed to create attachment.', 'aivec-ai-search-schema' ) )
 				);
 			}
 		}
 	} else {
 		wp_send_json_error(
-			array( 'message' => __( 'No file uploaded.', 'ai-search-schema' ) )
+			array( 'message' => __( 'No file uploaded.', 'aivec-ai-search-schema' ) )
 		);
 	}
 
@@ -174,7 +174,7 @@ if ( 'auto_judge' === $post_action ) {
 	if ( empty( $judgment ) || 'manual' === ( $judgment['checkType'] ?? '' ) ) {
 		wp_send_json_error(
 			array(
-				'message' => __( 'This test requires manual verification.', 'ai-search-schema' ),
+				'message' => __( 'This test requires manual verification.', 'aivec-ai-search-schema' ),
 				'status'  => 'manual',
 			)
 		);
@@ -184,7 +184,7 @@ if ( 'auto_judge' === $post_action ) {
 	// Evaluatorが利用可能か確認
 	if ( ! class_exists( 'AVC_AIS_Diagnostic_Evaluator' ) ) {
 		wp_send_json_error(
-			array( 'message' => __( 'Diagnostic evaluator not available.', 'ai-search-schema' ) )
+			array( 'message' => __( 'Diagnostic evaluator not available.', 'aivec-ai-search-schema' ) )
 		);
 		wp_die();
 	}
@@ -226,7 +226,7 @@ if ( 'auto_judge' === $post_action ) {
 
 // プラグインのルートディレクトリを取得
 $plugin_dir = dirname( __DIR__ );
-$plugin_url = plugin_dir_url( $plugin_dir . '/ai-search-schema.php' );
+$plugin_url = plugin_dir_url( $plugin_dir . '/aivec-ai-search-schema.php' );
 
 // テスト仕様データ（JSONからロード）
 $test_spec_file = __DIR__ . '/test-spec.json';
@@ -241,7 +241,7 @@ if ( file_exists( $test_spec_file ) ) {
 $plugin_version = defined( 'AVC_AIS_VERSION' ) ? AVC_AIS_VERSION : '0.1.0';
 
 // 設定ページURL
-$settings_url     = admin_url( 'options-general.php?page=ai-search-schema' );
+$settings_url     = admin_url( 'options-general.php?page=aivec-ai-search-schema' );
 $rich_results_url = 'https://search.google.com/test/rich-results?url=' . rawurlencode( home_url() );
 $nonce_value      = wp_create_nonce( 'avc_ais_test_manager' );
 $test_spec_json   = wp_json_encode( $test_spec );
@@ -254,7 +254,7 @@ $test_data_json = wp_json_encode( empty( $test_data ) ? new stdClass() : $test_d
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php esc_html_e( 'AI Search Schema Test Manager', 'ai-search-schema' ); ?></title>
+	<title><?php esc_html_e( 'AI Search Schema Test Manager', 'aivec-ai-search-schema' ); ?></title>
 	<?php wp_head(); ?>
 	<style>
 		:root {

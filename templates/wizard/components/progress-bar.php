@@ -15,18 +15,18 @@ defined( 'ABSPATH' ) || exit;
 
 // Steps to show in progress bar (exclude welcome).
 $visible_steps = array(
-	'basics'   => __( 'Basic Info', 'ai-search-schema' ),
-	'type'     => __( 'Site Type', 'ai-search-schema' ),
-	'location' => __( 'Location', 'ai-search-schema' ),
-	'hours'    => __( 'Hours', 'ai-search-schema' ),
-	'complete' => __( 'Complete', 'ai-search-schema' ),
+	'basics'   => __( 'Basic Info', 'aivec-ai-search-schema' ),
+	'type'     => __( 'Site Type', 'aivec-ai-search-schema' ),
+	'location' => __( 'Location', 'aivec-ai-search-schema' ),
+	'hours'    => __( 'Hours', 'aivec-ai-search-schema' ),
+	'complete' => __( 'Complete', 'aivec-ai-search-schema' ),
 );
 
 $visible_keys    = array_keys( $visible_steps );
 $current_visible = array_search( $current_step, $visible_keys, true );
 $completed_steps = $progress['completed_steps'] ?? array();
 ?>
-<nav class="ais-wizard__progress" aria-label="<?php esc_attr_e( 'Setup progress', 'ai-search-schema' ); ?>">
+<nav class="ais-wizard__progress" aria-label="<?php esc_attr_e( 'Setup progress', 'aivec-ai-search-schema' ); ?>">
 	<ol class="ais-wizard__steps">
 		<?php foreach ( $visible_steps as $step_key => $step_label ) : ?>
 			<?php

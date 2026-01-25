@@ -211,7 +211,7 @@ class AVC_AIS_Breadcrumbs {
 		}
 
 		$items      = array();
-		$home_label = apply_filters( 'avc_ais_breadcrumb_home_label', __( 'Home', 'ai-search-schema' ) );
+		$home_label = apply_filters( 'avc_ais_breadcrumb_home_label', __( 'Home', 'aivec-ai-search-schema' ) );
 
 		$items[] = array(
 			'label' => $home_label,

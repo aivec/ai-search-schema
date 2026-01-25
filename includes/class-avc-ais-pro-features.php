@@ -105,25 +105,33 @@ class AVC_AIS_Pro_Features {
 	public function get_pro_features_list() {
 		return array(
 			array(
-				'title'       => __( 'Multi-Location Support', 'ai-search-schema' ),
-				// phpcs:ignore Generic.Files.LineLength.TooLong -- Translation string.
-				'description' => __( 'Manage multiple LocalBusiness locations from a single WordPress installation.', 'ai-search-schema' ),
+				'title'       => __( 'Multi-Location Support', 'aivec-ai-search-schema' ),
+				'description' => __(
+					'Manage multiple LocalBusiness locations from a single WordPress installation.',
+					'aivec-ai-search-schema'
+				),
 				'icon'        => 'dashicons-location',
 			),
 			array(
-				'title'       => __( 'Custom Schema Templates', 'ai-search-schema' ),
+				'title'       => __( 'Custom Schema Templates', 'aivec-ai-search-schema' ),
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- Translation string.
-				'description' => __( 'Create and save custom schema templates for different content types.', 'ai-search-schema' ),
+				'description' => __( 'Create and save custom schema templates for different content types.', 'aivec-ai-search-schema' ),
 				'icon'        => 'dashicons-editor-code',
 			),
 			array(
-				'title'       => __( 'Priority Support', 'ai-search-schema' ),
-				'description' => __( 'Get priority email support from our development team.', 'ai-search-schema' ),
+				'title'       => __( 'Priority Support', 'aivec-ai-search-schema' ),
+				'description' => __(
+					'Get priority email support from our development team.',
+					'aivec-ai-search-schema'
+				),
 				'icon'        => 'dashicons-sos',
 			),
 			array(
-				'title'       => __( 'Advanced Validation', 'ai-search-schema' ),
-				'description' => __( 'Scheduled automatic schema validation with email reports.', 'ai-search-schema' ),
+				'title'       => __( 'Advanced Validation', 'aivec-ai-search-schema' ),
+				'description' => __(
+					'Scheduled automatic schema validation with email reports.',
+					'aivec-ai-search-schema'
+				),
 				'icon'        => 'dashicons-yes-alt',
 			),
 		);
@@ -162,23 +170,37 @@ class AVC_AIS_Pro_Features {
 		}
 		?>
 		<div class="ais-pro-notice">
-			<span class="ais-pro-badge"><?php esc_html_e( 'Pro', 'ai-search-schema' ); ?></span>
+			<span class="ais-pro-badge"><?php esc_html_e( 'Pro', 'aivec-ai-search-schema' ); ?></span>
 			<?php if ( $feature ) : ?>
-				<p>
-					<?php
-					printf(
-						/* translators: %s: feature name */
-						esc_html__( '%s is a Pro feature. Upgrade to unlock all Pro features.', 'ai-search-schema' ),
-						esc_html( $feature )
-					);
-					?>
-				</p>
-			<?php else : ?>
-				<p><?php esc_html_e( 'Upgrade to Pro to unlock all advanced features.', 'ai-search-schema' ); ?></p>
-			<?php endif; ?>
-			<?php // phpcs:ignore Generic.Files.LineLength.TooLong -- URL cannot be split. ?>
-			<a href="https://aivec.co.jp/apps/ai-search-schema-pro" target="_blank" rel="noopener noreferrer" class="button button-primary">
-				<?php esc_html_e( 'Learn More', 'ai-search-schema' ); ?>
+					<p>
+						<?php
+						printf(
+							/* translators: %s: feature name */
+							esc_html__(
+								'%s is a Pro feature. Upgrade to unlock all Pro features.',
+								'aivec-ai-search-schema'
+							),
+							esc_html( $feature )
+						);
+						?>
+					</p>
+				<?php else : ?>
+					<p>
+						<?php
+						esc_html_e(
+							'Upgrade to Pro to unlock all advanced features.',
+							'aivec-ai-search-schema'
+						);
+						?>
+					</p>
+				<?php endif; ?>
+			<a
+				href="https://aivec.co.jp/apps/ai-search-schema-pro"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="button button-primary"
+			>
+				<?php esc_html_e( 'Learn More', 'aivec-ai-search-schema' ); ?>
 			</a>
 		</div>
 		<?php

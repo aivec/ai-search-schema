@@ -29,7 +29,7 @@ require_once $functions;
 
 tests_add_filter('muplugins_loaded', static function () {
     $plugin_dir = dirname(__DIR__, 2);
-    $plugin_file = $plugin_dir . '/ai-search-schema.php';
+    $plugin_file = $plugin_dir . '/aivec-ai-search-schema.php';
 
     if (!file_exists($plugin_file)) {
         fwrite(STDERR, "Plugin loader not found at {$plugin_file}.\n");

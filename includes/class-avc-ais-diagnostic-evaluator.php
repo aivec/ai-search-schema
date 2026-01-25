@@ -92,8 +92,8 @@ class AVC_AIS_Diagnostic_Evaluator {
 		// Final message construction.
 		if ( empty( $result['message'] ) ) {
 			$result['message'] = self::STATUS_INFO === $result['status']
-				? __( 'All checks passed.', 'ai-search-schema' )
-				: __( 'Some issues detected. See details.', 'ai-search-schema' );
+				? __( 'All checks passed.', 'aivec-ai-search-schema' )
+				: __( 'Some issues detected. See details.', 'aivec-ai-search-schema' );
 		}
 
 		return $result;
@@ -120,7 +120,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 		if ( empty( $json_ld_raw ) ) {
 			return array(
 				'status'  => self::STATUS_ERROR,
-				'message' => __( 'No JSON-LD structured data found on this page.', 'ai-search-schema' ),
+				'message' => __( 'No JSON-LD structured data found on this page.', 'aivec-ai-search-schema' ),
 				'details' => array( 'json_ld_missing' => true ),
 			);
 		}
@@ -129,7 +129,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 		if ( false === $parsed ) {
 			return array(
 				'status'  => self::STATUS_ERROR,
-				'message' => __( 'JSON-LD could not be parsed. Invalid format.', 'ai-search-schema' ),
+				'message' => __( 'JSON-LD could not be parsed. Invalid format.', 'aivec-ai-search-schema' ),
 				'details' => array( 'json_ld_parse_error' => true ),
 			);
 		}
@@ -145,7 +145,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 					'status'  => self::STATUS_ERROR,
 					'message' => sprintf(
 						/* translators: %s: schema type name */
-						__( 'Target schema type "%s" not found in JSON-LD.', 'ai-search-schema' ),
+						__( 'Target schema type "%s" not found in JSON-LD.', 'aivec-ai-search-schema' ),
 						$target_type
 					),
 					'details' => array(
@@ -202,7 +202,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 				'status'  => self::STATUS_ERROR,
 				'message' => sprintf(
 					/* translators: %s: comma-separated list of field names */
-					__( 'Required fields missing: %s', 'ai-search-schema' ),
+					__( 'Required fields missing: %s', 'aivec-ai-search-schema' ),
 					implode( ', ', $missing_required )
 				),
 				'details' => array(
@@ -258,7 +258,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 					'fields'  => $missing_recommended,
 					'message' => sprintf(
 						/* translators: %s: comma-separated list of field names */
-						__( 'Recommended fields missing: %s', 'ai-search-schema' ),
+						__( 'Recommended fields missing: %s', 'aivec-ai-search-schema' ),
 						implode( ', ', $missing_recommended )
 					),
 				);
@@ -277,7 +277,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 					'actual'  => $actual_count,
 					'message' => sprintf(
 						/* translators: 1: field name, 2: minimum count, 3: actual count */
-						__( '%1$s has %3$d items (minimum: %2$d).', 'ai-search-schema' ),
+						__( '%1$s has %3$d items (minimum: %2$d).', 'aivec-ai-search-schema' ),
 						$min_count_field,
 						$min_count,
 						$actual_count
@@ -298,7 +298,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 					'actual'  => $actual_len,
 					'message' => sprintf(
 						/* translators: 1: field name, 2: minimum length, 3: actual length */
-						__( '%1$s is %3$d characters (minimum: %2$d).', 'ai-search-schema' ),
+						__( '%1$s is %3$d characters (minimum: %2$d).', 'aivec-ai-search-schema' ),
 						$min_len_field,
 						$min_len,
 						$actual_len
@@ -321,7 +321,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 			$result['status']                    = $error_on_fail ? self::STATUS_ERROR : self::STATUS_WARNING;
 			$result['message']                   = $issues[0]['message'] ?? __(
 				'Quality issues detected.',
-				'ai-search-schema'
+				'aivec-ai-search-schema'
 			);
 			$result['details']['quality_issues'] = $issues;
 		}
@@ -361,7 +361,7 @@ class AVC_AIS_Diagnostic_Evaluator {
 				'missing' => $missing,
 				'message' => sprintf(
 					/* translators: %s: comma-separated list of field names */
-					__( 'Partial data: some fields in group are missing: %s', 'ai-search-schema' ),
+					__( 'Partial data: some fields in group are missing: %s', 'aivec-ai-search-schema' ),
 					implode( ', ', $missing )
 				),
 			);
