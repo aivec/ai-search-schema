@@ -21,7 +21,7 @@ $total_steps = count( $step_keys );
 <head>
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AI Search Schema Setup', 'ai-search-schema' ) ); ?></title>
+	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AI Search Schema Setup', 'aivec-ai-search-schema' ) ); ?></title>
 	<?php
 	wp_enqueue_style( 'ais-wizard' );
 	wp_print_styles( 'ais-wizard' );
@@ -63,7 +63,7 @@ $total_steps = count( $step_keys );
 				if ( file_exists( $step_file ) ) {
 					include $step_file;
 				} else {
-					echo '<p>' . esc_html__( 'Step template not found.', 'ai-search-schema' ) . '</p>';
+					echo '<p>' . esc_html__( 'Step template not found.', 'aivec-ai-search-schema' ) . '</p>';
 				}
 				?>
 			</div>
@@ -75,7 +75,7 @@ $total_steps = count( $step_keys );
 				<?php
 				printf(
 					/* translators: %s: plugin version */
-					esc_html__( 'AI Search Schema v%s', 'ai-search-schema' ),
+					esc_html__( 'AI Search Schema v%s', 'aivec-ai-search-schema' ),
 					esc_html( AVC_AIS_VERSION )
 				);
 				?>

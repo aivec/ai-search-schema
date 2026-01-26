@@ -8,7 +8,7 @@
  * AVC 優先モード時は、最終HTMLから
  * 「AVC が出力した JSON-LD 以外の application/ld+json <script> をすべて削除」する。
  * 各SEOプラグインごとの出力仕様変更に影響されないよう、
- * 目印付きスクリプト（class="ai-search-schema-graph" / data-ai-search-schema="1"）だけ残すポリシー。
+ * 目印付きスクリプト（class="avc-ais-schema-graph" / data-avc-ais-schema="1"）だけ残すポリシー。
  *
  */
 class AVC_AIS_Schema {
@@ -141,11 +141,14 @@ class AVC_AIS_Schema {
 		$validation = $validator->validate( $schema_data );
 
 		if ( $this->local_business_suppressed ) {
-			$message = __( 'LocalBusiness: Skipped output because required fields were missing.', 'ai-search-schema' );
+			$message = __(
+				'LocalBusiness: Skipped output because required fields were missing.',
+				'aivec-ai-search-schema'
+			);
 			if ( ! empty( $this->local_business_missing_fields ) ) {
 				$message .= ' ' . sprintf(
 					/* translators: %s: comma separated list of missing fields */
-					__( 'Missing fields: %s.', 'ai-search-schema' ),
+					__( 'Missing fields: %s.', 'aivec-ai-search-schema' ),
 					implode( ', ', $this->local_business_missing_fields )
 				);
 			}
@@ -277,13 +280,19 @@ class AVC_AIS_Schema {
 		$publisher_entity = ! empty( $options['publisher_entity'] )
 			? $options['publisher_entity']
 			: 'Organization';
-		if ( 'Organization' !== $publisher_entity ) {
+		if ( ! in_array( $publisher_entity, array( 'Organization', 'LocalBusiness' ), true ) ) {
 			$publisher_entity = 'Organization';
 		}
 
 		$publisher_id = null;
-		if ( 'Organization' === $publisher_entity && ! empty( $organization ) ) {
+		if ( 'LocalBusiness' === $publisher_entity && ! empty( $local_business ) ) {
+			$publisher_id = $ids['local_business'];
+		} elseif ( 'Organization' === $publisher_entity && ! empty( $organization ) ) {
 			$publisher_id = $ids['organization'];
+		} elseif ( ! empty( $organization ) ) {
+			$publisher_id = $ids['organization'];
+		} elseif ( ! empty( $local_business ) ) {
+			$publisher_id = $ids['local_business'];
 		}
 
 		$website = $this->build_website_schema( $options, $ids, $site_url, $primary_language, $publisher_id );
@@ -936,11 +945,11 @@ class AVC_AIS_Schema {
 			if ( $query ) {
 				$context['title'] = sprintf(
 					/* translators: %s: search query string. */
-					__( 'Search results for "%s"', 'ai-search-schema' ),
+					__( 'Search results for "%s"', 'aivec-ai-search-schema' ),
 					$query
 				);
 			} else {
-				$context['title'] = __( 'Search results', 'ai-search-schema' );
+				$context['title'] = __( 'Search results', 'aivec-ai-search-schema' );
 			}
 			$search_link       = get_search_link( $query );
 			$context['url']    = is_wp_error( $search_link ) ? $this->get_current_url() : $search_link;
@@ -1695,13 +1704,22 @@ class AVC_AIS_Schema {
 		}
 
 		$publisher_entity = ! empty( $options['publisher_entity'] ) ? $options['publisher_entity'] : 'Organization';
-		if ( 'Organization' !== $publisher_entity ) {
+		if ( ! in_array( $publisher_entity, array( 'Organization', 'LocalBusiness' ), true ) ) {
 			$publisher_entity = 'Organization';
+		}
+
+		$publisher_name = ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' );
+		if ( 'LocalBusiness' === $publisher_entity ) {
+			$label         = ! empty( $options['local_business_label'] ) ? $options['local_business_label'] : '';
+			$composed_name = trim( $publisher_name . ' ' . $label );
+			if ( '' !== $composed_name ) {
+				$publisher_name = $composed_name;
+			}
 		}
 
 		$publisher = array(
 			'@type' => $publisher_entity,
-			'name'  => ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' ),
+			'name'  => $publisher_name,
 		);
 
 		if ( 'Organization' === $publisher_entity ) {
@@ -2223,7 +2241,10 @@ class AVC_AIS_Schema {
 			function ( $matches ) {
 				$script_tag = $matches[0];
 
-				if ( preg_match( '#class=["\'][^"\']*ai-search-schema-graph[^"\']*["\']#i', $script_tag ) ) {
+				if (
+					preg_match( '#class=["\'][^"\']*avc-ais-schema-graph[^"\']*["\']#i', $script_tag )
+					|| preg_match( '#data-avc-ais-schema=["\']1["\']#i', $script_tag )
+				) {
 					return $script_tag;
 				}
 
@@ -2235,7 +2256,10 @@ class AVC_AIS_Schema {
 					}
 				}
 
-				if ( preg_match( '#class=["\'][^"\']*ai-search-schema-graph[^"\']*["\']#i', $script_tag ) ) {
+				if (
+					preg_match( '#class=["\'][^"\']*avc-ais-schema-graph[^"\']*["\']#i', $script_tag )
+					|| preg_match( '#data-avc-ais-schema=["\']1["\']#i', $script_tag )
+				) {
 					return $script_tag;
 				}
 
@@ -2346,7 +2370,8 @@ class AVC_AIS_Schema {
 		}
 
 		$script_tag = sprintf(
-			'<script type="application/ld+json" class="ai-search-schema">%s</script>',
+			'<script type="application/ld+json" class="avc-ais-schema avc-ais-schema-graph" '
+			. 'data-avc-ais-schema="1">%s</script>',
 			$json
 		);
 
@@ -2356,8 +2381,9 @@ class AVC_AIS_Schema {
 				$script_tag,
 				array(
 					'script' => array(
-						'type'  => true,
-						'class' => true,
+						'type'                => true,
+						'class'               => true,
+						'data-avc-ais-schema' => true,
 					),
 				)
 			)
@@ -2444,11 +2470,11 @@ class AVC_AIS_Schema {
 
 		echo '<div class="notice notice-info is-dismissible ai-search-schema-notice">';
 		echo '<p><strong>'
-			. esc_html__( 'AI Search Schema – Development Mode Warning', 'ai-search-schema' )
+			. esc_html__( 'AI Search Schema – Development Mode Warning', 'aivec-ai-search-schema' )
 			. '</strong></p>';
 		if ( ! empty( $errors ) ) {
 			echo '<p>'
-				. esc_html__( 'The following validation errors were detected:', 'ai-search-schema' )
+				. esc_html__( 'The following validation errors were detected:', 'aivec-ai-search-schema' )
 				. '</p>';
 			echo '<ul>';
 			foreach ( (array) $errors as $error ) {
@@ -2458,7 +2484,7 @@ class AVC_AIS_Schema {
 		}
 		if ( ! empty( $warnings ) ) {
 			echo '<p>'
-				. esc_html__( 'Warnings:', 'ai-search-schema' )
+				. esc_html__( 'Warnings:', 'aivec-ai-search-schema' )
 				. '</p>';
 			echo '<ul>';
 			foreach ( (array) $warnings as $warning ) {
@@ -2467,7 +2493,7 @@ class AVC_AIS_Schema {
 			echo '</ul>';
 		}
 		echo '<p><small>'
-			. esc_html__( 'This warning only appears while WP_DEBUG is true.', 'ai-search-schema' )
+			. esc_html__( 'This warning only appears while WP_DEBUG is true.', 'aivec-ai-search-schema' )
 			. '</small></p>';
 		echo '</div>';
 	}
@@ -2485,10 +2511,10 @@ class AVC_AIS_Schema {
 			echo '<div class="notice notice-info ai-search-schema-notice"'
 				. ' style="margin:20px;">';
 			echo '<p><strong>'
-				. esc_html__( 'AI Search Schema – Development Mode Warning', 'ai-search-schema' )
+				. esc_html__( 'AI Search Schema – Development Mode Warning', 'aivec-ai-search-schema' )
 				. '</strong></p>';
 			echo '<p>'
-				. esc_html__( 'The following validation errors were detected:', 'ai-search-schema' )
+				. esc_html__( 'The following validation errors were detected:', 'aivec-ai-search-schema' )
 				. '</p>';
 			echo '<ul>';
 			foreach ( $this->runtime_validation_errors as $error ) {
@@ -2497,7 +2523,7 @@ class AVC_AIS_Schema {
 			echo '</ul>';
 			if ( ! empty( $this->runtime_validation_warnings ) ) {
 				echo '<p>'
-					. esc_html__( 'Warnings:', 'ai-search-schema' )
+					. esc_html__( 'Warnings:', 'aivec-ai-search-schema' )
 					. '</p>';
 				echo '<ul>';
 				foreach ( $this->runtime_validation_warnings as $warning ) {
@@ -2506,7 +2532,7 @@ class AVC_AIS_Schema {
 				echo '</ul>';
 			}
 			echo '<p><small>'
-				. esc_html__( 'This warning only appears while WP_DEBUG is true.', 'ai-search-schema' )
+				. esc_html__( 'This warning only appears while WP_DEBUG is true.', 'aivec-ai-search-schema' )
 				. '</small></p>';
 			echo '</div>';
 		}

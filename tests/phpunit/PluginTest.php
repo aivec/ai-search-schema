@@ -133,7 +133,7 @@ class PluginTest extends WP_UnitTestCase {
 		add_filter(
 			'plugin_locale',
 			function ( $locale, $domain ) use ( &$filter_called, &$test_locale ) {
-				if ( 'ai-search-schema' === $domain ) {
+				if ( 'aivec-ai-search-schema' === $domain ) {
 					$filter_called = true;
 					$test_locale   = $locale;
 				}
@@ -167,7 +167,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		$this->plugin->load_textdomain();
 
-		$this->assertEquals( 'ai-search-schema', $captured_domain );
+		$this->assertEquals( 'aivec-ai-search-schema', $captured_domain );
 	}
 
 	// ===== bootstrap Tests =====
@@ -306,7 +306,7 @@ class PluginTest extends WP_UnitTestCase {
 
 		$this->assertNotEmpty( $dir );
 		$this->assertDirectoryExists( $dir );
-		$this->assertFileExists( $dir . 'ai-search-schema.php' );
+		$this->assertFileExists( $dir . 'aivec-ai-search-schema.php' );
 	}
 
 	/**

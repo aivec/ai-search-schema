@@ -159,7 +159,7 @@ function ais_render_tooltip( $text ) {
 		'<span class="ais-field__tooltip-icon" aria-label="%1$s">?</span>' .
 		'<span class="ais-field__tooltip-text">%2$s</span>' .
 		'</span>',
-		esc_attr__( 'Help', 'ai-search-schema' ),
+		esc_attr__( 'Help', 'aivec-ai-search-schema' ),
 		esc_html( $text )
 	);
 }

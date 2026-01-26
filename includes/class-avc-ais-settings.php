@@ -64,10 +64,10 @@ class AVC_AIS_Settings {
 	public function add_settings_page() {
 		// トップレベルメニューを追加.
 		add_menu_page(
-			__( 'AI Search Schema Settings', 'ai-search-schema' ),
-			__( 'AI Search Schema', 'ai-search-schema' ),
+			__( 'AI Search Schema Settings', 'aivec-ai-search-schema' ),
+			__( 'AI Search Schema', 'aivec-ai-search-schema' ),
 			'manage_options',
-			'ai-search-schema',
+			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' ),
 			'dashicons-schema',
 			81
@@ -75,11 +75,11 @@ class AVC_AIS_Settings {
 
 		// メイン設定ページをサブメニューとして追加（トップレベルと同じページ）.
 		add_submenu_page(
-			'ai-search-schema',
-			__( 'AI Search Schema Settings', 'ai-search-schema' ),
-			__( 'Settings', 'ai-search-schema' ),
+			'aivec-ai-search-schema',
+			__( 'AI Search Schema Settings', 'aivec-ai-search-schema' ),
+			__( 'Settings', 'aivec-ai-search-schema' ),
 			'manage_options',
-			'ai-search-schema',
+			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -97,7 +97,7 @@ class AVC_AIS_Settings {
 	 * @param string $hook 現在の管理画面フック名
 	 */
 	public function enqueue_assets( $hook ) {
-		if ( 'toplevel_page_ai-search-schema' !== $hook ) {
+		if ( 'toplevel_page_aivec-ai-search-schema' !== $hook ) {
 			return;
 		}
 
@@ -161,33 +161,42 @@ class AVC_AIS_Settings {
 				'socialOptions'             => $this->get_social_network_choices(),
 				'languageOptions'           => $this->get_language_choices(),
 				/* translators: %s: The language label shown as a tag. */
-				'i18nLanguageRemove'        => __( 'Remove "%s"', 'ai-search-schema' ),
+				'i18nLanguageRemove'        => __( 'Remove "%s"', 'aivec-ai-search-schema' ),
 				'ajaxUrl'                   => admin_url( 'admin-ajax.php' ),
 				'geocodeNonce'              => wp_create_nonce( 'avc_ais_geocode' ),
-				'i18nGeocodeReady'          => __( 'Fetch coordinates from address', 'ai-search-schema' ),
-				'i18nGeocodeWorking'        => __( 'Fetching...', 'ai-search-schema' ),
-				'i18nGeocodeSuccess'        => __( 'Latitude and longitude updated.', 'ai-search-schema' ),
-				'i18nGeocodeFailure'        => __( 'Unable to fetch latitude and longitude.', 'ai-search-schema' ),
-				'i18nGeocodeMissingAddress' => __( 'Enter the address information.', 'ai-search-schema' ),
-				'i18nGeocodeMissingKey'     => __( 'Please configure a Google Maps API key.', 'ai-search-schema' ),
+				'i18nGeocodeReady'          => __( 'Fetch coordinates from address', 'aivec-ai-search-schema' ),
+				'i18nGeocodeWorking'        => __( 'Fetching...', 'aivec-ai-search-schema' ),
+				'i18nGeocodeSuccess'        => __( 'Latitude and longitude updated.', 'aivec-ai-search-schema' ),
+				'i18nGeocodeFailure'        => __(
+					'Unable to fetch latitude and longitude.',
+					'aivec-ai-search-schema'
+				),
+				'i18nGeocodeMissingAddress' => __(
+					'Enter the address information.',
+					'aivec-ai-search-schema'
+				),
+				'i18nGeocodeMissingKey'     => __(
+					'Please configure a Google Maps API key.',
+					'aivec-ai-search-schema'
+				),
 				'hasGeocodeApiKey'          => ! empty( $gmaps_api_key ),
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
-				'i18nEntityHelpOrg'         => __( 'The primary role of this site is defined as an "Organization". You can also enter headquarters or branch office information in the "Local details & hours" section below to associate your organization with a physical location and enhance visibility in local search results.', 'ai-search-schema' ),
+				'i18nEntityHelpOrg'         => __( 'The primary role of this site is defined as an "Organization". You can also enter headquarters or branch office information in the "Local details & hours" section below to associate your organization with a physical location and enhance visibility in local search results.', 'aivec-ai-search-schema' ),
 				// phpcs:ignore Generic.Files.LineLength.TooLong -- 翻訳文字列は分割できない
-				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'ai-search-schema' ),
+				'i18nEntityHelpLB'          => __( 'The primary role of this site is defined as a "Store/Business location". This setting is ideal when the site itself represents a specific physical store or service location.', 'aivec-ai-search-schema' ),
 				'llmsTxtNonce'              => wp_create_nonce( 'avc_ais_regenerate_llms_txt' ),
 				'llmsTxtSaveNonce'          => wp_create_nonce( 'avc_ais_save_llms_txt' ),
-				'i18nLlmsTxtRegenerating'   => __( 'Regenerating...', 'ai-search-schema' ),
-				'i18nLlmsTxtRegenerate'     => __( 'Regenerate from site data', 'ai-search-schema' ),
-				'i18nLlmsTxtSaving'         => __( 'Saving...', 'ai-search-schema' ),
-				'i18nLlmsTxtSave'           => __( 'Save edits', 'ai-search-schema' ),
-				'i18nLlmsTxtSaved'          => __( 'Saved!', 'ai-search-schema' ),
+				'i18nLlmsTxtRegenerating'   => __( 'Regenerating...', 'aivec-ai-search-schema' ),
+				'i18nLlmsTxtRegenerate'     => __( 'Regenerate from site data', 'aivec-ai-search-schema' ),
+				'i18nLlmsTxtSaving'         => __( 'Saving...', 'aivec-ai-search-schema' ),
+				'i18nLlmsTxtSave'           => __( 'Save edits', 'aivec-ai-search-schema' ),
+				'i18nLlmsTxtSaved'          => __( 'Saved!', 'aivec-ai-search-schema' ),
 				// License strings.
 				'licenseNonce'              => wp_create_nonce( 'avc_ais_license' ),
-				'i18nLicenseActivating'     => __( 'Activating...', 'ai-search-schema' ),
-				'i18nLicenseDeactivating'   => __( 'Deactivating...', 'ai-search-schema' ),
-				'i18nLicenseActivate'       => __( 'Activate', 'ai-search-schema' ),
-				'i18nLicenseDeactivate'     => __( 'Deactivate', 'ai-search-schema' ),
+				'i18nLicenseActivating'     => __( 'Activating...', 'aivec-ai-search-schema' ),
+				'i18nLicenseDeactivating'   => __( 'Deactivating...', 'aivec-ai-search-schema' ),
+				'i18nLicenseActivate'       => __( 'Activate', 'aivec-ai-search-schema' ),
+				'i18nLicenseDeactivate'     => __( 'Deactivate', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -219,7 +228,7 @@ class AVC_AIS_Settings {
 			$this->respond_json(
 				false,
 				array(
-					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+					'message' => __( 'You do not have permission to perform this action.', 'aivec-ai-search-schema' ),
 				),
 				403
 			);
@@ -228,7 +237,10 @@ class AVC_AIS_Settings {
 		$wait_seconds = $this->claim_geocode_slot();
 		if ( $wait_seconds > 0 ) {
 			/* translators: %d: number of seconds an admin must wait before requesting new coordinates. */
-			$message_format = __( 'Please wait %d seconds before requesting new coordinates.', 'ai-search-schema' );
+			$message_format = __(
+				'Please wait %d seconds before requesting new coordinates.',
+				'aivec-ai-search-schema'
+			);
 			$this->respond_json(
 				false,
 				array(
@@ -260,7 +272,7 @@ class AVC_AIS_Settings {
 		if ( empty( $parts ) ) {
 			$this->respond_json(
 				false,
-				array( 'message' => __( 'Enter the address information.', 'ai-search-schema' ) )
+				array( 'message' => __( 'Enter the address information.', 'aivec-ai-search-schema' ) )
 			);
 		}
 
@@ -294,7 +306,7 @@ class AVC_AIS_Settings {
 			$this->respond_json(
 				false,
 				array(
-					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+					'message' => __( 'You do not have permission to perform this action.', 'aivec-ai-search-schema' ),
 				),
 				403
 			);
@@ -308,7 +320,7 @@ class AVC_AIS_Settings {
 			true,
 			array(
 				'content' => $content,
-				'message' => __( 'llms.txt content has been regenerated from site data.', 'ai-search-schema' ),
+				'message' => __( 'llms.txt content has been regenerated from site data.', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -323,7 +335,7 @@ class AVC_AIS_Settings {
 			$this->respond_json(
 				false,
 				array(
-					'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ),
+					'message' => __( 'You do not have permission to perform this action.', 'aivec-ai-search-schema' ),
 				),
 				403
 			);
@@ -343,7 +355,7 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'message' => __( 'llms.txt content has been saved.', 'ai-search-schema' ),
+				'message' => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -410,7 +422,7 @@ class AVC_AIS_Settings {
 		if ( 200 !== $code || empty( $body ) ) {
 			return new \WP_Error(
 				'avc_ais_geocode_http_error',
-				__( 'The geocoding API returned an error.', 'ai-search-schema' )
+				__( 'The geocoding API returned an error.', 'aivec-ai-search-schema' )
 			);
 		}
 
@@ -421,7 +433,7 @@ class AVC_AIS_Settings {
 		if ( empty( $body['results'][0]['geometry']['location'] ) ) {
 			return new \WP_Error(
 				'avc_ais_geocode_not_found',
-				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
+				__( 'Unable to fetch latitude and longitude.', 'aivec-ai-search-schema' )
 			);
 		}
 
@@ -570,7 +582,7 @@ class AVC_AIS_Settings {
 		if ( $code < 200 || $code >= 300 ) {
 			return new \WP_Error(
 				'avc_ais_geocode_http_error',
-				__( 'The geocoding API returned an error.', 'ai-search-schema' )
+				__( 'The geocoding API returned an error.', 'aivec-ai-search-schema' )
 			);
 		}
 
@@ -580,7 +592,7 @@ class AVC_AIS_Settings {
 		if ( empty( $data ) || empty( $data[0]['lat'] ) || empty( $data[0]['lon'] ) ) {
 			return new \WP_Error(
 				'avc_ais_geocode_not_found',
-				__( 'Unable to fetch latitude and longitude.', 'ai-search-schema' )
+				__( 'Unable to fetch latitude and longitude.', 'aivec-ai-search-schema' )
 			);
 		}
 
@@ -591,7 +603,7 @@ class AVC_AIS_Settings {
 			'provider'  => 'nominatim',
 			'notice'    => __(
 				'No Google Maps API key was found, so OpenStreetMap (for development) was used instead.',
-				'ai-search-schema'
+				'aivec-ai-search-schema'
 			),
 		);
 	}
@@ -625,7 +637,7 @@ class AVC_AIS_Settings {
 		} else {
 			printf(
 				'<div class="notice notice-error"><p>%s</p></div>',
-				esc_html__( 'Settings template could not be located.', 'ai-search-schema' )
+				esc_html__( 'Settings template could not be located.', 'aivec-ai-search-schema' )
 			);
 		}
 	}
@@ -744,7 +756,7 @@ class AVC_AIS_Settings {
 		if ( '' === $country ) {
 			$country = 'JP';
 		}
-		// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+	// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
 		$address_locality = sanitize_text_field( $address['city'] ?? $address['locality'] ?? '' );
 		$street_address   = sanitize_text_field( $address['address_line'] ?? $address['street_address'] ?? '' );
 		$output['address'] = array(
@@ -899,7 +911,8 @@ class AVC_AIS_Settings {
 			: '';
 
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		$llms_txt = AVC_AIS_Llms_Txt::init();
+		$llms_txt         = AVC_AIS_Llms_Txt::init();
+		$previous_enabled = $llms_txt->is_enabled();
 		$llms_txt->set_enabled( $llms_txt_enabled );
 		if ( ! empty( $llms_txt_content ) ) {
 			$llms_txt->save_content( $llms_txt_content );
@@ -909,7 +922,6 @@ class AVC_AIS_Settings {
 		}
 
 		// Flush rewrite rules if llms.txt enabled status changed.
-		$previous_enabled = $llms_txt->is_enabled();
 		if ( $llms_txt_enabled !== $previous_enabled ) {
 			flush_rewrite_rules();
 		}
@@ -1230,17 +1242,17 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'facebook'    => __( 'Facebook', 'ai-search-schema' ),
-			'instagram'   => __( 'Instagram', 'ai-search-schema' ),
-			'x'           => __( 'X', 'ai-search-schema' ),
-			'youtube'     => __( 'YouTube', 'ai-search-schema' ),
-			'google_plus' => __( 'Google+', 'ai-search-schema' ),
-			'line'        => __( 'LINE', 'ai-search-schema' ),
-			'tiktok'      => __( 'TikTok', 'ai-search-schema' ),
-			'threads'     => __( 'Threads', 'ai-search-schema' ),
-			'pinterest'   => __( 'Pinterest', 'ai-search-schema' ),
-			'mixi'        => __( 'mixi', 'ai-search-schema' ),
-			'other'       => __( 'Other', 'ai-search-schema' ),
+			'facebook'    => __( 'Facebook', 'aivec-ai-search-schema' ),
+			'instagram'   => __( 'Instagram', 'aivec-ai-search-schema' ),
+			'x'           => __( 'X', 'aivec-ai-search-schema' ),
+			'youtube'     => __( 'YouTube', 'aivec-ai-search-schema' ),
+			'google_plus' => __( 'Google+', 'aivec-ai-search-schema' ),
+			'line'        => __( 'LINE', 'aivec-ai-search-schema' ),
+			'tiktok'      => __( 'TikTok', 'aivec-ai-search-schema' ),
+			'threads'     => __( 'Threads', 'aivec-ai-search-schema' ),
+			'pinterest'   => __( 'Pinterest', 'aivec-ai-search-schema' ),
+			'mixi'        => __( 'mixi', 'aivec-ai-search-schema' ),
+			'other'       => __( 'Other', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1264,13 +1276,13 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'WebPage'     => __( 'WebPage (default)', 'ai-search-schema' ),
-			'Article'     => __( 'Article', 'ai-search-schema' ),
-			'FAQPage'     => __( 'FAQPage', 'ai-search-schema' ),
-			'QAPage'      => __( 'QAPage', 'ai-search-schema' ),
-			'NewsArticle' => __( 'NewsArticle', 'ai-search-schema' ),
-			'BlogPosting' => __( 'BlogPosting', 'ai-search-schema' ),
-			'Product'     => __( 'Product', 'ai-search-schema' ),
+			'WebPage'     => __( 'WebPage (default)', 'aivec-ai-search-schema' ),
+			'Article'     => __( 'Article', 'aivec-ai-search-schema' ),
+			'FAQPage'     => __( 'FAQPage', 'aivec-ai-search-schema' ),
+			'QAPage'      => __( 'QAPage', 'aivec-ai-search-schema' ),
+			'NewsArticle' => __( 'NewsArticle', 'aivec-ai-search-schema' ),
+			'BlogPosting' => __( 'BlogPosting', 'aivec-ai-search-schema' ),
+			'Product'     => __( 'Product', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1298,17 +1310,17 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'ja'    => __( 'Japanese', 'ai-search-schema' ),
-			'en'    => __( 'English', 'ai-search-schema' ),
-			'zh-CN' => __( 'Chinese (Simplified)', 'ai-search-schema' ),
-			'zh-TW' => __( 'Chinese (Traditional)', 'ai-search-schema' ),
-			'ko'    => __( 'Korean', 'ai-search-schema' ),
-			'fr'    => __( 'French', 'ai-search-schema' ),
-			'de'    => __( 'German', 'ai-search-schema' ),
-			'es'    => __( 'Spanish', 'ai-search-schema' ),
-			'pt'    => __( 'Portuguese', 'ai-search-schema' ),
-			'it'    => __( 'Italian', 'ai-search-schema' ),
-			'th'    => __( 'Thai', 'ai-search-schema' ),
+			'ja'    => __( 'Japanese', 'aivec-ai-search-schema' ),
+			'en'    => __( 'English', 'aivec-ai-search-schema' ),
+			'zh-CN' => __( 'Chinese (Simplified)', 'aivec-ai-search-schema' ),
+			'zh-TW' => __( 'Chinese (Traditional)', 'aivec-ai-search-schema' ),
+			'ko'    => __( 'Korean', 'aivec-ai-search-schema' ),
+			'fr'    => __( 'French', 'aivec-ai-search-schema' ),
+			'de'    => __( 'German', 'aivec-ai-search-schema' ),
+			'es'    => __( 'Spanish', 'aivec-ai-search-schema' ),
+			'pt'    => __( 'Portuguese', 'aivec-ai-search-schema' ),
+			'it'    => __( 'Italian', 'aivec-ai-search-schema' ),
+			'th'    => __( 'Thai', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1333,14 +1345,14 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'Monday'        => __( 'Monday', 'ai-search-schema' ),
-			'Tuesday'       => __( 'Tuesday', 'ai-search-schema' ),
-			'Wednesday'     => __( 'Wednesday', 'ai-search-schema' ),
-			'Thursday'      => __( 'Thursday', 'ai-search-schema' ),
-			'Friday'        => __( 'Friday', 'ai-search-schema' ),
-			'Saturday'      => __( 'Saturday', 'ai-search-schema' ),
-			'Sunday'        => __( 'Sunday', 'ai-search-schema' ),
-			'PublicHoliday' => __( 'Public holiday', 'ai-search-schema' ),
+			'Monday'        => __( 'Monday', 'aivec-ai-search-schema' ),
+			'Tuesday'       => __( 'Tuesday', 'aivec-ai-search-schema' ),
+			'Wednesday'     => __( 'Wednesday', 'aivec-ai-search-schema' ),
+			'Thursday'      => __( 'Thursday', 'aivec-ai-search-schema' ),
+			'Friday'        => __( 'Friday', 'aivec-ai-search-schema' ),
+			'Saturday'      => __( 'Saturday', 'aivec-ai-search-schema' ),
+			'Sunday'        => __( 'Sunday', 'aivec-ai-search-schema' ),
+			'PublicHoliday' => __( 'Public holiday', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1582,16 +1594,16 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'auto'           => __( 'Use global default content model', 'ai-search-schema' ),
-			'WebPage'        => __( 'WebPage', 'ai-search-schema' ),
-			'Article'        => __( 'Article', 'ai-search-schema' ),
-			'BlogPosting'    => __( 'BlogPosting', 'ai-search-schema' ),
-			'NewsArticle'    => __( 'NewsArticle', 'ai-search-schema' ),
-			'FAQPage'        => __( 'FAQPage', 'ai-search-schema' ),
-			'QAPage'         => __( 'QAPage', 'ai-search-schema' ),
-			'Product'        => __( 'Product', 'ai-search-schema' ),
-			'CollectionPage' => __( 'CollectionPage', 'ai-search-schema' ),
-			'ItemList'       => __( 'ItemList', 'ai-search-schema' ),
+			'auto'           => __( 'Use global default content model', 'aivec-ai-search-schema' ),
+			'WebPage'        => __( 'WebPage', 'aivec-ai-search-schema' ),
+			'Article'        => __( 'Article', 'aivec-ai-search-schema' ),
+			'BlogPosting'    => __( 'BlogPosting', 'aivec-ai-search-schema' ),
+			'NewsArticle'    => __( 'NewsArticle', 'aivec-ai-search-schema' ),
+			'FAQPage'        => __( 'FAQPage', 'aivec-ai-search-schema' ),
+			'QAPage'         => __( 'QAPage', 'aivec-ai-search-schema' ),
+			'Product'        => __( 'Product', 'aivec-ai-search-schema' ),
+			'CollectionPage' => __( 'CollectionPage', 'aivec-ai-search-schema' ),
+			'ItemList'       => __( 'ItemList', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1610,8 +1622,8 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'ais'      => __( 'AVC schema priority (suppress other plugins)', 'ai-search-schema' ),
-			'external' => __( 'Let other SEO plugins output schema', 'ai-search-schema' ),
+			'ais'      => __( 'AVC schema priority (suppress other plugins)', 'aivec-ai-search-schema' ),
+			'external' => __( 'Let other SEO plugins output schema', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1675,26 +1687,26 @@ class AVC_AIS_Settings {
 		}
 
 		return array(
-			'JP' => __( 'Japan', 'ai-search-schema' ),
-			'US' => __( 'United States', 'ai-search-schema' ),
-			'CN' => __( 'China', 'ai-search-schema' ),
-			'TW' => __( 'Taiwan', 'ai-search-schema' ),
-			'HK' => __( 'Hong Kong', 'ai-search-schema' ),
-			'KR' => __( 'South Korea', 'ai-search-schema' ),
-			'SG' => __( 'Singapore', 'ai-search-schema' ),
-			'TH' => __( 'Thailand', 'ai-search-schema' ),
-			'VN' => __( 'Vietnam', 'ai-search-schema' ),
-			'PH' => __( 'Philippines', 'ai-search-schema' ),
-			'MY' => __( 'Malaysia', 'ai-search-schema' ),
-			'ID' => __( 'Indonesia', 'ai-search-schema' ),
-			'FR' => __( 'France', 'ai-search-schema' ),
-			'DE' => __( 'Germany', 'ai-search-schema' ),
-			'ES' => __( 'Spain', 'ai-search-schema' ),
-			'IT' => __( 'Italy', 'ai-search-schema' ),
-			'GB' => __( 'United Kingdom', 'ai-search-schema' ),
-			'CA' => __( 'Canada', 'ai-search-schema' ),
-			'AU' => __( 'Australia', 'ai-search-schema' ),
-			'NZ' => __( 'New Zealand', 'ai-search-schema' ),
+			'JP' => __( 'Japan', 'aivec-ai-search-schema' ),
+			'US' => __( 'United States', 'aivec-ai-search-schema' ),
+			'CN' => __( 'China', 'aivec-ai-search-schema' ),
+			'TW' => __( 'Taiwan', 'aivec-ai-search-schema' ),
+			'HK' => __( 'Hong Kong', 'aivec-ai-search-schema' ),
+			'KR' => __( 'South Korea', 'aivec-ai-search-schema' ),
+			'SG' => __( 'Singapore', 'aivec-ai-search-schema' ),
+			'TH' => __( 'Thailand', 'aivec-ai-search-schema' ),
+			'VN' => __( 'Vietnam', 'aivec-ai-search-schema' ),
+			'PH' => __( 'Philippines', 'aivec-ai-search-schema' ),
+			'MY' => __( 'Malaysia', 'aivec-ai-search-schema' ),
+			'ID' => __( 'Indonesia', 'aivec-ai-search-schema' ),
+			'FR' => __( 'France', 'aivec-ai-search-schema' ),
+			'DE' => __( 'Germany', 'aivec-ai-search-schema' ),
+			'ES' => __( 'Spain', 'aivec-ai-search-schema' ),
+			'IT' => __( 'Italy', 'aivec-ai-search-schema' ),
+			'GB' => __( 'United Kingdom', 'aivec-ai-search-schema' ),
+			'CA' => __( 'Canada', 'aivec-ai-search-schema' ),
+			'AU' => __( 'Australia', 'aivec-ai-search-schema' ),
+			'NZ' => __( 'New Zealand', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -1765,30 +1777,42 @@ class AVC_AIS_Settings {
 		$items[] = $this->make_item(
 			$has_name ? 'ok' : 'error',
 			$has_name
-				? __( 'The site operator is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The site operator name is not set. Entity identification may be difficult.', 'ai-search-schema' )
+				? __(
+					'The site operator is defined in the structured data.',
+					'aivec-ai-search-schema'
+				)
+				: __(
+					'The site operator name is not set. Entity identification may be difficult.',
+					'aivec-ai-search-schema'
+				)
 		);
 		$items[] = $this->make_item(
 			$has_url ? 'ok' : 'error',
 			$has_url
-				? __( 'The organization URL is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The organization URL is not set. Entity identification may be difficult.', 'ai-search-schema' )
+				? __(
+					'The organization URL is defined in the structured data.',
+					'aivec-ai-search-schema'
+				)
+				: __(
+					'The organization URL is not set. Entity identification may be difficult.',
+					'aivec-ai-search-schema'
+				)
 		);
 		$items[] = $this->make_item(
 			$has_logo ? 'ok' : 'warning',
 			$has_logo
-				? __( 'A logo is registered for entity identification.', 'ai-search-schema' )
-				: __( 'No logo is registered. Credibility assessment may be affected.', 'ai-search-schema' )
+				? __( 'A logo is registered for entity identification.', 'aivec-ai-search-schema' )
+				: __( 'No logo is registered. Credibility assessment may be affected.', 'aivec-ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			$has_same ? 'ok' : 'warning',
 			$has_same
-				? __( 'Social profiles (sameAs) are linked for entity verification.', 'ai-search-schema' )
-				: __( 'No social profiles are linked. Entity verification may be limited.', 'ai-search-schema' )
+				? __( 'Social profiles (sameAs) are linked for entity verification.', 'aivec-ai-search-schema' )
+				: __( 'No social profiles are linked. Entity verification may be limited.', 'aivec-ai-search-schema' )
 		);
 
 		return array(
-			'title' => __( 'Organization', 'ai-search-schema' ),
+			'title' => __( 'Organization', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
@@ -1807,22 +1831,28 @@ class AVC_AIS_Settings {
 		$items[] = $this->make_item(
 			! empty( $options['company_name'] ) ? 'ok' : 'error',
 			! empty( $options['company_name'] )
-				? __( 'The business name is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The business name is not set. Local search visibility may be affected.', 'ai-search-schema' )
+				? __(
+					'The business name is defined in the structured data.',
+					'aivec-ai-search-schema'
+				)
+				: __(
+					'The business name is not set. Local search visibility may be affected.',
+					'aivec-ai-search-schema'
+				)
 		);
 		$items[] = $this->make_item(
 			! empty( $options['phone'] ) ? 'ok' : 'error',
 			! empty( $options['phone'] )
-				? __( 'A phone number is registered for contact purposes.', 'ai-search-schema' )
-				: __( 'No phone number is set. This is a required field for LocalBusiness.', 'ai-search-schema' )
+				? __( 'A phone number is registered for contact purposes.', 'aivec-ai-search-schema' )
+				: __( 'No phone number is set. This is a required field for LocalBusiness.', 'aivec-ai-search-schema' )
 		);
 
 		$addr_status = ( $street && $locality && $region && $postal ) ? 'ok' : 'error';
 		$items[]     = $this->make_item(
 			$addr_status,
 			'ok' === $addr_status
-				? __( 'The address is fully defined in the structured data.', 'ai-search-schema' )
-				: __( 'The address is incomplete. Some fields may be missing.', 'ai-search-schema' )
+				? __( 'The address is fully defined in the structured data.', 'aivec-ai-search-schema' )
+				: __( 'The address is incomplete. Some fields may be missing.', 'aivec-ai-search-schema' )
 		);
 
 		$geo_status  = $has_geo ? 'ok' : 'warning';
@@ -1836,63 +1866,63 @@ class AVC_AIS_Settings {
 			$has_geo
 				? sprintf(
 					/* translators: %s decimal places */
-					__( 'Geo coordinates are registered (%s decimal places). Map display is ready.', 'ai-search-schema' ), // phpcs:ignore Generic.Files.LineLength.TooLong
+					__( 'Geo coordinates are registered (%s decimal places). Map display is ready.', 'aivec-ai-search-schema' ), // phpcs:ignore Generic.Files.LineLength.TooLong
 					max( $lat_decimal, $lng_decimal )
 				)
-				: __( 'Geo coordinates are not set. Map-based local search may be affected.', 'ai-search-schema' )
+				: __( 'Geo coordinates are not set. Map-based local search may be affected.', 'aivec-ai-search-schema' )
 		);
 
 		$items[] = $this->make_item(
 			$oh_entries ? 'ok' : 'warning',
 			$oh_entries
-				? __( 'Business hours are defined in the structured data.', 'ai-search-schema' )
-				: __( 'No business hours are set. Open/closed status cannot be determined.', 'ai-search-schema' )
+				? __( 'Business hours are defined in the structured data.', 'aivec-ai-search-schema' )
+				: __( 'No business hours are set. Open/closed status cannot be determined.', 'aivec-ai-search-schema' )
 		);
 
 		$items[] = $this->make_item(
 			! empty( $country ) ? 'ok' : 'warning',
 			! empty( $country )
-				? __( 'The country code is defined for address context.', 'ai-search-schema' )
-				: __( 'The country code is not set. Regional interpretation may vary.', 'ai-search-schema' )
+				? __( 'The country code is defined for address context.', 'aivec-ai-search-schema' )
+				: __( 'The country code is not set. Regional interpretation may vary.', 'aivec-ai-search-schema' )
 		);
 
 		return array(
-			'title' => __( 'LocalBusiness', 'ai-search-schema' ),
+			'title' => __( 'LocalBusiness', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
 
-		// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+	// phpcs:disable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
 	private function diagnose_website( array $options ) {
 		$items = array();
 		$items[] = $this->make_item(
 			! empty( $options['site_name'] ) ? 'ok' : 'error',
 			! empty( $options['site_name'] )
-				? __( 'The site name is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The site name is not set. Site identification may be unclear.', 'ai-search-schema' )
+				? __( 'The site name is defined in the structured data.', 'aivec-ai-search-schema' )
+				: __( 'The site name is not set. Site identification may be unclear.', 'aivec-ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $options['site_url'] ) ? 'ok' : 'error',
 			! empty( $options['site_url'] )
-				? __( 'The site URL is defined as the canonical reference.', 'ai-search-schema' )
-				: __( 'The site URL is not set. Canonical identification may fail.', 'ai-search-schema' )
+				? __( 'The site URL is defined as the canonical reference.', 'aivec-ai-search-schema' )
+				: __( 'The site URL is not set. Canonical identification may fail.', 'aivec-ai-search-schema' )
 		);
 		$langs = $options['languages'] ?? array();
 		$items[] = $this->make_item(
 			! empty( $langs ) ? 'ok' : 'warning',
 			! empty( $langs )
-				? __( 'The site language is defined for content context.', 'ai-search-schema' )
-				: __( 'No language is set. Content language context may be ambiguous.', 'ai-search-schema' )
+				? __( 'The site language is defined for content context.', 'aivec-ai-search-schema' )
+				: __( 'No language is set. Content language context may be ambiguous.', 'aivec-ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $options['company_name'] ) ? 'ok' : 'warning',
 			! empty( $options['company_name'] )
-				? __( 'The publisher is linked to the site entity.', 'ai-search-schema' )
-				: __( 'No publisher is set. Site-entity relationship is undefined.', 'ai-search-schema' )
+				? __( 'The publisher is linked to the site entity.', 'aivec-ai-search-schema' )
+				: __( 'No publisher is set. Site-entity relationship is undefined.', 'aivec-ai-search-schema' )
 		);
 
 		return array(
-			'title' => __( 'WebSite', 'ai-search-schema' ),
+			'title' => __( 'WebSite', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
@@ -1902,33 +1932,33 @@ class AVC_AIS_Settings {
 		$items[] = $this->make_item(
 			! empty( $options['site_url'] ) ? 'ok' : 'warning',
 			! empty( $options['site_url'] )
-				? __( 'The WebPage base URL is defined for page identification.', 'ai-search-schema' )
-				: __( 'The WebPage base URL is not set. Page linking may be affected.', 'ai-search-schema' )
+				? __( 'The WebPage base URL is defined for page identification.', 'aivec-ai-search-schema' )
+				: __( 'The WebPage base URL is not set. Page linking may be affected.', 'aivec-ai-search-schema' )
 		);
 		$langs = $options['languages'] ?? array();
 		$items[] = $this->make_item(
 			! empty( $langs ) ? 'ok' : 'warning',
 			! empty( $langs )
-				? __( 'The page language is defined for content context.', 'ai-search-schema' )
-				: __( 'No language is set. System default will be used.', 'ai-search-schema' )
+				? __( 'The page language is defined for content context.', 'aivec-ai-search-schema' )
+				: __( 'No language is set. System default will be used.', 'aivec-ai-search-schema' )
 		);
 
 		return array(
-			'title' => __( 'WebPage', 'ai-search-schema' ),
+			'title' => __( 'WebPage', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
 
 	private function diagnose_article( array $options ) {
-			$items = array();
-			$post_schema_type = $options['content_type_settings']['post_types']['post']['schema_type'] ?? 'auto';
-			$is_article = 'Article' === $post_schema_type || 'auto' === $post_schema_type;
-			$items[] = $this->make_item(
-				$is_article ? 'ok' : 'info',
-				$is_article
-					? __( 'Posts are output as Article schema for blog content.', 'ai-search-schema' )
-					: __( 'Posts are output as WebPage schema. Article may be more suitable for blogs.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
-			);
+		$items            = array();
+		$post_schema_type = $options['content_type_settings']['post_types']['post']['schema_type'] ?? 'auto';
+		$is_article       = 'Article' === $post_schema_type || 'auto' === $post_schema_type;
+		$items[]          = $this->make_item(
+			$is_article ? 'ok' : 'info',
+			$is_article
+				? __( 'Posts are output as Article schema for blog content.', 'aivec-ai-search-schema' )
+				: __( 'Posts are output as WebPage schema. Article may be more suitable for blogs.', 'aivec-ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
+		);
 		$posts = get_posts(
 			array(
 				'post_type'      => 'post',
@@ -1944,10 +1974,10 @@ class AVC_AIS_Settings {
 		if ( ! $has_post ) {
 			$items[] = $this->make_item(
 				'info',
-				__( 'No published posts found. Sample check cannot be performed.', 'ai-search-schema' )
+				__( 'No published posts found. Sample check cannot be performed.', 'aivec-ai-search-schema' )
 			);
 			return array(
-				'title' => __( 'Article (sample post)', 'ai-search-schema' ),
+				'title' => __( 'Article (sample post)', 'aivec-ai-search-schema' ),
 				'items' => $items,
 			);
 		}
@@ -1955,47 +1985,53 @@ class AVC_AIS_Settings {
 		$items[] = $this->make_item(
 			! empty( $post->post_title ) ? 'ok' : 'error',
 			! empty( $post->post_title )
-				? __( 'The headline is defined in the sample post.', 'ai-search-schema' )
-				: __( 'The headline is missing from the sample post.', 'ai-search-schema' )
+				? __( 'The headline is defined in the sample post.', 'aivec-ai-search-schema' )
+				: __( 'The headline is missing from the sample post.', 'aivec-ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $post->post_date ) ? 'ok' : 'error',
 			! empty( $post->post_date )
-				? __( 'The publication date is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The publication date is missing. Freshness signals may be affected.', 'ai-search-schema' )
+				? __( 'The publication date is defined in the structured data.', 'aivec-ai-search-schema' )
+				: __( 'The publication date is missing. Freshness signals may be affected.', 'aivec-ai-search-schema' )
 		);
 		$items[] = $this->make_item(
 			! empty( $post->post_modified ) ? 'ok' : 'warning',
 			! empty( $post->post_modified )
-				? __( 'The modification date is defined for content freshness.', 'ai-search-schema' )
-				: __( 'The modification date is not available.', 'ai-search-schema' )
+				? __( 'The modification date is defined for content freshness.', 'aivec-ai-search-schema' )
+				: __( 'The modification date is not available.', 'aivec-ai-search-schema' )
 		);
 
 		$author = get_user_by( 'id', $post->post_author );
 		$items[] = $this->make_item(
 			$author ? 'ok' : 'warning',
 			$author
-				? __( 'The author is defined for content attribution.', 'ai-search-schema' )
-				: __( 'No author is set. Content attribution may be unclear.', 'ai-search-schema' )
+				? __( 'The author is defined for content attribution.', 'aivec-ai-search-schema' )
+				: __( 'No author is set. Content attribution may be unclear.', 'aivec-ai-search-schema' )
 		);
 
-			$post_id = $post->ID ?? 0;
-			$has_image = ( $post_id && has_post_thumbnail( $post_id ) )
-				|| ( $post_id && get_post_thumbnail_id( $post_id ) );
-			$items[] = $this->make_item(
-				$has_image ? 'ok' : 'warning',
-				$has_image
-					? __( 'A featured image is set for the sample post.', 'ai-search-schema' )
-					: __( 'No featured image on the sample post. Rich results may be limited.', 'ai-search-schema' )
-			);
+		$post_id   = $post->ID ?? 0;
+		$has_image = ( $post_id && has_post_thumbnail( $post_id ) )
+			|| ( $post_id && get_post_thumbnail_id( $post_id ) );
+		$items[]   = $this->make_item(
+			$has_image ? 'ok' : 'warning',
+			$has_image
+				? __(
+					'A featured image is set for the sample post.',
+					'aivec-ai-search-schema'
+				)
+				: __(
+					'No featured image on the sample post. Rich results may be limited.',
+					'aivec-ai-search-schema'
+				)
+		);
 
 		return array(
-			'title' => __( 'Article (sample post)', 'ai-search-schema' ),
+			'title' => __( 'Article (sample post)', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
 
-		// phpcs:enable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
+	// phpcs:enable Generic.Formatting.MultipleStatementAlignment.NotSameWarning
 
 	private function diagnose_faq( array $options ) {
 		$items = array();
@@ -2012,21 +2048,21 @@ class AVC_AIS_Settings {
 		if ( $faq_enabled_any ) {
 			$items[] = $this->make_item(
 				'ok',
-				__( 'FAQ schema extraction is enabled for at least one post type.', 'ai-search-schema' )
+				__( 'FAQ schema extraction is enabled for at least one post type.', 'aivec-ai-search-schema' )
 			);
 			$items[] = $this->make_item(
 				'info',
-				__( 'FAQ content requires both question and answer elements with matching CSS classes.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
+				__( 'FAQ content requires both question and answer elements with matching CSS classes.', 'aivec-ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
 			);
 		} else {
 			$items[] = $this->make_item(
 				'info',
-				__( 'FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections.', 'ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
+				__( 'FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections.', 'aivec-ai-search-schema' ) // phpcs:ignore Generic.Files.LineLength.TooLong
 			);
 		}
 
 		return array(
-			'title' => __( 'FAQPage', 'ai-search-schema' ),
+			'title' => __( 'FAQPage', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
@@ -2066,12 +2102,12 @@ class AVC_AIS_Settings {
 		$items[] = $this->make_item(
 			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1 ? 'ok' : 'warning',
 			! empty( $breadcrumbs ) && count( $breadcrumbs ) > 1
-				? __( 'Breadcrumb navigation is defined in the structured data.', 'ai-search-schema' )
-				: __( 'The breadcrumb trail is empty. Site hierarchy may be unclear.', 'ai-search-schema' )
+				? __( 'Breadcrumb navigation is defined in the structured data.', 'aivec-ai-search-schema' )
+				: __( 'The breadcrumb trail is empty. Site hierarchy may be unclear.', 'aivec-ai-search-schema' )
 		);
 
 		return array(
-			'title' => __( 'BreadcrumbList', 'ai-search-schema' ),
+			'title' => __( 'BreadcrumbList', 'aivec-ai-search-schema' ),
 			'items' => $items,
 		);
 	}
@@ -2263,17 +2299,17 @@ class AVC_AIS_Settings {
 	 * @return int Remaining seconds to wait, or 0 when allowed.
 	 */
 	private function claim_geocode_slot() {
-			$user_id    = get_current_user_id();
-			$identifier = $user_id
-				? 'user_' . $user_id
-				: 'ip_' . (
-					isset( $_SERVER['REMOTE_ADDR'] )
-						? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
-						: 'anon'
-				);
-		$cache_key      = 'avc_ais_geocode_' . md5( $identifier );
-		$now            = time();
-		$last           = (int) get_transient( $cache_key );
+		$user_id    = get_current_user_id();
+		$identifier = $user_id
+			? 'user_' . $user_id
+			: 'ip_' . (
+				isset( $_SERVER['REMOTE_ADDR'] )
+					? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) )
+					: 'anon'
+			);
+		$cache_key  = 'avc_ais_geocode_' . md5( $identifier );
+		$now        = time();
+		$last       = (int) get_transient( $cache_key );
 
 		if ( $last && ( $now - $last ) < self::GEOCODE_RATE_LIMIT_SECONDS ) {
 			return self::GEOCODE_RATE_LIMIT_SECONDS - ( $now - $last );

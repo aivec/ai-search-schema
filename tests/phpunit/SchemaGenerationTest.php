@@ -112,7 +112,7 @@ class AVC_AIS_Generation_Test extends WP_UnitTestCase {
      * @return array|null
      */
     private function extract_json_ld($output) {
-        if (!preg_match('/<script[^>]+class=\"ai-search-schema\"[^>]*>(.*)<\\/script>/s', $output, $matches)) {
+        if (!preg_match('/<script[^>]+class=\"[^\"]*avc-ais-schema[^\"]*\"[^>]*>(.*)<\\/script>/s', $output, $matches)) {
             return null;
         }
         $json = html_entity_decode(trim($matches[1]));

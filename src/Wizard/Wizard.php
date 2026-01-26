@@ -82,37 +82,37 @@ class Wizard {
 	public function get_steps() {
 		$steps = array(
 			'welcome'  => array(
-				'name'     => __( 'Welcome', 'ai-search-schema' ),
+				'name'     => __( 'Welcome', 'aivec-ai-search-schema' ),
 				'view'     => 'welcome',
 				'required' => false,
 			),
 			'basics'   => array(
-				'name'     => __( 'Basic Information', 'ai-search-schema' ),
+				'name'     => __( 'Basic Information', 'aivec-ai-search-schema' ),
 				'view'     => 'step-1-basics',
 				'required' => true,
 			),
 			'type'     => array(
-				'name'     => __( 'Site Type', 'ai-search-schema' ),
+				'name'     => __( 'Site Type', 'aivec-ai-search-schema' ),
 				'view'     => 'step-2-type',
 				'required' => true,
 			),
 			'api-key'  => array(
-				'name'     => __( 'API Key', 'ai-search-schema' ),
+				'name'     => __( 'API Key', 'aivec-ai-search-schema' ),
 				'view'     => 'step-api-key',
 				'required' => false,
 			),
 			'location' => array(
-				'name'     => __( 'Location', 'ai-search-schema' ),
+				'name'     => __( 'Location', 'aivec-ai-search-schema' ),
 				'view'     => 'step-3-location',
 				'required' => false,
 			),
 			'hours'    => array(
-				'name'     => __( 'Business Hours', 'ai-search-schema' ),
+				'name'     => __( 'Business Hours', 'aivec-ai-search-schema' ),
 				'view'     => 'step-4-hours',
 				'required' => false,
 			),
 			'complete' => array(
-				'name'     => __( 'Complete', 'ai-search-schema' ),
+				'name'     => __( 'Complete', 'aivec-ai-search-schema' ),
 				'view'     => 'step-5-complete',
 				'required' => false,
 			),
@@ -127,8 +127,8 @@ class Wizard {
 	public function add_admin_menu() {
 		$hook = add_submenu_page(
 			'options.php', // Hidden from menu (use options.php instead of null for PHP 8 compatibility).
-			__( 'AI Search Schema Setup', 'ai-search-schema' ),
-			__( 'Setup Wizard', 'ai-search-schema' ),
+			__( 'AI Search Schema Setup', 'aivec-ai-search-schema' ),
+			__( 'Setup Wizard', 'aivec-ai-search-schema' ),
 			'manage_options',
 			self::PAGE_SLUG,
 			array( $this, 'render_wizard_page' )
@@ -145,7 +145,7 @@ class Wizard {
 	 */
 	public function set_page_title() {
 		global $title;
-		$title = __( 'AI Search Schema Setup', 'ai-search-schema' );
+		$title = __( 'AI Search Schema Setup', 'aivec-ai-search-schema' );
 	}
 
 	/**
@@ -219,10 +219,10 @@ class Wizard {
 		?>
 		<div class="notice notice-info is-dismissible ais-wizard-notice">
 			<p>
-				<strong><?php esc_html_e( 'AI Search Schema', 'ai-search-schema' ); ?></strong>
-				<?php esc_html_e( 'Complete the setup wizard to optimize your site for Google search.', 'ai-search-schema' ); ?>
+				<strong><?php esc_html_e( 'AI Search Schema', 'aivec-ai-search-schema' ); ?></strong>
+				<?php esc_html_e( 'Complete the setup wizard to optimize your site for Google search.', 'aivec-ai-search-schema' ); ?>
 				<a href="<?php echo esc_url( $this->get_wizard_url() ); ?>" class="button button-primary" style="margin-left: 10px;">
-					<?php esc_html_e( 'Start Setup', 'ai-search-schema' ); ?>
+					<?php esc_html_e( 'Start Setup', 'aivec-ai-search-schema' ); ?>
 				</a>
 			</p>
 		</div>
@@ -273,45 +273,45 @@ class Wizard {
 				'geocodeNonce' => wp_create_nonce( 'avc_ais_geocode' ),
 				'currentStep'  => $this->current_step,
 				'wizardUrl'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG ),
-				'settingsUrl'  => admin_url( 'options-general.php?page=ai-search-schema' ),
+				'settingsUrl'  => admin_url( 'options-general.php?page=aivec-ai-search-schema' ),
 				'strings'      => array(
-					'saving'             => __( 'Saving...', 'ai-search-schema' ),
-					'saved'              => __( 'Saved', 'ai-search-schema' ),
-					'error'              => __( 'An error occurred', 'ai-search-schema' ),
-					'errorSaving'        => __( 'Error saving. Please try again.', 'ai-search-schema' ),
-					'required'           => __( 'This field is required', 'ai-search-schema' ),
-					'invalidUrl'         => __( 'Please enter a valid URL', 'ai-search-schema' ),
-					'selectLogo'         => __( 'Select Logo', 'ai-search-schema' ),
-					'useLogo'            => __( 'Use this logo', 'ai-search-schema' ),
-					'noLogo'             => __( 'No logo selected', 'ai-search-schema' ),
-					'import'             => __( 'Import', 'ai-search-schema' ),
-					'importing'          => __( 'Importing...', 'ai-search-schema' ),
-					'imported'           => __( 'Imported!', 'ai-search-schema' ),
-					'importError'        => __( 'Import failed. Please try again.', 'ai-search-schema' ),
-					'enterAddress'       => __( 'Please enter an address first.', 'ai-search-schema' ),
-					'fetching'           => __( 'Fetching...', 'ai-search-schema' ),
-					'getCoordinates'     => __( 'Get Coordinates', 'ai-search-schema' ),
-					'geocodeError'       => __( 'Could not fetch coordinates.', 'ai-search-schema' ),
-					'viewSchema'         => __( 'View JSON-LD Schema', 'ai-search-schema' ),
-					'hideSchema'         => __( 'Hide JSON-LD Schema', 'ai-search-schema' ),
-					'noSchema'           => __( 'No schema generated yet.', 'ai-search-schema' ),
-					'schemaError'        => __( 'Could not load schema.', 'ai-search-schema' ),
-					'noHoursSet'         => __( 'Set your business hours above to see a preview.', 'ai-search-schema' ),
-					'monday'             => __( 'Monday', 'ai-search-schema' ),
-					'tuesday'            => __( 'Tuesday', 'ai-search-schema' ),
-					'wednesday'          => __( 'Wednesday', 'ai-search-schema' ),
-					'thursday'           => __( 'Thursday', 'ai-search-schema' ),
-					'friday'             => __( 'Friday', 'ai-search-schema' ),
-					'saturday'           => __( 'Saturday', 'ai-search-schema' ),
-					'sunday'             => __( 'Sunday', 'ai-search-schema' ),
-					'localBusinessTitle' => __( 'Local Business Selected', 'ai-search-schema' ),
-					'localBusinessText'  => __( 'You will be able to enter your business address, hours, and contact information.', 'ai-search-schema' ),
-					'organizationTitle'  => __( 'Organization Selected', 'ai-search-schema' ),
-					'organizationText'   => __( 'Perfect for companies, non-profits, and institutions.', 'ai-search-schema' ),
-					'personTitle'        => __( 'Personal Site Selected', 'ai-search-schema' ),
-					'personText'         => __( 'Great for blogs, portfolios, and freelancer websites.', 'ai-search-schema' ),
-					'websiteTitle'       => __( 'Online Service Selected', 'ai-search-schema' ),
-					'websiteText'        => __( 'Ideal for news sites, web apps, and online tools.', 'ai-search-schema' ),
+					'saving'             => __( 'Saving...', 'aivec-ai-search-schema' ),
+					'saved'              => __( 'Saved', 'aivec-ai-search-schema' ),
+					'error'              => __( 'An error occurred', 'aivec-ai-search-schema' ),
+					'errorSaving'        => __( 'Error saving. Please try again.', 'aivec-ai-search-schema' ),
+					'required'           => __( 'This field is required', 'aivec-ai-search-schema' ),
+					'invalidUrl'         => __( 'Please enter a valid URL', 'aivec-ai-search-schema' ),
+					'selectLogo'         => __( 'Select Logo', 'aivec-ai-search-schema' ),
+					'useLogo'            => __( 'Use this logo', 'aivec-ai-search-schema' ),
+					'noLogo'             => __( 'No logo selected', 'aivec-ai-search-schema' ),
+					'import'             => __( 'Import', 'aivec-ai-search-schema' ),
+					'importing'          => __( 'Importing...', 'aivec-ai-search-schema' ),
+					'imported'           => __( 'Imported!', 'aivec-ai-search-schema' ),
+					'importError'        => __( 'Import failed. Please try again.', 'aivec-ai-search-schema' ),
+					'enterAddress'       => __( 'Please enter an address first.', 'aivec-ai-search-schema' ),
+					'fetching'           => __( 'Fetching...', 'aivec-ai-search-schema' ),
+					'getCoordinates'     => __( 'Get Coordinates', 'aivec-ai-search-schema' ),
+					'geocodeError'       => __( 'Could not fetch coordinates.', 'aivec-ai-search-schema' ),
+					'viewSchema'         => __( 'View JSON-LD Schema', 'aivec-ai-search-schema' ),
+					'hideSchema'         => __( 'Hide JSON-LD Schema', 'aivec-ai-search-schema' ),
+					'noSchema'           => __( 'No schema generated yet.', 'aivec-ai-search-schema' ),
+					'schemaError'        => __( 'Could not load schema.', 'aivec-ai-search-schema' ),
+					'noHoursSet'         => __( 'Set your business hours above to see a preview.', 'aivec-ai-search-schema' ),
+					'monday'             => __( 'Monday', 'aivec-ai-search-schema' ),
+					'tuesday'            => __( 'Tuesday', 'aivec-ai-search-schema' ),
+					'wednesday'          => __( 'Wednesday', 'aivec-ai-search-schema' ),
+					'thursday'           => __( 'Thursday', 'aivec-ai-search-schema' ),
+					'friday'             => __( 'Friday', 'aivec-ai-search-schema' ),
+					'saturday'           => __( 'Saturday', 'aivec-ai-search-schema' ),
+					'sunday'             => __( 'Sunday', 'aivec-ai-search-schema' ),
+					'localBusinessTitle' => __( 'Local Business Selected', 'aivec-ai-search-schema' ),
+					'localBusinessText'  => __( 'You will be able to enter your business address, hours, and contact information.', 'aivec-ai-search-schema' ),
+					'organizationTitle'  => __( 'Organization Selected', 'aivec-ai-search-schema' ),
+					'organizationText'   => __( 'Perfect for companies, non-profits, and institutions.', 'aivec-ai-search-schema' ),
+					'personTitle'        => __( 'Personal Site Selected', 'aivec-ai-search-schema' ),
+					'personText'         => __( 'Great for blogs, portfolios, and freelancer websites.', 'aivec-ai-search-schema' ),
+					'websiteTitle'       => __( 'Online Service Selected', 'aivec-ai-search-schema' ),
+					'websiteText'        => __( 'Ideal for news sites, web apps, and online tools.', 'aivec-ai-search-schema' ),
 				),
 			)
 		);
@@ -418,14 +418,14 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$step = isset( $_POST['step'] ) ? sanitize_key( $_POST['step'] ) : '';
 		$data = isset( $_POST['data'] ) ? wp_unslash( $_POST['data'] ) : array(); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
 		if ( ! $step || ! isset( $this->steps[ $step ] ) ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid step', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid step', 'aivec-ai-search-schema' ) ) );
 		}
 
 		// Sanitize data based on step.
@@ -452,7 +452,7 @@ class Wizard {
 
 		wp_send_json_success(
 			array(
-				'message'  => __( 'Step saved', 'ai-search-schema' ),
+				'message'  => __( 'Step saved', 'aivec-ai-search-schema' ),
 				'progress' => $progress,
 			)
 		);
@@ -465,13 +465,13 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$step = isset( $_POST['step'] ) ? sanitize_key( $_POST['step'] ) : '';
 
 		if ( ! $step || ! isset( $this->steps[ $step ] ) ) {
-			wp_send_json_error( array( 'message' => __( 'Invalid step', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Invalid step', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$progress                    = $this->get_progress();
@@ -482,7 +482,7 @@ class Wizard {
 
 		wp_send_json_success(
 			array(
-				'message'  => __( 'Step skipped', 'ai-search-schema' ),
+				'message'  => __( 'Step skipped', 'aivec-ai-search-schema' ),
 				'progress' => $progress,
 			)
 		);
@@ -495,15 +495,15 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$this->mark_completed();
 
 		wp_send_json_success(
 			array(
-				'message'     => __( 'Setup completed!', 'ai-search-schema' ),
-				'redirectUrl' => admin_url( 'options-general.php?page=ai-search-schema' ),
+				'message'     => __( 'Setup completed!', 'aivec-ai-search-schema' ),
+				'redirectUrl' => admin_url( 'options-general.php?page=aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -515,7 +515,7 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$user_id = get_current_user_id();
@@ -524,7 +524,7 @@ class Wizard {
 
 		wp_send_json_success(
 			array(
-				'message'     => __( 'Wizard reset', 'ai-search-schema' ),
+				'message'     => __( 'Wizard reset', 'aivec-ai-search-schema' ),
 				'redirectUrl' => $this->get_wizard_url(),
 			)
 		);
@@ -537,7 +537,7 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		$source = isset( $_POST['source'] ) ? sanitize_key( $_POST['source'] ) : '';
@@ -563,7 +563,7 @@ class Wizard {
 
 		wp_send_json_success(
 			array(
-				'message'  => __( 'Settings imported successfully', 'ai-search-schema' ),
+				'message'  => __( 'Settings imported successfully', 'aivec-ai-search-schema' ),
 				'imported' => $imported_data,
 				'progress' => $progress,
 			)
@@ -913,7 +913,7 @@ class Wizard {
 		check_ajax_referer( 'avc_ais_wizard_nonce', 'nonce' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
-			wp_send_json_error( array( 'message' => __( 'Permission denied', 'ai-search-schema' ) ) );
+			wp_send_json_error( array( 'message' => __( 'Permission denied', 'aivec-ai-search-schema' ) ) );
 		}
 
 		try {
@@ -935,7 +935,7 @@ class Wizard {
 				wp_send_json_success(
 					array(
 						'schema'  => null,
-						'message' => __( 'No schema generated yet. Please complete the wizard steps first.', 'ai-search-schema' ),
+						'message' => __( 'No schema generated yet. Please complete the wizard steps first.', 'aivec-ai-search-schema' ),
 					)
 				);
 			}
@@ -944,7 +944,7 @@ class Wizard {
 		} catch ( \Exception $e ) {
 			wp_send_json_error(
 				array(
-					'message' => __( 'Error generating schema.', 'ai-search-schema' ),
+					'message' => __( 'Error generating schema.', 'aivec-ai-search-schema' ),
 					'error'   => $e->getMessage(),
 				)
 			);

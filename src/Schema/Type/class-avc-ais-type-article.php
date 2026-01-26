@@ -26,7 +26,9 @@ class AVC_AIS_Type_Article {
 			$excerpt        = get_the_excerpt( $post_id );
 			$content        = trim( wp_strip_all_tags( $post->post_content ) );
 			$has_image      = ! empty( $image_object );
-			$has_publisher  = ! empty( $publisher_id ) || ! empty( $options['company_name'] );
+			$has_publisher  = ! empty( $publisher_id )
+				|| ! empty( $options['company_name'] )
+				|| ! empty( $options['local_business_label'] );
 			$date_published = get_the_date( 'c', $post_id );
 			$date_modified  = get_the_modified_date( 'c', $post_id );
 			$author_name    = function_exists( 'get_the_author_meta' )
@@ -93,14 +95,26 @@ class AVC_AIS_Type_Article {
 			);
 		}
 
-		$entity_type = ! empty( $options['entity_type'] ) ? $options['entity_type'] : 'Organization';
+		$publisher_entity = ! empty( $options['publisher_entity'] ) ? $options['publisher_entity'] : 'Organization';
+		if ( ! in_array( $publisher_entity, array( 'Organization', 'LocalBusiness' ), true ) ) {
+			$publisher_entity = 'Organization';
+		}
+
+		$publisher_name = ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' );
+		if ( 'LocalBusiness' === $publisher_entity ) {
+			$label         = ! empty( $options['local_business_label'] ) ? $options['local_business_label'] : '';
+			$composed_name = trim( $publisher_name . ' ' . $label );
+			if ( '' !== $composed_name ) {
+				$publisher_name = $composed_name;
+			}
+		}
 
 		$publisher = array(
-			'@type' => $entity_type,
-			'name'  => ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' ),
+			'@type' => $publisher_entity,
+			'name'  => $publisher_name,
 		);
 
-		if ( 'Organization' === $entity_type ) {
+		if ( 'Organization' === $publisher_entity ) {
 			$logo_url = ! empty( $options['logo_url'] ) ? esc_url( $options['logo_url'] ) : '';
 			if ( $logo_url ) {
 				$logo    = array(

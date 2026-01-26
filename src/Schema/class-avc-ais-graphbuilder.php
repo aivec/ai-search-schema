@@ -62,6 +62,9 @@ class AVC_AIS_GraphBuilder {
 			return array();
 		}
 
+		// PRO版によるグラフ全体のカスタマイズを許可.
+		$graph = apply_filters( 'avc_ais_graph', $graph, $options );
+
 		return array(
 			'@context' => 'https://schema.org',
 			'@graph'   => $this->remove_null_values( $graph ),
@@ -108,6 +111,9 @@ class AVC_AIS_GraphBuilder {
 			);
 		}
 
+		// PRO版によるLocalBusinessデータのオーバーライドを許可.
+		$local_business = apply_filters( 'avc_ais_local_business_data', $local_business, $options );
+
 		if ( ! empty( $organization ) ) {
 			$graph[] = $organization;
 		}
@@ -126,8 +132,17 @@ class AVC_AIS_GraphBuilder {
 			}
 		}
 
+		$publisher_entity = ! empty( $options['publisher_entity'] ) ? $options['publisher_entity'] : 'Organization';
+		if ( ! in_array( $publisher_entity, array( 'Organization', 'LocalBusiness' ), true ) ) {
+			$publisher_entity = 'Organization';
+		}
+
 		$publisher_id = null;
-		if ( ! empty( $organization ) ) {
+		if ( 'LocalBusiness' === $publisher_entity && ! empty( $local_business ) ) {
+			$publisher_id = $ids['local_business'];
+		} elseif ( 'Organization' === $publisher_entity && ! empty( $organization ) ) {
+			$publisher_id = $ids['organization'];
+		} elseif ( ! empty( $organization ) ) {
 			$publisher_id = $ids['organization'];
 		} elseif ( ! empty( $local_business ) ) {
 			$publisher_id = $ids['local_business'];

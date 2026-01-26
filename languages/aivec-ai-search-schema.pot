@@ -2,8 +2,8 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.1.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
+"Project-Id-Version: AI Search Schema 1.1.2\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aivec-ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -12,10 +12,10 @@ msgstr ""
 "POT-Creation-Date: 2026-01-06T10:02:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
-"X-Domain: ai-search-schema\n"
+"X-Domain: aivec-ai-search-schema\n"
 
 #. Plugin Name of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 #: dist/includes/class-ai-search-schema-metabox.php:50
 #: dist/includes/class-ai-search-schema-metabox.php:76
 #: dist/includes/class-ai-search-schema-settings.php:68
@@ -28,22 +28,22 @@ msgid "AI Search Schema"
 msgstr ""
 
 #. Plugin URI of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "https://aivec.co.jp/apps"
 msgstr ""
 
 #. Description of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ."
 msgstr ""
 
 #. Author of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "Aivec LLC"
 msgstr ""
 
 #. Author URI of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "https://aivec.co.jp/"
 msgstr ""
 

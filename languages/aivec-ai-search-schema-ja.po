@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.1.1\n"
+"Project-Id-Version: AI Search Schema 1.1.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
-"POT-Creation-Date: 2026-01-22T12:57:23+00:00\n"
+"POT-Creation-Date: 2026-01-24T09:51:51+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
 "Last-Translator: Aivec LLC. <info@aivec.co.jp>\n"
 "Language-Team: Aivec LLC. <info@aivec.co.jp>\n"
@@ -24,30 +24,30 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-3: vendor\n"
 
 #. Plugin Name of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 #, fuzzy
 msgid "Aivec AI Search Schema"
-msgstr "AI Search Schema"
+msgstr "Aivec AI Search Schema"
 
 #. Plugin URI of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "https://aivec.co.jp/apps"
 msgstr "https://aivec.co.jp/apps"
 
 #. Description of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 #, fuzzy
 msgid ""
 "Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ."
 msgstr "AI検索最適化・ローカルSEO（MEO）対応のWordPressプラグイン。"
 
 #. Author of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 msgid "Aivec LLC"
 msgstr ""
 
 #. Author URI of the plugin
-#: ai-search-schema.php
+#: aivec-ai-search-schema.php
 #, fuzzy
 msgid "https://aivec.co.jp/"
 msgstr "https://aivec.co.jp/apps"
@@ -149,124 +149,124 @@ msgstr "ライセンス検証に失敗しました。"
 msgid "License deactivated."
 msgstr "ライセンスが無効化されました。"
 
-#: dist/includes/class-avc-ais-license.php:244
-#: dist/includes/class-avc-ais-license.php:267
-#: dist/includes/class-avc-ais-settings.php:222
-#: dist/includes/class-avc-ais-settings.php:297
-#: dist/includes/class-avc-ais-settings.php:326
-#: includes/class-avc-ais-license.php:244
-#: includes/class-avc-ais-license.php:267
-#: includes/class-avc-ais-settings.php:222
-#: includes/class-avc-ais-settings.php:297
-#: includes/class-avc-ais-settings.php:326
+#: dist/includes/class-avc-ais-license.php:245
+#: dist/includes/class-avc-ais-license.php:270
+#: dist/includes/class-avc-ais-settings.php:231
+#: dist/includes/class-avc-ais-settings.php:309
+#: dist/includes/class-avc-ais-settings.php:338
+#: includes/class-avc-ais-license.php:245
+#: includes/class-avc-ais-license.php:270
+#: includes/class-avc-ais-settings.php:231
+#: includes/class-avc-ais-settings.php:309
+#: includes/class-avc-ais-settings.php:338
 msgid "You do not have permission to perform this action."
 msgstr "この操作を実行する権限がありません。"
 
-#: dist/includes/class-avc-ais-license.php:286
-#: includes/class-avc-ais-license.php:286
+#: dist/includes/class-avc-ais-license.php:290
+#: includes/class-avc-ais-license.php:290
 msgid "Active"
 msgstr "有効"
 
-#: dist/includes/class-avc-ais-license.php:288
-#: includes/class-avc-ais-license.php:288
+#: dist/includes/class-avc-ais-license.php:292
+#: includes/class-avc-ais-license.php:292
 msgid "Expired"
 msgstr "期限切れ"
 
-#: dist/includes/class-avc-ais-license.php:290
-#: includes/class-avc-ais-license.php:290
+#: dist/includes/class-avc-ais-license.php:294
+#: includes/class-avc-ais-license.php:294
 msgid "Invalid"
 msgstr "無効"
 
-#: dist/includes/class-avc-ais-license.php:292
-#: includes/class-avc-ais-license.php:292
+#: dist/includes/class-avc-ais-license.php:296
+#: includes/class-avc-ais-license.php:296
 msgid "Inactive"
 msgstr "未使用"
 
 #: dist/includes/class-avc-ais-metabox.php:50
-#: dist/includes/class-avc-ais-metabox.php:76
+#: dist/includes/class-avc-ais-metabox.php:77
 #: dist/includes/class-avc-ais-settings.php:68 dist/src/Wizard/Wizard.php:222
-#: includes/class-avc-ais-metabox.php:50 includes/class-avc-ais-metabox.php:76
+#: includes/class-avc-ais-metabox.php:50 includes/class-avc-ais-metabox.php:77
 #: includes/class-avc-ais-settings.php:68 src/Wizard/Wizard.php:222
 msgid "AI Search Schema"
-msgstr "AI Search Schema"
+msgstr "Aivec AI Search Schema"
 
-#: dist/includes/class-avc-ais-metabox.php:78
-#: includes/class-avc-ais-metabox.php:78
+#: dist/includes/class-avc-ais-metabox.php:80
+#: includes/class-avc-ais-metabox.php:80
 #, fuzzy
 msgid "Page schema settings"
 msgstr "AEOスキーマ設定"
 
-#: dist/includes/class-avc-ais-metabox.php:82
-#: includes/class-avc-ais-metabox.php:82
+#: dist/includes/class-avc-ais-metabox.php:84
+#: includes/class-avc-ais-metabox.php:84
 msgid "Choose the schema type and optionally set selectors for FAQ extraction."
 msgstr ""
 "スキーマタイプを選択し、必要に応じてFAQ抽出用のセレクターを設定します。"
 
-#: dist/includes/class-avc-ais-metabox.php:94
-#: includes/class-avc-ais-metabox.php:94
+#: dist/includes/class-avc-ais-metabox.php:96
+#: includes/class-avc-ais-metabox.php:96
 msgid "Page type:"
 msgstr "ページ種別:"
 
-#: dist/includes/class-avc-ais-metabox.php:100
-#: includes/class-avc-ais-metabox.php:100
+#: dist/includes/class-avc-ais-metabox.php:102
+#: includes/class-avc-ais-metabox.php:102
 msgid "Automatic"
 msgstr "自動"
 
-#: dist/includes/class-avc-ais-metabox.php:101
-#: dist/includes/class-avc-ais-settings.php:1268
-#: dist/includes/class-avc-ais-settings.php:1587
-#: includes/class-avc-ais-metabox.php:101
-#: includes/class-avc-ais-settings.php:1268
-#: includes/class-avc-ais-settings.php:1587
+#: dist/includes/class-avc-ais-metabox.php:103
+#: dist/includes/class-avc-ais-settings.php:1280
+#: dist/includes/class-avc-ais-settings.php:1599
+#: includes/class-avc-ais-metabox.php:103
+#: includes/class-avc-ais-settings.php:1280
+#: includes/class-avc-ais-settings.php:1599
 msgid "Article"
 msgstr "Article"
 
-#: dist/includes/class-avc-ais-metabox.php:102
-#: dist/includes/class-avc-ais-settings.php:1269
-#: dist/includes/class-avc-ais-settings.php:1590
-#: dist/includes/class-avc-ais-settings.php:2029
-#: includes/class-avc-ais-metabox.php:102
-#: includes/class-avc-ais-settings.php:1269
-#: includes/class-avc-ais-settings.php:1590
-#: includes/class-avc-ais-settings.php:2029
+#: dist/includes/class-avc-ais-metabox.php:104
+#: dist/includes/class-avc-ais-settings.php:1281
+#: dist/includes/class-avc-ais-settings.php:1602
+#: dist/includes/class-avc-ais-settings.php:2065
+#: includes/class-avc-ais-metabox.php:104
+#: includes/class-avc-ais-settings.php:1281
+#: includes/class-avc-ais-settings.php:1602
+#: includes/class-avc-ais-settings.php:2065
 msgid "FAQPage"
 msgstr "FAQPage"
 
-#: dist/includes/class-avc-ais-metabox.php:103
-#: dist/includes/class-avc-ais-settings.php:1270
-#: dist/includes/class-avc-ais-settings.php:1591
-#: includes/class-avc-ais-metabox.php:103
-#: includes/class-avc-ais-settings.php:1270
-#: includes/class-avc-ais-settings.php:1591
+#: dist/includes/class-avc-ais-metabox.php:105
+#: dist/includes/class-avc-ais-settings.php:1282
+#: dist/includes/class-avc-ais-settings.php:1603
+#: includes/class-avc-ais-metabox.php:105
+#: includes/class-avc-ais-settings.php:1282
+#: includes/class-avc-ais-settings.php:1603
 msgid "QAPage"
 msgstr "QAPage"
 
-#: dist/includes/class-avc-ais-metabox.php:104
-#: dist/includes/class-avc-ais-settings.php:1586
-#: dist/includes/class-avc-ais-settings.php:1917
-#: includes/class-avc-ais-metabox.php:104
-#: includes/class-avc-ais-settings.php:1586
-#: includes/class-avc-ais-settings.php:1917
+#: dist/includes/class-avc-ais-metabox.php:106
+#: dist/includes/class-avc-ais-settings.php:1598
+#: dist/includes/class-avc-ais-settings.php:1947
+#: includes/class-avc-ais-metabox.php:106
+#: includes/class-avc-ais-settings.php:1598
+#: includes/class-avc-ais-settings.php:1947
 msgid "WebPage"
 msgstr "WebPage"
 
-#: dist/includes/class-avc-ais-metabox.php:110
-#: includes/class-avc-ais-metabox.php:110
+#: dist/includes/class-avc-ais-metabox.php:112
+#: includes/class-avc-ais-metabox.php:112
 msgid "FAQ question class:"
 msgstr "FAQ 質問クラス:"
 
-#: dist/includes/class-avc-ais-metabox.php:113
-#: includes/class-avc-ais-metabox.php:113
+#: dist/includes/class-avc-ais-metabox.php:115
+#: includes/class-avc-ais-metabox.php:115
 msgid "Example: faq-question, accordion-title"
 msgstr "例: faq-question, accordion-title"
 
-#: dist/includes/class-avc-ais-metabox.php:119
-#: includes/class-avc-ais-metabox.php:119
+#: dist/includes/class-avc-ais-metabox.php:121
+#: includes/class-avc-ais-metabox.php:121
 msgid "FAQ answer class:"
 msgstr "FAQ 回答クラス:"
 
-#: dist/includes/class-avc-ais-metabox.php:122
-#: includes/class-avc-ais-metabox.php:122
+#: dist/includes/class-avc-ais-metabox.php:124
+#: includes/class-avc-ais-metabox.php:124
 msgid "Example: faq-answer, accordion-content"
 msgstr "例: faq-answer, accordion-content"
 
@@ -277,71 +277,71 @@ msgstr "例: faq-answer, accordion-content"
 msgid "Multi-Location Support"
 msgstr "マルチロケーション対応"
 
-#: dist/includes/class-avc-ais-pro-features.php:110
-#: includes/class-avc-ais-pro-features.php:110
+#: dist/includes/class-avc-ais-pro-features.php:109
+#: includes/class-avc-ais-pro-features.php:109
 msgid ""
 "Manage multiple LocalBusiness locations from a single WordPress installation."
 msgstr ""
 "単一のWordPressインストールから複数のLocalBusinessロケーションを管理できま"
 "す。"
 
-#: dist/includes/class-avc-ais-pro-features.php:114
+#: dist/includes/class-avc-ais-pro-features.php:116
 #: dist/templates/admin-settings.php:1082
-#: includes/class-avc-ais-pro-features.php:114
+#: includes/class-avc-ais-pro-features.php:116
 #: templates/admin-settings.php:1082
 msgid "Custom Schema Templates"
 msgstr "カスタムスキーマテンプレート"
 
-#: dist/includes/class-avc-ais-pro-features.php:116
-#: includes/class-avc-ais-pro-features.php:116
+#: dist/includes/class-avc-ais-pro-features.php:118
+#: includes/class-avc-ais-pro-features.php:118
 msgid "Create and save custom schema templates for different content types."
 msgstr ""
 "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成・保存できます。"
 
-#: dist/includes/class-avc-ais-pro-features.php:120
+#: dist/includes/class-avc-ais-pro-features.php:122
 #: dist/templates/admin-settings.php:1087
-#: includes/class-avc-ais-pro-features.php:120
+#: includes/class-avc-ais-pro-features.php:122
 #: templates/admin-settings.php:1087
 msgid "Priority Support"
 msgstr "優先サポート"
 
-#: dist/includes/class-avc-ais-pro-features.php:121
-#: includes/class-avc-ais-pro-features.php:121
+#: dist/includes/class-avc-ais-pro-features.php:123
+#: includes/class-avc-ais-pro-features.php:123
 msgid "Get priority email support from our development team."
 msgstr "開発チームからの優先メールサポートを受けられます。"
 
-#: dist/includes/class-avc-ais-pro-features.php:125
+#: dist/includes/class-avc-ais-pro-features.php:130
 #: dist/templates/admin-settings.php:1092
-#: includes/class-avc-ais-pro-features.php:125
+#: includes/class-avc-ais-pro-features.php:130
 #: templates/admin-settings.php:1092
 msgid "Advanced Validation"
 msgstr "高度な検証機能"
 
-#: dist/includes/class-avc-ais-pro-features.php:126
-#: includes/class-avc-ais-pro-features.php:126
+#: dist/includes/class-avc-ais-pro-features.php:131
+#: includes/class-avc-ais-pro-features.php:131
 msgid "Scheduled automatic schema validation with email reports."
 msgstr "メールレポート付きのスケジュール自動スキーマ検証。"
 
-#: dist/includes/class-avc-ais-pro-features.php:165
-#: includes/class-avc-ais-pro-features.php:165
+#: dist/includes/class-avc-ais-pro-features.php:173
+#: includes/class-avc-ais-pro-features.php:173
 msgid "Pro"
 msgstr "Pro"
 
 #. translators: %s: feature name
-#: dist/includes/class-avc-ais-pro-features.php:171
-#: includes/class-avc-ais-pro-features.php:171
+#: dist/includes/class-avc-ais-pro-features.php:179
+#: includes/class-avc-ais-pro-features.php:179
 #, php-format
 msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
 msgstr ""
 "%s はPro機能です。アップグレードしてすべてのPro機能をアンロックしてください。"
 
-#: dist/includes/class-avc-ais-pro-features.php:177
-#: includes/class-avc-ais-pro-features.php:177
+#: dist/includes/class-avc-ais-pro-features.php:190
+#: includes/class-avc-ais-pro-features.php:190
 msgid "Upgrade to Pro to unlock all advanced features."
 msgstr "Proにアップグレードしてすべての高度な機能をアンロックしてください。"
 
-#: dist/includes/class-avc-ais-pro-features.php:181
-#: includes/class-avc-ais-pro-features.php:181
+#: dist/includes/class-avc-ais-pro-features.php:203
+#: includes/class-avc-ais-pro-features.php:203
 msgid "Learn More"
 msgstr "詳しく見る"
 
@@ -351,53 +351,53 @@ msgid "LocalBusiness: Skipped output because required fields were missing."
 msgstr "必須項目が不足していたため LocalBusiness の出力をスキップしました。"
 
 #. translators: %s: comma separated list of missing fields
-#: dist/includes/class-avc-ais-schema.php:148
-#: includes/class-avc-ais-schema.php:148
+#: dist/includes/class-avc-ais-schema.php:151
+#: includes/class-avc-ais-schema.php:151
 #, php-format
 msgid "Missing fields: %s."
 msgstr "不足フィールド: %s。"
 
 #. translators: %s: search query string.
-#: dist/includes/class-avc-ais-schema.php:939 dist/src/ContentResolver.php:124
+#: dist/includes/class-avc-ais-schema.php:948 dist/src/ContentResolver.php:124
 #: dist/src/Schema/class-avc-ais-contentresolver.php:116
-#: includes/class-avc-ais-schema.php:939 src/ContentResolver.php:124
+#: includes/class-avc-ais-schema.php:948 src/ContentResolver.php:124
 #: src/Schema/class-avc-ais-contentresolver.php:116
 #, php-format
 msgid "Search results for \"%s\""
 msgstr "「%s」の検索結果"
 
-#: dist/includes/class-avc-ais-schema.php:943 dist/src/ContentResolver.php:128
+#: dist/includes/class-avc-ais-schema.php:952 dist/src/ContentResolver.php:128
 #: dist/src/Schema/class-avc-ais-contentresolver.php:120
-#: includes/class-avc-ais-schema.php:943 src/ContentResolver.php:128
+#: includes/class-avc-ais-schema.php:952 src/ContentResolver.php:128
 #: src/Schema/class-avc-ais-contentresolver.php:120
 msgid "Search results"
 msgstr "検索結果"
 
-#: dist/includes/class-avc-ais-schema.php:2447
-#: dist/includes/class-avc-ais-schema.php:2488
-#: includes/class-avc-ais-schema.php:2447
-#: includes/class-avc-ais-schema.php:2488
+#: dist/includes/class-avc-ais-schema.php:2473
+#: dist/includes/class-avc-ais-schema.php:2514
+#: includes/class-avc-ais-schema.php:2473
+#: includes/class-avc-ais-schema.php:2514
 msgid "AI Search Schema – Development Mode Warning"
-msgstr "AI Search Schema – 開発モード警告"
+msgstr "Aivec AI Search Schema – 開発モード警告"
 
-#: dist/includes/class-avc-ais-schema.php:2451
-#: dist/includes/class-avc-ais-schema.php:2491
-#: includes/class-avc-ais-schema.php:2451
-#: includes/class-avc-ais-schema.php:2491
+#: dist/includes/class-avc-ais-schema.php:2477
+#: dist/includes/class-avc-ais-schema.php:2517
+#: includes/class-avc-ais-schema.php:2477
+#: includes/class-avc-ais-schema.php:2517
 msgid "The following validation errors were detected:"
 msgstr "以下のバリデーションエラーが検出されました："
 
-#: dist/includes/class-avc-ais-schema.php:2461
-#: dist/includes/class-avc-ais-schema.php:2500
-#: includes/class-avc-ais-schema.php:2461
-#: includes/class-avc-ais-schema.php:2500
+#: dist/includes/class-avc-ais-schema.php:2487
+#: dist/includes/class-avc-ais-schema.php:2526
+#: includes/class-avc-ais-schema.php:2487
+#: includes/class-avc-ais-schema.php:2526
 msgid "Warnings:"
 msgstr "警告:"
 
-#: dist/includes/class-avc-ais-schema.php:2470
-#: dist/includes/class-avc-ais-schema.php:2509
-#: includes/class-avc-ais-schema.php:2470
-#: includes/class-avc-ais-schema.php:2509
+#: dist/includes/class-avc-ais-schema.php:2496
+#: dist/includes/class-avc-ais-schema.php:2535
+#: includes/class-avc-ais-schema.php:2496
+#: includes/class-avc-ais-schema.php:2535
 msgid "This warning only appears while WP_DEBUG is true."
 msgstr "この警告はWP_DEBUG = trueのときのみ表示されます。"
 
@@ -408,7 +408,7 @@ msgstr "この警告はWP_DEBUG = trueのときのみ表示されます。"
 #: includes/class-avc-ais-settings.php:79 templates/admin-settings.php:137
 #: templates/admin-settings.php:142
 msgid "AI Search Schema Settings"
-msgstr "AI Search Schema 設定"
+msgstr "Aivec AI Search Schema 設定"
 
 #: dist/includes/class-avc-ais-settings.php:80
 #: includes/class-avc-ais-settings.php:80
@@ -440,28 +440,28 @@ msgid "Latitude and longitude updated."
 msgstr "緯度・経度を更新しました。"
 
 #: dist/includes/class-avc-ais-settings.php:170
-#: dist/includes/class-avc-ais-settings.php:424
-#: dist/includes/class-avc-ais-settings.php:583
+#: dist/includes/class-avc-ais-settings.php:436
+#: dist/includes/class-avc-ais-settings.php:595
 #: includes/class-avc-ais-settings.php:170
-#: includes/class-avc-ais-settings.php:424
-#: includes/class-avc-ais-settings.php:583
+#: includes/class-avc-ais-settings.php:436
+#: includes/class-avc-ais-settings.php:595
 msgid "Unable to fetch latitude and longitude."
 msgstr "緯度・経度を取得できませんでした。"
 
-#: dist/includes/class-avc-ais-settings.php:171
-#: dist/includes/class-avc-ais-settings.php:263
-#: includes/class-avc-ais-settings.php:171
-#: includes/class-avc-ais-settings.php:263
+#: dist/includes/class-avc-ais-settings.php:174
+#: dist/includes/class-avc-ais-settings.php:275
+#: includes/class-avc-ais-settings.php:174
+#: includes/class-avc-ais-settings.php:275
 msgid "Enter the address information."
 msgstr "住所情報を入力してください。"
 
-#: dist/includes/class-avc-ais-settings.php:172
-#: includes/class-avc-ais-settings.php:172
+#: dist/includes/class-avc-ais-settings.php:178
+#: includes/class-avc-ais-settings.php:178
 msgid "Please configure a Google Maps API key."
 msgstr "Google Maps APIキーを設定してください。"
 
-#: dist/includes/class-avc-ais-settings.php:175
-#: includes/class-avc-ais-settings.php:175
+#: dist/includes/class-avc-ais-settings.php:184
+#: includes/class-avc-ais-settings.php:184
 msgid ""
 "The primary role of this site is defined as an \"Organization\". You can "
 "also enter headquarters or branch office information in the \"Local details "
@@ -472,8 +472,8 @@ msgstr ""
 "営業時間」セクションで本社や支店の情報を入力することで、組織を物理的な所在地"
 "と関連付け、ローカル検索結果での露出を高めることができます。"
 
-#: dist/includes/class-avc-ais-settings.php:177
-#: includes/class-avc-ais-settings.php:177
+#: dist/includes/class-avc-ais-settings.php:186
+#: includes/class-avc-ais-settings.php:186
 msgid ""
 "The primary role of this site is defined as a \"Store/Business location\". "
 "This setting is ideal when the site itself represents a specific physical "
@@ -482,81 +482,81 @@ msgstr ""
 "このサイトの主な役割は「店舗・ビジネス拠点」として定義されています。この設定"
 "は、サイト自体が特定の実店舗やサービス拠点を表す場合に最適です。"
 
-#: dist/includes/class-avc-ais-settings.php:180
-#: includes/class-avc-ais-settings.php:180
+#: dist/includes/class-avc-ais-settings.php:189
+#: includes/class-avc-ais-settings.php:189
 msgid "Regenerating..."
 msgstr "再生成中…"
 
-#: dist/includes/class-avc-ais-settings.php:181
+#: dist/includes/class-avc-ais-settings.php:190
 #: dist/templates/admin-settings.php:1009
-#: includes/class-avc-ais-settings.php:181 templates/admin-settings.php:1009
+#: includes/class-avc-ais-settings.php:190 templates/admin-settings.php:1009
 msgid "Regenerate from site data"
 msgstr "サイトデータから再生成"
 
-#: dist/includes/class-avc-ais-settings.php:182 dist/src/Wizard/Wizard.php:278
-#: includes/class-avc-ais-settings.php:182 src/Wizard/Wizard.php:278
+#: dist/includes/class-avc-ais-settings.php:191 dist/src/Wizard/Wizard.php:278
+#: includes/class-avc-ais-settings.php:191 src/Wizard/Wizard.php:278
 msgid "Saving..."
 msgstr "保存中…"
 
-#: dist/includes/class-avc-ais-settings.php:183
+#: dist/includes/class-avc-ais-settings.php:192
 #: dist/templates/admin-settings.php:1006
-#: includes/class-avc-ais-settings.php:183 templates/admin-settings.php:1006
+#: includes/class-avc-ais-settings.php:192 templates/admin-settings.php:1006
 msgid "Save edits"
 msgstr "編集を保存"
 
-#: dist/includes/class-avc-ais-settings.php:184
-#: includes/class-avc-ais-settings.php:184
+#: dist/includes/class-avc-ais-settings.php:193
+#: includes/class-avc-ais-settings.php:193
 msgid "Saved!"
 msgstr "保存しました！"
 
-#: dist/includes/class-avc-ais-settings.php:187
-#: includes/class-avc-ais-settings.php:187
+#: dist/includes/class-avc-ais-settings.php:196
+#: includes/class-avc-ais-settings.php:196
 msgid "Activating..."
 msgstr "有効化中..."
 
-#: dist/includes/class-avc-ais-settings.php:188
-#: includes/class-avc-ais-settings.php:188
+#: dist/includes/class-avc-ais-settings.php:197
+#: includes/class-avc-ais-settings.php:197
 msgid "Deactivating..."
 msgstr "無効化中..."
 
-#: dist/includes/class-avc-ais-settings.php:189
+#: dist/includes/class-avc-ais-settings.php:198
 #: dist/templates/admin-settings.php:1057
-#: includes/class-avc-ais-settings.php:189 templates/admin-settings.php:1057
+#: includes/class-avc-ais-settings.php:198 templates/admin-settings.php:1057
 msgid "Activate"
 msgstr "有効化"
 
-#: dist/includes/class-avc-ais-settings.php:190
+#: dist/includes/class-avc-ais-settings.php:199
 #: dist/templates/admin-settings.php:1053
-#: includes/class-avc-ais-settings.php:190 templates/admin-settings.php:1053
+#: includes/class-avc-ais-settings.php:199 templates/admin-settings.php:1053
 msgid "Deactivate"
 msgstr "無効化"
 
 #. translators: %d: number of seconds an admin must wait before requesting new coordinates.
-#: dist/includes/class-avc-ais-settings.php:231
-#: includes/class-avc-ais-settings.php:231
+#: dist/includes/class-avc-ais-settings.php:240
+#: includes/class-avc-ais-settings.php:240
 #, php-format
 msgid "Please wait %d seconds before requesting new coordinates."
 msgstr "%d秒待ってから再度座標をリクエストしてください。"
 
-#: dist/includes/class-avc-ais-settings.php:311
-#: includes/class-avc-ais-settings.php:311
+#: dist/includes/class-avc-ais-settings.php:323
+#: includes/class-avc-ais-settings.php:323
 msgid "llms.txt content has been regenerated from site data."
 msgstr "llms.txt の内容がサイトデータから再生成されました。"
 
-#: dist/includes/class-avc-ais-settings.php:346
-#: includes/class-avc-ais-settings.php:346
+#: dist/includes/class-avc-ais-settings.php:358
+#: includes/class-avc-ais-settings.php:358
 msgid "llms.txt content has been saved."
 msgstr "llms.txt の内容を保存しました。"
 
-#: dist/includes/class-avc-ais-settings.php:413
-#: dist/includes/class-avc-ais-settings.php:573
-#: includes/class-avc-ais-settings.php:413
-#: includes/class-avc-ais-settings.php:573
+#: dist/includes/class-avc-ais-settings.php:425
+#: dist/includes/class-avc-ais-settings.php:585
+#: includes/class-avc-ais-settings.php:425
+#: includes/class-avc-ais-settings.php:585
 msgid "The geocoding API returned an error."
 msgstr "ジオコーディングAPIがエラーになりました。"
 
-#: dist/includes/class-avc-ais-settings.php:592
-#: includes/class-avc-ais-settings.php:592
+#: dist/includes/class-avc-ais-settings.php:604
+#: includes/class-avc-ais-settings.php:604
 msgid ""
 "No Google Maps API key was found, so OpenStreetMap (for development) was "
 "used instead."
@@ -564,607 +564,607 @@ msgstr ""
 "Google Maps APIキーが設定されていないため、開発用として OpenStreetMap を使用"
 "しました。"
 
-#: dist/includes/class-avc-ais-settings.php:628
-#: includes/class-avc-ais-settings.php:628
+#: dist/includes/class-avc-ais-settings.php:640
+#: includes/class-avc-ais-settings.php:640
 msgid "Settings template could not be located."
 msgstr "設定テンプレートが見つかりませんでした。"
 
-#: dist/includes/class-avc-ais-settings.php:1233
-#: includes/class-avc-ais-settings.php:1233
+#: dist/includes/class-avc-ais-settings.php:1245
+#: includes/class-avc-ais-settings.php:1245
 msgid "Facebook"
 msgstr "Facebook"
 
-#: dist/includes/class-avc-ais-settings.php:1234
-#: includes/class-avc-ais-settings.php:1234
+#: dist/includes/class-avc-ais-settings.php:1246
+#: includes/class-avc-ais-settings.php:1246
 msgid "Instagram"
 msgstr "Instagram"
 
-#: dist/includes/class-avc-ais-settings.php:1235
-#: includes/class-avc-ais-settings.php:1235
+#: dist/includes/class-avc-ais-settings.php:1247
+#: includes/class-avc-ais-settings.php:1247
 msgid "X"
 msgstr "X"
 
-#: dist/includes/class-avc-ais-settings.php:1236
-#: includes/class-avc-ais-settings.php:1236
+#: dist/includes/class-avc-ais-settings.php:1248
+#: includes/class-avc-ais-settings.php:1248
 msgid "YouTube"
 msgstr "YouTube"
 
-#: dist/includes/class-avc-ais-settings.php:1237
-#: includes/class-avc-ais-settings.php:1237
+#: dist/includes/class-avc-ais-settings.php:1249
+#: includes/class-avc-ais-settings.php:1249
 msgid "Google+"
 msgstr "Google+"
 
-#: dist/includes/class-avc-ais-settings.php:1238
-#: includes/class-avc-ais-settings.php:1238
+#: dist/includes/class-avc-ais-settings.php:1250
+#: includes/class-avc-ais-settings.php:1250
 msgid "LINE"
 msgstr "LINE"
 
-#: dist/includes/class-avc-ais-settings.php:1239
-#: includes/class-avc-ais-settings.php:1239
+#: dist/includes/class-avc-ais-settings.php:1251
+#: includes/class-avc-ais-settings.php:1251
 msgid "TikTok"
 msgstr "TikTok"
 
-#: dist/includes/class-avc-ais-settings.php:1240
-#: includes/class-avc-ais-settings.php:1240
+#: dist/includes/class-avc-ais-settings.php:1252
+#: includes/class-avc-ais-settings.php:1252
 msgid "Threads"
 msgstr "Threads"
 
-#: dist/includes/class-avc-ais-settings.php:1241
-#: includes/class-avc-ais-settings.php:1241
+#: dist/includes/class-avc-ais-settings.php:1253
+#: includes/class-avc-ais-settings.php:1253
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: dist/includes/class-avc-ais-settings.php:1242
-#: includes/class-avc-ais-settings.php:1242
+#: dist/includes/class-avc-ais-settings.php:1254
+#: includes/class-avc-ais-settings.php:1254
 msgid "mixi"
 msgstr "mixi"
 
-#: dist/includes/class-avc-ais-settings.php:1243
-#: includes/class-avc-ais-settings.php:1243
+#: dist/includes/class-avc-ais-settings.php:1255
+#: includes/class-avc-ais-settings.php:1255
 msgid "Other"
 msgstr "その他"
 
-#: dist/includes/class-avc-ais-settings.php:1267
-#: includes/class-avc-ais-settings.php:1267
+#: dist/includes/class-avc-ais-settings.php:1279
+#: includes/class-avc-ais-settings.php:1279
 msgid "WebPage (default)"
 msgstr "WebPage （標準）"
 
-#: dist/includes/class-avc-ais-settings.php:1271
-#: dist/includes/class-avc-ais-settings.php:1589
-#: includes/class-avc-ais-settings.php:1271
-#: includes/class-avc-ais-settings.php:1589
+#: dist/includes/class-avc-ais-settings.php:1283
+#: dist/includes/class-avc-ais-settings.php:1601
+#: includes/class-avc-ais-settings.php:1283
+#: includes/class-avc-ais-settings.php:1601
 msgid "NewsArticle"
 msgstr "NewsArticle"
 
-#: dist/includes/class-avc-ais-settings.php:1272
-#: dist/includes/class-avc-ais-settings.php:1588
-#: includes/class-avc-ais-settings.php:1272
-#: includes/class-avc-ais-settings.php:1588
+#: dist/includes/class-avc-ais-settings.php:1284
+#: dist/includes/class-avc-ais-settings.php:1600
+#: includes/class-avc-ais-settings.php:1284
+#: includes/class-avc-ais-settings.php:1600
 msgid "BlogPosting"
 msgstr "BlogPosting"
 
-#: dist/includes/class-avc-ais-settings.php:1273
-#: dist/includes/class-avc-ais-settings.php:1592
-#: includes/class-avc-ais-settings.php:1273
-#: includes/class-avc-ais-settings.php:1592
+#: dist/includes/class-avc-ais-settings.php:1285
+#: dist/includes/class-avc-ais-settings.php:1604
+#: includes/class-avc-ais-settings.php:1285
+#: includes/class-avc-ais-settings.php:1604
 msgid "Product"
 msgstr "Product"
 
-#: dist/includes/class-avc-ais-settings.php:1301
-#: includes/class-avc-ais-settings.php:1301
+#: dist/includes/class-avc-ais-settings.php:1313
+#: includes/class-avc-ais-settings.php:1313
 msgid "Japanese"
 msgstr "日本語"
 
-#: dist/includes/class-avc-ais-settings.php:1302
-#: includes/class-avc-ais-settings.php:1302
+#: dist/includes/class-avc-ais-settings.php:1314
+#: includes/class-avc-ais-settings.php:1314
 msgid "English"
 msgstr "英語"
 
-#: dist/includes/class-avc-ais-settings.php:1303
-#: includes/class-avc-ais-settings.php:1303
+#: dist/includes/class-avc-ais-settings.php:1315
+#: includes/class-avc-ais-settings.php:1315
 msgid "Chinese (Simplified)"
 msgstr "中国語 (簡体字)"
 
-#: dist/includes/class-avc-ais-settings.php:1304
-#: includes/class-avc-ais-settings.php:1304
+#: dist/includes/class-avc-ais-settings.php:1316
+#: includes/class-avc-ais-settings.php:1316
 msgid "Chinese (Traditional)"
 msgstr "中国語 (繁体字)"
 
-#: dist/includes/class-avc-ais-settings.php:1305
-#: includes/class-avc-ais-settings.php:1305
+#: dist/includes/class-avc-ais-settings.php:1317
+#: includes/class-avc-ais-settings.php:1317
 msgid "Korean"
 msgstr "韓国語"
 
-#: dist/includes/class-avc-ais-settings.php:1306
-#: includes/class-avc-ais-settings.php:1306
+#: dist/includes/class-avc-ais-settings.php:1318
+#: includes/class-avc-ais-settings.php:1318
 msgid "French"
 msgstr "フランス語"
 
-#: dist/includes/class-avc-ais-settings.php:1307
-#: includes/class-avc-ais-settings.php:1307
+#: dist/includes/class-avc-ais-settings.php:1319
+#: includes/class-avc-ais-settings.php:1319
 msgid "German"
 msgstr "ドイツ語"
 
-#: dist/includes/class-avc-ais-settings.php:1308
-#: includes/class-avc-ais-settings.php:1308
+#: dist/includes/class-avc-ais-settings.php:1320
+#: includes/class-avc-ais-settings.php:1320
 msgid "Spanish"
 msgstr "スペイン語"
 
-#: dist/includes/class-avc-ais-settings.php:1309
-#: includes/class-avc-ais-settings.php:1309
+#: dist/includes/class-avc-ais-settings.php:1321
+#: includes/class-avc-ais-settings.php:1321
 msgid "Portuguese"
 msgstr "ポルトガル語"
 
-#: dist/includes/class-avc-ais-settings.php:1310
-#: includes/class-avc-ais-settings.php:1310
+#: dist/includes/class-avc-ais-settings.php:1322
+#: includes/class-avc-ais-settings.php:1322
 msgid "Italian"
 msgstr "イタリア語"
 
-#: dist/includes/class-avc-ais-settings.php:1311
-#: includes/class-avc-ais-settings.php:1311
+#: dist/includes/class-avc-ais-settings.php:1323
+#: includes/class-avc-ais-settings.php:1323
 msgid "Thai"
 msgstr "タイ語"
 
-#: dist/includes/class-avc-ais-settings.php:1336 dist/src/Wizard/Wizard.php:300
+#: dist/includes/class-avc-ais-settings.php:1348 dist/src/Wizard/Wizard.php:300
 #: dist/templates/wizard/steps/step-4-hours.php:15
-#: includes/class-avc-ais-settings.php:1336 src/Wizard/Wizard.php:300
+#: includes/class-avc-ais-settings.php:1348 src/Wizard/Wizard.php:300
 #: templates/wizard/steps/step-4-hours.php:15
 msgid "Monday"
 msgstr "月曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1337 dist/src/Wizard/Wizard.php:301
+#: dist/includes/class-avc-ais-settings.php:1349 dist/src/Wizard/Wizard.php:301
 #: dist/templates/wizard/steps/step-4-hours.php:16
-#: includes/class-avc-ais-settings.php:1337 src/Wizard/Wizard.php:301
+#: includes/class-avc-ais-settings.php:1349 src/Wizard/Wizard.php:301
 #: templates/wizard/steps/step-4-hours.php:16
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1338 dist/src/Wizard/Wizard.php:302
+#: dist/includes/class-avc-ais-settings.php:1350 dist/src/Wizard/Wizard.php:302
 #: dist/templates/wizard/steps/step-4-hours.php:17
-#: includes/class-avc-ais-settings.php:1338 src/Wizard/Wizard.php:302
+#: includes/class-avc-ais-settings.php:1350 src/Wizard/Wizard.php:302
 #: templates/wizard/steps/step-4-hours.php:17
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1339 dist/src/Wizard/Wizard.php:303
+#: dist/includes/class-avc-ais-settings.php:1351 dist/src/Wizard/Wizard.php:303
 #: dist/templates/wizard/steps/step-4-hours.php:18
-#: includes/class-avc-ais-settings.php:1339 src/Wizard/Wizard.php:303
+#: includes/class-avc-ais-settings.php:1351 src/Wizard/Wizard.php:303
 #: templates/wizard/steps/step-4-hours.php:18
 msgid "Thursday"
 msgstr "木曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1340 dist/src/Wizard/Wizard.php:304
+#: dist/includes/class-avc-ais-settings.php:1352 dist/src/Wizard/Wizard.php:304
 #: dist/templates/wizard/steps/step-4-hours.php:19
-#: includes/class-avc-ais-settings.php:1340 src/Wizard/Wizard.php:304
+#: includes/class-avc-ais-settings.php:1352 src/Wizard/Wizard.php:304
 #: templates/wizard/steps/step-4-hours.php:19
 msgid "Friday"
 msgstr "金曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1341 dist/src/Wizard/Wizard.php:305
+#: dist/includes/class-avc-ais-settings.php:1353 dist/src/Wizard/Wizard.php:305
 #: dist/templates/wizard/steps/step-4-hours.php:20
-#: includes/class-avc-ais-settings.php:1341 src/Wizard/Wizard.php:305
+#: includes/class-avc-ais-settings.php:1353 src/Wizard/Wizard.php:305
 #: templates/wizard/steps/step-4-hours.php:20
 msgid "Saturday"
 msgstr "土曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1342 dist/src/Wizard/Wizard.php:306
+#: dist/includes/class-avc-ais-settings.php:1354 dist/src/Wizard/Wizard.php:306
 #: dist/templates/wizard/steps/step-4-hours.php:21
-#: includes/class-avc-ais-settings.php:1342 src/Wizard/Wizard.php:306
+#: includes/class-avc-ais-settings.php:1354 src/Wizard/Wizard.php:306
 #: templates/wizard/steps/step-4-hours.php:21
 msgid "Sunday"
 msgstr "日曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1343
-#: includes/class-avc-ais-settings.php:1343
+#: dist/includes/class-avc-ais-settings.php:1355
+#: includes/class-avc-ais-settings.php:1355
 msgid "Public holiday"
 msgstr "祝日"
 
-#: dist/includes/class-avc-ais-settings.php:1585
-#: includes/class-avc-ais-settings.php:1585
+#: dist/includes/class-avc-ais-settings.php:1597
+#: includes/class-avc-ais-settings.php:1597
 msgid "Use global default content model"
 msgstr "グローバルのデフォルトコンテンツモデルを使用"
 
-#: dist/includes/class-avc-ais-settings.php:1593
-#: includes/class-avc-ais-settings.php:1593
+#: dist/includes/class-avc-ais-settings.php:1605
+#: includes/class-avc-ais-settings.php:1605
 msgid "CollectionPage"
 msgstr "コレクションページ"
 
-#: dist/includes/class-avc-ais-settings.php:1594
-#: includes/class-avc-ais-settings.php:1594
+#: dist/includes/class-avc-ais-settings.php:1606
+#: includes/class-avc-ais-settings.php:1606
 msgid "ItemList"
 msgstr "アイテムリスト"
 
-#: dist/includes/class-avc-ais-settings.php:1613
-#: includes/class-avc-ais-settings.php:1613
+#: dist/includes/class-avc-ais-settings.php:1625
+#: includes/class-avc-ais-settings.php:1625
 msgid "AVC schema priority (suppress other plugins)"
-msgstr "AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
+msgstr "Aivec AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
 
-#: dist/includes/class-avc-ais-settings.php:1614
-#: includes/class-avc-ais-settings.php:1614
+#: dist/includes/class-avc-ais-settings.php:1626
+#: includes/class-avc-ais-settings.php:1626
 msgid "Let other SEO plugins output schema"
 msgstr "他のSEOプラグインのスキーマを優先する"
 
-#: dist/includes/class-avc-ais-settings.php:1678
-#: includes/class-avc-ais-settings.php:1678
+#: dist/includes/class-avc-ais-settings.php:1690
+#: includes/class-avc-ais-settings.php:1690
 msgid "Japan"
 msgstr "日本"
 
-#: dist/includes/class-avc-ais-settings.php:1679
-#: includes/class-avc-ais-settings.php:1679
+#: dist/includes/class-avc-ais-settings.php:1691
+#: includes/class-avc-ais-settings.php:1691
 msgid "United States"
 msgstr "アメリカ合衆国"
 
-#: dist/includes/class-avc-ais-settings.php:1680
-#: includes/class-avc-ais-settings.php:1680
+#: dist/includes/class-avc-ais-settings.php:1692
+#: includes/class-avc-ais-settings.php:1692
 msgid "China"
 msgstr "中国"
 
-#: dist/includes/class-avc-ais-settings.php:1681
-#: includes/class-avc-ais-settings.php:1681
+#: dist/includes/class-avc-ais-settings.php:1693
+#: includes/class-avc-ais-settings.php:1693
 msgid "Taiwan"
 msgstr "台湾"
 
-#: dist/includes/class-avc-ais-settings.php:1682
-#: includes/class-avc-ais-settings.php:1682
+#: dist/includes/class-avc-ais-settings.php:1694
+#: includes/class-avc-ais-settings.php:1694
 msgid "Hong Kong"
 msgstr "香港"
 
-#: dist/includes/class-avc-ais-settings.php:1683
-#: includes/class-avc-ais-settings.php:1683
+#: dist/includes/class-avc-ais-settings.php:1695
+#: includes/class-avc-ais-settings.php:1695
 msgid "South Korea"
 msgstr "韓国"
 
-#: dist/includes/class-avc-ais-settings.php:1684
-#: includes/class-avc-ais-settings.php:1684
+#: dist/includes/class-avc-ais-settings.php:1696
+#: includes/class-avc-ais-settings.php:1696
 msgid "Singapore"
 msgstr "シンガポール"
 
-#: dist/includes/class-avc-ais-settings.php:1685
-#: includes/class-avc-ais-settings.php:1685
+#: dist/includes/class-avc-ais-settings.php:1697
+#: includes/class-avc-ais-settings.php:1697
 msgid "Thailand"
 msgstr "タイ"
 
-#: dist/includes/class-avc-ais-settings.php:1686
-#: includes/class-avc-ais-settings.php:1686
+#: dist/includes/class-avc-ais-settings.php:1698
+#: includes/class-avc-ais-settings.php:1698
 msgid "Vietnam"
 msgstr "ベトナム"
 
-#: dist/includes/class-avc-ais-settings.php:1687
-#: includes/class-avc-ais-settings.php:1687
+#: dist/includes/class-avc-ais-settings.php:1699
+#: includes/class-avc-ais-settings.php:1699
 msgid "Philippines"
 msgstr "フィリピン"
 
-#: dist/includes/class-avc-ais-settings.php:1688
-#: includes/class-avc-ais-settings.php:1688
+#: dist/includes/class-avc-ais-settings.php:1700
+#: includes/class-avc-ais-settings.php:1700
 msgid "Malaysia"
 msgstr "マレーシア"
 
-#: dist/includes/class-avc-ais-settings.php:1689
-#: includes/class-avc-ais-settings.php:1689
+#: dist/includes/class-avc-ais-settings.php:1701
+#: includes/class-avc-ais-settings.php:1701
 msgid "Indonesia"
 msgstr "インドネシア"
 
-#: dist/includes/class-avc-ais-settings.php:1690
-#: includes/class-avc-ais-settings.php:1690
+#: dist/includes/class-avc-ais-settings.php:1702
+#: includes/class-avc-ais-settings.php:1702
 msgid "France"
 msgstr "フランス"
 
-#: dist/includes/class-avc-ais-settings.php:1691
-#: includes/class-avc-ais-settings.php:1691
+#: dist/includes/class-avc-ais-settings.php:1703
+#: includes/class-avc-ais-settings.php:1703
 msgid "Germany"
 msgstr "ドイツ"
 
-#: dist/includes/class-avc-ais-settings.php:1692
-#: includes/class-avc-ais-settings.php:1692
+#: dist/includes/class-avc-ais-settings.php:1704
+#: includes/class-avc-ais-settings.php:1704
 msgid "Spain"
 msgstr "スペイン"
 
-#: dist/includes/class-avc-ais-settings.php:1693
-#: includes/class-avc-ais-settings.php:1693
+#: dist/includes/class-avc-ais-settings.php:1705
+#: includes/class-avc-ais-settings.php:1705
 msgid "Italy"
 msgstr "イタリア"
 
-#: dist/includes/class-avc-ais-settings.php:1694
-#: includes/class-avc-ais-settings.php:1694
+#: dist/includes/class-avc-ais-settings.php:1706
+#: includes/class-avc-ais-settings.php:1706
 msgid "United Kingdom"
 msgstr "イギリス"
 
-#: dist/includes/class-avc-ais-settings.php:1695
-#: includes/class-avc-ais-settings.php:1695
+#: dist/includes/class-avc-ais-settings.php:1707
+#: includes/class-avc-ais-settings.php:1707
 msgid "Canada"
 msgstr "カナダ"
 
-#: dist/includes/class-avc-ais-settings.php:1696
-#: includes/class-avc-ais-settings.php:1696
+#: dist/includes/class-avc-ais-settings.php:1708
+#: includes/class-avc-ais-settings.php:1708
 msgid "Australia"
 msgstr "オーストラリア"
 
-#: dist/includes/class-avc-ais-settings.php:1697
-#: includes/class-avc-ais-settings.php:1697
+#: dist/includes/class-avc-ais-settings.php:1709
+#: includes/class-avc-ais-settings.php:1709
 msgid "New Zealand"
 msgstr "ニュージーランド"
 
-#: dist/includes/class-avc-ais-settings.php:1768
-#: includes/class-avc-ais-settings.php:1768
+#: dist/includes/class-avc-ais-settings.php:1780
+#: includes/class-avc-ais-settings.php:1780
 msgid "The site operator is defined in the structured data."
 msgstr "このサイトの運営主体が構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1769
-#: includes/class-avc-ais-settings.php:1769
+#: dist/includes/class-avc-ais-settings.php:1784
+#: includes/class-avc-ais-settings.php:1784
 msgid ""
 "The site operator name is not set. Entity identification may be difficult."
 msgstr "運営主体名が設定されていません。エンティティの識別が困難な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1774
-#: includes/class-avc-ais-settings.php:1774
+#: dist/includes/class-avc-ais-settings.php:1792
+#: includes/class-avc-ais-settings.php:1792
 msgid "The organization URL is defined in the structured data."
 msgstr "組織URLが構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1775
-#: includes/class-avc-ais-settings.php:1775
+#: dist/includes/class-avc-ais-settings.php:1796
+#: includes/class-avc-ais-settings.php:1796
 msgid ""
 "The organization URL is not set. Entity identification may be difficult."
 msgstr "組織URLが設定されていません。エンティティの識別が困難な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1780
-#: includes/class-avc-ais-settings.php:1780
+#: dist/includes/class-avc-ais-settings.php:1804
+#: includes/class-avc-ais-settings.php:1804
 msgid "A logo is registered for entity identification."
 msgstr "ロゴが登録されています。エンティティの識別に活用されます。"
 
-#: dist/includes/class-avc-ais-settings.php:1781
-#: includes/class-avc-ais-settings.php:1781
+#: dist/includes/class-avc-ais-settings.php:1805
+#: includes/class-avc-ais-settings.php:1805
 msgid "No logo is registered. Credibility assessment may be affected."
 msgstr "ロゴが登録されていません。信頼性の評価に影響する可能性があります。"
 
-#: dist/includes/class-avc-ais-settings.php:1786
-#: includes/class-avc-ais-settings.php:1786
+#: dist/includes/class-avc-ais-settings.php:1810
+#: includes/class-avc-ais-settings.php:1810
 msgid "Social profiles (sameAs) are linked for entity verification."
 msgstr "ソーシャルプロフィール（sameAs）が紐付けられています。"
 
-#: dist/includes/class-avc-ais-settings.php:1787
-#: includes/class-avc-ais-settings.php:1787
+#: dist/includes/class-avc-ais-settings.php:1811
+#: includes/class-avc-ais-settings.php:1811
 msgid "No social profiles are linked. Entity verification may be limited."
 msgstr ""
 "ソーシャルプロフィールが未設定です。エンティティの検証が制限される可能性があ"
 "ります。"
 
-#: dist/includes/class-avc-ais-settings.php:1791
-#: includes/class-avc-ais-settings.php:1791
+#: dist/includes/class-avc-ais-settings.php:1815
+#: includes/class-avc-ais-settings.php:1815
 msgid "Organization"
 msgstr "組織・団体・法人"
 
-#: dist/includes/class-avc-ais-settings.php:1810
-#: includes/class-avc-ais-settings.php:1810
+#: dist/includes/class-avc-ais-settings.php:1834
+#: includes/class-avc-ais-settings.php:1834
 msgid "The business name is defined in the structured data."
 msgstr "事業者名が構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1811
-#: includes/class-avc-ais-settings.php:1811
+#: dist/includes/class-avc-ais-settings.php:1838
+#: includes/class-avc-ais-settings.php:1838
 msgid "The business name is not set. Local search visibility may be affected."
 msgstr ""
 "事業者名が設定されていません。ローカル検索での表示に影響する可能性がありま"
 "す。"
 
-#: dist/includes/class-avc-ais-settings.php:1816
-#: includes/class-avc-ais-settings.php:1816
+#: dist/includes/class-avc-ais-settings.php:1846
+#: includes/class-avc-ais-settings.php:1846
 msgid "A phone number is registered for contact purposes."
 msgstr "電話番号が登録されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1817
-#: includes/class-avc-ais-settings.php:1817
+#: dist/includes/class-avc-ais-settings.php:1847
+#: includes/class-avc-ais-settings.php:1847
 msgid "No phone number is set. This is a required field for LocalBusiness."
 msgstr "電話番号が設定されていません。LocalBusinessの必須項目です。"
 
-#: dist/includes/class-avc-ais-settings.php:1824
-#: includes/class-avc-ais-settings.php:1824
+#: dist/includes/class-avc-ais-settings.php:1854
+#: includes/class-avc-ais-settings.php:1854
 msgid "The address is fully defined in the structured data."
 msgstr "住所が構造化データとして完全に定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1825
-#: includes/class-avc-ais-settings.php:1825
+#: dist/includes/class-avc-ais-settings.php:1855
+#: includes/class-avc-ais-settings.php:1855
 msgid "The address is incomplete. Some fields may be missing."
 msgstr "住所が不完全です。一部の項目が未入力の可能性があります。"
 
 #. translators: %s decimal places
-#: dist/includes/class-avc-ais-settings.php:1839
-#: includes/class-avc-ais-settings.php:1839
+#: dist/includes/class-avc-ais-settings.php:1869
+#: includes/class-avc-ais-settings.php:1869
 #, php-format
 msgid ""
 "Geo coordinates are registered (%s decimal places). Map display is ready."
 msgstr ""
 "緯度経度が登録されています（小数点以下%s桁）。地図表示の準備が整っています。"
 
-#: dist/includes/class-avc-ais-settings.php:1842
-#: includes/class-avc-ais-settings.php:1842
+#: dist/includes/class-avc-ais-settings.php:1872
+#: includes/class-avc-ais-settings.php:1872
 msgid "Geo coordinates are not set. Map-based local search may be affected."
 msgstr ""
 "緯度経度が設定されていません。地図ベースの検索に影響する可能性があります。"
 
-#: dist/includes/class-avc-ais-settings.php:1848
-#: includes/class-avc-ais-settings.php:1848
+#: dist/includes/class-avc-ais-settings.php:1878
+#: includes/class-avc-ais-settings.php:1878
 msgid "Business hours are defined in the structured data."
 msgstr "営業時間が構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1849
-#: includes/class-avc-ais-settings.php:1849
+#: dist/includes/class-avc-ais-settings.php:1879
+#: includes/class-avc-ais-settings.php:1879
 msgid "No business hours are set. Open/closed status cannot be determined."
 msgstr "営業時間が設定されていません。営業中/休業中の判定ができない状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1855
-#: includes/class-avc-ais-settings.php:1855
+#: dist/includes/class-avc-ais-settings.php:1885
+#: includes/class-avc-ais-settings.php:1885
 msgid "The country code is defined for address context."
 msgstr "国コードが住所のコンテキストとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1856
-#: includes/class-avc-ais-settings.php:1856
+#: dist/includes/class-avc-ais-settings.php:1886
+#: includes/class-avc-ais-settings.php:1886
 msgid "The country code is not set. Regional interpretation may vary."
 msgstr "国コードが設定されていません。地域の解釈が異なる可能性があります。"
 
-#: dist/includes/class-avc-ais-settings.php:1860
-#: includes/class-avc-ais-settings.php:1860
+#: dist/includes/class-avc-ais-settings.php:1890
+#: includes/class-avc-ais-settings.php:1890
 msgid "LocalBusiness"
 msgstr "ローカルビジネス"
 
-#: dist/includes/class-avc-ais-settings.php:1871
-#: includes/class-avc-ais-settings.php:1871
+#: dist/includes/class-avc-ais-settings.php:1901
+#: includes/class-avc-ais-settings.php:1901
 msgid "The site name is defined in the structured data."
 msgstr "サイト名が構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1872
-#: includes/class-avc-ais-settings.php:1872
+#: dist/includes/class-avc-ais-settings.php:1902
+#: includes/class-avc-ais-settings.php:1902
 msgid "The site name is not set. Site identification may be unclear."
 msgstr "サイト名が設定されていません。サイトの識別が不明確な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1877
-#: includes/class-avc-ais-settings.php:1877
+#: dist/includes/class-avc-ais-settings.php:1907
+#: includes/class-avc-ais-settings.php:1907
 msgid "The site URL is defined as the canonical reference."
 msgstr "サイトURLが正規参照として定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1878
-#: includes/class-avc-ais-settings.php:1878
+#: dist/includes/class-avc-ais-settings.php:1908
+#: includes/class-avc-ais-settings.php:1908
 msgid "The site URL is not set. Canonical identification may fail."
 msgstr ""
 "サイトURLが設定されていません。正規URLの識別が失敗する可能性があります。"
 
-#: dist/includes/class-avc-ais-settings.php:1884
-#: includes/class-avc-ais-settings.php:1884
+#: dist/includes/class-avc-ais-settings.php:1914
+#: includes/class-avc-ais-settings.php:1914
 msgid "The site language is defined for content context."
 msgstr "サイトの言語がコンテンツコンテキストとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1885
-#: includes/class-avc-ais-settings.php:1885
+#: dist/includes/class-avc-ais-settings.php:1915
+#: includes/class-avc-ais-settings.php:1915
 msgid "No language is set. Content language context may be ambiguous."
 msgstr ""
 "言語が設定されていません。コンテンツの言語コンテキストが曖昧な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1890
-#: includes/class-avc-ais-settings.php:1890
+#: dist/includes/class-avc-ais-settings.php:1920
+#: includes/class-avc-ais-settings.php:1920
 msgid "The publisher is linked to the site entity."
 msgstr "発行者がサイトエンティティに紐付けられています。"
 
-#: dist/includes/class-avc-ais-settings.php:1891
-#: includes/class-avc-ais-settings.php:1891
+#: dist/includes/class-avc-ais-settings.php:1921
+#: includes/class-avc-ais-settings.php:1921
 msgid "No publisher is set. Site-entity relationship is undefined."
 msgstr "発行者が設定されていません。サイトとエンティティの関係が未定義です。"
 
-#: dist/includes/class-avc-ais-settings.php:1895
-#: includes/class-avc-ais-settings.php:1895
+#: dist/includes/class-avc-ais-settings.php:1925
+#: includes/class-avc-ais-settings.php:1925
 msgid "WebSite"
 msgstr "WebSite"
 
-#: dist/includes/class-avc-ais-settings.php:1905
-#: includes/class-avc-ais-settings.php:1905
+#: dist/includes/class-avc-ais-settings.php:1935
+#: includes/class-avc-ais-settings.php:1935
 msgid "The WebPage base URL is defined for page identification."
 msgstr "WebPageのベースURLがページ識別用に定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1906
-#: includes/class-avc-ais-settings.php:1906
+#: dist/includes/class-avc-ais-settings.php:1936
+#: includes/class-avc-ais-settings.php:1936
 msgid "The WebPage base URL is not set. Page linking may be affected."
 msgstr ""
 "WebPageのベースURLが設定されていません。ページリンクに影響する可能性がありま"
 "す。"
 
-#: dist/includes/class-avc-ais-settings.php:1912
-#: includes/class-avc-ais-settings.php:1912
+#: dist/includes/class-avc-ais-settings.php:1942
+#: includes/class-avc-ais-settings.php:1942
 msgid "The page language is defined for content context."
 msgstr "ページの言語がコンテンツコンテキストとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1913
-#: includes/class-avc-ais-settings.php:1913
+#: dist/includes/class-avc-ais-settings.php:1943
+#: includes/class-avc-ais-settings.php:1943
 msgid "No language is set. System default will be used."
 msgstr "言語が設定されていません。システムデフォルトが使用されます。"
 
-#: dist/includes/class-avc-ais-settings.php:1929
-#: includes/class-avc-ais-settings.php:1929
+#: dist/includes/class-avc-ais-settings.php:1959
+#: includes/class-avc-ais-settings.php:1959
 msgid "Posts are output as Article schema for blog content."
 msgstr "投稿はブログコンテンツとしてArticleスキーマで出力されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1930
-#: includes/class-avc-ais-settings.php:1930
+#: dist/includes/class-avc-ais-settings.php:1960
+#: includes/class-avc-ais-settings.php:1960
 msgid ""
 "Posts are output as WebPage schema. Article may be more suitable for blogs."
 msgstr ""
 "投稿はWebPageスキーマで出力されています。ブログにはArticleがより適切な場合が"
 "あります。"
 
-#: dist/includes/class-avc-ais-settings.php:1947
-#: includes/class-avc-ais-settings.php:1947
+#: dist/includes/class-avc-ais-settings.php:1977
+#: includes/class-avc-ais-settings.php:1977
 msgid "No published posts found. Sample check cannot be performed."
 msgstr "公開済み投稿が見つかりません。サンプルチェックを実行できません。"
 
-#: dist/includes/class-avc-ais-settings.php:1950
-#: dist/includes/class-avc-ais-settings.php:1993
-#: includes/class-avc-ais-settings.php:1950
-#: includes/class-avc-ais-settings.php:1993
+#: dist/includes/class-avc-ais-settings.php:1980
+#: dist/includes/class-avc-ais-settings.php:2029
+#: includes/class-avc-ais-settings.php:1980
+#: includes/class-avc-ais-settings.php:2029
 msgid "Article (sample post)"
 msgstr "Article（サンプル投稿）"
 
-#: dist/includes/class-avc-ais-settings.php:1958
-#: includes/class-avc-ais-settings.php:1958
+#: dist/includes/class-avc-ais-settings.php:1988
+#: includes/class-avc-ais-settings.php:1988
 msgid "The headline is defined in the sample post."
 msgstr "サンプル投稿の見出しが定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1959
-#: includes/class-avc-ais-settings.php:1959
+#: dist/includes/class-avc-ais-settings.php:1989
+#: includes/class-avc-ais-settings.php:1989
 msgid "The headline is missing from the sample post."
 msgstr "サンプル投稿に見出しがありません。"
 
-#: dist/includes/class-avc-ais-settings.php:1964
-#: includes/class-avc-ais-settings.php:1964
+#: dist/includes/class-avc-ais-settings.php:1994
+#: includes/class-avc-ais-settings.php:1994
 msgid "The publication date is defined in the structured data."
 msgstr "公開日が構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1965
-#: includes/class-avc-ais-settings.php:1965
+#: dist/includes/class-avc-ais-settings.php:1995
+#: includes/class-avc-ais-settings.php:1995
 msgid "The publication date is missing. Freshness signals may be affected."
 msgstr "公開日がありません。鮮度シグナルに影響する可能性があります。"
 
-#: dist/includes/class-avc-ais-settings.php:1970
-#: includes/class-avc-ais-settings.php:1970
+#: dist/includes/class-avc-ais-settings.php:2000
+#: includes/class-avc-ais-settings.php:2000
 msgid "The modification date is defined for content freshness."
 msgstr "更新日がコンテンツの鮮度として定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1971
-#: includes/class-avc-ais-settings.php:1971
+#: dist/includes/class-avc-ais-settings.php:2001
+#: includes/class-avc-ais-settings.php:2001
 msgid "The modification date is not available."
 msgstr "更新日が利用できません。"
 
-#: dist/includes/class-avc-ais-settings.php:1978
-#: includes/class-avc-ais-settings.php:1978
+#: dist/includes/class-avc-ais-settings.php:2008
+#: includes/class-avc-ais-settings.php:2008
 msgid "The author is defined for content attribution."
 msgstr "著者がコンテンツの帰属として定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1979
-#: includes/class-avc-ais-settings.php:1979
+#: dist/includes/class-avc-ais-settings.php:2009
+#: includes/class-avc-ais-settings.php:2009
 msgid "No author is set. Content attribution may be unclear."
 msgstr "著者が設定されていません。コンテンツの帰属が不明確な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:1988
-#: includes/class-avc-ais-settings.php:1988
+#: dist/includes/class-avc-ais-settings.php:2018
+#: includes/class-avc-ais-settings.php:2018
 msgid "A featured image is set for the sample post."
 msgstr "サンプル投稿にアイキャッチ画像が設定されています。"
 
-#: dist/includes/class-avc-ais-settings.php:1989
-#: includes/class-avc-ais-settings.php:1989
+#: dist/includes/class-avc-ais-settings.php:2022
+#: includes/class-avc-ais-settings.php:2022
 msgid "No featured image on the sample post. Rich results may be limited."
 msgstr ""
 "サンプル投稿にアイキャッチ画像がありません。リッチリザルトが制限される可能性"
 "があります。"
 
-#: dist/includes/class-avc-ais-settings.php:2015
-#: includes/class-avc-ais-settings.php:2015
+#: dist/includes/class-avc-ais-settings.php:2051
+#: includes/class-avc-ais-settings.php:2051
 msgid "FAQ schema extraction is enabled for at least one post type."
 msgstr "FAQスキーマ抽出が少なくとも1つの投稿タイプで有効です。"
 
-#: dist/includes/class-avc-ais-settings.php:2019
-#: includes/class-avc-ais-settings.php:2019
+#: dist/includes/class-avc-ais-settings.php:2055
+#: includes/class-avc-ais-settings.php:2055
 msgid ""
 "FAQ content requires both question and answer elements with matching CSS "
 "classes."
 msgstr "FAQコンテンツには対応するCSSクラスを持つ質問と回答の両要素が必要です。"
 
-#: dist/includes/class-avc-ais-settings.php:2024
-#: includes/class-avc-ais-settings.php:2024
+#: dist/includes/class-avc-ais-settings.php:2060
+#: includes/class-avc-ais-settings.php:2060
 msgid ""
 "FAQ schema extraction is not enabled. Enable it if your content contains Q&A "
 "sections."
@@ -1172,18 +1172,18 @@ msgstr ""
 "FAQスキーマ抽出は無効です。Q&Aセクションを含むコンテンツがある場合は有効化を"
 "検討してください。"
 
-#: dist/includes/class-avc-ais-settings.php:2069
-#: includes/class-avc-ais-settings.php:2069
+#: dist/includes/class-avc-ais-settings.php:2105
+#: includes/class-avc-ais-settings.php:2105
 msgid "Breadcrumb navigation is defined in the structured data."
 msgstr "パンくずナビゲーションが構造化データとして定義されています。"
 
-#: dist/includes/class-avc-ais-settings.php:2070
-#: includes/class-avc-ais-settings.php:2070
+#: dist/includes/class-avc-ais-settings.php:2106
+#: includes/class-avc-ais-settings.php:2106
 msgid "The breadcrumb trail is empty. Site hierarchy may be unclear."
 msgstr "パンくずリストが空です。サイト階層が不明確な状態です。"
 
-#: dist/includes/class-avc-ais-settings.php:2074
-#: includes/class-avc-ais-settings.php:2074
+#: dist/includes/class-avc-ais-settings.php:2110
+#: includes/class-avc-ais-settings.php:2110
 msgid "BreadcrumbList"
 msgstr "パンくずリスト (BreadcrumbList)"
 
@@ -1237,7 +1237,7 @@ msgstr "完了"
 #: dist/templates/wizard/wizard-page.php:24 src/Wizard/Wizard.php:130
 #: src/Wizard/Wizard.php:148 templates/wizard/wizard-page.php:24
 msgid "AI Search Schema Setup"
-msgstr "AI Search Schema セットアップ"
+msgstr "Aivec AI Search Schema セットアップ"
 
 #: dist/src/Wizard/Wizard.php:131 src/Wizard/Wizard.php:131
 msgid "Setup Wizard"
@@ -1806,7 +1806,7 @@ msgstr "外部優先が選択されると、このプラグインはJSON-LDの�
 
 #: dist/templates/admin-settings.php:408 templates/admin-settings.php:408
 msgid "Use AI Search Schema output (disable other plugins)"
-msgstr "AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
+msgstr "Aivec AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
 
 #: dist/templates/admin-settings.php:412 templates/admin-settings.php:412
 msgid "Prefer external SEO plugin schema"
@@ -2443,7 +2443,7 @@ msgstr "ライセンス"
 
 #: dist/templates/admin-settings.php:1020 templates/admin-settings.php:1020
 msgid "Manage your AI Search Schema Pro license."
-msgstr "AI Search Schema Proライセンスを管理します。"
+msgstr "Aivec AI Search Schema Proライセンスを管理します。"
 
 #: dist/templates/admin-settings.php:1034 templates/admin-settings.php:1034
 msgid "Status:"
@@ -3128,7 +3128,7 @@ msgstr "スキップ"
 #: dist/templates/wizard/steps/welcome.php:34
 #: templates/wizard/steps/welcome.php:34
 msgid "Welcome to AI Search Schema"
-msgstr "AI Search Schema へようこそ"
+msgstr "Aivec AI Search Schema へようこそ"
 
 #: dist/templates/wizard/steps/welcome.php:38
 #: templates/wizard/steps/welcome.php:38
@@ -3213,7 +3213,7 @@ msgstr "設定テンプレートが見つかりませんでした。"
 #: dist/templates/wizard/wizard-page.php:78 templates/wizard/wizard-page.php:78
 #, php-format
 msgid "AI Search Schema v%s"
-msgstr "AI Search Schema v%s"
+msgstr "Aivec AI Search Schema v%s"
 
 #: tools/test-manager.php:48
 #, fuzzy

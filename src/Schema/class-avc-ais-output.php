@@ -45,13 +45,15 @@ class AVC_AIS_Output {
 			"<!-- AI Search Schema JSON-LD start -->\n%s\n<!-- AI Search Schema JSON-LD end -->\n",
 			wp_kses(
 				sprintf(
-					'<script type="application/ld+json" class="ai-search-schema">%s</script>',
+					'<script type="application/ld+json" class="avc-ais-schema avc-ais-schema-graph" '
+					. 'data-avc-ais-schema="1">%s</script>',
 					$json
 				),
 				array(
 					'script' => array(
-						'type'  => true,
-						'class' => true,
+						'type'                => true,
+						'class'               => true,
+						'data-avc-ais-schema' => true,
 					),
 				)
 			)

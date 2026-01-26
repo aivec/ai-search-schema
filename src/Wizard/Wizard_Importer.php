@@ -83,13 +83,13 @@ class Wizard_Importer {
 	 */
 	public function import( $source ) {
 		if ( ! isset( $this->sources[ $source ] ) ) {
-			return new \WP_Error( 'invalid_source', __( 'Invalid import source', 'ai-search-schema' ) );
+			return new \WP_Error( 'invalid_source', __( 'Invalid import source', 'aivec-ai-search-schema' ) );
 		}
 
 		$callback = $this->sources[ $source ]['callback'];
 
 		if ( ! is_callable( $callback ) ) {
-			return new \WP_Error( 'invalid_callback', __( 'Import callback not found', 'ai-search-schema' ) );
+			return new \WP_Error( 'invalid_callback', __( 'Import callback not found', 'aivec-ai-search-schema' ) );
 		}
 
 		return call_user_func( $callback );
@@ -141,7 +141,7 @@ class Wizard_Importer {
 		}
 
 		if ( ! empty( $titles['company_logo'] ) ) {
-			$preview['logo'] = __( 'Set', 'ai-search-schema' );
+			$preview['logo'] = __( 'Set', 'aivec-ai-search-schema' );
 		}
 
 		$social_profiles = array();
@@ -241,7 +241,7 @@ class Wizard_Importer {
 		}
 
 		if ( ! empty( $titles['knowledgegraph_logo'] ) ) {
-			$preview['logo'] = __( 'Set', 'ai-search-schema' );
+			$preview['logo'] = __( 'Set', 'aivec-ai-search-schema' );
 		}
 
 		if ( ! empty( $local['local_business_type'] ) ) {
@@ -249,7 +249,7 @@ class Wizard_Importer {
 		}
 
 		if ( ! empty( $local['local_address'] ) ) {
-			$preview['address'] = __( 'Set', 'ai-search-schema' );
+			$preview['address'] = __( 'Set', 'aivec-ai-search-schema' );
 		}
 
 		return $preview;
@@ -367,7 +367,7 @@ class Wizard_Importer {
 		}
 
 		if ( ! empty( $options['searchAppearance']['global']['schema']['organizationLogo'] ) ) {
-			$preview['logo'] = __( 'Set', 'ai-search-schema' );
+			$preview['logo'] = __( 'Set', 'aivec-ai-search-schema' );
 		}
 
 		return $preview;

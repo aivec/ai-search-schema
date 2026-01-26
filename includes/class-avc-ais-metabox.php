@@ -47,7 +47,7 @@ class AVC_AIS_MetaBox {
 
 		add_meta_box(
 			'avc_ais_meta',
-			__( 'AI Search Schema', 'ai-search-schema' ),
+			__( 'AI Search Schema', 'aivec-ai-search-schema' ),
 			array( $this, 'render_meta_box' ),
 			$allowed_post_types,
 			'normal',
@@ -73,15 +73,17 @@ class AVC_AIS_MetaBox {
 		<div class="ais-metabox">
 			<div class="ais-metabox__card">
 				<div class="ais-metabox__header">
-					<p class="ais-metabox__eyebrow"><?php esc_html_e( 'AI Search Schema', 'ai-search-schema' ); ?></p>
+					<p class="ais-metabox__eyebrow">
+						<?php esc_html_e( 'AI Search Schema', 'aivec-ai-search-schema' ); ?>
+					</p>
 					<h3 class="ais-metabox__title">
-						<?php esc_html_e( 'Page schema settings', 'ai-search-schema' ); ?>
+						<?php esc_html_e( 'Page schema settings', 'aivec-ai-search-schema' ); ?>
 					</h3>
 						<p class="ais-metabox__description">
 							<?php
 							esc_html_e(
 								'Choose the schema type and optionally set selectors for FAQ extraction.',
-								'ai-search-schema'
+								'aivec-ai-search-schema'
 							);
 							?>
 						</p>
@@ -91,35 +93,35 @@ class AVC_AIS_MetaBox {
 									<?php
 									ais_render_field(
 										'avc_ais_page_type',
-										__( 'Page type:', 'ai-search-schema' ),
+										__( 'Page type:', 'aivec-ai-search-schema' ),
 										'select',
 										$page_type,
 										'',
 										'avc_ais_meta[page_type]',
 										array(
-											'auto'    => __( 'Automatic', 'ai-search-schema' ),
-											'Article' => __( 'Article', 'ai-search-schema' ),
-											'FAQPage' => __( 'FAQPage', 'ai-search-schema' ),
-											'QAPage'  => __( 'QAPage', 'ai-search-schema' ),
-											'WebPage' => __( 'WebPage', 'ai-search-schema' ),
+											'auto'    => __( 'Automatic', 'aivec-ai-search-schema' ),
+											'Article' => __( 'Article', 'aivec-ai-search-schema' ),
+											'FAQPage' => __( 'FAQPage', 'aivec-ai-search-schema' ),
+											'QAPage'  => __( 'QAPage', 'aivec-ai-search-schema' ),
+											'WebPage' => __( 'WebPage', 'aivec-ai-search-schema' ),
 										)
 									);
 
 										ais_render_field(
 											'avc_ais_faq_question_class',
-											__( 'FAQ question class:', 'ai-search-schema' ),
+											__( 'FAQ question class:', 'aivec-ai-search-schema' ),
 											'text',
 											$faq_question_class,
-											__( 'Example: faq-question, accordion-title', 'ai-search-schema' ),
+											__( 'Example: faq-question, accordion-title', 'aivec-ai-search-schema' ),
 											'avc_ais_meta[faq_question_class]'
 										);
 
 										ais_render_field(
 											'avc_ais_faq_answer_class',
-											__( 'FAQ answer class:', 'ai-search-schema' ),
+											__( 'FAQ answer class:', 'aivec-ai-search-schema' ),
 											'text',
 											$faq_answer_class,
-											__( 'Example: faq-answer, accordion-content', 'ai-search-schema' ),
+											__( 'Example: faq-answer, accordion-content', 'aivec-ai-search-schema' ),
 											'avc_ais_meta[faq_answer_class]'
 										);
 

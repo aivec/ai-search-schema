@@ -29,7 +29,7 @@ class Plugin {
 	 * 翻訳ファイルの読み込みを行う
 	 */
 	public function load_textdomain(): void {
-		$domain = 'ai-search-schema';
+		$domain = 'aivec-ai-search-schema';
 		$locale = \determine_locale();
 		$locale = \apply_filters( 'plugin_locale', $locale, $domain );
 		$locale = $locale ?: 'en_US';
@@ -77,7 +77,7 @@ class Plugin {
 			if ( \class_exists( \Aivec\Welcart\CptmClient\Client::class ) ) {
 				$update_client = new Client(
 					AVC_AIS_FILE,
-					'ai-search-schema',
+					'aivec-ai-search-schema',
 					AVC_AIS_VERSION
 				);
 				$update_client->initUpdateChecker();

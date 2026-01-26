@@ -3,14 +3,14 @@
  * Plugin Name: Aivec AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Aivec LLC
  * Author URI:        https://aivec.co.jp/
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
- * Text Domain:       ai-search-schema
+ * Text Domain:       aivec-ai-search-schema
  * Domain Path:       /languages
  */
 
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'AVC_AIS_VERSION', '1.1.1' );
+define( 'AVC_AIS_VERSION', '1.1.2' );
 define( 'AVC_AIS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AVC_AIS_URL', plugin_dir_url( __FILE__ ) );
 define( 'AVC_AIS_FILE', __FILE__ );
@@ -90,7 +90,8 @@ if ( file_exists( $ais_autoloader ) ) {
 				} elseif ( strpos( $relative, 'Type_' ) === 0 ) {
 					$file = AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-' . $slug . '.php';
 				} elseif ( strpos( $relative, 'Adapter_' ) === 0 ) {
-					$file = AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-' . $slug . '.php';
+					$adapter_slug = strtolower( str_replace( '_', '-', substr( $relative, strlen( 'Adapter_' ) ) ) );
+					$file         = AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-' . $adapter_slug . '.php';
 				} else {
 					$file = AVC_AIS_DIR . 'src/Schema/class-avc-ais-' . $slug . '.php';
 				}

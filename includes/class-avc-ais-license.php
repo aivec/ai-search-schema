@@ -159,7 +159,7 @@ class AVC_AIS_License {
 			'success' => false,
 			'data'    => array(
 				'status'  => 'invalid',
-				'message' => __( 'License validation API is not yet available.', 'ai-search-schema' ),
+				'message' => __( 'License validation API is not yet available.', 'aivec-ai-search-schema' ),
 			),
 		);
 	}
@@ -176,7 +176,7 @@ class AVC_AIS_License {
 		if ( empty( $key ) ) {
 			return array(
 				'success' => false,
-				'message' => __( 'Please enter a license key.', 'ai-search-schema' ),
+				'message' => __( 'Please enter a license key.', 'aivec-ai-search-schema' ),
 			);
 		}
 
@@ -194,7 +194,7 @@ class AVC_AIS_License {
 
 			return array(
 				'success' => true,
-				'message' => __( 'License activated successfully.', 'ai-search-schema' ),
+				'message' => __( 'License activated successfully.', 'aivec-ai-search-schema' ),
 			);
 		}
 
@@ -209,7 +209,7 @@ class AVC_AIS_License {
 
 		return array(
 			'success' => false,
-			'message' => $validation['data']['message'] ?? __( 'License validation failed.', 'ai-search-schema' ),
+			'message' => $validation['data']['message'] ?? __( 'License validation failed.', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -229,7 +229,7 @@ class AVC_AIS_License {
 
 		return array(
 			'success' => true,
-			'message' => __( 'License deactivated.', 'ai-search-schema' ),
+			'message' => __( 'License deactivated.', 'aivec-ai-search-schema' ),
 		);
 	}
 
@@ -241,7 +241,9 @@ class AVC_AIS_License {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ) ),
+				array(
+					'message' => __( 'You do not have permission to perform this action.', 'aivec-ai-search-schema' ),
+				),
 				403
 			);
 		}
@@ -264,7 +266,9 @@ class AVC_AIS_License {
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error(
-				array( 'message' => __( 'You do not have permission to perform this action.', 'ai-search-schema' ) ),
+				array(
+					'message' => __( 'You do not have permission to perform this action.', 'aivec-ai-search-schema' ),
+				),
 				403
 			);
 		}
@@ -283,13 +287,13 @@ class AVC_AIS_License {
 
 		switch ( $status ) {
 			case 'valid':
-				return __( 'Active', 'ai-search-schema' );
+				return __( 'Active', 'aivec-ai-search-schema' );
 			case 'expired':
-				return __( 'Expired', 'ai-search-schema' );
+				return __( 'Expired', 'aivec-ai-search-schema' );
 			case 'invalid':
-				return __( 'Invalid', 'ai-search-schema' );
+				return __( 'Invalid', 'aivec-ai-search-schema' );
 			default:
-				return __( 'Inactive', 'ai-search-schema' );
+				return __( 'Inactive', 'aivec-ai-search-schema' );
 		}
 	}
 
