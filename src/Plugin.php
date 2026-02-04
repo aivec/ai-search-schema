@@ -6,7 +6,6 @@
 
 namespace Aivec\AiSearchSchema;
 
-use Aivec\AiSearchSchema\License\Client;
 use Aivec\AiSearchSchema\Wizard\Wizard;
 use Aivec\AiSearchSchema\Wp\Breadcrumbs;
 use Aivec\AiSearchSchema\Wp\MetaBox;
@@ -54,7 +53,6 @@ class Plugin {
 			}
 		}
 
-		\load_plugin_textdomain( $domain, false, \dirname( \plugin_basename( AVC_AIS_FILE ) ) . '/languages/' );
 	}
 
 	/**
@@ -73,15 +71,6 @@ class Plugin {
 			$wizard = new Wizard();
 			$wizard->register();
 
-			// cptm-client ベースの更新チェッカーを初期化（依存パッケージが存在する場合のみ）.
-			if ( \class_exists( \Aivec\Welcart\CptmClient\Client::class ) ) {
-				$update_client = new Client(
-					AVC_AIS_FILE,
-					'aivec-ai-search-schema',
-					AVC_AIS_VERSION
-				);
-				$update_client->initUpdateChecker();
-			}
 		}
 	}
 

@@ -11,7 +11,7 @@ const DIST = 'dist';
 // Migrated: SRC was 'src' -> now 'scss' as SCSS source root per migration.
 const SRC = 'scss';
 const BUNDLE_DIR = 'bundled';
-const PACKAGE_FOLDER = 'ai-search-schema';
+const PACKAGE_FOLDER = 'aivec-ai-search-schema';
 const PLUGIN_FILE = 'aivec-ai-search-schema.php';
 
 const paths = {
@@ -425,7 +425,7 @@ function zipTask() {
   const bundleDir = path.resolve(BUNDLE_DIR);
   fs.mkdirSync(bundleDir, { recursive: true });
 
-  const baseName = process.env.BUNDLE_NAME ? process.env.BUNDLE_NAME.replace(/\.zip$/i, '') : 'AI-Search-Schema';
+  const baseName = process.env.BUNDLE_NAME ? process.env.BUNDLE_NAME.replace(/\.zip$/i, '') : 'Aivec-AI-Search-Schema';
   const archiveName = `${baseName}-${versionLabel}.zip`;
   const folderName = process.env.BUNDLE_DIRNAME || PACKAGE_FOLDER;
 

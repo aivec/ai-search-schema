@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 chdir(__DIR__);
 
-const SLUG = 'avc-aeo-schema';
+const SLUG = 'aivec-ai-search-schema';
 const BUNDLE_DIR = 'bundled';
 const DIST_DIR = 'dist';
 
@@ -16,7 +16,7 @@ if (!is_dir(BUNDLE_DIR)) {
     mkdir(BUNDLE_DIR, 0777, true);
 }
 
-$archiveName = sprintf('AVC-AEO-Schema-%s.zip', $version);
+$archiveName = sprintf('Aivec-AI-Search-Schema-%s.zip', $version);
 $archivePath = BUNDLE_DIR . DIRECTORY_SEPARATOR . $archiveName;
 
 createZipFromDist(DIST_DIR, SLUG, $archivePath);

@@ -3,7 +3,7 @@
  * Plugin Name: Aivec AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version:           1.1.2
+ * Version:           1.1.3
  * Requires at least: 6.0
  * Requires PHP:      8.0
  * Author:            Aivec LLC
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'AVC_AIS_VERSION', '1.1.2' );
+define( 'AVC_AIS_VERSION', '1.1.3' );
 define( 'AVC_AIS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AVC_AIS_URL', plugin_dir_url( __FILE__ ) );
 define( 'AVC_AIS_FILE', __FILE__ );
@@ -55,7 +55,6 @@ function avc_ais_filter_null_option_values( $value ) {
 add_filter( 'option_avc_ais_options', 'avc_ais_filter_null_option_values', 1 );
 add_filter( 'option_avc_ais_settings', 'avc_ais_filter_null_option_values', 1 );
 add_filter( 'option_avc_ais_wizard_progress', 'avc_ais_filter_null_option_values', 1 );
-add_filter( 'option_avc_ais_license', 'avc_ais_filter_null_option_values', 1 );
 
 // Composer autoloader or PSR-4 fallback.
 $ais_autoloader = AVC_AIS_DIR . 'vendor/autoload.php';
@@ -139,18 +138,6 @@ add_action(
 		AVC_AIS_Llms_Txt::init();
 	},
 	5
-);
-
-// Initialize Pro features manager (only if Pro add-on hasn't loaded its own).
-add_action(
-	'init',
-	static function () {
-		if ( ! class_exists( 'AVC_AIS_Pro_Features' ) ) {
-			require_once AVC_AIS_DIR . 'includes/class-avc-ais-pro-features.php';
-			AVC_AIS_Pro_Features::init();
-		}
-	},
-	10
 );
 
 // Activation hook - set redirect transient for wizard and flush rewrite rules.
