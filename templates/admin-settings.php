@@ -237,19 +237,19 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				<div class="ais-card__body">
 					<div class="ais-field-grid two-col">
 						<div class="ais-field">
-							<label for="ais-company-name"><?php esc_html_e( 'Company or individual name', 'aivec-ai-search-schema' ); ?><span class="ais-required">*</span><?php ais_tooltip( __( 'The official name of your organization or personal name. Used in Organization/LocalBusiness schema.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-company-name"><?php esc_html_e( 'Company or individual name', 'aivec-ai-search-schema' ); ?><span class="ais-required">*</span><?php avc_ais_tooltip( __( 'The official name of your organization or personal name. Used in Organization/LocalBusiness schema.', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-company-name" type="text" name="<?php echo esc_attr( $option_name ); ?>[company_name]" value="<?php echo esc_attr( $options['company_name'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Acme Inc. / Taro Yamada', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 						<div class="ais-field">
-							<label for="ais-site-name"><?php esc_html_e( 'Site name', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'The name of your website. Used in WebSite schema for sitelinks search box.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-site-name"><?php esc_html_e( 'Site name', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'The name of your website. Used in WebSite schema for sitelinks search box.', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-site-name" type="text" name="<?php echo esc_attr( $option_name ); ?>[site_name]" value="<?php echo esc_attr( $options['site_name'] ); ?>" placeholder="<?php esc_attr_e( 'Example: My Company Blog', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 						<div class="ais-field">
-							<label for="ais-phone"><?php esc_html_e( 'Phone number', 'aivec-ai-search-schema' ); ?><span class="ais-required" title="<?php esc_attr_e( 'Required for LocalBusiness', 'aivec-ai-search-schema' ); ?>">*</span><?php ais_tooltip( __( 'Contact phone number in international format. Required for LocalBusiness.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-phone"><?php esc_html_e( 'Phone number', 'aivec-ai-search-schema' ); ?><span class="ais-required" title="<?php esc_attr_e( 'Required for LocalBusiness', 'aivec-ai-search-schema' ); ?>">*</span><?php avc_ais_tooltip( __( 'Contact phone number in international format. Required for LocalBusiness.', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-phone" type="text" name="<?php echo esc_attr( $option_name ); ?>[phone]" value="<?php echo esc_attr( $options['phone'] ); ?>" placeholder="<?php esc_attr_e( 'Example: +81-3-1234-5678', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 						<div class="ais-field">
-							<label for="ais-country-code"><?php esc_html_e( 'Country code', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Select the primary country or region.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-country-code"><?php esc_html_e( 'Country code', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Select the primary country or region.', 'aivec-ai-search-schema' ) ); ?></label>
 							<select id="ais-country-code" name="<?php echo esc_attr( $option_name ); ?>[country_code]">
 								<?php foreach ( $country_choices as $country_code => $country_label ) : ?>
 									<option value="<?php echo esc_attr( $country_code ); ?>" <?php selected( $options['country_code'], $country_code ); ?>><?php echo esc_html( $country_label ); ?></option>
@@ -258,7 +258,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 					</div>
 					<div class="ais-field">
-						<label for="ais-site-url"><?php esc_html_e( 'Site URL', 'aivec-ai-search-schema' ); ?><span class="ais-required">*</span><?php ais_tooltip( __( 'Your website URL. Used as the canonical URL in WebSite schema.', 'aivec-ai-search-schema' ) ); ?></label>
+						<label for="ais-site-url"><?php esc_html_e( 'Site URL', 'aivec-ai-search-schema' ); ?><span class="ais-required">*</span><?php avc_ais_tooltip( __( 'Your website URL. Used as the canonical URL in WebSite schema.', 'aivec-ai-search-schema' ) ); ?></label>
 						<input id="ais-site-url" type="text" name="<?php echo esc_attr( $option_name ); ?>[site_url]" value="<?php echo esc_attr( $options['site_url'] ); ?>" placeholder="<?php esc_attr_e( 'Example: https://example.com', 'aivec-ai-search-schema' ); ?>" />
 						<div class="ais-field__description">
 							<a class="button button-secondary" href="<?php echo esc_url( $rich_results_url ); ?>" target="_blank" rel="noopener noreferrer"><?php esc_html_e( 'Open Google Rich Results Test', 'aivec-ai-search-schema' ); ?></a>
@@ -311,7 +311,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				<div class="ais-card__body">
 					<div class="ais-field-grid two-col">
 						<div class="ais-field">
-							<label><?php esc_html_e( 'Logo', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Your organization logo. Used in Organization schema and as publisher logo for articles.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label><?php esc_html_e( 'Logo', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Your organization logo. Used in Organization schema and as publisher logo for articles.', 'aivec-ai-search-schema' ) ); ?></label>
 							<div class="ais-image-field">
 								<div id="ais-logo-preview" class="ais-image-preview"></div>
 								<div class="ais-image-controls">
@@ -325,7 +325,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</div>
 						</div>
 						<div class="ais-field">
-							<label><?php esc_html_e( 'Storefront image', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Used for the LocalBusiness image property. Upload a storefront photo that differs from the logo.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label><?php esc_html_e( 'Storefront image', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Used for the LocalBusiness image property. Upload a storefront photo that differs from the logo.', 'aivec-ai-search-schema' ) ); ?></label>
 							<div class="ais-image-field">
 								<div id="ais-lb-image-preview" class="ais-image-preview"></div>
 								<div class="ais-image-controls">
@@ -339,7 +339,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</div>
 						</div>
 						<div class="ais-field">
-							<label><?php esc_html_e( 'Store photo (LocalBusiness image)', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Used only for LocalBusiness image. Logo will not be used as a fallback.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label><?php esc_html_e( 'Store photo (LocalBusiness image)', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Used only for LocalBusiness image. Logo will not be used as a fallback.', 'aivec-ai-search-schema' ) ); ?></label>
 							<div class="ais-image-field">
 								<div id="ais-store-image-preview" class="ais-image-preview"></div>
 								<div class="ais-image-controls">
@@ -354,7 +354,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 					</div>
 					<div class="ais-field">
-						<label><?php esc_html_e( 'Social profiles', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Add your social media profiles. Used in Organization/LocalBusiness sameAs property for knowledge panel.', 'aivec-ai-search-schema' ) ); ?></label>
+						<label><?php esc_html_e( 'Social profiles', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Add your social media profiles. Used in Organization/LocalBusiness sameAs property for knowledge panel.', 'aivec-ai-search-schema' ) ); ?></label>
 						<div id="ais-social-rows">
 							<?php
 							foreach ( $social_links as $index => $row ) :
@@ -394,7 +394,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</select>
 						</div>
 						<div class="ais-field">
-							<label for="ais-content-model"><?php esc_html_e( 'Content model', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-commerce: Uses Product schema when WooCommerce is active.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-content-model"><?php esc_html_e( 'Content model', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-commerce: Uses Product schema when WooCommerce is active.', 'aivec-ai-search-schema' ) ); ?></label>
 							<select id="ais-content-model" name="<?php echo esc_attr( $option_name ); ?>[content_model]">
 								<?php foreach ( $content_models as $model_key => $model_label ) : ?>
 									<option value="<?php echo esc_attr( $model_key ); ?>" <?php selected( $options['content_model'], $model_key ); ?>><?php echo esc_html( $model_label ); ?></option>
@@ -402,7 +402,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</select>
 						</div>
 						<div class="ais-field ais-field--radios">
-							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'aivec-ai-search-schema' ) ); ?></span>
+							<span class="ais-field__label"><?php esc_html_e( 'Schema priority', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema.', 'aivec-ai-search-schema' ) ); ?></span>
 							<label class="ais-radio">
 								<input type="radio" name="<?php echo esc_attr( $option_name ); ?>[avc_ais_priority]" value="ais" <?php checked( $options['avc_ais_priority'], 'ais' ); ?> />
 								<span><?php esc_html_e( 'Use AI Search Schema output (disable other plugins)', 'aivec-ai-search-schema' ); ?></span>
@@ -413,18 +413,18 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</label>
 						</div>
 						<div class="ais-field">
-							<label for="ais-publisher-entity"><?php esc_html_e( 'Website publisher', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Sets the publisher reference for Article and WebPage schemas. Independent from "Primary role" — you can use LocalBusiness as publisher when articles are authored by the store.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-publisher-entity"><?php esc_html_e( 'Website publisher', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Sets the publisher reference for Article and WebPage schemas. Independent from "Primary role" — you can use LocalBusiness as publisher when articles are authored by the store.', 'aivec-ai-search-schema' ) ); ?></label>
 							<select id="ais-publisher-entity" name="<?php echo esc_attr( $option_name ); ?>[publisher_entity]">
 								<option value="Organization" <?php selected( $options['publisher_entity'], 'Organization' ); ?>><?php esc_html_e( 'Organization (brand site)', 'aivec-ai-search-schema' ); ?></option>
 								<option value="LocalBusiness" <?php selected( $options['publisher_entity'], 'LocalBusiness' ); ?>><?php esc_html_e( 'LocalBusiness (storefront site)', 'aivec-ai-search-schema' ); ?></option>
 							</select>
 						</div>
 						<div class="ais-field">
-							<label for="ais-business-type"><?php esc_html_e( 'LocalBusiness subtype', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-business-type"><?php esc_html_e( 'LocalBusiness subtype', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-business-type" type="text" name="<?php echo esc_attr( $option_name ); ?>[lb_subtype]" value="<?php echo esc_attr( $options['lb_subtype'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Store, Restaurant', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 						<div class="ais-field">
-							<label for="ais-lb-label"><?php esc_html_e( 'Location label', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Appends after the Organization name to clarify each location.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-lb-label"><?php esc_html_e( 'Location label', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Appends after the Organization name to clarify each location.', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-lb-label" type="text" name="<?php echo esc_attr( $option_name ); ?>[local_business_label]" value="<?php echo esc_attr( $options['local_business_label'] ); ?>" placeholder="<?php esc_attr_e( 'Example: HQ / Shinjuku', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 					</div>
@@ -449,7 +449,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		<div class="ais-card-grid ais-card-grid--stack">
 			<section class="ais-card ais-card--full">
 				<div class="ais-card__header">
-					<h2><?php esc_html_e( 'Page-type schema controls', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type.', 'aivec-ai-search-schema' ) ); ?></h2>
+					<h2><?php esc_html_e( 'Page-type schema controls', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type.', 'aivec-ai-search-schema' ) ); ?></h2>
 					<p><?php esc_html_e( 'Fine-tune schema per content type. Choose the right schema for each post type or taxonomy to maximize how your content appears in search results.', 'aivec-ai-search-schema' ); ?></p>
 				</div>
 				<div class="ais-card__body">
@@ -666,7 +666,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 					<div class="ais-field-grid two-col">
 						<div class="ais-field">
-							<label for="ais-price-range"><?php esc_html_e( 'Price range', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Select the price level for your business. Google displays this in search results.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-price-range"><?php esc_html_e( 'Price range', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Select the price level for your business. Google displays this in search results.', 'aivec-ai-search-schema' ) ); ?></label>
 							<select id="ais-price-range" name="<?php echo esc_attr( $option_name ); ?>[price_range]">
 								<option value=""><?php esc_html_e( '— Not specified —', 'aivec-ai-search-schema' ); ?></option>
 								<option value="$" <?php selected( $options['price_range'], '$' ); ?>><?php esc_html_e( '$ (Budget)', 'aivec-ai-search-schema' ); ?></option>
@@ -676,7 +676,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</select>
 						</div>
 						<div class="ais-field">
-							<label for="ais-payment-accepted"><?php esc_html_e( 'Accepted payment methods', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'List payment methods separated by commas. Examples: Cash, Credit Card, PayPay, Suica', 'aivec-ai-search-schema' ) ); ?></label>
+							<label for="ais-payment-accepted"><?php esc_html_e( 'Accepted payment methods', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'List payment methods separated by commas. Examples: Cash, Credit Card, PayPay, Suica', 'aivec-ai-search-schema' ) ); ?></label>
 							<input id="ais-payment-accepted" type="text" name="<?php echo esc_attr( $option_name ); ?>[payment_accepted]" value="<?php echo esc_attr( $options['payment_accepted'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Cash, Credit Card', 'aivec-ai-search-schema' ); ?>" />
 						</div>
 						<div class="ais-field ais-field--toggle">
@@ -725,7 +725,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</p>
 					</div>
 						<div class="ais-field">
-							<label><?php esc_html_e( 'Address', 'aivec-ai-search-schema' ); ?><span class="ais-required" title="<?php esc_attr_e( 'Required for LocalBusiness', 'aivec-ai-search-schema' ); ?>">*</span><?php ais_tooltip( __( 'Required for LocalBusiness. Enter your full postal address for the PostalAddress schema property.', 'aivec-ai-search-schema' ) ); ?></label>
+							<label><?php esc_html_e( 'Address', 'aivec-ai-search-schema' ); ?><span class="ais-required" title="<?php esc_attr_e( 'Required for LocalBusiness', 'aivec-ai-search-schema' ); ?>">*</span><?php avc_ais_tooltip( __( 'Required for LocalBusiness. Enter your full postal address for the PostalAddress schema property.', 'aivec-ai-search-schema' ) ); ?></label>
 							<div class="ais-address-grid">
 								<input type="text" id="ais-address-postal" name="<?php echo esc_attr( $option_name ); ?>[address][postal_code]" value="<?php echo esc_attr( $options['address']['postal_code'] ); ?>" placeholder="<?php esc_attr_e( 'Postal code (e.g. 150-0001)', 'aivec-ai-search-schema' ); ?>" />
 								<div class="ais-address-prefecture">
@@ -787,7 +787,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 						<div class="ais-field-grid two-col">
 							<div class="ais-field">
-								<label><?php esc_html_e( 'Latitude & longitude', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Required for LocalBusiness. Click "Fetch coordinates" to auto-fill from address.', 'aivec-ai-search-schema' ) ); ?></label>
+								<label><?php esc_html_e( 'Latitude & longitude', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Required for LocalBusiness. Click "Fetch coordinates" to auto-fill from address.', 'aivec-ai-search-schema' ) ); ?></label>
 								<div class="ais-field-grid two-col">
 									<input type="text" id="ais-geo-latitude" name="<?php echo esc_attr( $option_name ); ?>[geo][latitude]" value="<?php echo esc_attr( $options['geo']['latitude'] ); ?>" placeholder="<?php esc_attr_e( 'Latitude 35.123456', 'aivec-ai-search-schema' ); ?>" />
 								<input type="text" id="ais-geo-longitude" name="<?php echo esc_attr( $option_name ); ?>[geo][longitude]" value="<?php echo esc_attr( $options['geo']['longitude'] ); ?>" placeholder="<?php esc_attr_e( 'Longitude 139.123456', 'aivec-ai-search-schema' ); ?>" />
@@ -831,7 +831,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							</p>
 						</div>
 						<div class="ais-field">
-							<span class="ais-field__label" id="ais-opening-hours-label"><?php esc_html_e( 'Opening hours', 'aivec-ai-search-schema' ); ?><?php ais_tooltip( __( 'Add as many day and time combinations as needed. Use templates for quick setup.', 'aivec-ai-search-schema' ) ); ?></span>
+							<span class="ais-field__label" id="ais-opening-hours-label"><?php esc_html_e( 'Opening hours', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Add as many day and time combinations as needed. Use templates for quick setup.', 'aivec-ai-search-schema' ) ); ?></span>
 							<div class="ais-opening-hours-actions" role="group" aria-label="<?php esc_attr_e( 'Opening hour templates', 'aivec-ai-search-schema' ); ?>">
 								<button type="button" class="button" id="ais-oh-template-weekday"><?php esc_html_e( '平日 10:00–19:00', 'aivec-ai-search-schema' ); ?></button>
 								<button type="button" class="button" id="ais-oh-template-weekend"><?php esc_html_e( '土日祝 10:00–17:00', 'aivec-ai-search-schema' ); ?></button>
@@ -1014,89 +1014,6 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 				</div>
 			</section>
 
-			<section class="ais-card">
-				<div class="ais-card__header">
-					<h2><?php esc_html_e( 'License', 'aivec-ai-search-schema' ); ?></h2>
-					<p><?php esc_html_e( 'Manage your AI Search Schema Pro license.', 'aivec-ai-search-schema' ); ?></p>
-				</div>
-				<div class="ais-card__body">
-					<?php
-					require_once AVC_AIS_DIR . 'includes/class-avc-ais-license.php';
-					$license_manager = AVC_AIS_License::init();
-					$license_key     = $license_manager->get_license_key();
-					$license_status  = $license_manager->get_license_status();
-					$status_label    = $license_manager->get_status_label();
-					$status_class    = $license_manager->get_status_class();
-					$is_pro          = $license_manager->is_pro();
-					?>
-
-					<div class="ais-license-status-row">
-						<span class="ais-license-status-label"><?php esc_html_e( 'Status:', 'aivec-ai-search-schema' ); ?></span>
-						<span class="ais-license-status <?php echo esc_attr( $status_class ); ?>">
-							<?php echo esc_html( $status_label ); ?>
-						</span>
-					</div>
-
-					<div class="ais-field">
-						<label for="ais-license-key"><?php esc_html_e( 'License Key', 'aivec-ai-search-schema' ); ?></label>
-						<div class="ais-license-key-row">
-							<input
-								type="text"
-								id="ais-license-key"
-								class="regular-text"
-								value="<?php echo esc_attr( $license_key ); ?>"
-								placeholder="<?php esc_attr_e( 'Enter your license key', 'aivec-ai-search-schema' ); ?>"
-								<?php echo $is_pro ? 'readonly' : ''; ?>
-							/>
-							<?php if ( $is_pro ) : ?>
-								<button type="button" class="button" id="ais-deactivate-license">
-									<?php esc_html_e( 'Deactivate', 'aivec-ai-search-schema' ); ?>
-								</button>
-							<?php else : ?>
-								<button type="button" class="button button-primary" id="ais-activate-license">
-									<?php esc_html_e( 'Activate', 'aivec-ai-search-schema' ); ?>
-								</button>
-							<?php endif; ?>
-							<span class="spinner" style="float: none; margin-top: 0;"></span>
-						</div>
-						<p class="ais-field__description">
-							<?php esc_html_e( 'Enter your Pro license key to unlock advanced features.', 'aivec-ai-search-schema' ); ?>
-							<a href="https://aivec.co.jp/apps/ai-search-schema-pro" target="_blank" rel="noopener noreferrer">
-								<?php esc_html_e( 'Get a license', 'aivec-ai-search-schema' ); ?>
-							</a>
-						</p>
-						<span class="ais-license-message" id="ais-license-message"></span>
-					</div>
-
-					<?php if ( ! $is_pro ) : ?>
-					<div class="ais-pro-features-preview">
-						<h3><?php esc_html_e( 'Pro Features', 'aivec-ai-search-schema' ); ?></h3>
-						<ul class="ais-pro-features-list">
-							<li>
-								<span class="dashicons dashicons-location"></span>
-								<strong><?php esc_html_e( 'Multi-Location Support', 'aivec-ai-search-schema' ); ?></strong>
-								<span><?php esc_html_e( 'Manage multiple LocalBusiness locations.', 'aivec-ai-search-schema' ); ?></span>
-							</li>
-							<li>
-								<span class="dashicons dashicons-editor-code"></span>
-								<strong><?php esc_html_e( 'Custom Schema Templates', 'aivec-ai-search-schema' ); ?></strong>
-								<span><?php esc_html_e( 'Create custom schema templates for different content types.', 'aivec-ai-search-schema' ); ?></span>
-							</li>
-							<li>
-								<span class="dashicons dashicons-sos"></span>
-								<strong><?php esc_html_e( 'Priority Support', 'aivec-ai-search-schema' ); ?></strong>
-								<span><?php esc_html_e( 'Get priority email support.', 'aivec-ai-search-schema' ); ?></span>
-							</li>
-							<li>
-								<span class="dashicons dashicons-yes-alt"></span>
-								<strong><?php esc_html_e( 'Advanced Validation', 'aivec-ai-search-schema' ); ?></strong>
-								<span><?php esc_html_e( 'Scheduled automatic schema validation.', 'aivec-ai-search-schema' ); ?></span>
-							</li>
-						</ul>
-					</div>
-					<?php endif; ?>
-				</div>
-			</section>
 		</div>
 
 		<div class="ais-settings__actions">

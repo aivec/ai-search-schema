@@ -91,7 +91,7 @@ class AVC_AIS_MetaBox {
 
 				<div class="ais-metabox__fields">
 									<?php
-									ais_render_field(
+									avc_ais_render_field(
 										'avc_ais_page_type',
 										__( 'Page type:', 'aivec-ai-search-schema' ),
 										'select',
@@ -107,7 +107,7 @@ class AVC_AIS_MetaBox {
 										)
 									);
 
-										ais_render_field(
+										avc_ais_render_field(
 											'avc_ais_faq_question_class',
 											__( 'FAQ question class:', 'aivec-ai-search-schema' ),
 											'text',
@@ -116,7 +116,7 @@ class AVC_AIS_MetaBox {
 											'avc_ais_meta[faq_question_class]'
 										);
 
-										ais_render_field(
+										avc_ais_render_field(
 											'avc_ais_faq_answer_class',
 											__( 'FAQ answer class:', 'aivec-ai-search-schema' ),
 											'text',

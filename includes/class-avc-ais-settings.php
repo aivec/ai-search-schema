@@ -191,12 +191,6 @@ class AVC_AIS_Settings {
 				'i18nLlmsTxtSaving'         => __( 'Saving...', 'aivec-ai-search-schema' ),
 				'i18nLlmsTxtSave'           => __( 'Save edits', 'aivec-ai-search-schema' ),
 				'i18nLlmsTxtSaved'          => __( 'Saved!', 'aivec-ai-search-schema' ),
-				// License strings.
-				'licenseNonce'              => wp_create_nonce( 'avc_ais_license' ),
-				'i18nLicenseActivating'     => __( 'Activating...', 'aivec-ai-search-schema' ),
-				'i18nLicenseDeactivating'   => __( 'Deactivating...', 'aivec-ai-search-schema' ),
-				'i18nLicenseActivate'       => __( 'Activate', 'aivec-ai-search-schema' ),
-				'i18nLicenseDeactivate'     => __( 'Deactivate', 'aivec-ai-search-schema' ),
 			)
 		);
 	}

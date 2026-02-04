@@ -10,7 +10,7 @@
  * @param mixed  $default_value デフォルト値（省略時は空文字列）
  * @return mixed オプションの値
  */
-function ais_get_option( $key, $default_value = '' ) {
+function avc_ais_get_option( $key, $default_value = '' ) {
 	$options = get_option( 'avc_ais_options', array() );
 	return isset( $options[ $key ] ) ? $options[ $key ] : $default_value;
 }
@@ -21,7 +21,7 @@ function ais_get_option( $key, $default_value = '' ) {
  * @param string $key オプションのキー
  * @param mixed  $value オプションの値
  */
-function ais_update_option( $key, $value ) {
+function avc_ais_update_option( $key, $value ) {
 	$options         = get_option( 'avc_ais_options', array() );
 	$options[ $key ] = $value;
 	update_option( 'avc_ais_options', $options );
@@ -33,7 +33,7 @@ function ais_update_option( $key, $value ) {
  * @param string|null $phone 電話番号
  * @return string サニタイズされた電話番号
  */
-function ais_sanitize_phone( $phone ) {
+function avc_ais_sanitize_phone( $phone ) {
 	return sanitize_text_field( (string) ( $phone ?? '' ) );
 }
 
@@ -43,7 +43,7 @@ function ais_sanitize_phone( $phone ) {
  * @param string|null $url URL
  * @return string サニタイズされたURL
  */
-function ais_sanitize_url( $url ) {
+function avc_ais_sanitize_url( $url ) {
 	return esc_url_raw( (string) ( $url ?? '' ) );
 }
 
@@ -53,7 +53,7 @@ function ais_sanitize_url( $url ) {
  * @param string|null $text テキスト
  * @return string サニタイズされたテキスト
  */
-function ais_sanitize_text( $text ) {
+function avc_ais_sanitize_text( $text ) {
 	return sanitize_text_field( (string) ( $text ?? '' ) );
 }
 
@@ -63,7 +63,7 @@ function ais_sanitize_text( $text ) {
  * @param string|null $email メールアドレス
  * @return string サニタイズされたメールアドレス
  */
-function ais_sanitize_email( $email ) {
+function avc_ais_sanitize_email( $email ) {
 	return sanitize_email( (string) ( $email ?? '' ) );
 }
 
@@ -78,7 +78,7 @@ function ais_sanitize_email( $email ) {
  * @param string $name        Optional name attribute. Defaults to $id.
  * @param array  $options     Options for select fields as value => label.
  */
-function ais_render_field(
+function avc_ais_render_field(
 	$id,
 	$label,
 	$type = 'text',
@@ -149,7 +149,7 @@ function ais_render_field(
  * @param string $text The tooltip text to display on hover.
  * @return string HTML for the tooltip.
  */
-function ais_render_tooltip( $text ) {
+function avc_ais_render_tooltip( $text ) {
 	if ( empty( $text ) ) {
 		return '';
 	}
@@ -169,6 +169,6 @@ function ais_render_tooltip( $text ) {
  *
  * @param string $text The tooltip text to display on hover.
  */
-function ais_tooltip( $text ) {
-	echo ais_render_tooltip( $text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+function avc_ais_tooltip( $text ) {
+	echo avc_ais_render_tooltip( $text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 }
