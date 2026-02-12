@@ -4,9 +4,11 @@ Tags: schema, seo, structured-data, ai-search, local-seo, breadcrumbs, faq, llms
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.1.2
+Stable tag: 1.1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+
+AI-focused structured data (JSON-LD) for LocalBusiness, breadcrumbs, FAQ extraction, and llms.txt.
 
 {{BODY}}
 
@@ -38,17 +40,19 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 * Expected vs actual behavior
 * Error logs (if available)
 
-== External Communication ==
+== External Services ==
 
-= License Validation (Pro Version) =
-When activating a Pro license, the following may be sent to our server:
-* License key
-* Site URL (domain)
-* Plugin version
+This plugin can connect to external services only when you use specific features.
 
-We do NOT collect: post content, user data, or analytics.
+= Google Maps Geocoding API (optional) =
+Used to convert the address you enter into latitude/longitude when you click "Fetch coordinates".
+Data sent: the address fields you entered, your site locale, and your site URL in the User-Agent header.
+Service provided by Google. Terms: https://cloud.google.com/maps-platform/terms | Privacy: https://policies.google.com/privacy
 
-The free version makes no external license API calls.
+= OpenStreetMap Nominatim (optional fallback) =
+Used only when no Google Maps API key is configured and you click "Fetch coordinates".
+Data sent: the address fields you entered, the admin email (if available), and your site URL in the User-Agent header.
+Service provided by OpenStreetMap (Nominatim). Usage policy: https://operations.osmfoundation.org/policies/nominatim/ | Privacy: https://osmfoundation.org/wiki/Privacy_Policy
 
 == Frequently Asked Questions ==
 

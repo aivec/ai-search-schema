@@ -63,8 +63,8 @@ This plugin follows WordPress security best practices:
 - API keys are stored securely (never exposed in HTML) / APIキーは安全に保存（HTMLに露出しない）
 
 ## Installation / セットアップ
-1. Upload the plugin folder to `wp-content/plugins/ai-search-schema`
-   プラグイン一式を `wp-content/plugins/ai-search-schema` に配置
+1. Upload the plugin folder to `wp-content/plugins/aivec-ai-search-schema`
+   プラグイン一式を `wp-content/plugins/aivec-ai-search-schema` に配置
 2. Activate from WordPress admin
    管理画面で有効化
 3. Open **Settings → AI Search Schema** and complete the forms
