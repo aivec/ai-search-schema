@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Validator {
 	/**
 	 * スキーマを検証し、AEO向けの必須項目を自己診断する。

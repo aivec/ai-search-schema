@@ -2,6 +2,7 @@
 /**
  * JSON-LD 出力を担当するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Output {
 	/**
 	 * @var AVC_AIS_Validator

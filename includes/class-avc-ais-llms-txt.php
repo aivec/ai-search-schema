@@ -11,6 +11,7 @@
 /**
  * AVC_AIS_Llms_Txt class
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Llms_Txt {
 
 	/**

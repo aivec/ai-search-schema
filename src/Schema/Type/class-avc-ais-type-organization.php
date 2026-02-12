@@ -2,6 +2,7 @@
 /**
  * Organization ノードを生成するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_Organization {
 	/**
 	 * Organization ノードを構築

@@ -11,6 +11,7 @@
  * 目印付きスクリプト（class="avc-ais-schema-graph" / data-avc-ais-schema="1"）だけ残すポリシー。
  *
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Schema {
 	/**
 	 * @var AVC_AIS_Schema|null

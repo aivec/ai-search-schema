@@ -5,6 +5,7 @@
  * プラグインの一般設定を管理するクラスです。
  * 設定項目の保存や表示を行います。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Settings {
 	private const OPTION_NAME                = 'avc_ais_options';
 	private const OPTION_GMAPS_KEY           = 'avc_ais_gmaps_api_key';
