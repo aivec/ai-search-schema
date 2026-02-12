@@ -3,6 +3,8 @@
 
 namespace Aivec\AiSearchSchema;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * レガシー Output を PSR-4 名前空間から利用するためのラッパー。
  */

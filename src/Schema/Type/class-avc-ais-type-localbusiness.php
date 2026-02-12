@@ -2,6 +2,7 @@
 /**
  * LocalBusiness ノードを生成するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_LocalBusiness {
 	/**
 	 * LocalBusiness ノードを構築

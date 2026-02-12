@@ -2,6 +2,7 @@
 /**
  * ItemList スキーマ生成クラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_ItemList {
 	public static function build( $id, array $items ) {
 		$list_items = array();

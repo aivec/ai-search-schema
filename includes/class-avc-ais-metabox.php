@@ -5,6 +5,7 @@
  *
  * 投稿や固定ページにメタボックスを追加し、AEOスキーマに関連する設定を行うクラスです。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_MetaBox {
 	/**
 	 * @var AVC_AIS_MetaBox|null

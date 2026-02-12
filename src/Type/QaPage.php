@@ -7,6 +7,8 @@
 
 namespace Aivec\AiSearchSchema\Type;
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! class_exists( '\AVC_AIS_Type_QAPage' ) ) {
 	require_once AVC_AIS_DIR . 'src/Schema/Type/class-avc-ais-type-qapage.php';
 }

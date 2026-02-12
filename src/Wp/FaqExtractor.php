@@ -3,6 +3,8 @@
 
 namespace Aivec\AiSearchSchema\Wp;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * レガシー FAQ 抽出クラスを PSR-4 名前空間から利用するためのラッパー。
  */

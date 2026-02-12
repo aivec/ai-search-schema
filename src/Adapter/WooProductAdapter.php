@@ -7,6 +7,8 @@
 
 namespace Aivec\AiSearchSchema\Adapter;
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! class_exists( '\AVC_AIS_WooProductAdapter' ) ) {
 	require_once AVC_AIS_DIR . 'src/Schema/Adapter/class-avc-ais-wooproductadapter.php';
 }

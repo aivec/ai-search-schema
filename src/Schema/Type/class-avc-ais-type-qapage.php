@@ -2,6 +2,7 @@
 /**
  * QAPage スキーマ生成クラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_QAPage {
 	public static function build( array $context, $language_value, $webpage_id ) {
 		$answer_text = '';

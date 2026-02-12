@@ -10,6 +10,7 @@
 /**
  * 営業時間スキーマを構築するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_OpeningHoursBuilder {
 
 	/**
