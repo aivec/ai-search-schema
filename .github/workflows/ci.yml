@@ -116,7 +116,7 @@ jobs:
         run: |
           wp plugin install plugin-check --activate --path=/tmp/wordpress
           ln -s "$GITHUB_WORKSPACE" /tmp/wordpress/wp-content/plugins/aivec-ai-search-schema
-          wp plugin check aivec-ai-search-schema --skip-plugins --skip-themes --path=/tmp/wordpress
+          wp plugin check aivec-ai-search-schema --skip-themes --path=/tmp/wordpress
 
   test:
     name: PHPUnit (PHP ${{ matrix.php-version }})
