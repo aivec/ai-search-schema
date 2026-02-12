@@ -2,6 +2,7 @@
 /**
  * WooCommerce 連携で Product スキーマを生成するアダプタ。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_WooProductAdapter {
 	/**
 	 * WooCommerce が利用可能か。

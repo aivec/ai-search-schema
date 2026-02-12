@@ -2,6 +2,7 @@
 /**
  * WebPage ノードを生成するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_WebPage {
 	public static function build( array $context, array $ids, $language, array $types, array $primary_image ) {
 		if ( empty( $context['url'] ) ) {

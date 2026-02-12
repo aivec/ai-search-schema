@@ -2,6 +2,7 @@
 /**
  * FAQPage スキーマ生成クラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_FAQPage {
 	public static function build( array $context, $language_value, $webpage_id, array $options ) {
 		$override = self::get_context_override( $options, $context );

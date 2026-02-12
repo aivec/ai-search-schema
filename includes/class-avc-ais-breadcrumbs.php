@@ -4,6 +4,7 @@
  *
  * このクラスは、パンくずリストを生成し、サイト内のナビゲーションを提供します。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Breadcrumbs {
 	/**
 	 * @var AVC_AIS_Breadcrumbs|null

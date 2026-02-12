@@ -6,6 +6,8 @@
 
 namespace Aivec\AiSearchSchema;
 
+defined( 'ABSPATH' ) || exit;
+
 use Aivec\AiSearchSchema\Wizard\Wizard;
 use Aivec\AiSearchSchema\Wp\Breadcrumbs;
 use Aivec\AiSearchSchema\Wp\MetaBox;

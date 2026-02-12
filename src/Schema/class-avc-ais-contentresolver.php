@@ -2,6 +2,7 @@
 /**
  * ページコンテキストやコンテンツ種別の解決を担当するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_ContentResolver {
 	/**
 	 * サイトURLを正規化

@@ -8,6 +8,8 @@
 
 namespace Aivec\AiSearchSchema\Wizard;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * Wizard_Importer class.
  */

@@ -2,6 +2,7 @@
 /**
  * グラフ生成と共通ヘルパーを担当するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_GraphBuilder {
 	/**
 	 * @var AVC_AIS_ContentResolver

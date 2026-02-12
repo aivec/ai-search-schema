@@ -125,6 +125,8 @@ function copy() {
     '!vendor/**',
     '!.git/**',
     '!.github/**',
+    // Exclude License directory (PRO版専用)
+    '!src/License/**',
     // Exclude WordPress.org directory assets (icons, screenshots, banners)
     '!assets/icon-*.png',
     '!assets/screenshot-*.png',

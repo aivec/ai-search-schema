@@ -7,6 +7,8 @@
 
 namespace Aivec\AiSearchSchema;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * ページコンテキストやコンテンツ種別の解決を担当するクラス。
  */

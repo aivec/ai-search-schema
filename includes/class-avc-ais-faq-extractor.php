@@ -4,6 +4,7 @@
  *
  * このクラスは、指定されたクラス名から質問と回答を取得します。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Faq_Extractor {
 
 	/**

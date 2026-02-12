@@ -6,6 +6,8 @@
 
 namespace Aivec\AiSearchSchema\Wp;
 
+defined( 'ABSPATH' ) || exit;
+
 if ( ! class_exists( '\AVC_AIS_Prefectures' ) ) {
 	require_once AVC_AIS_DIR . 'includes/class-avc-ais-prefectures.php';
 }

@@ -10,6 +10,8 @@
 
 namespace Aivec\AiSearchSchema\License;
 
+defined( 'ABSPATH' ) || exit;
+
 use Aivec\Welcart\CptmClient\Client as CptmClient;
 
 /**

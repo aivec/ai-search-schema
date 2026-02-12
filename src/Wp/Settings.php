@@ -3,6 +3,8 @@
 
 namespace Aivec\AiSearchSchema\Wp;
 
+defined( 'ABSPATH' ) || exit;
+
 /**
  * レガシー設定クラスを PSR-4 名前空間から利用するためのラッパー。
  */

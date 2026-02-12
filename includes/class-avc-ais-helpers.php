@@ -4,6 +4,7 @@
  *
  * プラグイン内で共通して使用されるヘルパー関数を提供します。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Helpers {
 
 	/**

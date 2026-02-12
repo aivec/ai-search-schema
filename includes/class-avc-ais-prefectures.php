@@ -8,6 +8,7 @@
 /**
  * 都道府県とISOコードを提供するユーティリティ.
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Prefectures {
 
 	/**

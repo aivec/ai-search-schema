@@ -2,6 +2,7 @@
 /**
  * Article系スキーマを生成するクラス。
  */
+defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Type_Article {
 	public static function build(
 		$post_id = null,
