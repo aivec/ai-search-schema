@@ -89,8 +89,19 @@ jobs:
           coverage: none
           tools: composer, wp-cli
 
+      - name: Node.js をセットアップ
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
       - name: Composer 依存をインストール
         run: composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Node 依存をインストール
+        run: npm ci
+
+      - name: ビルド (dist 生成)
+        run: npm run build
 
       - name: WordPress を準備
         run: |
@@ -115,7 +126,8 @@ jobs:
       - name: Plugin Check を実行
         run: |
           wp plugin install plugin-check --activate --path=/tmp/wordpress
-          ln -s "$GITHUB_WORKSPACE" /tmp/wordpress/wp-content/plugins/aivec-ai-search-schema
+          mkdir -p /tmp/wordpress/wp-content/plugins/aivec-ai-search-schema
+          rsync -a dist/ /tmp/wordpress/wp-content/plugins/aivec-ai-search-schema/
           wp plugin check aivec-ai-search-schema --skip-themes --path=/tmp/wordpress
 
   test:
