@@ -227,14 +227,16 @@ class AVC_AIS_MetaBox {
 				return;
 		}
 
-				// データを保存
-				$raw_meta = isset( $_POST['avc_ais_meta'] )
-					? (array) wp_unslash( $_POST['avc_ais_meta'] )
-					: array();
+		// データを保存
+		$raw_meta = array();
+		if ( isset( $_POST['avc_ais_meta'] ) ) {
+			$raw_meta = (array) wp_unslash( $_POST['avc_ais_meta'] );
+			$raw_meta = array_map( 'sanitize_text_field', $raw_meta );
+		}
 
-				$allowed_page_types = array( 'auto', 'Article', 'FAQPage', 'QAPage', 'WebPage' );
+		$allowed_page_types = array( 'auto', 'Article', 'FAQPage', 'QAPage', 'WebPage' );
 
-			$meta = array();
+		$meta = array();
 
 		if ( isset( $raw_meta['page_type'] ) ) {
 				$page_type = sanitize_text_field( $raw_meta['page_type'] );

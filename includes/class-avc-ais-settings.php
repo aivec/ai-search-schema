@@ -249,6 +249,7 @@ class AVC_AIS_Settings {
 		}
 
 		$address_data   = isset( $_POST['address'] ) ? (array) wp_unslash( $_POST['address'] ) : array();
+		$address_data   = array_map( 'sanitize_text_field', $address_data );
 		$postal_code    = sanitize_text_field( $address_data['postal_code'] ?? '' );
 		$region         = sanitize_text_field( $address_data['region'] ?? '' );
 		$locality       = sanitize_text_field( $address_data['locality'] ?? '' );

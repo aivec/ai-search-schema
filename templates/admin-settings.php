@@ -1,5 +1,5 @@
 <?php
-/* phpcs:disable WordPress.Files.LineLength.TooLong */
+/* phpcs:disable WordPress.Files.LineLength.TooLong,WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound */
 /**
  * Admin settings page template
  *
