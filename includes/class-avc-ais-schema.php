@@ -5,10 +5,8 @@
  * JSON-LD スキーマを生成するクラスで、共通 @graph やページ別のスキーマを出力します。
  *
  * NOTE:
- * AVC 優先モード時は、最終HTMLから
- * 「AVC が出力した JSON-LD 以外の application/ld+json <script> をすべて削除」する。
- * 各SEOプラグインごとの出力仕様変更に影響されないよう、
- * 目印付きスクリプト（class="avc-ais-schema-graph" / data-avc-ais-schema="1"）だけ残すポリシー。
+ * AVC 優先モード時は、主要SEOプラグイン向けのフィルタで JSON-LD 出力を抑止する。
+ * 出力バッファによる強制除去は行わない。
  *
  */
 defined( 'ABSPATH' ) || exit;
@@ -82,26 +80,6 @@ class AVC_AIS_Schema {
 	 * }>
 	 */
 	private $external_schema_filters = array();
-
-	/**
-	 * @var bool
-	 */
-	private $head_buffer_enabled = false;
-
-	/**
-	 * @var bool
-	 */
-	private $head_buffer_active = false;
-
-	/**
-	 * @var bool
-	 */
-	private $global_buffer_enabled = false;
-
-	/**
-	 * @var bool
-	 */
-	private $global_buffer_active = false;
 
 	/**
 	 * コンストラクタ
@@ -1927,10 +1905,7 @@ class AVC_AIS_Schema {
 			return;
 		}
 
-				$priority = 99;
-
-				$options       = $this->get_normalized_options();
-				$is_debug_mode = ! empty( $options['debug_mode'] );
+			$priority = 99;
 
 		$this->external_schema_filters = array(
 			array(
@@ -2023,11 +1998,7 @@ class AVC_AIS_Schema {
 			add_filter( $filter['hook'], $filter['callback'], $filter['priority'], $filter['accepted_args'] );
 		}
 
-		if ( $is_debug_mode ) {
-				$this->enable_head_schema_buffer();
-				$this->enable_global_schema_buffer();
-		}
-				$this->suppressing_external_schema = true;
+			$this->suppressing_external_schema = true;
 	}
 
 	/**
@@ -2042,8 +2013,6 @@ class AVC_AIS_Schema {
 			remove_filter( $filter['hook'], $filter['callback'], $filter['priority'] );
 		}
 
-		$this->disable_head_schema_buffer();
-		$this->disable_global_schema_buffer();
 		$this->external_schema_filters     = array();
 		$this->suppressing_external_schema = false;
 	}
@@ -2086,188 +2055,6 @@ class AVC_AIS_Schema {
 	public function filter_return_empty_string( $_value = null ) {
 		unset( $_value );
 		return '';
-	}
-
-	/**
-	 * wp_head の出力をバッファリングして競合スキーマを除去
-	 *
-	 * @return void
-	 */
-	private function enable_head_schema_buffer() {
-		if ( $this->head_buffer_enabled || is_admin() ) {
-			return;
-		}
-
-		add_action( 'wp_head', array( $this, 'begin_head_schema_buffer' ), 0 );
-		add_action( 'wp_head', array( $this, 'flush_head_schema_buffer' ), PHP_INT_MAX );
-		$this->head_buffer_enabled = true;
-	}
-
-	/**
-	 * wp_head バッファリングを解除
-	 *
-	 * @return void
-	 */
-	private function disable_head_schema_buffer() {
-		if ( ! $this->head_buffer_enabled ) {
-			return;
-		}
-
-		remove_action( 'wp_head', array( $this, 'begin_head_schema_buffer' ), 0 );
-		remove_action( 'wp_head', array( $this, 'flush_head_schema_buffer' ), PHP_INT_MAX );
-		$this->head_buffer_enabled = false;
-	}
-
-	/**
-	 * ページ全体をバッファリングして競合スキーマを除去
-	 *
-	 * @return void
-	 */
-	private function enable_global_schema_buffer() {
-		if ( $this->global_buffer_enabled || is_admin() ) {
-			return;
-		}
-
-		add_action( 'template_redirect', array( $this, 'begin_global_schema_buffer' ), PHP_INT_MIN );
-		add_action( 'shutdown', array( $this, 'flush_global_schema_buffer' ), 0 );
-		$this->global_buffer_enabled = true;
-	}
-
-	/**
-	 * ページ全体バッファリングを解除
-	 *
-	 * @return void
-	 */
-	private function disable_global_schema_buffer() {
-		if ( ! $this->global_buffer_enabled ) {
-			return;
-		}
-
-		remove_action( 'template_redirect', array( $this, 'begin_global_schema_buffer' ), PHP_INT_MIN );
-		remove_action( 'shutdown', array( $this, 'flush_global_schema_buffer' ), 0 );
-
-		if ( $this->global_buffer_active ) {
-			$this->flush_global_schema_buffer();
-		}
-
-		$this->global_buffer_enabled = false;
-	}
-
-	/**
-	 * wp_head 出力のバッファを開始
-	 *
-	 * @return void
-	 */
-	public function begin_head_schema_buffer() {
-		if ( $this->head_buffer_active ) {
-			return;
-		}
-
-		$this->head_buffer_active = true;
-		ob_start();
-	}
-
-	/**
-	 * バッファをフラッシュし、競合スキーマを除去
-	 *
-	 * @return void
-	 */
-	public function flush_head_schema_buffer() {
-		if ( ! $this->head_buffer_active ) {
-			return;
-		}
-
-		$buffer = ob_get_clean();
-
-		$this->head_buffer_active = false;
-
-		if ( false === $buffer ) {
-			return;
-		}
-
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Needed to reinject filtered head markup.
-		echo $this->strip_competing_schema_markup( $buffer );
-	}
-
-	/**
-	 * 全体出力のバッファを開始
-	 *
-	 * @return void
-	 */
-	public function begin_global_schema_buffer() {
-		if ( $this->global_buffer_active || is_admin() || wp_doing_ajax() || wp_doing_cron() ) {
-			return;
-		}
-
-		if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) {
-			return;
-		}
-
-		$this->global_buffer_active = true;
-		ob_start();
-	}
-
-	/**
-	 * 全体出力のバッファをフラッシュ
-	 *
-	 * @return void
-	 */
-	public function flush_global_schema_buffer() {
-		if ( ! $this->global_buffer_active ) {
-			return;
-		}
-
-		$output                     = ob_get_clean();
-		$this->global_buffer_active = false;
-
-		if ( false === $output ) {
-			return;
-		}
-
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Filtering entire page output for competing schemas.
-		echo $this->strip_competing_schema_markup( $output );
-	}
-
-	/**
-	 * wp_head 出力から競合スキーマを除去
-	 *
-	 * @param string $buffer
-	 * @return string
-	 */
-	private function strip_competing_schema_markup( $buffer ) {
-		$pattern = '#<script[^>]*type=["\']application/ld\+json["\'][^>]*>.*?</script>#is';
-
-		return preg_replace_callback(
-			$pattern,
-			function ( $matches ) {
-				$script_tag = $matches[0];
-
-				if (
-					preg_match( '#class=["\'][^"\']*avc-ais-schema-graph[^"\']*["\']#i', $script_tag )
-					|| preg_match( '#data-avc-ais-schema=["\']1["\']#i', $script_tag )
-				) {
-					return $script_tag;
-				}
-
-				$custom_patterns = apply_filters( 'avc_ais_competing_patterns', array() );
-
-				foreach ( $custom_patterns as $custom_pattern ) {
-					if ( is_string( $custom_pattern ) && '' !== $custom_pattern ) {
-						$script_tag = preg_replace( $custom_pattern, '', $script_tag );
-					}
-				}
-
-				if (
-					preg_match( '#class=["\'][^"\']*avc-ais-schema-graph[^"\']*["\']#i', $script_tag )
-					|| preg_match( '#data-avc-ais-schema=["\']1["\']#i', $script_tag )
-				) {
-					return $script_tag;
-				}
-
-				return '';
-			},
-			$buffer
-		);
 	}
 
 	/**

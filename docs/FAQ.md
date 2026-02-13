@@ -94,19 +94,19 @@ Use these tools to validate your schema output:
 ### My site already has schema from another plugin. Will there be duplicates?
 ### サイトに他のプラグインからのスキーマがあります。重複しますか？
 
-**English:** No. AI Search Schema automatically detects and suppresses schema output from:
+**English:** No. AI Search Schema automatically suppresses schema output from:
 - Yoast SEO
 - Rank Math
 - All in One SEO (AIOSEO)
 
-The plugin uses output buffering and filter removal to ensure only one schema source is active.
+The plugin uses filter hooks to disable schema output from major SEO plugins. If a plugin does not provide suppression hooks, duplicate schemas may still appear.
 
-**日本語:** いいえ。AI Search Schemaは以下からのスキーマ出力を自動的に検出して抑制します：
+**日本語:** いいえ。AI Search Schemaは以下からのスキーマ出力を自動的に抑制します：
 - Yoast SEO
 - Rank Math
 - All in One SEO (AIOSEO)
 
-プラグインは出力バッファリングとフィルター除去を使用して、アクティブなスキーマソースが1つだけになることを保証します。
+プラグインは主要SEOプラグイン向けのフィルターで出力を抑止します。抑止フックがないプラグインでは重複が残る場合があります。
 
 ---
 
@@ -116,14 +116,12 @@ The plugin uses output buffering and filter removal to ensure only one schema so
 **English:** When "Use AI Search Schema output" is selected in settings:
 
 1. **Filter removal**: Hooks from competing plugins are removed before `wp_head`
-2. **Output buffering**: Any remaining schema in the HTML buffer is stripped
-3. **Unified output**: AI Search Schema outputs a single, merged `@graph`
+2. **Unified output**: AI Search Schema outputs a single, merged `@graph`
 
 **日本語:** 設定で「AI Search Schema 出力を使用」が選択されている場合：
 
 1. **フィルター除去**: `wp_head`の前に競合プラグインのフックを除去
-2. **出力バッファリング**: HTMLバッファ内の残りのスキーマを除去
-3. **統合出力**: AI Search Schemaが単一の統合された`@graph`を出力
+2. **統合出力**: AI Search Schemaが単一の統合された`@graph`を出力
 
 ---
 
