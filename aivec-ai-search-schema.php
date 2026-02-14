@@ -57,9 +57,9 @@ add_filter( 'option_avc_ais_settings', 'avc_ais_filter_null_option_values', 1 );
 add_filter( 'option_avc_ais_wizard_progress', 'avc_ais_filter_null_option_values', 1 );
 
 // Composer autoloader or PSR-4 fallback.
-$ais_autoloader = AVC_AIS_DIR . 'vendor/autoload.php';
-if ( file_exists( $ais_autoloader ) ) {
-	require_once $ais_autoloader;
+$avc_ais_autoloader = AVC_AIS_DIR . 'vendor/autoload.php';
+if ( file_exists( $avc_ais_autoloader ) ) {
+	require_once $avc_ais_autoloader;
 } else {
 	spl_autoload_register(
 		static function ( $class_name ) {

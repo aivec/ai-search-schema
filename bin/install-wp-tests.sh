@@ -73,12 +73,19 @@ install_test_suite() {
         tests_tag="tags/${WP_VERSION}"
     fi
 
+    local use_github=false
     if command -v svn >/dev/null 2>&1; then
         echo "Fetching WordPress tests from develop.svn.wordpress.org/${tests_tag}"
-        svn export --force --quiet "https://develop.svn.wordpress.org/${tests_tag}/tests/phpunit" "$checkout_dir"
+        if ! svn export --force --quiet --ignore-externals "https://develop.svn.wordpress.org/${tests_tag}/tests/phpunit" "$checkout_dir"; then
+            echo "svn export failed; falling back to GitHub archive." >&2
+            use_github=true
+        fi
     else
         echo "svn not found; downloading tests from GitHub archive."
+        use_github=true
+    fi
 
+    if [ "$use_github" = true ]; then
         local ref="heads/trunk"
         if [ "$tests_tag" != "trunk" ]; then
             ref="tags/${WP_VERSION}"

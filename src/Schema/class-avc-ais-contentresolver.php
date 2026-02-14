@@ -258,8 +258,9 @@ class AVC_AIS_ContentResolver {
 			return home_url( trailingslashit( $wp->request ) );
 		}
 
-		$request_uri = isset( $_SERVER['REQUEST_URI'] ) ? wp_unslash( $_SERVER['REQUEST_URI'] ) : '/';
-		$request_uri = sanitize_text_field( $request_uri );
+		$request_uri = isset( $_SERVER['REQUEST_URI'] )
+			? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) )
+			: '/';
 		if ( '' === $request_uri || '/' !== $request_uri[0] ) {
 			$request_uri = '/' . ltrim( $request_uri, '/' );
 		}
