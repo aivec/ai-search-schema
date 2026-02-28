@@ -54,6 +54,12 @@ Used only when no Google Maps API key is configured and you click "Fetch coordin
 Data sent: the address fields you entered, the admin email (if available), and your site URL in the User-Agent header.
 Service provided by OpenStreetMap (Nominatim). Usage policy: https://operations.osmfoundation.org/policies/nominatim/ | Privacy: https://osmfoundation.org/wiki/Privacy_Policy
 
+= ZipCloud (optional, Japan only) =
+Used to auto-fill address fields from a Japanese postal code when you enter a 7-digit zip code in the admin settings.
+Data sent: the postal code you entered (e.g., "1000001").
+Timing: only when you type a valid 7-digit Japanese postal code in the settings page.
+Service provided by ZipCloud (https://zipcloud.ibsnet.co.jp/). Service info: https://zipcloud.ibsnet.co.jp/
+
 == Frequently Asked Questions ==
 
 = Does it support multiple locations? =
