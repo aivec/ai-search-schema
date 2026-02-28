@@ -65,8 +65,8 @@
   }
 
   function initLanguageTags() {
-    const map = (window.aisSettings && aisSettings.languageOptions) || {};
-    const removeTemplate = (window.aisSettings && aisSettings.i18nLanguageRemove) || '%s';
+    const map = (window.avcAisSettings && avcAisSettings.languageOptions) || {};
+    const removeTemplate = (window.avcAisSettings && avcAisSettings.i18nLanguageRemove) || '%s';
     const $container = $('#ais-language-tags');
     if (!$container.length) {
       return;
@@ -444,11 +444,11 @@
 
   function initGeocodeLookup() {
     const $button = $('#ais-geocode-button');
-    if (!$button.length || !window.aisSettings) {
+    if (!$button.length || !window.avcAisSettings) {
       return;
     }
 
-    const settings = window.aisSettings;
+    const settings = window.avcAisSettings;
     const ajaxUrl = settings.ajaxUrl || window.ajaxurl;
     const hasApiKey = !!settings.hasGeocodeApiKey;
     const $status = $('#ais-geocode-status');
@@ -837,8 +837,8 @@
     }
 
     const helpTexts = {
-      Organization: window.aisSettings?.i18nEntityHelpOrg || '',
-      LocalBusiness: window.aisSettings?.i18nEntityHelpLB || ''
+      Organization: window.avcAisSettings?.i18nEntityHelpOrg || '',
+      LocalBusiness: window.avcAisSettings?.i18nEntityHelpLB || ''
     };
 
     function updateHelpText() {
@@ -977,21 +977,21 @@
       e.preventDefault();
 
       const originalText = $button.text();
-      $button.prop('disabled', true).text(aisSettings.i18nLlmsTxtSaving || 'Saving...');
+      $button.prop('disabled', true).text(avcAisSettings.i18nLlmsTxtSaving || 'Saving...');
       $spinner.addClass('is-active');
       $status.text('');
 
       $.ajax({
-        url: aisSettings.ajaxUrl,
+        url: avcAisSettings.ajaxUrl,
         type: 'POST',
         data: {
           action: 'avc_ais_save_llms_txt',
-          nonce: aisSettings.llmsTxtSaveNonce,
+          nonce: avcAisSettings.llmsTxtSaveNonce,
           content: $textarea.val()
         },
         success: function (response) {
           if (response.success) {
-            $status.text(aisSettings.i18nLlmsTxtSaved || 'Saved!').css('color', '#46b450');
+            $status.text(avcAisSettings.i18nLlmsTxtSaved || 'Saved!').css('color', '#46b450');
             setTimeout(function () {
               $status.fadeOut(function () {
                 $status.text('').show().css('color', '');
@@ -1005,7 +1005,7 @@
           $status.text('Failed to save llms.txt').css('color', '#dc3232');
         },
         complete: function () {
-          $button.prop('disabled', false).text(aisSettings.i18nLlmsTxtSave || originalText);
+          $button.prop('disabled', false).text(avcAisSettings.i18nLlmsTxtSave || originalText);
           $spinner.removeClass('is-active');
         }
       });
@@ -1027,16 +1027,16 @@
       e.preventDefault();
 
       const originalText = $button.text();
-      $button.prop('disabled', true).text(aisSettings.i18nLlmsTxtRegenerating || 'Regenerating...');
+      $button.prop('disabled', true).text(avcAisSettings.i18nLlmsTxtRegenerating || 'Regenerating...');
       $spinner.addClass('is-active');
       $status.text('');
 
       $.ajax({
-        url: aisSettings.ajaxUrl,
+        url: avcAisSettings.ajaxUrl,
         type: 'POST',
         data: {
           action: 'avc_ais_regenerate_llms_txt',
-          nonce: aisSettings.llmsTxtNonce
+          nonce: avcAisSettings.llmsTxtNonce
         },
         success: function (response) {
           if (response.success && response.data && response.data.content) {
@@ -1055,7 +1055,7 @@
           $status.text('Failed to regenerate llms.txt').css('color', '#dc3232');
         },
         complete: function () {
-          $button.prop('disabled', false).text(aisSettings.i18nLlmsTxtRegenerate || originalText);
+          $button.prop('disabled', false).text(avcAisSettings.i18nLlmsTxtRegenerate || originalText);
           $spinner.removeClass('is-active');
         }
       });

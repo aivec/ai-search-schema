@@ -40,11 +40,21 @@ $site_types = array(
 	<div class="ais-wizard-step__content">
 		<div class="ais-wizard-type-grid">
 			<?php foreach ( $site_types as $type_key => $type_data ) : ?>
-				<label class="ais-wizard-type-card <?php echo $entity_type === $type_key ? 'ais-wizard-type-card--selected' : ''; ?>">
+				<label class="ais-wizard-type-card <?php echo esc_attr( $entity_type === $type_key ? 'ais-wizard-type-card--selected' : '' ); ?>">
 					<input type="radio" name="entity_type" value="<?php echo esc_attr( $type_key ); ?>" <?php checked( $entity_type, $type_key ); ?>>
 					<div class="ais-wizard-type-card__icon">
 						<svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-							<?php echo $type_data['icon']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							<?php
+							echo wp_kses(
+								$type_data['icon'],
+								array(
+									'path' => array(
+										'd'    => true,
+										'fill' => true,
+									),
+								)
+							);
+							?>
 						</svg>
 					</div>
 					<div class="ais-wizard-type-card__content">

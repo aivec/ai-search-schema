@@ -75,12 +75,6 @@ class Client extends CptmClient {
 			$url = $endpoint_override;
 		}
 
-		// データベースサーバー情報を取得.
-		$server_info = '';
-		if ( isset( $wpdb->use_mysqli ) && $wpdb->use_mysqli && isset( $wpdb->dbh ) ) {
-			$server_info = mysqli_get_server_info( $wpdb->dbh );
-		}
-
 		// phpcs:ignore PHPCompatibility.Classes.NewClasses.puc_v4_factoryFound
 		\Puc_v4_Factory::buildUpdateChecker(
 			add_query_arg(
@@ -92,7 +86,6 @@ class Client extends CptmClient {
 					'wordpressVersion'           => $wp_version,
 					'phpVersion'                 => phpversion(),
 					'webServer'                  => isset( $_SERVER['SERVER_SOFTWARE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['SERVER_SOFTWARE'] ) ) : '',
-					'databaseInfo'               => $server_info,
 					'databaseVersion'            => $wpdb->db_version(),
 				),
 				$url . '/wp-update-server/'

@@ -1,0 +1,48 @@
+# Distribution ignore file for WP-CLI wp dist-archive
+# Files and directories listed here will be excluded from the distribution ZIP
+
+# Development directories
+/.ai
+/.claude
+/.cursor
+/.vscode
+/tests
+/tools
+/docs
+/scss
+
+# Build and output directories
+/dist
+/bundled
+/build
+/out
+
+# Package management
+# Note: /vendor is NOT excluded because this plugin uses Composer autoload in production
+/package.json
+/package-lock.json
+/composer.json
+/composer.lock
+/bundle
+/node_modules
+/.git
+/.github
+
+# Build configuration
+/gulpfile.js
+/phpcs.xml
+/phpunit.xml.dist
+.distignore
+.gitignore
+.phpunit.result.cache
+
+# Environment and temp files
+*.env
+*.env.*
+*.log
+*.map
+.DS_Store
+Thumbs.db
+*.zip
+*.tar.gz
+*.tgz

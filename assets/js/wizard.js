@@ -4,7 +4,7 @@
  * @package Aivec\AiSearchSchema
  */
 
-/* global jQuery, wp, aisWizardData */
+/* global jQuery, wp, avcAisWizardData */
 
 (function ($) {
   'use strict';
@@ -135,25 +135,25 @@
       $btn.prop('disabled', true);
 
       $.ajax({
-        url: aisWizardData.ajaxUrl,
+        url: avcAisWizardData.ajaxUrl,
         method: 'POST',
         data: {
           action: 'avc_ais_wizard_save_step',
-          nonce: aisWizardData.nonce,
-          step: aisWizardData.currentStep,
+          nonce: avcAisWizardData.nonce,
+          step: avcAisWizardData.currentStep,
           data: formData
         },
         success: function (response) {
           if (response.success) {
             // Navigate to next step
-            window.location.href = aisWizardData.wizardUrl + '&step=' + nextStep;
+            window.location.href = avcAisWizardData.wizardUrl + '&step=' + nextStep;
           } else {
-            alert(response.data.message || aisWizardData.strings.errorSaving);
+            alert(response.data.message || avcAisWizardData.strings.errorSaving);
             $btn.prop('disabled', false);
           }
         },
         error: function () {
-          alert(aisWizardData.strings.errorSaving);
+          alert(avcAisWizardData.strings.errorSaving);
           $btn.prop('disabled', false);
         }
       });
@@ -228,20 +228,20 @@
 
       const typeInfo = {
         LocalBusiness: {
-          title: aisWizardData.strings.localBusinessTitle || 'Local Business Selected',
-          text: aisWizardData.strings.localBusinessText || 'You will be able to enter your business address, hours, and contact information.'
+          title: avcAisWizardData.strings.localBusinessTitle || 'Local Business Selected',
+          text: avcAisWizardData.strings.localBusinessText || 'You will be able to enter your business address, hours, and contact information.'
         },
         Organization: {
-          title: aisWizardData.strings.organizationTitle || 'Organization Selected',
-          text: aisWizardData.strings.organizationText || 'Perfect for companies, non-profits, and institutions.'
+          title: avcAisWizardData.strings.organizationTitle || 'Organization Selected',
+          text: avcAisWizardData.strings.organizationText || 'Perfect for companies, non-profits, and institutions.'
         },
         Person: {
-          title: aisWizardData.strings.personTitle || 'Personal Site Selected',
-          text: aisWizardData.strings.personText || 'Great for blogs, portfolios, and freelancer websites.'
+          title: avcAisWizardData.strings.personTitle || 'Personal Site Selected',
+          text: avcAisWizardData.strings.personText || 'Great for blogs, portfolios, and freelancer websites.'
         },
         WebSite: {
-          title: aisWizardData.strings.websiteTitle || 'Online Service Selected',
-          text: aisWizardData.strings.websiteText || 'Ideal for news sites, web apps, and online tools.'
+          title: avcAisWizardData.strings.websiteTitle || 'Online Service Selected',
+          text: avcAisWizardData.strings.websiteText || 'Ideal for news sites, web apps, and online tools.'
         }
       };
 
@@ -347,13 +347,13 @@
       const $preview = $('#ais-wizard-hours-preview');
       const days = [];
       const dayNames = {
-        monday: aisWizardData.strings.monday || 'Monday',
-        tuesday: aisWizardData.strings.tuesday || 'Tuesday',
-        wednesday: aisWizardData.strings.wednesday || 'Wednesday',
-        thursday: aisWizardData.strings.thursday || 'Thursday',
-        friday: aisWizardData.strings.friday || 'Friday',
-        saturday: aisWizardData.strings.saturday || 'Saturday',
-        sunday: aisWizardData.strings.sunday || 'Sunday'
+        monday: avcAisWizardData.strings.monday || 'Monday',
+        tuesday: avcAisWizardData.strings.tuesday || 'Tuesday',
+        wednesday: avcAisWizardData.strings.wednesday || 'Wednesday',
+        thursday: avcAisWizardData.strings.thursday || 'Thursday',
+        friday: avcAisWizardData.strings.friday || 'Friday',
+        saturday: avcAisWizardData.strings.saturday || 'Saturday',
+        sunday: avcAisWizardData.strings.sunday || 'Sunday'
       };
 
       $('.ais-wizard-hours-table__row').each(function () {
@@ -374,7 +374,7 @@
       });
 
       if (days.length === 0) {
-        $preview.html('<p class="ais-wizard-hours-preview__empty">' + (aisWizardData.strings.noHoursSet || 'Set your business hours above to see a preview.') + '</p>');
+        $preview.html('<p class="ais-wizard-hours-preview__empty">' + (avcAisWizardData.strings.noHoursSet || 'Set your business hours above to see a preview.') + '</p>');
       } else {
         let html = '<ul class="ais-wizard-hours-preview__list">';
         days.forEach(function (day) {
@@ -413,30 +413,30 @@
           return;
         }
 
-        $btn.prop('disabled', true).text(aisWizardData.strings.importing || 'Importing...');
+        $btn.prop('disabled', true).text(avcAisWizardData.strings.importing || 'Importing...');
 
         $.ajax({
-          url: aisWizardData.ajaxUrl,
+          url: avcAisWizardData.ajaxUrl,
           method: 'POST',
           data: {
             action: 'avc_ais_wizard_import',
-            nonce: aisWizardData.nonce,
+            nonce: avcAisWizardData.nonce,
             source: source
           },
           success: function (response) {
             if (response.success) {
-              $btn.text(aisWizardData.strings.imported || 'Imported!');
+              $btn.text(avcAisWizardData.strings.imported || 'Imported!');
               setTimeout(function () {
-                window.location.href = aisWizardData.wizardUrl + '&step=basics';
+                window.location.href = avcAisWizardData.wizardUrl + '&step=basics';
               }, 1000);
             } else {
-              alert(response.data.message || aisWizardData.strings.importError || 'Import failed.');
-              $btn.prop('disabled', false).text(aisWizardData.strings.import || 'Import');
+              alert(response.data.message || avcAisWizardData.strings.importError || 'Import failed.');
+              $btn.prop('disabled', false).text(avcAisWizardData.strings.import || 'Import');
             }
           },
           error: function () {
-            alert(aisWizardData.strings.importError || 'Import failed.');
-            $btn.prop('disabled', false).text(aisWizardData.strings.import || 'Import');
+            alert(avcAisWizardData.strings.importError || 'Import failed.');
+            $btn.prop('disabled', false).text(avcAisWizardData.strings.import || 'Import');
           }
         });
       });
@@ -463,9 +463,9 @@
         }
 
         const frame = wp.media({
-          title: aisWizardData.strings.selectLogo || 'Select Logo',
+          title: avcAisWizardData.strings.selectLogo || 'Select Logo',
           button: {
-            text: aisWizardData.strings.useLogo || 'Use this logo'
+            text: avcAisWizardData.strings.useLogo || 'Use this logo'
           },
           multiple: false,
           library: {
@@ -486,7 +486,7 @@
       // Remove button click
       $removeBtn.on('click', function () {
         $input.val('');
-        $preview.html('<div class="ais-wizard-logo-upload__placeholder"><svg viewBox="0 0 24 24" width="48" height="48" fill="#9ca3af"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span>' + (aisWizardData.strings.noLogo || 'No logo selected') + '</span></div>');
+        $preview.html('<div class="ais-wizard-logo-upload__placeholder"><svg viewBox="0 0 24 24" width="48" height="48" fill="#9ca3af"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span>' + (avcAisWizardData.strings.noLogo || 'No logo selected') + '</span></div>');
         $removeBtn.hide();
       });
     },
@@ -508,18 +508,18 @@
 
         // Check if at least one address field is filled
         if (!postalCode && !region && !locality && !street) {
-          alert(aisWizardData.strings.enterAddress || 'Please enter an address first.');
+          alert(avcAisWizardData.strings.enterAddress || 'Please enter an address first.');
           return;
         }
 
-        $geocodeBtn.prop('disabled', true).text(aisWizardData.strings.fetching || 'Fetching...');
+        $geocodeBtn.prop('disabled', true).text(avcAisWizardData.strings.fetching || 'Fetching...');
 
         $.ajax({
-          url: aisWizardData.ajaxUrl,
+          url: avcAisWizardData.ajaxUrl,
           method: 'POST',
           data: {
             action: 'avc_ais_geocode',
-            nonce: aisWizardData.geocodeNonce || aisWizardData.nonce,
+            nonce: avcAisWizardData.geocodeNonce || avcAisWizardData.nonce,
             'address[postal_code]': postalCode,
             'address[region]': region,
             'address[locality]': locality,
@@ -530,13 +530,13 @@
               $('#ais-wizard-lat').val(response.data.latitude);
               $('#ais-wizard-lng').val(response.data.longitude);
             } else {
-              alert(response.data.message || aisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
+              alert(response.data.message || avcAisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
             }
-            $geocodeBtn.prop('disabled', false).html('<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>' + (aisWizardData.strings.getCoordinates || 'Get Coordinates'));
+            $geocodeBtn.prop('disabled', false).html('<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>' + (avcAisWizardData.strings.getCoordinates || 'Get Coordinates'));
           },
           error: function () {
-            alert(aisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
-            $geocodeBtn.prop('disabled', false).html('<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>' + (aisWizardData.strings.getCoordinates || 'Get Coordinates'));
+            alert(avcAisWizardData.strings.geocodeError || 'Could not fetch coordinates.');
+            $geocodeBtn.prop('disabled', false).html('<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 8c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm8.94 3c-.46-4.17-3.77-7.48-7.94-7.94V1h-2v2.06C6.83 3.52 3.52 6.83 3.06 11H1v2h2.06c.46 4.17 3.77 7.48 7.94 7.94V23h2v-2.06c4.17-.46 7.48-3.77 7.94-7.94H23v-2h-2.06zM12 19c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z"/></svg>' + (avcAisWizardData.strings.getCoordinates || 'Get Coordinates'));
           }
         });
       });
@@ -556,26 +556,26 @@
       $showBtn.on('click', function () {
         if ($code.is(':visible')) {
           $code.slideUp(200);
-          $showBtn.text(aisWizardData.strings.viewSchema || 'View JSON-LD Schema');
+          $showBtn.text(avcAisWizardData.strings.viewSchema || 'View JSON-LD Schema');
         } else {
           // Fetch schema
           $.ajax({
-            url: aisWizardData.ajaxUrl,
+            url: avcAisWizardData.ajaxUrl,
             method: 'POST',
             data: {
               action: 'avc_ais_wizard_get_schema',
-              nonce: aisWizardData.nonce
+              nonce: avcAisWizardData.nonce
             },
             success: function (response) {
               if (response.success && response.data.schema) {
                 $code.text(JSON.stringify(response.data.schema, null, 2)).slideDown(200);
-                $showBtn.text(aisWizardData.strings.hideSchema || 'Hide JSON-LD Schema');
+                $showBtn.text(avcAisWizardData.strings.hideSchema || 'Hide JSON-LD Schema');
               } else {
-                $code.text(aisWizardData.strings.noSchema || 'No schema generated yet.').slideDown(200);
+                $code.text(avcAisWizardData.strings.noSchema || 'No schema generated yet.').slideDown(200);
               }
             },
             error: function () {
-              $code.text(aisWizardData.strings.schemaError || 'Could not load schema.').slideDown(200);
+              $code.text(avcAisWizardData.strings.schemaError || 'Could not load schema.').slideDown(200);
             }
           });
         }

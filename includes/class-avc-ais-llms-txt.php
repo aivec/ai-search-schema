@@ -97,10 +97,9 @@ class AVC_AIS_Llms_Txt {
 			return;
 		}
 
-		header( 'Content-Type: text/markdown; charset=utf-8' );
+		header( 'Content-Type: text/plain; charset=utf-8' );
 		header( 'X-Robots-Tag: noindex' );
-		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markdown content.
-		echo $this->get_content();
+		echo esc_html( $this->get_content() );
 		exit;
 	}
 

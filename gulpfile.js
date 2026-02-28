@@ -125,6 +125,8 @@ function copy() {
     '!vendor/**',
     '!.git/**',
     '!.github/**',
+    // Exclude bundle script (dev-only, WP.org審査指摘対応)
+    '!bundle',
     // Exclude License directory (PRO版専用)
     '!src/License/**',
     // Exclude WordPress.org directory assets (icons, screenshots, banners)

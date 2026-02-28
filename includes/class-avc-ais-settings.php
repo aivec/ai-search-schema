@@ -157,7 +157,7 @@ class AVC_AIS_Settings {
 
 		wp_localize_script(
 			'ais-settings',
-			'aisSettings',
+			'avcAisSettings',
 			array(
 				'socialOptions'             => $this->get_social_network_choices(),
 				'languageOptions'           => $this->get_language_choices(),

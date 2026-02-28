@@ -268,7 +268,7 @@ class Wizard {
 
 		wp_localize_script(
 			'ais-wizard',
-			'aisWizardData',
+			'avcAisWizardData',
 			array(
 				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),
 				'nonce'        => wp_create_nonce( 'avc_ais_wizard_nonce' ),
