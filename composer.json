@@ -10,7 +10,8 @@
     "classmap": [
       "src/Schema",
       "src/Adapter",
-      "src/Type"
+      "src/Type",
+      "includes"
     ]
   },
   "require-dev": {
