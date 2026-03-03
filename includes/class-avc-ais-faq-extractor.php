@@ -44,9 +44,9 @@ class AVC_AIS_Faq_Extractor {
 		$elements = array();
 
 		// DOMDocumentを使用してHTMLから要素を取得
-		$dom               = new DOMDocument();
-		$internal_errors   = libxml_use_internal_errors( true );
-		$content = get_the_content();
+		$dom             = new DOMDocument();
+		$internal_errors = libxml_use_internal_errors( true );
+		$content         = get_the_content();
 
 		$dom->loadHTML(
 			'<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body>'

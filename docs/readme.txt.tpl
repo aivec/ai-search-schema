@@ -4,7 +4,7 @@ Tags: schema, structured-data, ai-search, local-seo, llms-txt
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,11 +46,13 @@ This plugin can connect to external services only when you use specific features
 
 = Google Maps Geocoding API (optional) =
 Used to convert the address you enter into latitude/longitude when you click "Fetch coordinates".
+API endpoint: https://maps.googleapis.com/maps/api/geocode/json
 Data sent: the address fields you entered, your site locale, and your site URL in the User-Agent header.
 Service provided by Google. Terms: https://cloud.google.com/maps-platform/terms | Privacy: https://policies.google.com/privacy
 
 = OpenStreetMap Nominatim (optional fallback) =
 Used only when no Google Maps API key is configured and you click "Fetch coordinates".
+API endpoint: https://nominatim.openstreetmap.org/search
 Data sent: the address fields you entered, the admin email (if available), and your site URL in the User-Agent header.
 Service provided by OpenStreetMap (Nominatim). Usage policy: https://operations.osmfoundation.org/policies/nominatim/ | Privacy: https://osmfoundation.org/wiki/Privacy_Policy
 
