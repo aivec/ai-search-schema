@@ -103,7 +103,7 @@ jobs:
         run: |
           mkdir -p dist/${{ env.PLUGIN_SLUG }}
           
-          # 必要なファイルをコピー（tools/を除外）
+          # 必要なファイルをコピー（WP.org準拠：vendor/License除外）
           rsync -av --progress \
             --exclude='.git' \
             --exclude='.github' \
@@ -111,22 +111,30 @@ jobs:
             --exclude='.gitattributes' \
             --exclude='node_modules' \
             --exclude='vendor' \
+            --exclude='src/License' \
             --exclude='tests' \
             --exclude='phpunit.xml*' \
             --exclude='phpcs.xml*' \
             --exclude='.phpcs.xml*' \
+            --exclude='composer.json' \
             --exclude='composer.lock' \
+            --exclude='package.json' \
             --exclude='package-lock.json' \
             --exclude='.editorconfig' \
             --exclude='.eslintrc*' \
             --exclude='.stylelintrc*' \
             --exclude='*.map' \
-            --exclude='*.scss' \
+            --exclude='scss/' \
             --exclude='gulpfile.js' \
             --exclude='webpack.config.js' \
             --exclude='bin/' \
+            --exclude='bundle' \
             --exclude='/dist/' \
+            --exclude='.ai/' \
             --exclude='.claude/' \
+            --exclude='.cursor/' \
+            --exclude='.vscode/' \
+            --exclude='bundled/' \
             --exclude='ARCHITECTURE.md' \
             --exclude='CLAUDE.md' \
             --exclude='docs/' \

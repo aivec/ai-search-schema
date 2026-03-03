@@ -20,7 +20,7 @@ class Wizard {
 	 *
 	 * @var string
 	 */
-	const PAGE_SLUG = 'ais-wizard';
+	const PAGE_SLUG = 'avc-ais-wizard';
 
 	/**
 	 * Option key for wizard completion status.
@@ -252,14 +252,14 @@ class Wizard {
 		wp_enqueue_media();
 
 		wp_enqueue_style(
-			'ais-wizard',
+			'avc-ais-wizard',
 			AVC_AIS_URL . 'assets/dist/css/wizard.min.css',
 			array(),
 			AVC_AIS_VERSION
 		);
 
 		wp_enqueue_script(
-			'ais-wizard',
+			'avc-ais-wizard',
 			AVC_AIS_URL . 'assets/js/wizard.js',
 			array( 'jquery', 'wp-util' ),
 			AVC_AIS_VERSION,
@@ -267,7 +267,7 @@ class Wizard {
 		);
 
 		wp_localize_script(
-			'ais-wizard',
+			'avc-ais-wizard',
 			'avcAisWizardData',
 			array(
 				'ajaxUrl'      => admin_url( 'admin-ajax.php' ),

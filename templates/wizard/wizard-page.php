@@ -23,8 +23,8 @@ $total_steps = count( $step_keys );
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AI Search Schema Setup', 'aivec-ai-search-schema' ) ); ?></title>
 	<?php
-	wp_enqueue_style( 'ais-wizard' );
-	wp_print_styles( 'ais-wizard' );
+	wp_enqueue_style( 'avc-ais-wizard' );
+	wp_print_styles( 'avc-ais-wizard' );
 	wp_print_styles( 'dashicons' );
 	?>
 </head>
@@ -91,8 +91,8 @@ $total_steps = count( $step_keys );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'wp-util' );
 	wp_enqueue_media();
-	wp_enqueue_script( 'ais-wizard' );
-	wp_print_scripts( array( 'jquery', 'wp-util', 'media-upload', 'ais-wizard' ) );
+	wp_enqueue_script( 'avc-ais-wizard' );
+	wp_print_scripts( array( 'jquery', 'wp-util', 'media-upload', 'avc-ais-wizard' ) );
 	?>
 </body>
 </html>

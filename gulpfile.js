@@ -22,11 +22,9 @@ const paths = {
     'src/**/*',
     'templates/**/*',
     'assets/**/*',
-    'composer.json',
-    'package.json',
-    'package-lock.json',
     'readme.txt',
     'LICENSE*'
+    // Note: composer.json, package.json, package-lock.json excluded for WP.org
   ]
 };
 
