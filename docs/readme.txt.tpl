@@ -4,7 +4,7 @@ Tags: schema, structured-data, ai-search, local-seo, llms-txt
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 8.0
-Stable tag: 1.2.1
+Stable tag: 1.2.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -58,9 +58,10 @@ Service provided by OpenStreetMap (Nominatim). Usage policy: https://operations.
 
 = ZipCloud (optional, Japan only) =
 Used to auto-fill address fields from a Japanese postal code when you enter a 7-digit zip code in the admin settings.
+API endpoint: https://zipcloud.ibsnet.co.jp/api/search
 Data sent: the postal code you entered (e.g., "1000001").
 Timing: only when you type a valid 7-digit Japanese postal code in the settings page.
-Service provided by ZipCloud (https://zipcloud.ibsnet.co.jp/). Service info: https://zipcloud.ibsnet.co.jp/
+Service provided by ZipCloud. Terms: https://zipcloud.ibsnet.co.jp/rule/api | Privacy: https://ibsnet.co.jp/privacy-policy/
 
 == Frequently Asked Questions ==
 

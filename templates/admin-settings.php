@@ -129,7 +129,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 
 	<?php if ( ! empty( $settings_notices ) ) : ?>
 		<div class="ais-modern-settings__notices">
-			<?php echo $settings_notices; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php echo wp_kses_post( $settings_notices ); ?>
 		</div>
 	<?php endif; ?>
 
@@ -159,7 +159,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 		</div>
 
 		<?php if ( $diag_has_issues ) : ?>
-		<div class="ais-validation-summary<?php echo $diag_error_count > 0 ? ' ais-validation-summary--has-errors' : ''; ?>">
+			<?php $validation_class = 'ais-validation-summary' . ( $diag_error_count > 0 ? ' ais-validation-summary--has-errors' : '' ); ?>
+		<div class="<?php echo esc_attr( $validation_class ); ?>">
 			<div class="ais-validation-summary__header">
 				<div class="ais-validation-summary__icon">
 					<?php if ( $diag_error_count > 0 ) : ?>
@@ -319,7 +320,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-logo-url" name="<?php echo esc_attr( $option_name ); ?>[logo_url]" value="<?php echo esc_attr( $logo_url ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-logo-select" data-title="<?php esc_attr_e( 'Select logo', 'aivec-ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert logo', 'aivec-ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'aivec-ai-search-schema' ); ?></button>
-										<button type="button" class="button-link ais-inline-link <?php echo $logo_url ? '' : 'hidden'; ?>" id="ais-logo-remove"><?php esc_html_e( 'Clear logo', 'aivec-ai-search-schema' ); ?></button>
+										<?php $logo_remove_class = 'button-link ais-inline-link' . ( $logo_url ? '' : ' hidden' ); ?>
+										<button type="button" class="<?php echo esc_attr( $logo_remove_class ); ?>" id="ais-logo-remove"><?php esc_html_e( 'Clear logo', 'aivec-ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -333,7 +335,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-lb-image-url" name="<?php echo esc_attr( $option_name ); ?>[lb_image_url]" value="<?php echo esc_attr( $lb_image_url ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-lb-image-select" data-title="<?php esc_attr_e( 'Select storefront image', 'aivec-ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert image', 'aivec-ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'aivec-ai-search-schema' ); ?></button>
-										<button type="button" class="button-link ais-inline-link <?php echo $lb_image_url ? '' : 'hidden'; ?>" id="ais-lb-image-remove"><?php esc_html_e( 'Clear image', 'aivec-ai-search-schema' ); ?></button>
+										<?php $lb_remove_class = 'button-link ais-inline-link' . ( $lb_image_url ? '' : ' hidden' ); ?>
+										<button type="button" class="<?php echo esc_attr( $lb_remove_class ); ?>" id="ais-lb-image-remove"><?php esc_html_e( 'Clear image', 'aivec-ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -688,7 +691,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 							<p class="ais-field__description"><?php esc_html_e( 'ON: Adds acceptsReservations property to LocalBusiness schema. Enable for restaurants, salons, or any business that takes bookings.', 'aivec-ai-search-schema' ); ?></p>
 						</div>
 					</div>
-					<div class="ais-field ais-field--api-key <?php echo $gmaps_api_key_set ? 'is-locked' : ''; ?>">
+					<?php $api_key_class = 'ais-field ais-field--api-key' . ( $gmaps_api_key_set ? ' is-locked' : '' ); ?>
+					<div class="<?php echo esc_attr( $api_key_class ); ?>">
 						<label for="ais-gmaps-api-key"><?php esc_html_e( 'Google Maps API Key', 'aivec-ai-search-schema' ); ?></label>
 						<div class="ais-api-key-control">
 							<input

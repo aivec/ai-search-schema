@@ -42,9 +42,9 @@ $total_steps = count( $step_keys );
 				$current_lang = $current_lang ?: 'en';
 				$is_japanese  = strpos( $current_lang, 'ja' ) === 0;
 				?>
-				<a href="<?php echo esc_url( add_query_arg( 'lang', 'ja' ) ); ?>" class="<?php echo $is_japanese ? 'active' : ''; ?>">JA</a>
+				<a href="<?php echo esc_url( add_query_arg( 'lang', 'ja' ) ); ?>" class="<?php echo esc_attr( $is_japanese ? 'active' : '' ); ?>">JA</a>
 				<span class="ais-wizard__lang-sep">|</span>
-				<a href="<?php echo esc_url( add_query_arg( 'lang', 'en' ) ); ?>" class="<?php echo ! $is_japanese ? 'active' : ''; ?>">EN</a>
+				<a href="<?php echo esc_url( add_query_arg( 'lang', 'en' ) ); ?>" class="<?php echo esc_attr( ! $is_japanese ? 'active' : '' ); ?>">EN</a>
 			</div>
 		</header>
 

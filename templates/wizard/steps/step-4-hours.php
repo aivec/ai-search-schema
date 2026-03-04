@@ -105,7 +105,7 @@ for ( $h = 0; $h < 24; $h++ ) {
 						</label>
 					</div>
 					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
-						<select name="hours_<?php echo esc_attr( $day_key ); ?>_opens" class="ais-wizard-form__select ais-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
+						<select name="hours_<?php echo esc_attr( $day_key ); ?>_opens" class="ais-wizard-form__select ais-wizard-hours-select" <?php disabled( ! $is_open ); ?>>
 							<option value=""><?php esc_html_e( 'Select', 'aivec-ai-search-schema' ); ?></option>
 							<?php foreach ( $time_options as $time_value => $time_label ) : ?>
 								<option value="<?php echo esc_attr( $time_value ); ?>" <?php selected( $opens, $time_value ); ?>>
@@ -115,7 +115,7 @@ for ( $h = 0; $h < 24; $h++ ) {
 						</select>
 					</div>
 					<div class="ais-wizard-hours-table__col ais-wizard-hours-table__col--time">
-						<select name="hours_<?php echo esc_attr( $day_key ); ?>_closes" class="ais-wizard-form__select ais-wizard-hours-select" <?php echo $is_open ? '' : 'disabled'; ?>>
+						<select name="hours_<?php echo esc_attr( $day_key ); ?>_closes" class="ais-wizard-form__select ais-wizard-hours-select" <?php disabled( ! $is_open ); ?>>
 							<option value=""><?php esc_html_e( 'Select', 'aivec-ai-search-schema' ); ?></option>
 							<?php foreach ( $time_options as $time_value => $time_label ) : ?>
 								<option value="<?php echo esc_attr( $time_value ); ?>" <?php selected( $closes, $time_value ); ?>>

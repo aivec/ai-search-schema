@@ -179,5 +179,5 @@ function avc_ais_render_tooltip( $text ) {
  */
 defined( 'ABSPATH' ) || exit;
 function avc_ais_tooltip( $text ) {
-	echo avc_ais_render_tooltip( $text ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo wp_kses_post( avc_ais_render_tooltip( $text ) );
 }

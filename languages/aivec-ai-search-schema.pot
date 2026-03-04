@@ -2,29 +2,21 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.2.1\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aivec-ai-search-schema\n"
+"Project-Id-Version: AI Search Schema 1.2.3\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-01-06T10:02:33+00:00\n"
+"POT-Creation-Date: 2026-03-04T03:59:09+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: aivec-ai-search-schema\n"
 
 #. Plugin Name of the plugin
 #: aivec-ai-search-schema.php
-#: dist/includes/class-ai-search-schema-metabox.php:50
-#: dist/includes/class-ai-search-schema-metabox.php:76
-#: dist/includes/class-ai-search-schema-settings.php:68
-#: dist/src/Wizard/Wizard.php:222
-#: includes/class-ai-search-schema-metabox.php:50
-#: includes/class-ai-search-schema-metabox.php:76
-#: includes/class-ai-search-schema-settings.php:68
-#: src/Wizard/Wizard.php:222
-msgid "AI Search Schema"
+msgid "Aivec AI Search Schema"
 msgstr ""
 
 #. Plugin URI of the plugin
@@ -47,3332 +39,1908 @@ msgstr ""
 msgid "https://aivec.co.jp/"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-breadcrumbs.php:214
-#: includes/class-ai-search-schema-breadcrumbs.php:214
+#: includes/class-avc-ais-breadcrumbs.php:215
 msgid "Home"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:162
-#: includes/class-ai-search-schema-license.php:162
-msgid "License validation API is not yet available."
+#: includes/class-avc-ais-diagnostic-evaluator.php:95
+msgid "All checks passed."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:179
-#: includes/class-ai-search-schema-license.php:179
-msgid "Please enter a license key."
+#: includes/class-avc-ais-diagnostic-evaluator.php:96
+msgid "Some issues detected. See details."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:197
-#: includes/class-ai-search-schema-license.php:197
-msgid "License activated successfully."
+#: includes/class-avc-ais-diagnostic-evaluator.php:123
+msgid "No JSON-LD structured data found on this page."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:212
-#: includes/class-ai-search-schema-license.php:212
-msgid "License validation failed."
+#: includes/class-avc-ais-diagnostic-evaluator.php:132
+msgid "JSON-LD could not be parsed. Invalid format."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:232
-#: includes/class-ai-search-schema-license.php:232
-msgid "License deactivated."
+#. translators: %s: schema type name
+#: includes/class-avc-ais-diagnostic-evaluator.php:148
+msgid "Target schema type \"%s\" not found in JSON-LD."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:244
-#: dist/includes/class-ai-search-schema-license.php:267
-#: dist/includes/class-ai-search-schema-settings.php:193
-#: dist/includes/class-ai-search-schema-settings.php:268
-#: dist/includes/class-ai-search-schema-settings.php:297
-#: includes/class-ai-search-schema-license.php:244
-#: includes/class-ai-search-schema-license.php:267
-#: includes/class-ai-search-schema-settings.php:193
-#: includes/class-ai-search-schema-settings.php:268
-#: includes/class-ai-search-schema-settings.php:297
-msgid "You do not have permission to perform this action."
+#. translators: %s: comma-separated list of field names
+#: includes/class-avc-ais-diagnostic-evaluator.php:205
+msgid "Required fields missing: %s"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:286
-#: includes/class-ai-search-schema-license.php:286
-msgid "Active"
+#. translators: %s: comma-separated list of field names
+#: includes/class-avc-ais-diagnostic-evaluator.php:261
+msgid "Recommended fields missing: %s"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:288
-#: includes/class-ai-search-schema-license.php:288
-msgid "Expired"
+#. translators: 1: field name, 2: minimum count, 3: actual count
+#: includes/class-avc-ais-diagnostic-evaluator.php:280
+msgid "%1$s has %3$d items (minimum: %2$d)."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:290
-#: includes/class-ai-search-schema-license.php:290
-msgid "Invalid"
+#. translators: 1: field name, 2: minimum length, 3: actual length
+#: includes/class-avc-ais-diagnostic-evaluator.php:301
+msgid "%1$s is %3$d characters (minimum: %2$d)."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-license.php:292
-#: includes/class-ai-search-schema-license.php:292
-msgid "Inactive"
+#: includes/class-avc-ais-diagnostic-evaluator.php:322
+msgid "Quality issues detected."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:78
-#: includes/class-ai-search-schema-metabox.php:78
+#. translators: %s: comma-separated list of field names
+#: includes/class-avc-ais-diagnostic-evaluator.php:364
+msgid "Partial data: some fields in group are missing: %s"
+msgstr ""
+
+#: includes/class-avc-ais-metabox.php:51
+#: includes/class-avc-ais-metabox.php:78
+#: includes/class-avc-ais-settings.php:69
+#: src/Wizard/Wizard.php:224
+msgid "AI Search Schema"
+msgstr ""
+
+#: includes/class-avc-ais-metabox.php:81
 msgid "Page schema settings"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:82
-#: includes/class-ai-search-schema-metabox.php:82
+#: includes/class-avc-ais-metabox.php:85
 msgid "Choose the schema type and optionally set selectors for FAQ extraction."
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:94
-#: includes/class-ai-search-schema-metabox.php:94
+#: includes/class-avc-ais-metabox.php:97
 msgid "Page type:"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:100
-#: includes/class-ai-search-schema-metabox.php:100
+#: includes/class-avc-ais-metabox.php:103
 msgid "Automatic"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:101
-#: dist/includes/class-ai-search-schema-settings.php:1239
-#: dist/includes/class-ai-search-schema-settings.php:1558
-#: includes/class-ai-search-schema-metabox.php:101
-#: includes/class-ai-search-schema-settings.php:1239
-#: includes/class-ai-search-schema-settings.php:1558
+#: includes/class-avc-ais-metabox.php:104
+#: includes/class-avc-ais-settings.php:1276
+#: includes/class-avc-ais-settings.php:1595
 msgid "Article"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:102
-#: dist/includes/class-ai-search-schema-settings.php:1240
-#: dist/includes/class-ai-search-schema-settings.php:1561
-#: dist/includes/class-ai-search-schema-settings.php:1999
-#: includes/class-ai-search-schema-metabox.php:102
-#: includes/class-ai-search-schema-settings.php:1240
-#: includes/class-ai-search-schema-settings.php:1561
-#: includes/class-ai-search-schema-settings.php:2000
+#: includes/class-avc-ais-metabox.php:105
+#: includes/class-avc-ais-settings.php:1277
+#: includes/class-avc-ais-settings.php:1598
+#: includes/class-avc-ais-settings.php:2061
 msgid "FAQPage"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:103
-#: dist/includes/class-ai-search-schema-settings.php:1241
-#: dist/includes/class-ai-search-schema-settings.php:1562
-#: includes/class-ai-search-schema-metabox.php:103
-#: includes/class-ai-search-schema-settings.php:1241
-#: includes/class-ai-search-schema-settings.php:1562
+#: includes/class-avc-ais-metabox.php:106
+#: includes/class-avc-ais-settings.php:1278
+#: includes/class-avc-ais-settings.php:1599
 msgid "QAPage"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:104
-#: dist/includes/class-ai-search-schema-settings.php:1557
-#: dist/includes/class-ai-search-schema-settings.php:1888
-#: includes/class-ai-search-schema-metabox.php:104
-#: includes/class-ai-search-schema-settings.php:1557
-#: includes/class-ai-search-schema-settings.php:1888
+#: includes/class-avc-ais-metabox.php:107
+#: includes/class-avc-ais-settings.php:1594
+#: includes/class-avc-ais-settings.php:1943
 msgid "WebPage"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:110
-#: includes/class-ai-search-schema-metabox.php:110
+#: includes/class-avc-ais-metabox.php:113
 msgid "FAQ question class:"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:113
-#: includes/class-ai-search-schema-metabox.php:113
+#: includes/class-avc-ais-metabox.php:116
 msgid "Example: faq-question, accordion-title"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:119
-#: includes/class-ai-search-schema-metabox.php:119
+#: includes/class-avc-ais-metabox.php:122
 msgid "FAQ answer class:"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-metabox.php:122
-#: includes/class-ai-search-schema-metabox.php:122
+#: includes/class-avc-ais-metabox.php:125
 msgid "Example: faq-answer, accordion-content"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema-pro-features.php:108
-#: dist/templates/admin-settings.php:1077
-#: includes/class-ai-search-schema-pro-features.php:108
-#: templates/admin-settings.php:1084
-msgid "Multi-Location Support"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:110
-#: includes/class-ai-search-schema-pro-features.php:110
-msgid "Manage multiple LocalBusiness locations from a single WordPress installation."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:114
-#: dist/templates/admin-settings.php:1082
-#: includes/class-ai-search-schema-pro-features.php:114
-#: templates/admin-settings.php:1089
-msgid "Custom Schema Templates"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:116
-#: includes/class-ai-search-schema-pro-features.php:116
-msgid "Create and save custom schema templates for different content types."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:120
-#: dist/templates/admin-settings.php:1087
-#: includes/class-ai-search-schema-pro-features.php:120
-#: templates/admin-settings.php:1094
-msgid "Priority Support"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:121
-#: includes/class-ai-search-schema-pro-features.php:121
-msgid "Get priority email support from our development team."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:125
-#: dist/templates/admin-settings.php:1092
-#: includes/class-ai-search-schema-pro-features.php:125
-#: templates/admin-settings.php:1099
-msgid "Advanced Validation"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:126
-#: includes/class-ai-search-schema-pro-features.php:126
-msgid "Scheduled automatic schema validation with email reports."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:165
-#: includes/class-ai-search-schema-pro-features.php:165
-msgid "Pro"
-msgstr ""
-
-#. translators: %s: feature name
-#: dist/includes/class-ai-search-schema-pro-features.php:171
-#: includes/class-ai-search-schema-pro-features.php:171
-msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:177
-#: includes/class-ai-search-schema-pro-features.php:177
-msgid "Upgrade to Pro to unlock all advanced features."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-pro-features.php:181
-#: includes/class-ai-search-schema-pro-features.php:181
-msgid "Learn More"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:67
-#: dist/includes/class-ai-search-schema-settings.php:79
-#: dist/templates/admin-settings.php:133
-#: dist/templates/admin-settings.php:138
-#: includes/class-ai-search-schema-settings.php:67
-#: includes/class-ai-search-schema-settings.php:79
-#: templates/admin-settings.php:133
-#: templates/admin-settings.php:138
-msgid "AI Search Schema Settings"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:80
-#: includes/class-ai-search-schema-settings.php:80
-msgid "Settings"
-msgstr ""
-
-#. translators: %s is the language label.
-#. translators: %s: The language label shown as a tag.
-#: dist/includes/class-ai-search-schema-settings.php:135
-#: dist/templates/admin-settings.php:274
-#: includes/class-ai-search-schema-settings.php:135
-#: templates/admin-settings.php:274
-msgid "Remove \"%s\""
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:138
-#: dist/templates/admin-settings.php:792
-#: includes/class-ai-search-schema-settings.php:138
-#: templates/admin-settings.php:792
-msgid "Fetch coordinates from address"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:139
-#: dist/src/Wizard/Wizard.php:292
-#: includes/class-ai-search-schema-settings.php:139
-#: src/Wizard/Wizard.php:292
-msgid "Fetching..."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:140
-#: includes/class-ai-search-schema-settings.php:140
-msgid "Latitude and longitude updated."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:141
-#: dist/includes/class-ai-search-schema-settings.php:395
-#: dist/includes/class-ai-search-schema-settings.php:554
-#: includes/class-ai-search-schema-settings.php:141
-#: includes/class-ai-search-schema-settings.php:395
-#: includes/class-ai-search-schema-settings.php:554
-msgid "Unable to fetch latitude and longitude."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:142
-#: dist/includes/class-ai-search-schema-settings.php:234
-#: includes/class-ai-search-schema-settings.php:142
-#: includes/class-ai-search-schema-settings.php:234
-msgid "Enter the address information."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:143
-#: includes/class-ai-search-schema-settings.php:143
-msgid "Please configure a Google Maps API key."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:146
-#: includes/class-ai-search-schema-settings.php:146
-msgid "The primary role of this site is defined as an \"Organization\". You can also enter headquarters or branch office information in the \"Local details & hours\" section below to associate your organization with a physical location and enhance visibility in local search results."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:148
-#: includes/class-ai-search-schema-settings.php:148
-msgid "The primary role of this site is defined as a \"Store/Business location\". This setting is ideal when the site itself represents a specific physical store or service location."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:151
-#: includes/class-ai-search-schema-settings.php:151
-msgid "Regenerating..."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:152
-#: dist/templates/admin-settings.php:1009
-#: includes/class-ai-search-schema-settings.php:152
-#: templates/admin-settings.php:1016
-msgid "Regenerate from site data"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:153
-#: dist/src/Wizard/Wizard.php:278
-#: includes/class-ai-search-schema-settings.php:153
-#: src/Wizard/Wizard.php:278
-msgid "Saving..."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:154
-#: dist/templates/admin-settings.php:1006
-#: includes/class-ai-search-schema-settings.php:154
-#: templates/admin-settings.php:1013
-msgid "Save edits"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:155
-#: includes/class-ai-search-schema-settings.php:155
-msgid "Saved!"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:158
-#: includes/class-ai-search-schema-settings.php:158
-msgid "Activating..."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:159
-#: includes/class-ai-search-schema-settings.php:159
-msgid "Deactivating..."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:160
-#: dist/templates/admin-settings.php:1057
-#: includes/class-ai-search-schema-settings.php:160
-#: templates/admin-settings.php:1064
-msgid "Activate"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:161
-#: dist/templates/admin-settings.php:1053
-#: includes/class-ai-search-schema-settings.php:161
-#: templates/admin-settings.php:1060
-msgid "Deactivate"
-msgstr ""
-
-#. translators: %d: number of seconds an admin must wait before requesting new coordinates.
-#: dist/includes/class-ai-search-schema-settings.php:202
-#: includes/class-ai-search-schema-settings.php:202
-msgid "Please wait %d seconds before requesting new coordinates."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:282
-#: includes/class-ai-search-schema-settings.php:282
-msgid "llms.txt content has been regenerated from site data."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:317
-#: includes/class-ai-search-schema-settings.php:317
-msgid "llms.txt content has been saved."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:384
-#: dist/includes/class-ai-search-schema-settings.php:544
-#: includes/class-ai-search-schema-settings.php:384
-#: includes/class-ai-search-schema-settings.php:544
-msgid "The geocoding API returned an error."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:563
-#: includes/class-ai-search-schema-settings.php:563
-msgid "No Google Maps API key was found, so OpenStreetMap (for development) was used instead."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:599
-#: includes/class-ai-search-schema-settings.php:599
-msgid "Settings template could not be located."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1204
-#: includes/class-ai-search-schema-settings.php:1204
-msgid "Facebook"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1205
-#: includes/class-ai-search-schema-settings.php:1205
-msgid "Instagram"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1206
-#: includes/class-ai-search-schema-settings.php:1206
-msgid "X"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1207
-#: includes/class-ai-search-schema-settings.php:1207
-msgid "YouTube"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1208
-#: includes/class-ai-search-schema-settings.php:1208
-msgid "Google+"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1209
-#: includes/class-ai-search-schema-settings.php:1209
-msgid "LINE"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1210
-#: includes/class-ai-search-schema-settings.php:1210
-msgid "TikTok"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1211
-#: includes/class-ai-search-schema-settings.php:1211
-msgid "Threads"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1212
-#: includes/class-ai-search-schema-settings.php:1212
-msgid "Pinterest"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1213
-#: includes/class-ai-search-schema-settings.php:1213
-msgid "mixi"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1214
-#: includes/class-ai-search-schema-settings.php:1214
-msgid "Other"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1238
-#: includes/class-ai-search-schema-settings.php:1238
-msgid "WebPage (default)"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1242
-#: dist/includes/class-ai-search-schema-settings.php:1560
-#: includes/class-ai-search-schema-settings.php:1242
-#: includes/class-ai-search-schema-settings.php:1560
-msgid "NewsArticle"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1243
-#: dist/includes/class-ai-search-schema-settings.php:1559
-#: includes/class-ai-search-schema-settings.php:1243
-#: includes/class-ai-search-schema-settings.php:1559
-msgid "BlogPosting"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1244
-#: dist/includes/class-ai-search-schema-settings.php:1563
-#: includes/class-ai-search-schema-settings.php:1244
-#: includes/class-ai-search-schema-settings.php:1563
-msgid "Product"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1272
-#: includes/class-ai-search-schema-settings.php:1272
-msgid "Japanese"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1273
-#: includes/class-ai-search-schema-settings.php:1273
-msgid "English"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1274
-#: includes/class-ai-search-schema-settings.php:1274
-msgid "Chinese (Simplified)"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1275
-#: includes/class-ai-search-schema-settings.php:1275
-msgid "Chinese (Traditional)"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1276
-#: includes/class-ai-search-schema-settings.php:1276
-msgid "Korean"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1277
-#: includes/class-ai-search-schema-settings.php:1277
-msgid "French"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1278
-#: includes/class-ai-search-schema-settings.php:1278
-msgid "German"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1279
-#: includes/class-ai-search-schema-settings.php:1279
-msgid "Spanish"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1280
-#: includes/class-ai-search-schema-settings.php:1280
-msgid "Portuguese"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1281
-#: includes/class-ai-search-schema-settings.php:1281
-msgid "Italian"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1282
-#: includes/class-ai-search-schema-settings.php:1282
-msgid "Thai"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1307
-#: dist/src/Wizard/Wizard.php:300
-#: dist/templates/wizard/steps/step-4-hours.php:15
-#: includes/class-ai-search-schema-settings.php:1307
-#: src/Wizard/Wizard.php:300
-#: templates/wizard/steps/step-4-hours.php:15
-msgid "Monday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1308
-#: dist/src/Wizard/Wizard.php:301
-#: dist/templates/wizard/steps/step-4-hours.php:16
-#: includes/class-ai-search-schema-settings.php:1308
-#: src/Wizard/Wizard.php:301
-#: templates/wizard/steps/step-4-hours.php:16
-msgid "Tuesday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1309
-#: dist/src/Wizard/Wizard.php:302
-#: dist/templates/wizard/steps/step-4-hours.php:17
-#: includes/class-ai-search-schema-settings.php:1309
-#: src/Wizard/Wizard.php:302
-#: templates/wizard/steps/step-4-hours.php:17
-msgid "Wednesday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1310
-#: dist/src/Wizard/Wizard.php:303
-#: dist/templates/wizard/steps/step-4-hours.php:18
-#: includes/class-ai-search-schema-settings.php:1310
-#: src/Wizard/Wizard.php:303
-#: templates/wizard/steps/step-4-hours.php:18
-msgid "Thursday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1311
-#: dist/src/Wizard/Wizard.php:304
-#: dist/templates/wizard/steps/step-4-hours.php:19
-#: includes/class-ai-search-schema-settings.php:1311
-#: src/Wizard/Wizard.php:304
-#: templates/wizard/steps/step-4-hours.php:19
-msgid "Friday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1312
-#: dist/src/Wizard/Wizard.php:305
-#: dist/templates/wizard/steps/step-4-hours.php:20
-#: includes/class-ai-search-schema-settings.php:1312
-#: src/Wizard/Wizard.php:305
-#: templates/wizard/steps/step-4-hours.php:20
-msgid "Saturday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1313
-#: dist/src/Wizard/Wizard.php:306
-#: dist/templates/wizard/steps/step-4-hours.php:21
-#: includes/class-ai-search-schema-settings.php:1313
-#: src/Wizard/Wizard.php:306
-#: templates/wizard/steps/step-4-hours.php:21
-msgid "Sunday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1314
-#: includes/class-ai-search-schema-settings.php:1314
-msgid "Public holiday"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1556
-#: includes/class-ai-search-schema-settings.php:1556
-msgid "Use global default content model"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1564
-#: includes/class-ai-search-schema-settings.php:1564
-msgid "CollectionPage"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1565
-#: includes/class-ai-search-schema-settings.php:1565
-msgid "ItemList"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1584
-#: includes/class-ai-search-schema-settings.php:1584
-msgid "AVC schema priority (suppress other plugins)"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1585
-#: includes/class-ai-search-schema-settings.php:1585
-msgid "Let other SEO plugins output schema"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1649
-#: includes/class-ai-search-schema-settings.php:1649
-msgid "Japan"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1650
-#: includes/class-ai-search-schema-settings.php:1650
-msgid "United States"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1651
-#: includes/class-ai-search-schema-settings.php:1651
-msgid "China"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1652
-#: includes/class-ai-search-schema-settings.php:1652
-msgid "Taiwan"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1653
-#: includes/class-ai-search-schema-settings.php:1653
-msgid "Hong Kong"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1654
-#: includes/class-ai-search-schema-settings.php:1654
-msgid "South Korea"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1655
-#: includes/class-ai-search-schema-settings.php:1655
-msgid "Singapore"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1656
-#: includes/class-ai-search-schema-settings.php:1656
-msgid "Thailand"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1657
-#: includes/class-ai-search-schema-settings.php:1657
-msgid "Vietnam"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1658
-#: includes/class-ai-search-schema-settings.php:1658
-msgid "Philippines"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1659
-#: includes/class-ai-search-schema-settings.php:1659
-msgid "Malaysia"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1660
-#: includes/class-ai-search-schema-settings.php:1660
-msgid "Indonesia"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1661
-#: includes/class-ai-search-schema-settings.php:1661
-msgid "France"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1662
-#: includes/class-ai-search-schema-settings.php:1662
-msgid "Germany"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1663
-#: includes/class-ai-search-schema-settings.php:1663
-msgid "Spain"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1664
-#: includes/class-ai-search-schema-settings.php:1664
-msgid "Italy"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1665
-#: includes/class-ai-search-schema-settings.php:1665
-msgid "United Kingdom"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1666
-#: includes/class-ai-search-schema-settings.php:1666
-msgid "Canada"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1667
-#: includes/class-ai-search-schema-settings.php:1667
-msgid "Australia"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1668
-#: includes/class-ai-search-schema-settings.php:1668
-msgid "New Zealand"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1739
-msgid "Organization name is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1740
-msgid "Organization name is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1745
-msgid "Organization URL is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1746
-msgid "Organization URL is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1751
-msgid "Logo is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1752
-msgid "Logo is not set. Set a square logo image."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1757
-msgid "SameAs / social profiles are present."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1758
-msgid "SameAs profiles are missing. Add social links."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1762
-#: includes/class-ai-search-schema-settings.php:1762
-msgid "Organization"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1781
-msgid "LocalBusiness name is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1782
-msgid "LocalBusiness name is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1787
-msgid "Telephone is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1788
-msgid "Telephone is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1795
-msgid "Address fields are set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1796
-msgid "Address is incomplete. Set prefecture, city, street, and postal code."
-msgstr ""
-
-#. translators: %s decimal places
-#: dist/includes/class-ai-search-schema-settings.php:1810
-msgid "Geo coordinates set (lat/long, %s decimals)."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1813
-msgid "Geo coordinates are missing. Fetch via address or enter lat/long."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1819
-msgid "Opening hours are configured."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1820
-msgid "Opening hours are empty. Add at least one slot."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1826
-msgid "addressCountry is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1827
-msgid "addressCountry is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1831
-#: includes/class-ai-search-schema-settings.php:1831
-msgid "LocalBusiness"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1842
-msgid "WebSite name is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1843
-msgid "WebSite name is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1848
-msgid "WebSite URL is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1849
-msgid "WebSite URL is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1855
-msgid "Language (inLanguage) is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1856
-msgid "Language is missing. Add at least one language."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1861
-msgid "Publisher is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1862
-msgid "Publisher is missing. Set Organization first."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1866
-#: includes/class-ai-search-schema-settings.php:1866
-msgid "WebSite"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1876
-msgid "WebPage @id/url base is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1877
-msgid "WebPage base URL is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1883
-msgid "WebPage inLanguage ready."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1884
-msgid "WebPage inLanguage will fallback. Consider setting languages."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1899
-msgid "Article schema is preferred for content."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1900
-msgid "Content model is not set to Article by default."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1917
-msgid "No published posts found. Article schema cannot be checked."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1920
-#: dist/includes/class-ai-search-schema-settings.php:1963
-#: includes/class-ai-search-schema-settings.php:1921
-#: includes/class-ai-search-schema-settings.php:1964
-msgid "Article (sample post)"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1928
-msgid "Headline is present."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1929
-msgid "Headline is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1934
-msgid "datePublished is present."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1935
-msgid "datePublished is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1940
-msgid "dateModified is present."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1941
-msgid "dateModified is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1948
-msgid "Author is set."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1949
-msgid "Author information is missing."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1958
-msgid "Featured image found for the sample post."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1959
-msgid "Featured image missing on the sample post."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1985
-msgid "FAQPage schema is enabled for at least one post type."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1989
-msgid "Ensure each FAQ has both question and answer in the page content."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:1994
-msgid "FAQPage schema is disabled. Enable it on relevant post types if needed."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:2039
-msgid "BreadcrumbList can be generated."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:2040
-msgid "Breadcrumb trail is empty. Check HTML output or enable breadcrumbs."
-msgstr ""
-
-#: dist/includes/class-ai-search-schema-settings.php:2044
-#: includes/class-ai-search-schema-settings.php:2045
-msgid "BreadcrumbList"
-msgstr ""
-
-#: dist/includes/class-ai-search-schema.php:144
-#: includes/class-ai-search-schema.php:144
+#: includes/class-avc-ais-schema.php:123
 msgid "LocalBusiness: Skipped output because required fields were missing."
 msgstr ""
 
 #. translators: %s: comma separated list of missing fields
-#: dist/includes/class-ai-search-schema.php:148
-#: includes/class-ai-search-schema.php:148
+#: includes/class-avc-ais-schema.php:130
 msgid "Missing fields: %s."
 msgstr ""
 
 #. translators: %s: search query string.
-#: dist/includes/class-ai-search-schema.php:939
-#: dist/src/ContentResolver.php:124
-#: dist/src/Schema/class-ai-search-schema-contentresolver.php:116
-#: includes/class-ai-search-schema.php:939
-#: src/ContentResolver.php:124
-#: src/Schema/class-ai-search-schema-contentresolver.php:116
+#: includes/class-avc-ais-schema.php:927
+#: src/ContentResolver.php:126
+#: src/Schema/class-avc-ais-contentresolver.php:117
 msgid "Search results for \"%s\""
 msgstr ""
 
-#: dist/includes/class-ai-search-schema.php:943
-#: dist/src/ContentResolver.php:128
-#: dist/src/Schema/class-ai-search-schema-contentresolver.php:120
-#: includes/class-ai-search-schema.php:943
-#: src/ContentResolver.php:128
-#: src/Schema/class-ai-search-schema-contentresolver.php:120
+#: includes/class-avc-ais-schema.php:931
+#: src/ContentResolver.php:130
+#: src/Schema/class-avc-ais-contentresolver.php:121
 msgid "Search results"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema.php:2447
-#: dist/includes/class-ai-search-schema.php:2488
-#: includes/class-ai-search-schema.php:2447
-#: includes/class-ai-search-schema.php:2488
+#: includes/class-avc-ais-schema.php:2262
+#: includes/class-avc-ais-schema.php:2303
 msgid "AI Search Schema – Development Mode Warning"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema.php:2451
-#: dist/includes/class-ai-search-schema.php:2491
-#: includes/class-ai-search-schema.php:2451
-#: includes/class-ai-search-schema.php:2491
+#: includes/class-avc-ais-schema.php:2266
+#: includes/class-avc-ais-schema.php:2306
 msgid "The following validation errors were detected:"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema.php:2461
-#: dist/includes/class-ai-search-schema.php:2500
-#: includes/class-ai-search-schema.php:2461
-#: includes/class-ai-search-schema.php:2500
+#: includes/class-avc-ais-schema.php:2276
+#: includes/class-avc-ais-schema.php:2315
 msgid "Warnings:"
 msgstr ""
 
-#: dist/includes/class-ai-search-schema.php:2470
-#: dist/includes/class-ai-search-schema.php:2509
-#: includes/class-ai-search-schema.php:2470
-#: includes/class-ai-search-schema.php:2509
+#: includes/class-avc-ais-schema.php:2285
+#: includes/class-avc-ais-schema.php:2324
 msgid "This warning only appears while WP_DEBUG is true."
 msgstr ""
 
-#: dist/includes/functions.php:162
-#: dist/templates/admin-settings.php:386
-#: includes/functions.php:162
-#: templates/admin-settings.php:386
+#: includes/class-avc-ais-settings.php:68
+#: includes/class-avc-ais-settings.php:80
+#: templates/admin-settings.php:137
+#: templates/admin-settings.php:142
+msgid "AI Search Schema Settings"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:81
+msgid "Settings"
+msgstr ""
+
+#. translators: %s: The language label shown as a tag.
+#: includes/class-avc-ais-settings.php:165
+#: templates/admin-settings.php:279
+msgid "Remove \"%s\""
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:168
+#: templates/admin-settings.php:800
+msgid "Fetch coordinates from address"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:169
+#: src/Wizard/Wizard.php:294
+msgid "Fetching..."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:170
+msgid "Latitude and longitude updated."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:171
+#: includes/class-avc-ais-settings.php:432
+#: includes/class-avc-ais-settings.php:591
+msgid "Unable to fetch latitude and longitude."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:175
+#: includes/class-avc-ais-settings.php:271
+msgid "Enter the address information."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:179
+msgid "Please configure a Google Maps API key."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:185
+msgid "The primary role of this site is defined as an \"Organization\". You can also enter headquarters or branch office information in the \"Local details & hours\" section below to associate your organization with a physical location and enhance visibility in local search results."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:187
+msgid "The primary role of this site is defined as a \"Store/Business location\". This setting is ideal when the site itself represents a specific physical store or service location."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:190
+msgid "Regenerating..."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:191
+#: templates/admin-settings.php:1013
+msgid "Regenerate from site data"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:192
+#: src/Wizard/Wizard.php:280
+msgid "Saving..."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:193
+#: templates/admin-settings.php:1010
+msgid "Save edits"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:194
+msgid "Saved!"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:226
+#: includes/class-avc-ais-settings.php:305
+#: includes/class-avc-ais-settings.php:334
+msgid "You do not have permission to perform this action."
+msgstr ""
+
+#. translators: %d: number of seconds an admin must wait before requesting new coordinates.
+#: includes/class-avc-ais-settings.php:235
+msgid "Please wait %d seconds before requesting new coordinates."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:319
+msgid "llms.txt content has been regenerated from site data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:354
+msgid "llms.txt content has been saved."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:421
+#: includes/class-avc-ais-settings.php:581
+msgid "The geocoding API returned an error."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:600
+msgid "No Google Maps API key was found, so OpenStreetMap (for development) was used instead."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:636
+msgid "Settings template could not be located."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1241
+msgid "Facebook"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1242
+msgid "Instagram"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1243
+msgid "X"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1244
+msgid "YouTube"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1245
+msgid "Google+"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1246
+msgid "LINE"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1247
+msgid "TikTok"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1248
+msgid "Threads"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1249
+msgid "Pinterest"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1250
+msgid "mixi"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1251
+msgid "Other"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1275
+msgid "WebPage (default)"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1279
+#: includes/class-avc-ais-settings.php:1597
+msgid "NewsArticle"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1280
+#: includes/class-avc-ais-settings.php:1596
+msgid "BlogPosting"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1281
+#: includes/class-avc-ais-settings.php:1600
+msgid "Product"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1309
+msgid "Japanese"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1310
+msgid "English"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1311
+msgid "Chinese (Simplified)"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1312
+msgid "Chinese (Traditional)"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1313
+msgid "Korean"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1314
+msgid "French"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1315
+msgid "German"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1316
+msgid "Spanish"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1317
+msgid "Portuguese"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1318
+msgid "Italian"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1319
+msgid "Thai"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1344
+#: src/Wizard/Wizard.php:302
+#: templates/wizard/steps/step-4-hours.php:15
+msgid "Monday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1345
+#: src/Wizard/Wizard.php:303
+#: templates/wizard/steps/step-4-hours.php:16
+msgid "Tuesday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1346
+#: src/Wizard/Wizard.php:304
+#: templates/wizard/steps/step-4-hours.php:17
+msgid "Wednesday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1347
+#: src/Wizard/Wizard.php:305
+#: templates/wizard/steps/step-4-hours.php:18
+msgid "Thursday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1348
+#: src/Wizard/Wizard.php:306
+#: templates/wizard/steps/step-4-hours.php:19
+msgid "Friday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1349
+#: src/Wizard/Wizard.php:307
+#: templates/wizard/steps/step-4-hours.php:20
+msgid "Saturday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1350
+#: src/Wizard/Wizard.php:308
+#: templates/wizard/steps/step-4-hours.php:21
+msgid "Sunday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1351
+msgid "Public holiday"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1593
+msgid "Use global default content model"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1601
+msgid "CollectionPage"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1602
+msgid "ItemList"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1621
+msgid "AVC schema priority (suppress other plugins)"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1622
+msgid "Let other SEO plugins output schema"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1686
+msgid "Japan"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1687
+msgid "United States"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1688
+msgid "China"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1689
+msgid "Taiwan"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1690
+msgid "Hong Kong"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1691
+msgid "South Korea"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1692
+msgid "Singapore"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1693
+msgid "Thailand"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1694
+msgid "Vietnam"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1695
+msgid "Philippines"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1696
+msgid "Malaysia"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1697
+msgid "Indonesia"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1698
+msgid "France"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1699
+msgid "Germany"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1700
+msgid "Spain"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1701
+msgid "Italy"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1702
+msgid "United Kingdom"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1703
+msgid "Canada"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1704
+msgid "Australia"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1705
+msgid "New Zealand"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1776
+msgid "The site operator is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1780
+msgid "The site operator name is not set. Entity identification may be difficult."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1788
+msgid "The organization URL is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1792
+msgid "The organization URL is not set. Entity identification may be difficult."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1800
+msgid "A logo is registered for entity identification."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1801
+msgid "No logo is registered. Credibility assessment may be affected."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1806
+msgid "Social profiles (sameAs) are linked for entity verification."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1807
+msgid "No social profiles are linked. Entity verification may be limited."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1811
+msgid "Organization"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1830
+msgid "The business name is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1834
+msgid "The business name is not set. Local search visibility may be affected."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1842
+msgid "A phone number is registered for contact purposes."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1843
+msgid "No phone number is set. This is a required field for LocalBusiness."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1850
+msgid "The address is fully defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1851
+msgid "The address is incomplete. Some fields may be missing."
+msgstr ""
+
+#. translators: %s decimal places
+#: includes/class-avc-ais-settings.php:1865
+msgid "Geo coordinates are registered (%s decimal places). Map display is ready."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1868
+msgid "Geo coordinates are not set. Map-based local search may be affected."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1874
+msgid "Business hours are defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1875
+msgid "No business hours are set. Open/closed status cannot be determined."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1881
+msgid "The country code is defined for address context."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1882
+msgid "The country code is not set. Regional interpretation may vary."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1886
+msgid "LocalBusiness"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1897
+msgid "The site name is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1898
+msgid "The site name is not set. Site identification may be unclear."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1903
+msgid "The site URL is defined as the canonical reference."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1904
+msgid "The site URL is not set. Canonical identification may fail."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1910
+msgid "The site language is defined for content context."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1911
+msgid "No language is set. Content language context may be ambiguous."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1916
+msgid "The publisher is linked to the site entity."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1917
+msgid "No publisher is set. Site-entity relationship is undefined."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1921
+msgid "WebSite"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1931
+msgid "The WebPage base URL is defined for page identification."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1932
+msgid "The WebPage base URL is not set. Page linking may be affected."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1938
+msgid "The page language is defined for content context."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1939
+msgid "No language is set. System default will be used."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1955
+msgid "Posts are output as Article schema for blog content."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1956
+msgid "Posts are output as WebPage schema. Article may be more suitable for blogs."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1973
+msgid "No published posts found. Sample check cannot be performed."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1976
+#: includes/class-avc-ais-settings.php:2025
+msgid "Article (sample post)"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1984
+msgid "The headline is defined in the sample post."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1985
+msgid "The headline is missing from the sample post."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1990
+msgid "The publication date is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1991
+msgid "The publication date is missing. Freshness signals may be affected."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1996
+msgid "The modification date is defined for content freshness."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:1997
+msgid "The modification date is not available."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2004
+msgid "The author is defined for content attribution."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2005
+msgid "No author is set. Content attribution may be unclear."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2014
+msgid "A featured image is set for the sample post."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2018
+msgid "No featured image on the sample post. Rich results may be limited."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2047
+msgid "FAQ schema extraction is enabled for at least one post type."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2051
+msgid "FAQ content requires both question and answer elements with matching CSS classes."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2056
+msgid "FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2101
+msgid "Breadcrumb navigation is defined in the structured data."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2102
+msgid "The breadcrumb trail is empty. Site hierarchy may be unclear."
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:2106
+msgid "BreadcrumbList"
+msgstr ""
+
+#: includes/functions.php:170
+#: templates/admin-settings.php:393
 msgid "Help"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:85
-#: src/Wizard/Wizard.php:85
+#: src/Wizard/Wizard.php:87
 msgid "Welcome"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:90
-#: dist/templates/wizard/steps/step-1-basics.php:19
-#: src/Wizard/Wizard.php:90
+#: src/Wizard/Wizard.php:92
 #: templates/wizard/steps/step-1-basics.php:19
 msgid "Basic Information"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:95
-#: dist/templates/wizard/components/progress-bar.php:19
-#: dist/templates/wizard/steps/step-5-complete.php:50
-#: src/Wizard/Wizard.php:95
+#: src/Wizard/Wizard.php:97
 #: templates/wizard/components/progress-bar.php:19
 #: templates/wizard/steps/step-5-complete.php:50
 msgid "Site Type"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:100
-#: src/Wizard/Wizard.php:100
+#: src/Wizard/Wizard.php:102
 msgid "API Key"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:105
-#: dist/templates/wizard/components/progress-bar.php:20
-#: src/Wizard/Wizard.php:105
+#: src/Wizard/Wizard.php:107
 #: templates/wizard/components/progress-bar.php:20
 msgid "Location"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:110
-#: dist/templates/wizard/steps/step-4-hours.php:36
-#: src/Wizard/Wizard.php:110
+#: src/Wizard/Wizard.php:112
 #: templates/wizard/steps/step-4-hours.php:36
 msgid "Business Hours"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:115
-#: dist/templates/wizard/components/progress-bar.php:22
-#: src/Wizard/Wizard.php:115
+#: src/Wizard/Wizard.php:117
 #: templates/wizard/components/progress-bar.php:22
 msgid "Complete"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:130
-#: dist/src/Wizard/Wizard.php:148
-#: dist/templates/wizard/wizard-page.php:24
-#: src/Wizard/Wizard.php:130
-#: src/Wizard/Wizard.php:148
+#: src/Wizard/Wizard.php:132
+#: src/Wizard/Wizard.php:150
 #: templates/wizard/wizard-page.php:24
 msgid "AI Search Schema Setup"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:131
-#: src/Wizard/Wizard.php:131
+#: src/Wizard/Wizard.php:133
 msgid "Setup Wizard"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:223
-#: src/Wizard/Wizard.php:223
+#: src/Wizard/Wizard.php:225
 msgid "Complete the setup wizard to optimize your site for Google search."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:225
-#: src/Wizard/Wizard.php:225
+#: src/Wizard/Wizard.php:227
 msgid "Start Setup"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:279
-#: src/Wizard/Wizard.php:279
+#: src/Wizard/Wizard.php:281
 msgid "Saved"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:280
-#: src/Wizard/Wizard.php:280
+#: src/Wizard/Wizard.php:282
 msgid "An error occurred"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:281
-#: src/Wizard/Wizard.php:281
+#: src/Wizard/Wizard.php:283
 msgid "Error saving. Please try again."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:282
-#: src/Wizard/Wizard.php:282
+#: src/Wizard/Wizard.php:284
 msgid "This field is required"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:283
-#: src/Wizard/Wizard.php:283
+#: src/Wizard/Wizard.php:285
 msgid "Please enter a valid URL"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:284
-#: src/Wizard/Wizard.php:284
+#: src/Wizard/Wizard.php:286
 msgid "Select Logo"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:285
-#: src/Wizard/Wizard.php:285
+#: src/Wizard/Wizard.php:287
 msgid "Use this logo"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:286
-#: dist/templates/wizard/steps/step-1-basics.php:65
-#: src/Wizard/Wizard.php:286
+#: src/Wizard/Wizard.php:288
 #: templates/wizard/steps/step-1-basics.php:65
 msgid "No logo selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:287
-#: dist/templates/wizard/steps/welcome.php:153
-#: src/Wizard/Wizard.php:287
-#: templates/wizard/steps/welcome.php:153
+#: src/Wizard/Wizard.php:289
+#: templates/wizard/steps/welcome.php:154
 msgid "Import"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:288
-#: src/Wizard/Wizard.php:288
+#: src/Wizard/Wizard.php:290
 msgid "Importing..."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:289
-#: src/Wizard/Wizard.php:289
+#: src/Wizard/Wizard.php:291
 msgid "Imported!"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:290
-#: src/Wizard/Wizard.php:290
+#: src/Wizard/Wizard.php:292
 msgid "Import failed. Please try again."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:291
-#: src/Wizard/Wizard.php:291
+#: src/Wizard/Wizard.php:293
 msgid "Please enter an address first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:293
-#: dist/templates/wizard/steps/step-3-location.php:147
-#: src/Wizard/Wizard.php:293
+#: src/Wizard/Wizard.php:295
 #: templates/wizard/steps/step-3-location.php:147
 msgid "Get Coordinates"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:294
-#: src/Wizard/Wizard.php:294
+#: src/Wizard/Wizard.php:296
 msgid "Could not fetch coordinates."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:295
-#: dist/templates/wizard/steps/step-5-complete.php:109
-#: src/Wizard/Wizard.php:295
+#: src/Wizard/Wizard.php:297
 #: templates/wizard/steps/step-5-complete.php:112
 msgid "View JSON-LD Schema"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:296
-#: src/Wizard/Wizard.php:296
+#: src/Wizard/Wizard.php:298
 msgid "Hide JSON-LD Schema"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:297
-#: src/Wizard/Wizard.php:297
+#: src/Wizard/Wizard.php:299
 msgid "No schema generated yet."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:298
-#: src/Wizard/Wizard.php:298
+#: src/Wizard/Wizard.php:300
 msgid "Could not load schema."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:299
-#: dist/templates/wizard/steps/step-4-hours.php:141
-#: src/Wizard/Wizard.php:299
+#: src/Wizard/Wizard.php:301
 #: templates/wizard/steps/step-4-hours.php:141
 msgid "Set your business hours above to see a preview."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:307
-#: src/Wizard/Wizard.php:307
+#: src/Wizard/Wizard.php:309
 msgid "Local Business Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:308
-#: src/Wizard/Wizard.php:308
+#: src/Wizard/Wizard.php:310
 msgid "You will be able to enter your business address, hours, and contact information."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:309
-#: src/Wizard/Wizard.php:309
+#: src/Wizard/Wizard.php:311
 msgid "Organization Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:310
-#: src/Wizard/Wizard.php:310
+#: src/Wizard/Wizard.php:312
 msgid "Perfect for companies, non-profits, and institutions."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:311
-#: src/Wizard/Wizard.php:311
+#: src/Wizard/Wizard.php:313
 msgid "Personal Site Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:312
-#: src/Wizard/Wizard.php:312
+#: src/Wizard/Wizard.php:314
 msgid "Great for blogs, portfolios, and freelancer websites."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:313
-#: src/Wizard/Wizard.php:313
+#: src/Wizard/Wizard.php:315
 msgid "Online Service Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:314
-#: src/Wizard/Wizard.php:314
+#: src/Wizard/Wizard.php:316
 msgid "Ideal for news sites, web apps, and online tools."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:421
-#: dist/src/Wizard/Wizard.php:468
-#: dist/src/Wizard/Wizard.php:498
-#: dist/src/Wizard/Wizard.php:518
-#: dist/src/Wizard/Wizard.php:540
-#: dist/src/Wizard/Wizard.php:758
-#: src/Wizard/Wizard.php:421
-#: src/Wizard/Wizard.php:468
-#: src/Wizard/Wizard.php:498
-#: src/Wizard/Wizard.php:518
-#: src/Wizard/Wizard.php:540
-#: src/Wizard/Wizard.php:916
+#: src/Wizard/Wizard.php:423
+#: src/Wizard/Wizard.php:470
+#: src/Wizard/Wizard.php:500
+#: src/Wizard/Wizard.php:520
+#: src/Wizard/Wizard.php:542
+#: src/Wizard/Wizard.php:918
 msgid "Permission denied"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:428
-#: dist/src/Wizard/Wizard.php:474
-#: src/Wizard/Wizard.php:428
-#: src/Wizard/Wizard.php:474
+#: src/Wizard/Wizard.php:430
+#: src/Wizard/Wizard.php:476
 msgid "Invalid step"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:455
-#: src/Wizard/Wizard.php:455
+#: src/Wizard/Wizard.php:457
 msgid "Step saved"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:485
-#: src/Wizard/Wizard.php:485
+#: src/Wizard/Wizard.php:487
 msgid "Step skipped"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:505
-#: src/Wizard/Wizard.php:505
+#: src/Wizard/Wizard.php:507
 msgid "Setup completed!"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:527
-#: src/Wizard/Wizard.php:527
+#: src/Wizard/Wizard.php:529
 msgid "Wizard reset"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:566
-#: src/Wizard/Wizard.php:566
+#: src/Wizard/Wizard.php:568
 msgid "Settings imported successfully"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:780
-#: src/Wizard/Wizard.php:938
+#: src/Wizard/Wizard.php:940
 msgid "No schema generated yet. Please complete the wizard steps first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:789
-#: src/Wizard/Wizard.php:947
+#: src/Wizard/Wizard.php:949
 msgid "Error generating schema."
 msgstr ""
 
-#: dist/src/Wizard/Wizard_Importer.php:86
-#: src/Wizard/Wizard_Importer.php:86
+#: src/Wizard/Wizard_Importer.php:88
 msgid "Invalid import source"
 msgstr ""
 
-#: dist/src/Wizard/Wizard_Importer.php:92
-#: src/Wizard/Wizard_Importer.php:92
+#: src/Wizard/Wizard_Importer.php:94
 msgid "Import callback not found"
 msgstr ""
 
-#: dist/src/Wizard/Wizard_Importer.php:144
-#: dist/src/Wizard/Wizard_Importer.php:244
-#: dist/src/Wizard/Wizard_Importer.php:252
-#: dist/src/Wizard/Wizard_Importer.php:370
-#: src/Wizard/Wizard_Importer.php:144
-#: src/Wizard/Wizard_Importer.php:244
-#: src/Wizard/Wizard_Importer.php:252
-#: src/Wizard/Wizard_Importer.php:370
+#: src/Wizard/Wizard_Importer.php:146
+#: src/Wizard/Wizard_Importer.php:246
+#: src/Wizard/Wizard_Importer.php:254
+#: src/Wizard/Wizard_Importer.php:372
 msgid "Set"
 msgstr ""
 
-#: dist/templates/admin-settings.php:62
-#: templates/admin-settings.php:62
+#: templates/admin-settings.php:66
 msgid "Not set"
 msgstr ""
 
-#: dist/templates/admin-settings.php:105
-#: dist/templates/admin-settings.php:121
-#: templates/admin-settings.php:105
-#: templates/admin-settings.php:121
+#: templates/admin-settings.php:109
+#: templates/admin-settings.php:125
 msgid "Support Policy"
 msgstr ""
 
-#: dist/templates/admin-settings.php:107
-#: templates/admin-settings.php:107
+#: templates/admin-settings.php:111
 msgid "Free version support: Bug reports only. Usage questions and SEO/AEO consulting are not supported. Report bugs via GitHub with reproduction steps."
 msgstr ""
 
-#: dist/templates/admin-settings.php:110
-#: templates/admin-settings.php:110
+#: templates/admin-settings.php:114
 msgid "無料版サポート：不具合報告のみ。使い方・SEO/AEO相談はサポート対象外です。不具合はGitHubから再現手順を添えて報告してください。"
 msgstr ""
 
-#: dist/templates/admin-settings.php:115
-#: templates/admin-settings.php:115
+#: templates/admin-settings.php:119
 msgid "Docs / FAQ"
 msgstr ""
 
-#: dist/templates/admin-settings.php:118
-#: templates/admin-settings.php:118
+#: templates/admin-settings.php:122
 msgid "Bug Report"
 msgstr ""
 
-#: dist/templates/admin-settings.php:137
-#: templates/admin-settings.php:137
+#: templates/admin-settings.php:141
 msgid "Schema Console"
 msgstr ""
 
-#: dist/templates/admin-settings.php:139
-#: templates/admin-settings.php:139
+#: templates/admin-settings.php:143
 msgid "Manage brand profiles, publishing entities, and local SEO schema from a single console."
 msgstr ""
 
-#: dist/templates/admin-settings.php:144
-#: templates/admin-settings.php:144
+#: templates/admin-settings.php:148
 msgid "Active Languages"
 msgstr ""
 
-#: dist/templates/admin-settings.php:148
-#: templates/admin-settings.php:148
+#: templates/admin-settings.php:152
 msgid "Primary Country"
 msgstr ""
 
-#: dist/templates/admin-settings.php:152
-#: templates/admin-settings.php:152
+#: templates/admin-settings.php:156
 msgid "Entity Type"
 msgstr ""
 
-#: dist/templates/admin-settings.php:168
-#: templates/admin-settings.php:168
+#: templates/admin-settings.php:173
 msgid "Schema Validation Summary"
 msgstr ""
 
 #. translators: %d: number of errors
-#: dist/templates/admin-settings.php:174
-#: templates/admin-settings.php:174
+#: templates/admin-settings.php:179
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] ""
 msgstr[1] ""
 
 #. translators: %d: number of warnings
-#: dist/templates/admin-settings.php:182
-#: templates/admin-settings.php:182
+#: templates/admin-settings.php:187
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
 msgstr[1] ""
 
-#: dist/templates/admin-settings.php:189
-#: templates/admin-settings.php:189
+#: templates/admin-settings.php:194
 msgid "Toggle details"
 msgstr ""
 
-#: dist/templates/admin-settings.php:196
-#: templates/admin-settings.php:196
+#: templates/admin-settings.php:201
 msgid "Errors"
 msgstr ""
 
-#: dist/templates/admin-settings.php:209
-#: templates/admin-settings.php:209
+#: templates/admin-settings.php:214
 msgid "Warnings"
 msgstr ""
 
-#: dist/templates/admin-settings.php:230
-#: templates/admin-settings.php:230
+#: templates/admin-settings.php:235
 msgid "Brand & Site"
 msgstr ""
 
-#: dist/templates/admin-settings.php:231
-msgid "Register brand, site, and contact information."
+#: templates/admin-settings.php:236
+msgid "Tell search engines who you are. This information forms the foundation of Organization and WebSite schemas, helping you appear in knowledge panels and AI search results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:236
-#: templates/admin-settings.php:236
+#: templates/admin-settings.php:241
 msgid "Company or individual name"
 msgstr ""
 
-#: dist/templates/admin-settings.php:236
-#: templates/admin-settings.php:236
+#: templates/admin-settings.php:241
 msgid "The official name of your organization or personal name. Used in Organization/LocalBusiness schema."
 msgstr ""
 
-#: dist/templates/admin-settings.php:237
-#: templates/admin-settings.php:237
+#: templates/admin-settings.php:242
 msgid "Example: Acme Inc. / Taro Yamada"
 msgstr ""
 
-#: dist/templates/admin-settings.php:240
-#: templates/admin-settings.php:240
+#: templates/admin-settings.php:245
 msgid "Site name"
 msgstr ""
 
-#: dist/templates/admin-settings.php:240
-#: templates/admin-settings.php:240
+#: templates/admin-settings.php:245
 msgid "The name of your website. Used in WebSite schema for sitelinks search box."
 msgstr ""
 
-#: dist/templates/admin-settings.php:241
-#: templates/admin-settings.php:241
+#: templates/admin-settings.php:246
 msgid "Example: My Company Blog"
 msgstr ""
 
-#: dist/templates/admin-settings.php:244
-#: templates/admin-settings.php:244
+#: templates/admin-settings.php:249
 msgid "Phone number"
 msgstr ""
 
-#: dist/templates/admin-settings.php:244
-#: dist/templates/admin-settings.php:724
-#: templates/admin-settings.php:244
-#: templates/admin-settings.php:724
+#: templates/admin-settings.php:249
+#: templates/admin-settings.php:732
 msgid "Required for LocalBusiness"
 msgstr ""
 
-#: dist/templates/admin-settings.php:244
-#: templates/admin-settings.php:244
+#: templates/admin-settings.php:249
 msgid "Contact phone number in international format. Required for LocalBusiness."
 msgstr ""
 
-#: dist/templates/admin-settings.php:245
-#: templates/admin-settings.php:245
+#: templates/admin-settings.php:250
 msgid "Example: +81-3-1234-5678"
 msgstr ""
 
-#: dist/templates/admin-settings.php:248
-#: dist/templates/admin-settings.php:763
-#: templates/admin-settings.php:248
-#: templates/admin-settings.php:763
+#: templates/admin-settings.php:253
+#: templates/admin-settings.php:771
 msgid "Country code"
 msgstr ""
 
-#: dist/templates/admin-settings.php:248
-#: templates/admin-settings.php:248
+#: templates/admin-settings.php:253
 msgid "Select the primary country or region."
 msgstr ""
 
-#: dist/templates/admin-settings.php:257
-#: templates/admin-settings.php:257
+#: templates/admin-settings.php:262
 msgid "Site URL"
 msgstr ""
 
-#: dist/templates/admin-settings.php:257
-#: templates/admin-settings.php:257
+#: templates/admin-settings.php:262
 msgid "Your website URL. Used as the canonical URL in WebSite schema."
 msgstr ""
 
-#: dist/templates/admin-settings.php:258
-#: templates/admin-settings.php:258
+#: templates/admin-settings.php:263
 msgid "Example: https://example.com"
 msgstr ""
 
-#: dist/templates/admin-settings.php:260
-#: templates/admin-settings.php:260
+#: templates/admin-settings.php:265
 msgid "Open Google Rich Results Test"
 msgstr ""
 
-#: dist/templates/admin-settings.php:261
-#: templates/admin-settings.php:261
+#: templates/admin-settings.php:266
 msgid "Save first, then click again to test the latest URL."
 msgstr ""
 
-#: dist/templates/admin-settings.php:265
-#: templates/admin-settings.php:265
+#: templates/admin-settings.php:270
 msgid "Supported languages"
 msgstr ""
 
-#: dist/templates/admin-settings.php:287
-#: templates/admin-settings.php:287
+#: templates/admin-settings.php:292
 msgid "Select a language..."
 msgstr ""
 
-#: dist/templates/admin-settings.php:297
-#: templates/admin-settings.php:297
+#: templates/admin-settings.php:302
 msgid "Added languages appear as tags. Remove them with the × action."
 msgstr ""
 
-#: dist/templates/admin-settings.php:304
-#: templates/admin-settings.php:304
+#: templates/admin-settings.php:309
 msgid "Brand assets & social"
 msgstr ""
 
-#: dist/templates/admin-settings.php:305
-msgid "Manage logos, storefront imagery, and social profiles."
+#: templates/admin-settings.php:310
+msgid "Build trust and recognition. Your logo and social profiles help search engines verify your identity and display richer, more credible results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:310
-#: templates/admin-settings.php:310
+#: templates/admin-settings.php:315
 msgid "Logo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:310
-#: templates/admin-settings.php:310
+#: templates/admin-settings.php:315
 msgid "Your organization logo. Used in Organization schema and as publisher logo for articles."
 msgstr ""
 
-#: dist/templates/admin-settings.php:317
-#: templates/admin-settings.php:317
+#: templates/admin-settings.php:322
 msgid "Select logo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:317
-#: templates/admin-settings.php:317
+#: templates/admin-settings.php:322
 msgid "Insert logo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:317
-#: dist/templates/admin-settings.php:331
-#: dist/templates/admin-settings.php:345
-#: templates/admin-settings.php:317
-#: templates/admin-settings.php:331
-#: templates/admin-settings.php:345
+#: templates/admin-settings.php:322
+#: templates/admin-settings.php:337
+#: templates/admin-settings.php:352
 msgid "Select from media library"
 msgstr ""
 
-#: dist/templates/admin-settings.php:318
-#: templates/admin-settings.php:318
+#: templates/admin-settings.php:324
 msgid "Clear logo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:324
-#: templates/admin-settings.php:324
+#: templates/admin-settings.php:330
 msgid "Storefront image"
 msgstr ""
 
-#: dist/templates/admin-settings.php:324
-#: templates/admin-settings.php:324
+#: templates/admin-settings.php:330
 msgid "Used for the LocalBusiness image property. Upload a storefront photo that differs from the logo."
 msgstr ""
 
-#: dist/templates/admin-settings.php:331
-#: templates/admin-settings.php:331
+#: templates/admin-settings.php:337
 msgid "Select storefront image"
 msgstr ""
 
-#: dist/templates/admin-settings.php:331
-#: dist/templates/admin-settings.php:345
-#: templates/admin-settings.php:331
-#: templates/admin-settings.php:345
+#: templates/admin-settings.php:337
+#: templates/admin-settings.php:352
 msgid "Insert image"
 msgstr ""
 
-#: dist/templates/admin-settings.php:332
-#: dist/templates/admin-settings.php:346
-#: templates/admin-settings.php:332
-#: templates/admin-settings.php:346
+#: templates/admin-settings.php:339
+#: templates/admin-settings.php:353
 msgid "Clear image"
 msgstr ""
 
-#: dist/templates/admin-settings.php:338
-#: templates/admin-settings.php:338
+#: templates/admin-settings.php:345
 msgid "Store photo (LocalBusiness image)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:338
-#: templates/admin-settings.php:338
+#: templates/admin-settings.php:345
 msgid "Used only for LocalBusiness image. Logo will not be used as a fallback."
 msgstr ""
 
-#: dist/templates/admin-settings.php:345
-#: templates/admin-settings.php:345
+#: templates/admin-settings.php:352
 msgid "Select store photo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:353
-#: templates/admin-settings.php:353
+#: templates/admin-settings.php:360
 msgid "Social profiles"
 msgstr ""
 
-#: dist/templates/admin-settings.php:353
-#: templates/admin-settings.php:353
+#: templates/admin-settings.php:360
 msgid "Add your social media profiles. Used in Organization/LocalBusiness sameAs property for knowledge panel."
 msgstr ""
 
-#: dist/templates/admin-settings.php:367
-#: dist/templates/admin-settings.php:1116
-#: templates/admin-settings.php:367
-#: templates/admin-settings.php:1123
+#: templates/admin-settings.php:374
+#: templates/admin-settings.php:1037
 msgid "Account name or profile URL"
 msgstr ""
 
-#: dist/templates/admin-settings.php:368
-#: dist/templates/admin-settings.php:1117
-#: templates/admin-settings.php:368
-#: templates/admin-settings.php:1124
+#: templates/admin-settings.php:375
+#: templates/admin-settings.php:1038
 msgid "Other service label"
 msgstr ""
 
-#: dist/templates/admin-settings.php:369
-#: dist/templates/admin-settings.php:909
-#: dist/templates/admin-settings.php:1118
-#: dist/templates/admin-settings.php:1133
-#: dist/templates/wizard/steps/step-1-basics.php:77
-#: templates/admin-settings.php:369
-#: templates/admin-settings.php:909
-#: templates/admin-settings.php:1125
-#: templates/admin-settings.php:1140
+#: templates/admin-settings.php:376
+#: templates/admin-settings.php:917
+#: templates/admin-settings.php:1039
+#: templates/admin-settings.php:1054
 #: templates/wizard/steps/step-1-basics.php:77
 msgid "Remove"
 msgstr ""
 
-#: dist/templates/admin-settings.php:373
-#: templates/admin-settings.php:373
+#: templates/admin-settings.php:380
 msgid "Add social profile"
 msgstr ""
 
-#: dist/templates/admin-settings.php:380
-#: templates/admin-settings.php:380
+#: templates/admin-settings.php:387
 msgid "Schema output"
 msgstr ""
 
-#: dist/templates/admin-settings.php:381
-msgid "Control entity types and content models."
+#: templates/admin-settings.php:388
+msgid "Control how structured data is delivered. JSON-LD is invisible to visitors but essential for search engines and AI systems to understand your content."
 msgstr ""
 
-#: dist/templates/admin-settings.php:386
-#: templates/admin-settings.php:386
+#: templates/admin-settings.php:393
 msgid "Primary role of this site"
 msgstr ""
 
-#: dist/templates/admin-settings.php:388
-#: templates/admin-settings.php:388
+#: templates/admin-settings.php:395
 msgid "Organization (corporate or brand site)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:389
-#: templates/admin-settings.php:389
+#: templates/admin-settings.php:396
 msgid "Store / Business location (storefront or service site)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:393
-#: templates/admin-settings.php:393
+#: templates/admin-settings.php:400
 msgid "Content model"
 msgstr ""
 
-#: dist/templates/admin-settings.php:393
-#: templates/admin-settings.php:393
+#: templates/admin-settings.php:400
 msgid "Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-commerce: Uses Product schema when WooCommerce is active."
 msgstr ""
 
-#: dist/templates/admin-settings.php:401
-#: dist/templates/admin-settings.php:461
-#: dist/templates/admin-settings.php:525
-#: templates/admin-settings.php:401
-#: templates/admin-settings.php:461
-#: templates/admin-settings.php:525
+#: templates/admin-settings.php:408
+#: templates/admin-settings.php:468
+#: templates/admin-settings.php:532
 msgid "Schema priority"
 msgstr ""
 
-#: dist/templates/admin-settings.php:401
-#: templates/admin-settings.php:401
+#: templates/admin-settings.php:408
 msgid "When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema."
 msgstr ""
 
-#: dist/templates/admin-settings.php:404
-#: templates/admin-settings.php:404
+#: templates/admin-settings.php:411
 msgid "Use AI Search Schema output (disable other plugins)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:408
-#: templates/admin-settings.php:408
+#: templates/admin-settings.php:415
 msgid "Prefer external SEO plugin schema"
 msgstr ""
 
-#: dist/templates/admin-settings.php:412
-#: templates/admin-settings.php:412
+#: templates/admin-settings.php:419
 msgid "Website publisher"
 msgstr ""
 
-#: dist/templates/admin-settings.php:412
-#: templates/admin-settings.php:412
+#: templates/admin-settings.php:419
 msgid "Sets the publisher reference for Article and WebPage schemas. Independent from \"Primary role\" — you can use LocalBusiness as publisher when articles are authored by the store."
 msgstr ""
 
-#: dist/templates/admin-settings.php:414
-#: templates/admin-settings.php:414
+#: templates/admin-settings.php:421
 msgid "Organization (brand site)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:415
-#: templates/admin-settings.php:415
+#: templates/admin-settings.php:422
 msgid "LocalBusiness (storefront site)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:419
-#: templates/admin-settings.php:419
+#: templates/admin-settings.php:426
 msgid "LocalBusiness subtype"
 msgstr ""
 
-#: dist/templates/admin-settings.php:419
-#: templates/admin-settings.php:419
+#: templates/admin-settings.php:426
 msgid "Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService"
 msgstr ""
 
-#: dist/templates/admin-settings.php:420
-#: templates/admin-settings.php:420
+#: templates/admin-settings.php:427
 msgid "Example: Store, Restaurant"
 msgstr ""
 
-#: dist/templates/admin-settings.php:423
-#: templates/admin-settings.php:423
+#: templates/admin-settings.php:430
 msgid "Location label"
 msgstr ""
 
-#: dist/templates/admin-settings.php:423
-#: templates/admin-settings.php:423
+#: templates/admin-settings.php:430
 msgid "Appends after the Organization name to clarify each location."
 msgstr ""
 
-#: dist/templates/admin-settings.php:424
-#: templates/admin-settings.php:424
+#: templates/admin-settings.php:431
 msgid "Example: HQ / Shinjuku"
 msgstr ""
 
-#: dist/templates/admin-settings.php:428
-#: dist/templates/admin-settings.php:459
-#: dist/templates/admin-settings.php:523
-#: templates/admin-settings.php:428
-#: templates/admin-settings.php:459
-#: templates/admin-settings.php:523
+#: templates/admin-settings.php:435
+#: templates/admin-settings.php:466
+#: templates/admin-settings.php:530
 msgid "Breadcrumbs"
 msgstr ""
 
-#: dist/templates/admin-settings.php:431
-#: templates/admin-settings.php:431
+#: templates/admin-settings.php:438
 msgid "Include BreadcrumbList in JSON-LD output"
 msgstr ""
 
-#: dist/templates/admin-settings.php:433
-#: templates/admin-settings.php:433
+#: templates/admin-settings.php:440
 msgid "ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO."
 msgstr ""
 
-#: dist/templates/admin-settings.php:436
-#: templates/admin-settings.php:436
-msgid "Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()"
+#: templates/admin-settings.php:443
+msgid "Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()"
 msgstr ""
 
-#: dist/templates/admin-settings.php:438
-#: templates/admin-settings.php:438
+#: templates/admin-settings.php:445
 msgid "ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme already has breadcrumbs."
 msgstr ""
 
-#: dist/templates/admin-settings.php:448
-#: templates/admin-settings.php:448
+#: templates/admin-settings.php:455
 msgid "Page-type schema controls"
 msgstr ""
 
-#: dist/templates/admin-settings.php:448
-#: templates/admin-settings.php:448
+#: templates/admin-settings.php:455
 msgid "Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type."
 msgstr ""
 
-#: dist/templates/admin-settings.php:449
-msgid "Adjust schema types, breadcrumb output, FAQ extraction, and priority per content area."
+#: templates/admin-settings.php:456
+msgid "Fine-tune schema per content type. Choose the right schema for each post type or taxonomy to maximize how your content appears in search results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:454
-#: templates/admin-settings.php:454
+#: templates/admin-settings.php:461
 msgid "Post type overrides"
 msgstr ""
 
-#: dist/templates/admin-settings.php:457
-#: dist/templates/admin-settings.php:521
-#: templates/admin-settings.php:457
-#: templates/admin-settings.php:521
+#: templates/admin-settings.php:464
+#: templates/admin-settings.php:528
 msgid "Content"
 msgstr ""
 
-#: dist/templates/admin-settings.php:458
-#: dist/templates/admin-settings.php:522
-#: templates/admin-settings.php:458
-#: templates/admin-settings.php:522
+#: templates/admin-settings.php:465
+#: templates/admin-settings.php:529
 msgid "Schema type"
 msgstr ""
 
-#: dist/templates/admin-settings.php:460
-#: dist/templates/admin-settings.php:524
-#: templates/admin-settings.php:460
-#: templates/admin-settings.php:524
+#: templates/admin-settings.php:467
+#: templates/admin-settings.php:531
 msgid "FAQ extraction"
 msgstr ""
 
-#: dist/templates/admin-settings.php:492
-#: dist/templates/admin-settings.php:499
-#: dist/templates/admin-settings.php:556
-#: dist/templates/admin-settings.php:563
-#: templates/admin-settings.php:492
 #: templates/admin-settings.php:499
-#: templates/admin-settings.php:556
+#: templates/admin-settings.php:506
 #: templates/admin-settings.php:563
+#: templates/admin-settings.php:570
 msgid "Enabled"
 msgstr ""
 
-#: dist/templates/admin-settings.php:512
-#: templates/admin-settings.php:512
+#: templates/admin-settings.php:519
 msgid "Override schema defaults per post type so you can force Article, FAQPage, or WebPage output without editing individual posts."
 msgstr ""
 
-#: dist/templates/admin-settings.php:515
-#: templates/admin-settings.php:515
+#: templates/admin-settings.php:522
 msgid "Taxonomy overrides"
 msgstr ""
 
-#: dist/templates/admin-settings.php:517
-#: templates/admin-settings.php:517
+#: templates/admin-settings.php:524
 msgid "No public taxonomies were detected on this site."
 msgstr ""
 
-#: dist/templates/admin-settings.php:576
-#: templates/admin-settings.php:576
+#: templates/admin-settings.php:583
 msgid "Taxonomy archives can inherit the breadcrumbs/FAQ toggles and schema priority settings just like posts."
 msgstr ""
 
-#: dist/templates/admin-settings.php:584
-#: templates/admin-settings.php:584
+#: templates/admin-settings.php:591
 msgid "Local details & hours"
 msgstr ""
 
-#: dist/templates/admin-settings.php:585
-msgid "Capture address, coordinates, and hours to enrich the LocalBusiness schema."
+#: templates/admin-settings.php:592
+msgid "Get found locally. Address, coordinates, and business hours power LocalBusiness schema for Google Maps, local search, and \"near me\" queries."
 msgstr ""
 
-#: dist/templates/admin-settings.php:593
-#: templates/admin-settings.php:593
+#: templates/admin-settings.php:600
 msgid "Google Recommended Properties for LocalBusiness"
 msgstr ""
 
-#: dist/templates/admin-settings.php:594
-#: templates/admin-settings.php:594
+#: templates/admin-settings.php:601
 msgid "Complete these fields to maximize your visibility in local search results and Google Maps."
 msgstr ""
 
-#: dist/templates/admin-settings.php:601
-#: templates/admin-settings.php:601
+#: templates/admin-settings.php:608
 msgid "name"
 msgstr ""
 
-#: dist/templates/admin-settings.php:602
-#: templates/admin-settings.php:602
+#: templates/admin-settings.php:609
 msgid "Business name (Company name field)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:608
-#: templates/admin-settings.php:608
+#: templates/admin-settings.php:615
 msgid "address"
 msgstr ""
 
-#: dist/templates/admin-settings.php:609
-#: templates/admin-settings.php:609
+#: templates/admin-settings.php:616
 msgid "Full postal address"
 msgstr ""
 
-#: dist/templates/admin-settings.php:615
-#: templates/admin-settings.php:615
+#: templates/admin-settings.php:622
 msgid "telephone"
 msgstr ""
 
-#: dist/templates/admin-settings.php:616
-#: templates/admin-settings.php:616
+#: templates/admin-settings.php:623
 msgid "Contact phone number"
 msgstr ""
 
-#: dist/templates/admin-settings.php:622
-#: templates/admin-settings.php:622
+#: templates/admin-settings.php:629
 msgid "geo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:623
-#: templates/admin-settings.php:623
+#: templates/admin-settings.php:630
 msgid "Latitude and longitude"
 msgstr ""
 
-#: dist/templates/admin-settings.php:629
-#: templates/admin-settings.php:629
+#: templates/admin-settings.php:636
 msgid "openingHours"
 msgstr ""
 
-#: dist/templates/admin-settings.php:630
-#: templates/admin-settings.php:630
+#: templates/admin-settings.php:637
 msgid "Business hours"
 msgstr ""
 
-#: dist/templates/admin-settings.php:636
-#: templates/admin-settings.php:636
+#: templates/admin-settings.php:643
 msgid "image"
 msgstr ""
 
-#: dist/templates/admin-settings.php:637
-#: templates/admin-settings.php:637
+#: templates/admin-settings.php:644
 msgid "Storefront photo"
 msgstr ""
 
-#: dist/templates/admin-settings.php:643
-#: templates/admin-settings.php:643
+#: templates/admin-settings.php:650
 msgid "url"
 msgstr ""
 
-#: dist/templates/admin-settings.php:644
-#: templates/admin-settings.php:644
+#: templates/admin-settings.php:651
 msgid "Website URL"
 msgstr ""
 
-#: dist/templates/admin-settings.php:650
-#: templates/admin-settings.php:650
+#: templates/admin-settings.php:657
 msgid "priceRange"
 msgstr ""
 
-#: dist/templates/admin-settings.php:651
-#: templates/admin-settings.php:651
+#: templates/admin-settings.php:658
 msgid "Price range ($, $$, $$$)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:657
-#: templates/admin-settings.php:657
+#: templates/admin-settings.php:664
 msgid "View Google LocalBusiness documentation →"
 msgstr ""
 
-#: dist/templates/admin-settings.php:660
-#: templates/admin-settings.php:660
+#: templates/admin-settings.php:667
 msgid "LocalBusiness output relies on these fields. When skip on incomplete is enabled, missing items here will suppress output."
 msgstr ""
 
-#: dist/templates/admin-settings.php:665
-#: templates/admin-settings.php:665
+#: templates/admin-settings.php:672
 msgid "Price range"
 msgstr ""
 
-#: dist/templates/admin-settings.php:665
-#: templates/admin-settings.php:665
+#: templates/admin-settings.php:672
 msgid "Select the price level for your business. Google displays this in search results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:667
-#: templates/admin-settings.php:667
+#: templates/admin-settings.php:674
 msgid "— Not specified —"
 msgstr ""
 
-#: dist/templates/admin-settings.php:668
-#: templates/admin-settings.php:668
+#: templates/admin-settings.php:675
 msgid "$ (Budget)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:669
-#: templates/admin-settings.php:669
+#: templates/admin-settings.php:676
 msgid "$$ (Moderate)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:670
-#: templates/admin-settings.php:670
+#: templates/admin-settings.php:677
 msgid "$$$ (Expensive)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:671
-#: templates/admin-settings.php:671
+#: templates/admin-settings.php:678
 msgid "$$$$ (Luxury)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:675
-#: templates/admin-settings.php:675
+#: templates/admin-settings.php:682
 msgid "Accepted payment methods"
 msgstr ""
 
-#: dist/templates/admin-settings.php:675
-#: templates/admin-settings.php:675
+#: templates/admin-settings.php:682
 msgid "List payment methods separated by commas. Examples: Cash, Credit Card, PayPay, Suica"
 msgstr ""
 
-#: dist/templates/admin-settings.php:676
-#: templates/admin-settings.php:676
+#: templates/admin-settings.php:683
 msgid "Example: Cash, Credit Card"
 msgstr ""
 
-#: dist/templates/admin-settings.php:679
-#: templates/admin-settings.php:679
+#: templates/admin-settings.php:686
 msgid "Reservations"
 msgstr ""
 
-#: dist/templates/admin-settings.php:682
-#: templates/admin-settings.php:682
+#: templates/admin-settings.php:689
 msgid "Accept reservations"
 msgstr ""
 
-#: dist/templates/admin-settings.php:684
-#: templates/admin-settings.php:684
+#: templates/admin-settings.php:691
 msgid "ON: Adds acceptsReservations property to LocalBusiness schema. Enable for restaurants, salons, or any business that takes bookings."
 msgstr ""
 
-#: dist/templates/admin-settings.php:688
-#: dist/templates/wizard/steps/step-api-key.php:17
-#: dist/templates/wizard/steps/step-api-key.php:49
-#: templates/admin-settings.php:688
+#: templates/admin-settings.php:696
 #: templates/wizard/steps/step-api-key.php:17
 #: templates/wizard/steps/step-api-key.php:49
 msgid "Google Maps API Key"
 msgstr ""
 
-#: dist/templates/admin-settings.php:695
-#: templates/admin-settings.php:695
+#: templates/admin-settings.php:703
 msgid "Stored API key"
 msgstr ""
 
-#: dist/templates/admin-settings.php:695
-#: templates/admin-settings.php:695
+#: templates/admin-settings.php:703
 msgid "Example: AIzaSyB..."
 msgstr ""
 
-#: dist/templates/admin-settings.php:701
-#: templates/admin-settings.php:701
+#: templates/admin-settings.php:709
 msgid "Save key"
 msgstr ""
 
-#: dist/templates/admin-settings.php:707
-#: templates/admin-settings.php:707
+#: templates/admin-settings.php:715
 msgid "An API key is already stored. Delete it first if you need to change it."
 msgstr ""
 
-#: dist/templates/admin-settings.php:714
-#: templates/admin-settings.php:714
+#: templates/admin-settings.php:722
 msgid "Delete the stored API key?"
 msgstr ""
 
-#: dist/templates/admin-settings.php:716
-#: templates/admin-settings.php:716
+#: templates/admin-settings.php:724
 msgid "Delete stored key"
 msgstr ""
 
-#: dist/templates/admin-settings.php:719
-#: templates/admin-settings.php:719
+#: templates/admin-settings.php:727
 msgid "Enter a Google Maps Geocoding API key to use Google for geocoding. When empty, OpenStreetMap is used for development purposes."
 msgstr ""
 
-#: dist/templates/admin-settings.php:724
-#: dist/templates/wizard/steps/step-3-location.php:88
-#: dist/templates/wizard/steps/step-5-complete.php:71
-#: templates/admin-settings.php:724
+#: templates/admin-settings.php:732
 #: templates/wizard/steps/step-3-location.php:88
 #: templates/wizard/steps/step-5-complete.php:86
 msgid "Address"
 msgstr ""
 
-#: dist/templates/admin-settings.php:724
-#: templates/admin-settings.php:724
+#: templates/admin-settings.php:732
 msgid "Required for LocalBusiness. Enter your full postal address for the PostalAddress schema property."
 msgstr ""
 
-#: dist/templates/admin-settings.php:726
-#: templates/admin-settings.php:726
+#: templates/admin-settings.php:734
 msgid "Postal code (e.g. 150-0001)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:732
-#: templates/admin-settings.php:732
+#: templates/admin-settings.php:740
 msgid "Select prefecture"
 msgstr ""
 
-#: dist/templates/admin-settings.php:750
-#: templates/admin-settings.php:750
+#: templates/admin-settings.php:758
 msgid "市区町村（例：草津市）"
 msgstr ""
 
-#: dist/templates/admin-settings.php:751
-#: templates/admin-settings.php:751
+#: templates/admin-settings.php:759
 msgid "市区町村"
 msgstr ""
 
-#: dist/templates/admin-settings.php:758
-#: templates/admin-settings.php:758
+#: templates/admin-settings.php:766
 msgid "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 msgstr ""
 
-#: dist/templates/admin-settings.php:759
-#: templates/admin-settings.php:759
+#: templates/admin-settings.php:767
 msgid "町名・番地・建物名"
 msgstr ""
 
-#: dist/templates/admin-settings.php:764
-#: templates/admin-settings.php:764
+#: templates/admin-settings.php:772
 msgid "Country (e.g. JP)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:766
-#: templates/admin-settings.php:766
+#: templates/admin-settings.php:774
 msgid "ISO 3166-2 updates automatically from the prefecture selection."
 msgstr ""
 
-#: dist/templates/admin-settings.php:770
-#: templates/admin-settings.php:770
+#: templates/admin-settings.php:778
 msgid "ISO 3166-2"
 msgstr ""
 
-#: dist/templates/admin-settings.php:781
-#: templates/admin-settings.php:781
+#: templates/admin-settings.php:789
 msgid "郵便番号から住所を自動補完する"
 msgstr ""
 
-#: dist/templates/admin-settings.php:786
-#: templates/admin-settings.php:786
+#: templates/admin-settings.php:794
 msgid "Latitude & longitude"
 msgstr ""
 
-#: dist/templates/admin-settings.php:786
-#: templates/admin-settings.php:786
+#: templates/admin-settings.php:794
 msgid "Required for LocalBusiness. Click \"Fetch coordinates\" to auto-fill from address."
 msgstr ""
 
-#: dist/templates/admin-settings.php:788
-#: templates/admin-settings.php:788
+#: templates/admin-settings.php:796
 msgid "Latitude 35.123456"
 msgstr ""
 
-#: dist/templates/admin-settings.php:789
-#: templates/admin-settings.php:789
+#: templates/admin-settings.php:797
 msgid "Longitude 139.123456"
 msgstr ""
 
-#: dist/templates/admin-settings.php:797
-#: templates/admin-settings.php:797
+#: templates/admin-settings.php:805
 msgid "Google Map link"
 msgstr ""
 
-#: dist/templates/admin-settings.php:806
-#: templates/admin-settings.php:806
+#: templates/admin-settings.php:814
 msgid "Generate hasMap from saved coordinates"
 msgstr ""
 
-#: dist/templates/admin-settings.php:809
-#: templates/admin-settings.php:809
+#: templates/admin-settings.php:817
 msgid "When enabled, hasMap becomes https://www.google.com/maps/search/?api=1&query=latitude,longitude. Coordinates are required."
 msgstr ""
 
-#: dist/templates/admin-settings.php:814
-#: templates/admin-settings.php:814
+#: templates/admin-settings.php:822
 msgid "LocalBusiness output control"
 msgstr ""
 
-#: dist/templates/admin-settings.php:823
-#: templates/admin-settings.php:823
+#: templates/admin-settings.php:831
 msgid "Do not output LocalBusiness when required fields are missing"
 msgstr ""
 
-#: dist/templates/admin-settings.php:826
-#: templates/admin-settings.php:826
+#: templates/admin-settings.php:834
 msgid "When enabled, LocalBusiness will be skipped unless name, address, and telephone are complete. A warning will appear in debug mode."
 msgstr ""
 
-#: dist/templates/admin-settings.php:830
-#: templates/admin-settings.php:830
+#: templates/admin-settings.php:838
 msgid "Opening hours"
 msgstr ""
 
-#: dist/templates/admin-settings.php:830
-#: templates/admin-settings.php:830
+#: templates/admin-settings.php:838
 msgid "Add as many day and time combinations as needed. Use templates for quick setup."
 msgstr ""
 
-#: dist/templates/admin-settings.php:831
-#: templates/admin-settings.php:831
+#: templates/admin-settings.php:839
 msgid "Opening hour templates"
 msgstr ""
 
-#: dist/templates/admin-settings.php:832
-#: templates/admin-settings.php:832
+#: templates/admin-settings.php:840
 msgid "平日 10:00–19:00"
 msgstr ""
 
-#: dist/templates/admin-settings.php:833
-#: templates/admin-settings.php:833
+#: templates/admin-settings.php:841
 msgid "土日祝 10:00–17:00"
 msgstr ""
 
-#: dist/templates/admin-settings.php:834
-#: templates/admin-settings.php:834
+#: templates/admin-settings.php:842
 msgid "24時間営業（毎日 00:00–23:59）"
 msgstr ""
 
-#: dist/templates/admin-settings.php:835
-#: templates/admin-settings.php:835
+#: templates/admin-settings.php:843
 msgid "クリア"
 msgstr ""
 
-#: dist/templates/admin-settings.php:840
-#: templates/admin-settings.php:840
+#: templates/admin-settings.php:848
 msgid "月曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:844
-#: templates/admin-settings.php:844
+#: templates/admin-settings.php:852
 msgid "火曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:848
-#: templates/admin-settings.php:848
+#: templates/admin-settings.php:856
 msgid "水曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:852
-#: templates/admin-settings.php:852
+#: templates/admin-settings.php:860
 msgid "木曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:856
-#: templates/admin-settings.php:856
+#: templates/admin-settings.php:864
 msgid "金曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:860
-#: templates/admin-settings.php:860
+#: templates/admin-settings.php:868
 msgid "土曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:864
-#: templates/admin-settings.php:864
+#: templates/admin-settings.php:872
 msgid "日曜を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:868
-#: dist/templates/admin-settings.php:874
-#: templates/admin-settings.php:868
-#: templates/admin-settings.php:874
+#: templates/admin-settings.php:876
+#: templates/admin-settings.php:882
 msgid "祝日を含める"
 msgstr ""
 
-#: dist/templates/admin-settings.php:877
-#: templates/admin-settings.php:877
+#: templates/admin-settings.php:885
 msgid "祝日の営業時間"
 msgstr ""
 
-#: dist/templates/admin-settings.php:880
-#: templates/admin-settings.php:880
+#: templates/admin-settings.php:888
 msgid "平日と同じ"
 msgstr ""
 
-#: dist/templates/admin-settings.php:884
-#: templates/admin-settings.php:884
+#: templates/admin-settings.php:892
 msgid "土日祝テンプレと同じ"
 msgstr ""
 
-#: dist/templates/admin-settings.php:888
-#: templates/admin-settings.php:888
+#: templates/admin-settings.php:896
 msgid "カスタム設定"
 msgstr ""
 
-#: dist/templates/admin-settings.php:907
-#: templates/admin-settings.php:907
+#: templates/admin-settings.php:915
 msgid "to"
 msgstr ""
 
-#: dist/templates/admin-settings.php:913
-#: templates/admin-settings.php:913
+#: templates/admin-settings.php:921
 msgid "Add time slot"
 msgstr ""
 
-#: dist/templates/admin-settings.php:920
-msgid "AEO/GEO チェック"
+#: templates/admin-settings.php:928
+msgid "AEO/GEO Diagnostics"
 msgstr ""
 
-#: dist/templates/admin-settings.php:921
-msgid "主要スキーマの必須項目が揃っているかを自己診断します。"
+#: templates/admin-settings.php:929
+msgid "Check your schema readiness. This diagnostic validates required fields and highlights issues that may prevent rich results or AI visibility."
 msgstr ""
 
-#: dist/templates/admin-settings.php:943
-#: templates/admin-settings.php:945
+#: templates/admin-settings.php:942
 msgid "OK"
 msgstr ""
 
-#: dist/templates/admin-settings.php:943
-#: templates/admin-settings.php:948
-msgid "Error"
+#: templates/admin-settings.php:943
+msgid "Info"
 msgstr ""
 
-#: dist/templates/admin-settings.php:943
+#: templates/admin-settings.php:944
 #: templates/admin-settings.php:947
-#: templates/admin-settings.php:950
 msgid "Warning"
 msgstr ""
 
-#: dist/templates/admin-settings.php:954
-#: templates/admin-settings.php:961
+#: templates/admin-settings.php:945
+msgid "Error"
+msgstr ""
+
+#: templates/admin-settings.php:958
 msgid "まだ診断結果がありません。"
 msgstr ""
 
 #. translators: %s: datetime string
-#: dist/templates/admin-settings.php:962
-#: templates/admin-settings.php:969
+#: templates/admin-settings.php:966
 msgid "最終診断: %s（再読み込みで更新）"
 msgstr ""
 
-#: dist/templates/admin-settings.php:973
-#: templates/admin-settings.php:980
+#: templates/admin-settings.php:977
 msgid "llms.txt"
 msgstr ""
 
-#: dist/templates/admin-settings.php:974
-msgid "Generate llms.txt to help AI systems understand your site structure."
+#: templates/admin-settings.php:978
+msgid "Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude understand your site structure for better AI-powered search visibility."
 msgstr ""
 
-#: dist/templates/admin-settings.php:988
-#: templates/admin-settings.php:995
+#: templates/admin-settings.php:992
 msgid "Enable llms.txt"
 msgstr ""
 
-#: dist/templates/admin-settings.php:991
-#: templates/admin-settings.php:998
+#: templates/admin-settings.php:995
 msgid "When enabled, the file is served at:"
 msgstr ""
 
-#: dist/templates/admin-settings.php:997
-#: templates/admin-settings.php:1004
+#: templates/admin-settings.php:1001
 msgid "Content (Markdown)"
 msgstr ""
 
-#: dist/templates/admin-settings.php:1000
-#: templates/admin-settings.php:1007
+#: templates/admin-settings.php:1004
 msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
 msgstr ""
 
-#: dist/templates/admin-settings.php:1019
-#: templates/admin-settings.php:1026
-msgid "License"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1020
-#: templates/admin-settings.php:1027
-msgid "Manage your AI Search Schema Pro license."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1034
-#: templates/admin-settings.php:1041
-msgid "Status:"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1041
-#: templates/admin-settings.php:1048
-msgid "License Key"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1048
-#: templates/admin-settings.php:1055
-msgid "Enter your license key"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1063
-#: templates/admin-settings.php:1070
-msgid "Enter your Pro license key to unlock advanced features."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1065
-#: templates/admin-settings.php:1072
-msgid "Get a license"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1073
-#: templates/admin-settings.php:1080
-msgid "Pro Features"
-msgstr ""
-
-#: dist/templates/admin-settings.php:1078
-#: templates/admin-settings.php:1085
-msgid "Manage multiple LocalBusiness locations."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1083
-#: templates/admin-settings.php:1090
-msgid "Create custom schema templates for different content types."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1088
-#: templates/admin-settings.php:1095
-msgid "Get priority email support."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1093
-#: templates/admin-settings.php:1100
-msgid "Scheduled automatic schema validation."
-msgstr ""
-
-#: dist/templates/admin-settings.php:1103
-#: templates/admin-settings.php:1110
+#: templates/admin-settings.php:1024
 msgid "Save settings"
 msgstr ""
 
-#: dist/templates/admin-settings.php:1131
-#: templates/admin-settings.php:1138
+#: templates/admin-settings.php:1052
 msgid "〜"
 msgstr ""
 
-#: dist/templates/admin-settings.php:1139
-#: templates/admin-settings.php:1146
+#: templates/admin-settings.php:1060
 msgid "Open Test Manager"
 msgstr ""
 
-#: dist/templates/admin-settings.php:1141
-#: templates/admin-settings.php:1148
+#: templates/admin-settings.php:1062
 msgid "Test Manager"
 msgstr ""
 
-#: dist/templates/wizard/components/progress-bar.php:18
 #: templates/wizard/components/progress-bar.php:18
 msgid "Basic Info"
 msgstr ""
 
-#: dist/templates/wizard/components/progress-bar.php:21
 #: templates/wizard/components/progress-bar.php:21
 msgid "Hours"
 msgstr ""
 
-#: dist/templates/wizard/components/progress-bar.php:29
 #: templates/wizard/components/progress-bar.php:29
 msgid "Setup progress"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:22
 #: templates/wizard/steps/step-1-basics.php:22
 msgid "Tell us about your site. This information will be used for search engine optimization."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:31
-#: dist/templates/wizard/steps/step-5-complete.php:46
 #: templates/wizard/steps/step-1-basics.php:31
 #: templates/wizard/steps/step-5-complete.php:46
 msgid "Site Name"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:36
 #: templates/wizard/steps/step-1-basics.php:36
 msgid "The name of your website as it should appear in search results."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:43
 #: templates/wizard/steps/step-1-basics.php:43
 msgid "Site Description"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:47
 #: templates/wizard/steps/step-1-basics.php:47
 msgid "A brief description of your website (optional)."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:54
 #: templates/wizard/steps/step-1-basics.php:54
 msgid "Site Logo"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:59
 #: templates/wizard/steps/step-1-basics.php:59
 msgid "Logo preview"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:74
 #: templates/wizard/steps/step-1-basics.php:74
 msgid "Upload Logo"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:83
 #: templates/wizard/steps/step-1-basics.php:83
 msgid "Recommended size: 600x60 pixels. PNG or SVG format."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:94
-#: dist/templates/wizard/steps/step-2-type.php:94
-#: dist/templates/wizard/steps/step-3-location.php:198
-#: dist/templates/wizard/steps/step-4-hours.php:152
-#: dist/templates/wizard/steps/step-api-key.php:92
 #: templates/wizard/steps/step-1-basics.php:94
-#: templates/wizard/steps/step-2-type.php:82
+#: templates/wizard/steps/step-2-type.php:92
 #: templates/wizard/steps/step-3-location.php:198
 #: templates/wizard/steps/step-4-hours.php:152
 #: templates/wizard/steps/step-api-key.php:92
 msgid "Back"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-1-basics.php:97
-#: dist/templates/wizard/steps/step-2-type.php:97
-#: dist/templates/wizard/steps/step-3-location.php:201
-#: dist/templates/wizard/steps/step-4-hours.php:155
-#: dist/templates/wizard/steps/step-api-key.php:99
 #: templates/wizard/steps/step-1-basics.php:97
-#: templates/wizard/steps/step-2-type.php:85
+#: templates/wizard/steps/step-2-type.php:95
 #: templates/wizard/steps/step-3-location.php:201
 #: templates/wizard/steps/step-4-hours.php:155
 #: templates/wizard/steps/step-api-key.php:99
 msgid "Continue"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-2-type.php:17
 #: templates/wizard/steps/step-2-type.php:17
 msgid "Local Business"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-2-type.php:18
 #: templates/wizard/steps/step-2-type.php:18
 msgid "Physical store, restaurant, service provider with a location"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-2-type.php:20
 #: templates/wizard/steps/step-2-type.php:20
 msgid "e.g., Café, Beauty Salon, Clinic"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-2-type.php:23
 #: templates/wizard/steps/step-2-type.php:23
 msgid "Organization / Company"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:24
-msgid "Corporate website, non-profit, educational institution"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:26
-msgid "e.g., Corporation, NPO, University"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:29
-msgid "Personal / Individual"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:30
-msgid "Personal blog, portfolio, freelancer website"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:32
-msgid "e.g., Blog, Portfolio, Artist"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:35
-msgid "Online Service / Media"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:36
-msgid "News site, online tool, web application"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:38
-msgid "e.g., News, SaaS, Web App"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:45
-#: templates/wizard/steps/step-2-type.php:33
-msgid "What type of site is this?"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-2-type.php:48
-#: templates/wizard/steps/step-2-type.php:36
-msgid "Select the option that best describes your website. This helps search engines understand your content."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:15
-#: templates/wizard/steps/step-3-location.php:15
-msgid "General Local Business"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:16
-#: templates/wizard/steps/step-3-location.php:16
-msgid "Restaurant"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:17
-#: templates/wizard/steps/step-3-location.php:17
-msgid "Cafe"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:18
-#: templates/wizard/steps/step-3-location.php:18
-msgid "Bar or Pub"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:19
-#: templates/wizard/steps/step-3-location.php:19
-msgid "Bakery"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:20
-#: templates/wizard/steps/step-3-location.php:20
-msgid "Store / Retail"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:21
-#: templates/wizard/steps/step-3-location.php:21
-msgid "Beauty Salon"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:22
-#: templates/wizard/steps/step-3-location.php:22
-msgid "Hair Salon"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:23
-#: templates/wizard/steps/step-3-location.php:23
-msgid "Spa"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:24
-#: templates/wizard/steps/step-3-location.php:24
-msgid "Dentist"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:25
-#: templates/wizard/steps/step-3-location.php:25
-msgid "Doctor / Physician"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:26
-#: templates/wizard/steps/step-3-location.php:26
-msgid "Hospital"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:27
-#: templates/wizard/steps/step-3-location.php:27
-msgid "Pharmacy"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:28
-#: templates/wizard/steps/step-3-location.php:28
-msgid "Legal Service"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:29
-#: templates/wizard/steps/step-3-location.php:29
-msgid "Accounting Service"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:30
-#: templates/wizard/steps/step-3-location.php:30
-msgid "Real Estate Agent"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:31
-#: templates/wizard/steps/step-3-location.php:31
-msgid "Auto Repair"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:32
-#: templates/wizard/steps/step-3-location.php:32
-msgid "Hotel"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:33
-#: templates/wizard/steps/step-3-location.php:33
-msgid "Fitness Center / Gym"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:34
-#: templates/wizard/steps/step-3-location.php:34
-msgid "Home & Construction Service"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:39
-#: templates/wizard/steps/step-3-location.php:39
-msgid "Not specified"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:40
-#: templates/wizard/steps/step-3-location.php:40
-msgid "$ - Budget-friendly"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:41
-#: templates/wizard/steps/step-3-location.php:41
-msgid "$$ - Moderate"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:42
-#: templates/wizard/steps/step-3-location.php:42
-msgid "$$$ - Upscale"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:43
-#: templates/wizard/steps/step-3-location.php:43
-msgid "$$$$ - Luxury"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:49
-#: templates/wizard/steps/step-3-location.php:49
-msgid "Business Location"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:52
-#: templates/wizard/steps/step-3-location.php:52
-msgid "Enter your business details for local SEO. This information helps customers find you."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:61
-#: dist/templates/wizard/steps/step-5-complete.php:66
-#: templates/wizard/steps/step-3-location.php:61
-#: templates/wizard/steps/step-5-complete.php:70
-msgid "Business Type"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:76
-#: dist/templates/wizard/steps/step-5-complete.php:62
-#: templates/wizard/steps/step-3-location.php:76
-#: templates/wizard/steps/step-5-complete.php:66
-msgid "Business Name"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:94
-#: templates/wizard/steps/step-3-location.php:94
-msgid "Postal Code"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:96
-#: templates/wizard/steps/step-3-location.php:96
-msgid "e.g., 100-0001"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:100
-#: templates/wizard/steps/step-3-location.php:100
-msgid "Country"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:108
-#: templates/wizard/steps/step-3-location.php:108
-msgid "Prefecture / State"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:110
-#: templates/wizard/steps/step-3-location.php:110
-msgid "e.g., Tokyo"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:115
-#: templates/wizard/steps/step-3-location.php:115
-msgid "City / Town"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:117
-#: templates/wizard/steps/step-3-location.php:117
-msgid "e.g., Chiyoda"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:122
-#: templates/wizard/steps/step-3-location.php:122
-msgid "Street Address"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:124
-#: templates/wizard/steps/step-3-location.php:124
-msgid "e.g., 1-1-1 Marunouchi"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:132
-#: templates/wizard/steps/step-3-location.php:132
-msgid "Latitude"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:138
-#: templates/wizard/steps/step-3-location.php:138
-msgid "Longitude"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:158
-#: templates/wizard/steps/step-3-location.php:158
-msgid "Contact Information"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:164
-#: templates/wizard/steps/step-3-location.php:164
-msgid "Phone Number"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:166
-#: templates/wizard/steps/step-3-location.php:166
-msgid "e.g., 03-1234-5678"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:170
-#: templates/wizard/steps/step-3-location.php:170
-msgid "Email"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:172
-#: templates/wizard/steps/step-3-location.php:172
-msgid "e.g., info@example.com"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-3-location.php:180
-#: templates/wizard/steps/step-3-location.php:180
-msgid "Price Range"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:39
-#: templates/wizard/steps/step-4-hours.php:39
-msgid "Set your business hours. This helps customers know when you are open."
-msgstr ""
-
-#. translators: %s: example time range
-#: dist/templates/wizard/steps/step-4-hours.php:45
-#: templates/wizard/steps/step-4-hours.php:45
-msgid "Example: %s"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:59
-#: templates/wizard/steps/step-4-hours.php:59
-msgid "Quick Setup"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:63
-#: templates/wizard/steps/step-4-hours.php:63
-msgid "Same hours every weekday"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:66
-#: templates/wizard/steps/step-4-hours.php:66
-msgid "Same hours every day"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:69
-#: templates/wizard/steps/step-4-hours.php:69
-msgid "Clear all"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:78
-#: templates/wizard/steps/step-4-hours.php:78
-msgid "Day"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:81
-#: dist/templates/wizard/steps/welcome.php:66
-#: templates/wizard/steps/step-4-hours.php:81
-#: templates/wizard/steps/welcome.php:66
-msgid "Open"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:84
-#: templates/wizard/steps/step-4-hours.php:84
-msgid "Opening Time"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:87
-#: templates/wizard/steps/step-4-hours.php:87
-msgid "Closing Time"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:109
-#: dist/templates/wizard/steps/step-4-hours.php:119
-#: templates/wizard/steps/step-4-hours.php:109
-#: templates/wizard/steps/step-4-hours.php:119
-msgid "Select"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-4-hours.php:137
-#: templates/wizard/steps/step-4-hours.php:137
-msgid "Preview"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:24
-#: templates/wizard/steps/step-5-complete.php:24
-msgid "Setup Complete!"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:28
-#: templates/wizard/steps/step-5-complete.php:28
-msgid "Congratulations! Your site is now optimized for search engines. Here is a summary of your settings."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:37
-#: templates/wizard/steps/step-5-complete.php:37
-msgid "Settings Summary"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:43
-#: templates/wizard/steps/step-5-complete.php:43
-msgid "Site Information"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:59
-#: templates/wizard/steps/step-5-complete.php:63
-msgid "Business Information"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:89
-#: templates/wizard/steps/step-5-complete.php:92
-msgid "Phone"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:105
-#: templates/wizard/steps/step-5-complete.php:108
-msgid "Generated Schema"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:117
-#: templates/wizard/steps/step-5-complete.php:120
-msgid "Next Steps"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:123
-#: templates/wizard/steps/step-5-complete.php:126
-msgid "Schema markup is now active on your site"
-msgstr ""
-
-#. translators: %s: link to Google Rich Results Test
-#: dist/templates/wizard/steps/step-5-complete.php:132
-#: templates/wizard/steps/step-5-complete.php:135
-msgid "Test your schema with %s"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:133
-#: templates/wizard/steps/step-5-complete.php:136
-msgid "Google Rich Results Test"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:141
-#: templates/wizard/steps/step-5-complete.php:144
-msgid "Customize additional settings from the plugin settings page"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:152
-#: templates/wizard/steps/step-5-complete.php:155
-msgid "Go to Settings"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-5-complete.php:158
-#: templates/wizard/steps/step-5-complete.php:161
-msgid "View Site"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:20
-#: templates/wizard/steps/step-api-key.php:20
-msgid "Optional: Enter your Google Maps API key to enable automatic coordinate lookup for your business address."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:34
-#: templates/wizard/steps/step-api-key.php:34
-msgid "Why do I need this?"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:37
-#: templates/wizard/steps/step-api-key.php:37
-msgid "The Google Maps API key enables the \"Get Coordinates\" feature in the next step. This automatically converts your business address into latitude and longitude coordinates, which improves your local SEO and helps Google Maps show your location accurately."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:40
-#: templates/wizard/steps/step-api-key.php:40
-msgid "You can skip this step and enter coordinates manually, or add the API key later from the settings page."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:51
-#: templates/wizard/steps/step-api-key.php:51
-msgid "e.g., AIzaSyB..."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:57
-#: templates/wizard/steps/step-api-key.php:57
-msgid "API key is already configured."
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:68
-#: templates/wizard/steps/step-api-key.php:68
-msgid "How to get an API key"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:71
-#: templates/wizard/steps/step-api-key.php:71
-msgid "Go to the Google Cloud Console"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:72
-#: templates/wizard/steps/step-api-key.php:72
-msgid "Create a new project or select an existing one"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:73
-#: templates/wizard/steps/step-api-key.php:73
-msgid "Enable the \"Geocoding API\""
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:74
-#: templates/wizard/steps/step-api-key.php:74
-msgid "Go to \"Credentials\" and create an API key"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:75
-#: templates/wizard/steps/step-api-key.php:75
-msgid "Copy the API key and paste it above"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:81
-#: templates/wizard/steps/step-api-key.php:81
-msgid "Open Google Cloud Console"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:96
-#: templates/wizard/steps/step-api-key.php:96
-msgid "Skip"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:34
-#: templates/wizard/steps/welcome.php:34
-msgid "Welcome to AI Search Schema"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:38
-#: templates/wizard/steps/welcome.php:38
-msgid "Get your site optimized for Google search in just 5 minutes. This wizard will guide you through the essential settings."
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:52
-#: templates/wizard/steps/welcome.php:52
-msgid "Google Search Preview"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:57
-#: templates/wizard/steps/welcome.php:57
-msgid "Your City"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:63
-#: templates/wizard/steps/welcome.php:63
-msgid "Business"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:68
-#: templates/wizard/steps/welcome.php:68
-msgid "Closes at 6:00 PM"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:80
-#: templates/wizard/steps/welcome.php:80
-msgid "Get Started"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:88
-#: templates/wizard/steps/welcome.php:88
-msgid "Import from another plugin"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:95
-#: templates/wizard/steps/welcome.php:95
-msgid "Set up later"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:105
-#: templates/wizard/steps/welcome.php:105
-msgid "Close"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:115
-#: templates/wizard/steps/welcome.php:115
-msgid "Import Existing Settings"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:119
-#: templates/wizard/steps/welcome.php:119
-msgid "We detected these SEO plugins. You can import their settings to get started quickly."
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:158
-#: templates/wizard/steps/welcome.php:158
-msgid "Not detected"
-msgstr ""
-
-#: dist/templates/wizard/steps/welcome.php:167
-#: templates/wizard/steps/welcome.php:167
-msgid "Continue without importing"
-msgstr ""
-
-#: dist/templates/wizard/wizard-page.php:66
-#: templates/wizard/wizard-page.php:66
-msgid "Step template not found."
-msgstr ""
-
-#. translators: %s: plugin version
-#: dist/templates/wizard/wizard-page.php:78
-#: templates/wizard/wizard-page.php:78
-msgid "AI Search Schema v%s"
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1739
-msgid "The site operator is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1740
-msgid "The site operator name is not set. Entity identification may be difficult."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1745
-msgid "The organization URL is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1746
-msgid "The organization URL is not set. Entity identification may be difficult."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1751
-msgid "A logo is registered for entity identification."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1752
-msgid "No logo is registered. Credibility assessment may be affected."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1757
-msgid "Social profiles (sameAs) are linked for entity verification."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1758
-msgid "No social profiles are linked. Entity verification may be limited."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1781
-msgid "The business name is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1782
-msgid "The business name is not set. Local search visibility may be affected."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1787
-msgid "A phone number is registered for contact purposes."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1788
-msgid "No phone number is set. This is a required field for LocalBusiness."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1795
-msgid "The address is fully defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1796
-msgid "The address is incomplete. Some fields may be missing."
-msgstr ""
-
-#. translators: %s decimal places
-#: includes/class-ai-search-schema-settings.php:1810
-msgid "Geo coordinates are registered (%s decimal places). Map display is ready."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1813
-msgid "Geo coordinates are not set. Map-based local search may be affected."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1819
-msgid "Business hours are defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1820
-msgid "No business hours are set. Open/closed status cannot be determined."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1826
-msgid "The country code is defined for address context."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1827
-msgid "The country code is not set. Regional interpretation may vary."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1842
-msgid "The site name is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1843
-msgid "The site name is not set. Site identification may be unclear."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1848
-msgid "The site URL is defined as the canonical reference."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1849
-msgid "The site URL is not set. Canonical identification may fail."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1855
-msgid "The site language is defined for content context."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1856
-msgid "No language is set. Content language context may be ambiguous."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1861
-msgid "The publisher is linked to the site entity."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1862
-msgid "No publisher is set. Site-entity relationship is undefined."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1876
-msgid "The WebPage base URL is defined for page identification."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1877
-msgid "The WebPage base URL is not set. Page linking may be affected."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1883
-msgid "The page language is defined for content context."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1884
-msgid "No language is set. System default will be used."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1900
-msgid "Posts are output as Article schema for blog content."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1901
-msgid "Posts are output as WebPage schema. Article may be more suitable for blogs."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1918
-msgid "No published posts found. Sample check cannot be performed."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1929
-msgid "The headline is defined in the sample post."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1930
-msgid "The headline is missing from the sample post."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1935
-msgid "The publication date is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1936
-msgid "The publication date is missing. Freshness signals may be affected."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1941
-msgid "The modification date is defined for content freshness."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1942
-msgid "The modification date is not available."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1949
-msgid "The author is defined for content attribution."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1950
-msgid "No author is set. Content attribution may be unclear."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1959
-msgid "A featured image is set for the sample post."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1960
-msgid "No featured image on the sample post. Rich results may be limited."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1986
-msgid "FAQ schema extraction is enabled for at least one post type."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1990
-msgid "FAQ content requires both question and answer elements with matching CSS classes."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:1995
-msgid "FAQ schema extraction is not enabled. Enable it if your content contains Q&A sections."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:2040
-msgid "Breadcrumb navigation is defined in the structured data."
-msgstr ""
-
-#: includes/class-ai-search-schema-settings.php:2041
-msgid "The breadcrumb trail is empty. Site hierarchy may be unclear."
-msgstr ""
-
-#: templates/admin-settings.php:231
-msgid "Tell search engines who you are. This information forms the foundation of Organization and WebSite schemas, helping you appear in knowledge panels and AI search results."
-msgstr ""
-
-#: templates/admin-settings.php:305
-msgid "Build trust and recognition. Your logo and social profiles help search engines verify your identity and display richer, more credible results."
-msgstr ""
-
-#: templates/admin-settings.php:381
-msgid "Control how structured data is delivered. JSON-LD is invisible to visitors but essential for search engines and AI systems to understand your content."
-msgstr ""
-
-#: templates/admin-settings.php:449
-msgid "Fine-tune schema per content type. Choose the right schema for each post type or taxonomy to maximize how your content appears in search results."
-msgstr ""
-
-#: templates/admin-settings.php:585
-msgid "Get found locally. Address, coordinates, and business hours power LocalBusiness schema for Google Maps, local search, and \"near me\" queries."
-msgstr ""
-
-#: templates/admin-settings.php:920
-msgid "AEO/GEO Diagnostics"
-msgstr ""
-
-#: templates/admin-settings.php:921
-msgid "Check your schema readiness. This diagnostic validates required fields and highlights issues that may prevent rich results or AI visibility."
-msgstr ""
-
-#: templates/admin-settings.php:946
-msgid "Info"
-msgstr ""
-
-#: templates/admin-settings.php:981
-msgid "Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude understand your site structure for better AI-powered search visibility."
 msgstr ""
 
 #: templates/wizard/steps/step-2-type.php:24
@@ -3383,38 +1951,425 @@ msgstr ""
 msgid "e.g., Corporation, NPO, Blog, News site"
 msgstr ""
 
-#: tools/test-manager.php:48
-msgid "You do not have sufficient permissions to access this page."
+#: templates/wizard/steps/step-2-type.php:33
+msgid "What type of site is this?"
 msgstr ""
 
-#: tools/test-manager.php:49
-msgid "Access Denied"
+#: templates/wizard/steps/step-2-type.php:36
+msgid "Select the option that best describes your website. This helps search engines understand your content."
 msgstr ""
 
-#: tools/test-manager.php:60
-msgid "Security check failed."
+#: templates/wizard/steps/step-3-location.php:15
+msgid "General Local Business"
 msgstr ""
 
-#: tools/test-manager.php:80
-msgid "Data saved successfully."
+#: templates/wizard/steps/step-3-location.php:16
+msgid "Restaurant"
 msgstr ""
 
-#: tools/test-manager.php:84
-msgid "Invalid JSON data."
+#: templates/wizard/steps/step-3-location.php:17
+msgid "Cafe"
 msgstr ""
 
-#: tools/test-manager.php:133
-msgid "Screenshot uploaded."
+#: templates/wizard/steps/step-3-location.php:18
+msgid "Bar or Pub"
 msgstr ""
 
-#: tools/test-manager.php:140
-msgid "Failed to create attachment."
+#: templates/wizard/steps/step-3-location.php:19
+msgid "Bakery"
 msgstr ""
 
-#: tools/test-manager.php:146
-msgid "No file uploaded."
+#: templates/wizard/steps/step-3-location.php:20
+msgid "Store / Retail"
 msgstr ""
 
-#: tools/test-manager.php:184
-msgid "AI Search Schema Test Manager"
+#: templates/wizard/steps/step-3-location.php:21
+msgid "Beauty Salon"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:22
+msgid "Hair Salon"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:23
+msgid "Spa"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:24
+msgid "Dentist"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:25
+msgid "Doctor / Physician"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:26
+msgid "Hospital"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:27
+msgid "Pharmacy"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:28
+msgid "Legal Service"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:29
+msgid "Accounting Service"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:30
+msgid "Real Estate Agent"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:31
+msgid "Auto Repair"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:32
+msgid "Hotel"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:33
+msgid "Fitness Center / Gym"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:34
+msgid "Home & Construction Service"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:39
+msgid "Not specified"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:40
+msgid "$ - Budget-friendly"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:41
+msgid "$$ - Moderate"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:42
+msgid "$$$ - Upscale"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:43
+msgid "$$$$ - Luxury"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:49
+msgid "Business Location"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:52
+msgid "Enter your business details for local SEO. This information helps customers find you."
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:61
+#: templates/wizard/steps/step-5-complete.php:70
+msgid "Business Type"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:76
+#: templates/wizard/steps/step-5-complete.php:66
+msgid "Business Name"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:94
+msgid "Postal Code"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:96
+msgid "e.g., 100-0001"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:100
+msgid "Country"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:108
+msgid "Prefecture / State"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:110
+msgid "e.g., Tokyo"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:115
+msgid "City / Town"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:117
+msgid "e.g., Chiyoda"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:122
+msgid "Street Address"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:124
+msgid "e.g., 1-1-1 Marunouchi"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:132
+msgid "Latitude"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:138
+msgid "Longitude"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:158
+msgid "Contact Information"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:164
+msgid "Phone Number"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:166
+msgid "e.g., 03-1234-5678"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:170
+msgid "Email"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:172
+msgid "e.g., info@example.com"
+msgstr ""
+
+#: templates/wizard/steps/step-3-location.php:180
+msgid "Price Range"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:39
+msgid "Set your business hours. This helps customers know when you are open."
+msgstr ""
+
+#. translators: %s: example time range
+#: templates/wizard/steps/step-4-hours.php:45
+msgid "Example: %s"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:59
+msgid "Quick Setup"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:63
+msgid "Same hours every weekday"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:66
+msgid "Same hours every day"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:69
+msgid "Clear all"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:78
+msgid "Day"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:81
+#: templates/wizard/steps/welcome.php:66
+msgid "Open"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:84
+msgid "Opening Time"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:87
+msgid "Closing Time"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:109
+#: templates/wizard/steps/step-4-hours.php:119
+msgid "Select"
+msgstr ""
+
+#: templates/wizard/steps/step-4-hours.php:137
+msgid "Preview"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:24
+msgid "Setup Complete!"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:28
+msgid "Congratulations! Your site is now optimized for search engines. Here is a summary of your settings."
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:37
+msgid "Settings Summary"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:43
+msgid "Site Information"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:63
+msgid "Business Information"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:92
+msgid "Phone"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:108
+msgid "Generated Schema"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:120
+msgid "Next Steps"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:126
+msgid "Schema markup is now active on your site"
+msgstr ""
+
+#. translators: %s: link to Google Rich Results Test
+#: templates/wizard/steps/step-5-complete.php:135
+msgid "Test your schema with %s"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:136
+msgid "Google Rich Results Test"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:144
+msgid "Customize additional settings from the plugin settings page"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:155
+msgid "Go to Settings"
+msgstr ""
+
+#: templates/wizard/steps/step-5-complete.php:161
+msgid "View Site"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:20
+msgid "Optional: Enter your Google Maps API key to enable automatic coordinate lookup for your business address."
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:34
+msgid "Why do I need this?"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:37
+msgid "The Google Maps API key enables the \"Get Coordinates\" feature in the next step. This automatically converts your business address into latitude and longitude coordinates, which improves your local SEO and helps Google Maps show your location accurately."
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:40
+msgid "You can skip this step and enter coordinates manually, or add the API key later from the settings page."
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:51
+msgid "e.g., AIzaSyB..."
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:57
+msgid "API key is already configured."
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:68
+msgid "How to get an API key"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:71
+msgid "Go to the Google Cloud Console"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:72
+msgid "Create a new project or select an existing one"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:73
+msgid "Enable the \"Geocoding API\""
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:74
+msgid "Go to \"Credentials\" and create an API key"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:75
+msgid "Copy the API key and paste it above"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:81
+msgid "Open Google Cloud Console"
+msgstr ""
+
+#: templates/wizard/steps/step-api-key.php:96
+msgid "Skip"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:34
+msgid "Welcome to AI Search Schema"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:38
+msgid "Get your site optimized for Google search in just 5 minutes. This wizard will guide you through the essential settings."
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:52
+msgid "Google Search Preview"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:57
+msgid "Your City"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:63
+msgid "Business"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:68
+msgid "Closes at 6:00 PM"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:80
+msgid "Get Started"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:88
+msgid "Import from another plugin"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:95
+msgid "Set up later"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:105
+msgid "Close"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:115
+msgid "Import Existing Settings"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:119
+msgid "We detected these SEO plugins. You can import their settings to get started quickly."
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:159
+msgid "Not detected"
+msgstr ""
+
+#: templates/wizard/steps/welcome.php:168
+msgid "Continue without importing"
+msgstr ""
+
+#: templates/wizard/wizard-page.php:66
+msgid "Step template not found."
+msgstr ""
+
+#. translators: %s: plugin version
+#: templates/wizard/wizard-page.php:78
+msgid "AI Search Schema v%s"
 msgstr ""
