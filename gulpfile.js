@@ -116,6 +116,9 @@ function copy() {
   });
 
   const excludes = [
+    // WP.org準拠: 隠しファイル除外
+    '!.*',
+    '!**/.*',
     '!node_modules/**',
     `!${DIST}/**`,
     '!bundled/**',
