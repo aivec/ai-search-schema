@@ -287,30 +287,6 @@ The plugin's admin panel includes a real-time guide showing which properties are
 
 ---
 
-## External Communication / 外部通信について
-
-### License Validation (Pro Version) / ライセンス検証（Pro版）
-
-When activating a Pro license, the following information may be sent to our license server:
-
-Pro版ライセンス有効化時に、以下の情報がライセンスサーバーに送信される場合があります：
-
-- License key / ライセンスキー
-- Site URL (domain) / サイトURL（ドメイン）
-- Plugin version / プラグインバージョン
-
-**We do NOT collect or transmit / 収集・送信しない情報:**
-
-- Post/page content / 投稿・ページのコンテンツ
-- User personal data / ユーザーの個人情報
-- Analytics or tracking data / アナリティクス・トラッキングデータ
-
-**Note:** The free version does not make any external API calls for license validation.
-
-**注意:** 無料版ではライセンス検証のための外部API通信は行いません。
-
----
-
 ## Further Resources / 関連リソース
 
 - [Google Structured Data Documentation](https://developers.google.com/search/docs/appearance/structured-data)

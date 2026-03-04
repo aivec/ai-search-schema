@@ -24,8 +24,7 @@ const paths = {
     'assets/**/*',
     'readme.txt',
     'LICENSE*'
-    // Note: composer.json, package.json, package-lock.json are excluded
-    // per WP.org Plugin Team guidelines (.distignore)
+    // Note: composer.json, package.json, package-lock.json excluded for WP.org
   ]
 };
 

@@ -73,7 +73,7 @@ $site_logo = $options['logo_url'] ?? '';
 							</svg>
 							<?php esc_html_e( 'Upload Logo', 'aivec-ai-search-schema' ); ?>
 						</button>
-						<button type="button" class="ais-wizard-btn ais-wizard-btn--text" id="ais-wizard-remove-logo" style="<?php echo $site_logo ? '' : 'display: none;'; ?>">
+						<button type="button" class="ais-wizard-btn ais-wizard-btn--text" id="ais-wizard-remove-logo" style="<?php echo esc_attr( $site_logo ? '' : 'display: none;' ); ?>">
 							<?php esc_html_e( 'Remove', 'aivec-ai-search-schema' ); ?>
 						</button>
 					</div>

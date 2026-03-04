@@ -121,7 +121,8 @@ foreach ( $sources as $source ) {
 
 				<div class="ais-wizard-import-sources">
 					<?php foreach ( $sources as $source_key => $source ) : ?>
-						<div class="ais-wizard-import-source <?php echo $source['detected'] ? 'ais-wizard-import-source--detected' : 'ais-wizard-import-source--not-found'; ?>">
+						<?php $source_class = 'ais-wizard-import-source ' . ( $source['detected'] ? 'ais-wizard-import-source--detected' : 'ais-wizard-import-source--not-found' ); ?>
+						<div class="<?php echo esc_attr( $source_class ); ?>">
 							<div class="ais-wizard-import-source__header">
 								<span class="ais-wizard-import-source__icon">
 									<?php if ( $source['detected'] ) : ?>

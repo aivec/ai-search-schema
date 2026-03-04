@@ -2,16 +2,16 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.2.3\n"
+"Project-Id-Version: Aivec AI Search Schema 1.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-04T07:55:53+00:00\n"
+"POT-Creation-Date: 2026-03-04T07:59:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.12.0\n"
+"X-Generator: WP-CLI 2.11.0\n"
 "X-Domain: aivec-ai-search-schema\n"
 
 #. Plugin Name of the plugin
@@ -67,35 +67,30 @@ msgstr ""
 #. translators: %s: schema type name
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:148
 #: includes/class-avc-ais-diagnostic-evaluator.php:148
-#, php-format
 msgid "Target schema type \"%s\" not found in JSON-LD."
 msgstr ""
 
 #. translators: %s: comma-separated list of field names
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:205
 #: includes/class-avc-ais-diagnostic-evaluator.php:205
-#, php-format
 msgid "Required fields missing: %s"
 msgstr ""
 
 #. translators: %s: comma-separated list of field names
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:261
 #: includes/class-avc-ais-diagnostic-evaluator.php:261
-#, php-format
 msgid "Recommended fields missing: %s"
 msgstr ""
 
 #. translators: 1: field name, 2: minimum count, 3: actual count
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:280
 #: includes/class-avc-ais-diagnostic-evaluator.php:280
-#, php-format
 msgid "%1$s has %3$d items (minimum: %2$d)."
 msgstr ""
 
 #. translators: 1: field name, 2: minimum length, 3: actual length
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:301
 #: includes/class-avc-ais-diagnostic-evaluator.php:301
-#, php-format
 msgid "%1$s is %3$d characters (minimum: %2$d)."
 msgstr ""
 
@@ -107,7 +102,6 @@ msgstr ""
 #. translators: %s: comma-separated list of field names
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:364
 #: includes/class-avc-ais-diagnostic-evaluator.php:364
-#, php-format
 msgid "Partial data: some fields in group are missing: %s"
 msgstr ""
 
@@ -208,7 +202,6 @@ msgstr ""
 #. translators: %s: comma separated list of missing fields
 #: dist/includes/class-avc-ais-schema.php:130
 #: includes/class-avc-ais-schema.php:130
-#, php-format
 msgid "Missing fields: %s."
 msgstr ""
 
@@ -219,7 +212,6 @@ msgstr ""
 #: includes/class-avc-ais-schema.php:927
 #: src/ContentResolver.php:126
 #: src/Schema/class-avc-ais-contentresolver.php:117
-#, php-format
 msgid "Search results for \"%s\""
 msgstr ""
 
@@ -281,7 +273,6 @@ msgstr ""
 #: dist/templates/admin-settings.php:279
 #: includes/class-avc-ais-settings.php:165
 #: templates/admin-settings.php:279
-#, php-format
 msgid "Remove \"%s\""
 msgstr ""
 
@@ -378,7 +369,6 @@ msgstr ""
 #. translators: %d: number of seconds an admin must wait before requesting new coordinates.
 #: dist/includes/class-avc-ais-settings.php:235
 #: includes/class-avc-ais-settings.php:235
-#, php-format
 msgid "Please wait %d seconds before requesting new coordinates."
 msgstr ""
 
@@ -816,7 +806,6 @@ msgstr ""
 #. translators: %s decimal places
 #: dist/includes/class-avc-ais-settings.php:1865
 #: includes/class-avc-ais-settings.php:1865
-#, php-format
 msgid "Geo coordinates are registered (%s decimal places). Map display is ready."
 msgstr ""
 
@@ -1388,7 +1377,6 @@ msgstr ""
 #. translators: %d: number of errors
 #: dist/templates/admin-settings.php:179
 #: templates/admin-settings.php:179
-#, php-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] ""
@@ -1397,7 +1385,6 @@ msgstr[1] ""
 #. translators: %d: number of warnings
 #: dist/templates/admin-settings.php:187
 #: templates/admin-settings.php:187
-#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
@@ -2352,7 +2339,6 @@ msgstr ""
 #. translators: %s: datetime string
 #: dist/templates/admin-settings.php:968
 #: templates/admin-settings.php:968
-#, php-format
 msgid "最終診断: %s（再読み込みで更新）"
 msgstr ""
 
@@ -2776,7 +2762,6 @@ msgstr ""
 #. translators: %s: example time range
 #: dist/templates/wizard/steps/step-4-hours.php:45
 #: templates/wizard/steps/step-4-hours.php:45
-#, php-format
 msgid "Example: %s"
 msgstr ""
 
@@ -2882,7 +2867,6 @@ msgstr ""
 #. translators: %s: link to Google Rich Results Test
 #: dist/templates/wizard/steps/step-5-complete.php:135
 #: templates/wizard/steps/step-5-complete.php:135
-#, php-format
 msgid "Test your schema with %s"
 msgstr ""
 
@@ -3054,7 +3038,6 @@ msgstr ""
 #. translators: %s: plugin version
 #: dist/templates/wizard/wizard-page.php:82
 #: templates/wizard/wizard-page.php:82
-#, php-format
 msgid "AI Search Schema v%s"
 msgstr ""
 

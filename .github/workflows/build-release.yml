@@ -103,13 +103,15 @@ jobs:
         run: |
           mkdir -p dist/${{ env.PLUGIN_SLUG }}
 
-          # 必要なファイルをコピー（tools/を除外）
+          # 必要なファイルをコピー（WP.org準拠：vendor/License除外）
           rsync -av --progress \
             --exclude='.git' \
             --exclude='.github' \
             --exclude='.gitignore' \
             --exclude='.gitattributes' \
             --exclude='node_modules' \
+            --exclude='vendor' \
+            --exclude='src/License' \
             --exclude='tests' \
             --exclude='phpunit.xml*' \
             --exclude='phpcs.xml*' \
@@ -132,11 +134,11 @@ jobs:
             --exclude='.claude/' \
             --exclude='.cursor/' \
             --exclude='.vscode/' \
+            --exclude='bundled/' \
             --exclude='ARCHITECTURE.md' \
             --exclude='CLAUDE.md' \
             --exclude='docs/' \
             --exclude='tools/' \
-            --exclude='bundled/' \
             ./ dist/${{ env.PLUGIN_SLUG }}/
 
           # ZIP作成

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: AI Search Schema 1.1.4\n"
+"Project-Id-Version: AI Search Schema 1.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
-"POT-Creation-Date: 2026-02-03T11:22:17+00:00\n"
+"POT-Creation-Date: 2026-03-04T07:49:32+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
 "Last-Translator: Aivec LLC. <info@aivec.co.jp>\n"
 "Language-Team: Aivec LLC. <info@aivec.co.jp>\n"
@@ -52,8 +52,8 @@ msgstr ""
 msgid "https://aivec.co.jp/"
 msgstr "https://aivec.co.jp/apps"
 
-#: dist/includes/class-avc-ais-breadcrumbs.php:214
-#: includes/class-avc-ais-breadcrumbs.php:214
+#: dist/includes/class-avc-ais-breadcrumbs.php:215
+#: includes/class-avc-ais-breadcrumbs.php:215
 msgid "Home"
 msgstr "ホーム"
 
@@ -124,211 +124,211 @@ msgstr ""
 msgid "Partial data: some fields in group are missing: %s"
 msgstr ""
 
-#: dist/includes/class-avc-ais-metabox.php:50
-#: dist/includes/class-avc-ais-metabox.php:77
-#: dist/includes/class-avc-ais-settings.php:68 dist/src/Wizard/Wizard.php:222
-#: includes/class-avc-ais-metabox.php:50 includes/class-avc-ais-metabox.php:77
-#: includes/class-avc-ais-settings.php:68 src/Wizard/Wizard.php:222
+#: dist/includes/class-avc-ais-metabox.php:51
+#: dist/includes/class-avc-ais-metabox.php:78
+#: dist/includes/class-avc-ais-settings.php:69 dist/src/Wizard/Wizard.php:224
+#: includes/class-avc-ais-metabox.php:51 includes/class-avc-ais-metabox.php:78
+#: includes/class-avc-ais-settings.php:69 src/Wizard/Wizard.php:224
 msgid "AI Search Schema"
 msgstr "Aivec AI Search Schema"
 
-#: dist/includes/class-avc-ais-metabox.php:80
-#: includes/class-avc-ais-metabox.php:80
+#: dist/includes/class-avc-ais-metabox.php:81
+#: includes/class-avc-ais-metabox.php:81
 #, fuzzy
 msgid "Page schema settings"
 msgstr "AEOスキーマ設定"
 
-#: dist/includes/class-avc-ais-metabox.php:84
-#: includes/class-avc-ais-metabox.php:84
+#: dist/includes/class-avc-ais-metabox.php:85
+#: includes/class-avc-ais-metabox.php:85
 msgid "Choose the schema type and optionally set selectors for FAQ extraction."
 msgstr ""
 "スキーマタイプを選択し、必要に応じてFAQ抽出用のセレクターを設定します。"
 
-#: dist/includes/class-avc-ais-metabox.php:96
-#: includes/class-avc-ais-metabox.php:96
+#: dist/includes/class-avc-ais-metabox.php:97
+#: includes/class-avc-ais-metabox.php:97
 msgid "Page type:"
 msgstr "ページ種別:"
 
-#: dist/includes/class-avc-ais-metabox.php:102
-#: includes/class-avc-ais-metabox.php:102
+#: dist/includes/class-avc-ais-metabox.php:103
+#: includes/class-avc-ais-metabox.php:103
 msgid "Automatic"
 msgstr "自動"
 
-#: dist/includes/class-avc-ais-metabox.php:103
-#: dist/includes/class-avc-ais-settings.php:1274
-#: dist/includes/class-avc-ais-settings.php:1593
-#: includes/class-avc-ais-metabox.php:103
-#: includes/class-avc-ais-settings.php:1274
-#: includes/class-avc-ais-settings.php:1593
+#: dist/includes/class-avc-ais-metabox.php:104
+#: dist/includes/class-avc-ais-settings.php:1276
+#: dist/includes/class-avc-ais-settings.php:1595
+#: includes/class-avc-ais-metabox.php:104
+#: includes/class-avc-ais-settings.php:1276
+#: includes/class-avc-ais-settings.php:1595
 msgid "Article"
 msgstr "Article"
 
-#: dist/includes/class-avc-ais-metabox.php:104
-#: dist/includes/class-avc-ais-settings.php:1275
-#: dist/includes/class-avc-ais-settings.php:1596
-#: dist/includes/class-avc-ais-settings.php:2059
-#: includes/class-avc-ais-metabox.php:104
-#: includes/class-avc-ais-settings.php:1275
-#: includes/class-avc-ais-settings.php:1596
-#: includes/class-avc-ais-settings.php:2059
+#: dist/includes/class-avc-ais-metabox.php:105
+#: dist/includes/class-avc-ais-settings.php:1277
+#: dist/includes/class-avc-ais-settings.php:1598
+#: dist/includes/class-avc-ais-settings.php:2061
+#: includes/class-avc-ais-metabox.php:105
+#: includes/class-avc-ais-settings.php:1277
+#: includes/class-avc-ais-settings.php:1598
+#: includes/class-avc-ais-settings.php:2061
 msgid "FAQPage"
 msgstr "FAQPage"
 
-#: dist/includes/class-avc-ais-metabox.php:105
-#: dist/includes/class-avc-ais-settings.php:1276
-#: dist/includes/class-avc-ais-settings.php:1597
-#: includes/class-avc-ais-metabox.php:105
-#: includes/class-avc-ais-settings.php:1276
-#: includes/class-avc-ais-settings.php:1597
+#: dist/includes/class-avc-ais-metabox.php:106
+#: dist/includes/class-avc-ais-settings.php:1278
+#: dist/includes/class-avc-ais-settings.php:1599
+#: includes/class-avc-ais-metabox.php:106
+#: includes/class-avc-ais-settings.php:1278
+#: includes/class-avc-ais-settings.php:1599
 msgid "QAPage"
 msgstr "QAPage"
 
-#: dist/includes/class-avc-ais-metabox.php:106
-#: dist/includes/class-avc-ais-settings.php:1592
-#: dist/includes/class-avc-ais-settings.php:1941
-#: includes/class-avc-ais-metabox.php:106
-#: includes/class-avc-ais-settings.php:1592
-#: includes/class-avc-ais-settings.php:1941
+#: dist/includes/class-avc-ais-metabox.php:107
+#: dist/includes/class-avc-ais-settings.php:1594
+#: dist/includes/class-avc-ais-settings.php:1943
+#: includes/class-avc-ais-metabox.php:107
+#: includes/class-avc-ais-settings.php:1594
+#: includes/class-avc-ais-settings.php:1943
 msgid "WebPage"
 msgstr "WebPage"
 
-#: dist/includes/class-avc-ais-metabox.php:112
-#: includes/class-avc-ais-metabox.php:112
+#: dist/includes/class-avc-ais-metabox.php:113
+#: includes/class-avc-ais-metabox.php:113
 msgid "FAQ question class:"
 msgstr "FAQ 質問クラス:"
 
-#: dist/includes/class-avc-ais-metabox.php:115
-#: includes/class-avc-ais-metabox.php:115
+#: dist/includes/class-avc-ais-metabox.php:116
+#: includes/class-avc-ais-metabox.php:116
 msgid "Example: faq-question, accordion-title"
 msgstr "例: faq-question, accordion-title"
 
-#: dist/includes/class-avc-ais-metabox.php:121
-#: includes/class-avc-ais-metabox.php:121
+#: dist/includes/class-avc-ais-metabox.php:122
+#: includes/class-avc-ais-metabox.php:122
 msgid "FAQ answer class:"
 msgstr "FAQ 回答クラス:"
 
-#: dist/includes/class-avc-ais-metabox.php:124
-#: includes/class-avc-ais-metabox.php:124
+#: dist/includes/class-avc-ais-metabox.php:125
+#: includes/class-avc-ais-metabox.php:125
 msgid "Example: faq-answer, accordion-content"
 msgstr "例: faq-answer, accordion-content"
 
-#: dist/includes/class-avc-ais-schema.php:144
-#: includes/class-avc-ais-schema.php:144
+#: dist/includes/class-avc-ais-schema.php:123
+#: includes/class-avc-ais-schema.php:123
 msgid "LocalBusiness: Skipped output because required fields were missing."
 msgstr "必須項目が不足していたため LocalBusiness の出力をスキップしました。"
 
 #. translators: %s: comma separated list of missing fields
-#: dist/includes/class-avc-ais-schema.php:151
-#: includes/class-avc-ais-schema.php:151
+#: dist/includes/class-avc-ais-schema.php:130
+#: includes/class-avc-ais-schema.php:130
 #, php-format
 msgid "Missing fields: %s."
 msgstr "不足フィールド: %s。"
 
 #. translators: %s: search query string.
-#: dist/includes/class-avc-ais-schema.php:948 dist/src/ContentResolver.php:124
-#: dist/src/Schema/class-avc-ais-contentresolver.php:116
-#: includes/class-avc-ais-schema.php:948 src/ContentResolver.php:124
-#: src/Schema/class-avc-ais-contentresolver.php:116
+#: dist/includes/class-avc-ais-schema.php:927 dist/src/ContentResolver.php:126
+#: dist/src/Schema/class-avc-ais-contentresolver.php:117
+#: includes/class-avc-ais-schema.php:927 src/ContentResolver.php:126
+#: src/Schema/class-avc-ais-contentresolver.php:117
 #, php-format
 msgid "Search results for \"%s\""
 msgstr "「%s」の検索結果"
 
-#: dist/includes/class-avc-ais-schema.php:952 dist/src/ContentResolver.php:128
-#: dist/src/Schema/class-avc-ais-contentresolver.php:120
-#: includes/class-avc-ais-schema.php:952 src/ContentResolver.php:128
-#: src/Schema/class-avc-ais-contentresolver.php:120
+#: dist/includes/class-avc-ais-schema.php:931 dist/src/ContentResolver.php:130
+#: dist/src/Schema/class-avc-ais-contentresolver.php:121
+#: includes/class-avc-ais-schema.php:931 src/ContentResolver.php:130
+#: src/Schema/class-avc-ais-contentresolver.php:121
 msgid "Search results"
 msgstr "検索結果"
 
-#: dist/includes/class-avc-ais-schema.php:2473
-#: dist/includes/class-avc-ais-schema.php:2514
-#: includes/class-avc-ais-schema.php:2473
-#: includes/class-avc-ais-schema.php:2514
+#: dist/includes/class-avc-ais-schema.php:2262
+#: dist/includes/class-avc-ais-schema.php:2303
+#: includes/class-avc-ais-schema.php:2262
+#: includes/class-avc-ais-schema.php:2303
 msgid "AI Search Schema – Development Mode Warning"
 msgstr "Aivec AI Search Schema – 開発モード警告"
 
-#: dist/includes/class-avc-ais-schema.php:2477
-#: dist/includes/class-avc-ais-schema.php:2517
-#: includes/class-avc-ais-schema.php:2477
-#: includes/class-avc-ais-schema.php:2517
+#: dist/includes/class-avc-ais-schema.php:2266
+#: dist/includes/class-avc-ais-schema.php:2306
+#: includes/class-avc-ais-schema.php:2266
+#: includes/class-avc-ais-schema.php:2306
 msgid "The following validation errors were detected:"
 msgstr "以下のバリデーションエラーが検出されました："
 
-#: dist/includes/class-avc-ais-schema.php:2487
-#: dist/includes/class-avc-ais-schema.php:2526
-#: includes/class-avc-ais-schema.php:2487
-#: includes/class-avc-ais-schema.php:2526
+#: dist/includes/class-avc-ais-schema.php:2276
+#: dist/includes/class-avc-ais-schema.php:2315
+#: includes/class-avc-ais-schema.php:2276
+#: includes/class-avc-ais-schema.php:2315
 msgid "Warnings:"
 msgstr "警告:"
 
-#: dist/includes/class-avc-ais-schema.php:2496
-#: dist/includes/class-avc-ais-schema.php:2535
-#: includes/class-avc-ais-schema.php:2496
-#: includes/class-avc-ais-schema.php:2535
+#: dist/includes/class-avc-ais-schema.php:2285
+#: dist/includes/class-avc-ais-schema.php:2324
+#: includes/class-avc-ais-schema.php:2285
+#: includes/class-avc-ais-schema.php:2324
 msgid "This warning only appears while WP_DEBUG is true."
 msgstr "この警告はWP_DEBUG = trueのときのみ表示されます。"
 
-#: dist/includes/class-avc-ais-settings.php:67
-#: dist/includes/class-avc-ais-settings.php:79
+#: dist/includes/class-avc-ais-settings.php:68
+#: dist/includes/class-avc-ais-settings.php:80
 #: dist/templates/admin-settings.php:137 dist/templates/admin-settings.php:142
-#: includes/class-avc-ais-settings.php:67
-#: includes/class-avc-ais-settings.php:79 templates/admin-settings.php:137
+#: includes/class-avc-ais-settings.php:68
+#: includes/class-avc-ais-settings.php:80 templates/admin-settings.php:137
 #: templates/admin-settings.php:142
 msgid "AI Search Schema Settings"
 msgstr "Aivec AI Search Schema 設定"
 
-#: dist/includes/class-avc-ais-settings.php:80
-#: includes/class-avc-ais-settings.php:80
+#: dist/includes/class-avc-ais-settings.php:81
+#: includes/class-avc-ais-settings.php:81
 msgid "Settings"
 msgstr "設定"
 
 #. translators: %s: The language label shown as a tag.
-#: dist/includes/class-avc-ais-settings.php:164
-#: dist/templates/admin-settings.php:278
-#: includes/class-avc-ais-settings.php:164 templates/admin-settings.php:278
+#: dist/includes/class-avc-ais-settings.php:165
+#: dist/templates/admin-settings.php:279
+#: includes/class-avc-ais-settings.php:165 templates/admin-settings.php:279
 #, php-format
 msgid "Remove \"%s\""
 msgstr "「%s」を削除"
 
-#: dist/includes/class-avc-ais-settings.php:167
-#: dist/templates/admin-settings.php:796
-#: includes/class-avc-ais-settings.php:167 templates/admin-settings.php:796
+#: dist/includes/class-avc-ais-settings.php:168
+#: dist/templates/admin-settings.php:802
+#: includes/class-avc-ais-settings.php:168 templates/admin-settings.php:802
 msgid "Fetch coordinates from address"
 msgstr "住所から緯度・経度を取得"
 
-#: dist/includes/class-avc-ais-settings.php:168 dist/src/Wizard/Wizard.php:292
-#: includes/class-avc-ais-settings.php:168 src/Wizard/Wizard.php:292
+#: dist/includes/class-avc-ais-settings.php:169 dist/src/Wizard/Wizard.php:294
+#: includes/class-avc-ais-settings.php:169 src/Wizard/Wizard.php:294
 msgid "Fetching..."
 msgstr "取得中…"
 
-#: dist/includes/class-avc-ais-settings.php:169
-#: includes/class-avc-ais-settings.php:169
+#: dist/includes/class-avc-ais-settings.php:170
+#: includes/class-avc-ais-settings.php:170
 msgid "Latitude and longitude updated."
 msgstr "緯度・経度を更新しました。"
 
-#: dist/includes/class-avc-ais-settings.php:170
-#: dist/includes/class-avc-ais-settings.php:430
-#: dist/includes/class-avc-ais-settings.php:589
-#: includes/class-avc-ais-settings.php:170
-#: includes/class-avc-ais-settings.php:430
-#: includes/class-avc-ais-settings.php:589
+#: dist/includes/class-avc-ais-settings.php:171
+#: dist/includes/class-avc-ais-settings.php:432
+#: dist/includes/class-avc-ais-settings.php:591
+#: includes/class-avc-ais-settings.php:171
+#: includes/class-avc-ais-settings.php:432
+#: includes/class-avc-ais-settings.php:591
 msgid "Unable to fetch latitude and longitude."
 msgstr "緯度・経度を取得できませんでした。"
 
-#: dist/includes/class-avc-ais-settings.php:174
-#: dist/includes/class-avc-ais-settings.php:269
-#: includes/class-avc-ais-settings.php:174
-#: includes/class-avc-ais-settings.php:269
+#: dist/includes/class-avc-ais-settings.php:175
+#: dist/includes/class-avc-ais-settings.php:271
+#: includes/class-avc-ais-settings.php:175
+#: includes/class-avc-ais-settings.php:271
 msgid "Enter the address information."
 msgstr "住所情報を入力してください。"
 
-#: dist/includes/class-avc-ais-settings.php:178
-#: includes/class-avc-ais-settings.php:178
+#: dist/includes/class-avc-ais-settings.php:179
+#: includes/class-avc-ais-settings.php:179
 msgid "Please configure a Google Maps API key."
 msgstr "Google Maps APIキーを設定してください。"
 
-#: dist/includes/class-avc-ais-settings.php:184
-#: includes/class-avc-ais-settings.php:184
+#: dist/includes/class-avc-ais-settings.php:185
+#: includes/class-avc-ais-settings.php:185
 msgid ""
 "The primary role of this site is defined as an \"Organization\". You can "
 "also enter headquarters or branch office information in the \"Local details "
@@ -339,8 +339,8 @@ msgstr ""
 "営業時間」セクションで本社や支店の情報を入力することで、組織を物理的な所在地"
 "と関連付け、ローカル検索結果での露出を高めることができます。"
 
-#: dist/includes/class-avc-ais-settings.php:186
-#: includes/class-avc-ais-settings.php:186
+#: dist/includes/class-avc-ais-settings.php:187
+#: includes/class-avc-ais-settings.php:187
 msgid ""
 "The primary role of this site is defined as a \"Store/Business location\". "
 "This setting is ideal when the site itself represents a specific physical "
@@ -349,68 +349,68 @@ msgstr ""
 "このサイトの主な役割は「店舗・ビジネス拠点」として定義されています。この設定"
 "は、サイト自体が特定の実店舗やサービス拠点を表す場合に最適です。"
 
-#: dist/includes/class-avc-ais-settings.php:189
-#: includes/class-avc-ais-settings.php:189
+#: dist/includes/class-avc-ais-settings.php:190
+#: includes/class-avc-ais-settings.php:190
 msgid "Regenerating..."
 msgstr "再生成中…"
 
-#: dist/includes/class-avc-ais-settings.php:190
-#: dist/templates/admin-settings.php:1009
-#: includes/class-avc-ais-settings.php:190 templates/admin-settings.php:1009
+#: dist/includes/class-avc-ais-settings.php:191
+#: dist/templates/admin-settings.php:1015
+#: includes/class-avc-ais-settings.php:191 templates/admin-settings.php:1015
 msgid "Regenerate from site data"
 msgstr "サイトデータから再生成"
 
-#: dist/includes/class-avc-ais-settings.php:191 dist/src/Wizard/Wizard.php:278
-#: includes/class-avc-ais-settings.php:191 src/Wizard/Wizard.php:278
+#: dist/includes/class-avc-ais-settings.php:192 dist/src/Wizard/Wizard.php:280
+#: includes/class-avc-ais-settings.php:192 src/Wizard/Wizard.php:280
 msgid "Saving..."
 msgstr "保存中…"
 
-#: dist/includes/class-avc-ais-settings.php:192
-#: dist/templates/admin-settings.php:1006
-#: includes/class-avc-ais-settings.php:192 templates/admin-settings.php:1006
+#: dist/includes/class-avc-ais-settings.php:193
+#: dist/templates/admin-settings.php:1012
+#: includes/class-avc-ais-settings.php:193 templates/admin-settings.php:1012
 msgid "Save edits"
 msgstr "編集を保存"
 
-#: dist/includes/class-avc-ais-settings.php:193
-#: includes/class-avc-ais-settings.php:193
+#: dist/includes/class-avc-ais-settings.php:194
+#: includes/class-avc-ais-settings.php:194
 msgid "Saved!"
 msgstr "保存しました！"
 
-#: dist/includes/class-avc-ais-settings.php:225
-#: dist/includes/class-avc-ais-settings.php:303
-#: dist/includes/class-avc-ais-settings.php:332
-#: includes/class-avc-ais-settings.php:225
-#: includes/class-avc-ais-settings.php:303
-#: includes/class-avc-ais-settings.php:332
+#: dist/includes/class-avc-ais-settings.php:226
+#: dist/includes/class-avc-ais-settings.php:305
+#: dist/includes/class-avc-ais-settings.php:334
+#: includes/class-avc-ais-settings.php:226
+#: includes/class-avc-ais-settings.php:305
+#: includes/class-avc-ais-settings.php:334
 msgid "You do not have permission to perform this action."
 msgstr "この操作を実行する権限がありません。"
 
 #. translators: %d: number of seconds an admin must wait before requesting new coordinates.
-#: dist/includes/class-avc-ais-settings.php:234
-#: includes/class-avc-ais-settings.php:234
+#: dist/includes/class-avc-ais-settings.php:235
+#: includes/class-avc-ais-settings.php:235
 #, php-format
 msgid "Please wait %d seconds before requesting new coordinates."
 msgstr "%d秒待ってから再度座標をリクエストしてください。"
 
-#: dist/includes/class-avc-ais-settings.php:317
-#: includes/class-avc-ais-settings.php:317
+#: dist/includes/class-avc-ais-settings.php:319
+#: includes/class-avc-ais-settings.php:319
 msgid "llms.txt content has been regenerated from site data."
 msgstr "llms.txt の内容がサイトデータから再生成されました。"
 
-#: dist/includes/class-avc-ais-settings.php:352
-#: includes/class-avc-ais-settings.php:352
+#: dist/includes/class-avc-ais-settings.php:354
+#: includes/class-avc-ais-settings.php:354
 msgid "llms.txt content has been saved."
 msgstr "llms.txt の内容を保存しました。"
 
-#: dist/includes/class-avc-ais-settings.php:419
-#: dist/includes/class-avc-ais-settings.php:579
-#: includes/class-avc-ais-settings.php:419
-#: includes/class-avc-ais-settings.php:579
+#: dist/includes/class-avc-ais-settings.php:421
+#: dist/includes/class-avc-ais-settings.php:581
+#: includes/class-avc-ais-settings.php:421
+#: includes/class-avc-ais-settings.php:581
 msgid "The geocoding API returned an error."
 msgstr "ジオコーディングAPIがエラーになりました。"
 
-#: dist/includes/class-avc-ais-settings.php:598
-#: includes/class-avc-ais-settings.php:598
+#: dist/includes/class-avc-ais-settings.php:600
+#: includes/class-avc-ais-settings.php:600
 msgid ""
 "No Google Maps API key was found, so OpenStreetMap (for development) was "
 "used instead."
@@ -418,875 +418,875 @@ msgstr ""
 "Google Maps APIキーが設定されていないため、開発用として OpenStreetMap を使用"
 "しました。"
 
-#: dist/includes/class-avc-ais-settings.php:634
-#: includes/class-avc-ais-settings.php:634
+#: dist/includes/class-avc-ais-settings.php:636
+#: includes/class-avc-ais-settings.php:636
 msgid "Settings template could not be located."
 msgstr "設定テンプレートが見つかりませんでした。"
 
-#: dist/includes/class-avc-ais-settings.php:1239
-#: includes/class-avc-ais-settings.php:1239
+#: dist/includes/class-avc-ais-settings.php:1241
+#: includes/class-avc-ais-settings.php:1241
 msgid "Facebook"
 msgstr "Facebook"
 
-#: dist/includes/class-avc-ais-settings.php:1240
-#: includes/class-avc-ais-settings.php:1240
+#: dist/includes/class-avc-ais-settings.php:1242
+#: includes/class-avc-ais-settings.php:1242
 msgid "Instagram"
 msgstr "Instagram"
 
-#: dist/includes/class-avc-ais-settings.php:1241
-#: includes/class-avc-ais-settings.php:1241
+#: dist/includes/class-avc-ais-settings.php:1243
+#: includes/class-avc-ais-settings.php:1243
 msgid "X"
 msgstr "X"
 
-#: dist/includes/class-avc-ais-settings.php:1242
-#: includes/class-avc-ais-settings.php:1242
+#: dist/includes/class-avc-ais-settings.php:1244
+#: includes/class-avc-ais-settings.php:1244
 msgid "YouTube"
 msgstr "YouTube"
 
-#: dist/includes/class-avc-ais-settings.php:1243
-#: includes/class-avc-ais-settings.php:1243
+#: dist/includes/class-avc-ais-settings.php:1245
+#: includes/class-avc-ais-settings.php:1245
 msgid "Google+"
 msgstr "Google+"
 
-#: dist/includes/class-avc-ais-settings.php:1244
-#: includes/class-avc-ais-settings.php:1244
+#: dist/includes/class-avc-ais-settings.php:1246
+#: includes/class-avc-ais-settings.php:1246
 msgid "LINE"
 msgstr "LINE"
 
-#: dist/includes/class-avc-ais-settings.php:1245
-#: includes/class-avc-ais-settings.php:1245
+#: dist/includes/class-avc-ais-settings.php:1247
+#: includes/class-avc-ais-settings.php:1247
 msgid "TikTok"
 msgstr "TikTok"
 
-#: dist/includes/class-avc-ais-settings.php:1246
-#: includes/class-avc-ais-settings.php:1246
+#: dist/includes/class-avc-ais-settings.php:1248
+#: includes/class-avc-ais-settings.php:1248
 msgid "Threads"
 msgstr "Threads"
 
-#: dist/includes/class-avc-ais-settings.php:1247
-#: includes/class-avc-ais-settings.php:1247
+#: dist/includes/class-avc-ais-settings.php:1249
+#: includes/class-avc-ais-settings.php:1249
 msgid "Pinterest"
 msgstr "Pinterest"
 
-#: dist/includes/class-avc-ais-settings.php:1248
-#: includes/class-avc-ais-settings.php:1248
+#: dist/includes/class-avc-ais-settings.php:1250
+#: includes/class-avc-ais-settings.php:1250
 msgid "mixi"
 msgstr "mixi"
 
-#: dist/includes/class-avc-ais-settings.php:1249
-#: includes/class-avc-ais-settings.php:1249
+#: dist/includes/class-avc-ais-settings.php:1251
+#: includes/class-avc-ais-settings.php:1251
 msgid "Other"
 msgstr "その他"
 
-#: dist/includes/class-avc-ais-settings.php:1273
-#: includes/class-avc-ais-settings.php:1273
+#: dist/includes/class-avc-ais-settings.php:1275
+#: includes/class-avc-ais-settings.php:1275
 msgid "WebPage (default)"
 msgstr "WebPage （標準）"
 
-#: dist/includes/class-avc-ais-settings.php:1277
-#: dist/includes/class-avc-ais-settings.php:1595
-#: includes/class-avc-ais-settings.php:1277
-#: includes/class-avc-ais-settings.php:1595
+#: dist/includes/class-avc-ais-settings.php:1279
+#: dist/includes/class-avc-ais-settings.php:1597
+#: includes/class-avc-ais-settings.php:1279
+#: includes/class-avc-ais-settings.php:1597
 msgid "NewsArticle"
 msgstr "NewsArticle"
 
-#: dist/includes/class-avc-ais-settings.php:1278
-#: dist/includes/class-avc-ais-settings.php:1594
-#: includes/class-avc-ais-settings.php:1278
-#: includes/class-avc-ais-settings.php:1594
+#: dist/includes/class-avc-ais-settings.php:1280
+#: dist/includes/class-avc-ais-settings.php:1596
+#: includes/class-avc-ais-settings.php:1280
+#: includes/class-avc-ais-settings.php:1596
 msgid "BlogPosting"
 msgstr "BlogPosting"
 
-#: dist/includes/class-avc-ais-settings.php:1279
-#: dist/includes/class-avc-ais-settings.php:1598
-#: includes/class-avc-ais-settings.php:1279
-#: includes/class-avc-ais-settings.php:1598
+#: dist/includes/class-avc-ais-settings.php:1281
+#: dist/includes/class-avc-ais-settings.php:1600
+#: includes/class-avc-ais-settings.php:1281
+#: includes/class-avc-ais-settings.php:1600
 msgid "Product"
 msgstr "Product"
 
-#: dist/includes/class-avc-ais-settings.php:1307
-#: includes/class-avc-ais-settings.php:1307
+#: dist/includes/class-avc-ais-settings.php:1309
+#: includes/class-avc-ais-settings.php:1309
 msgid "Japanese"
 msgstr "日本語"
 
-#: dist/includes/class-avc-ais-settings.php:1308
-#: includes/class-avc-ais-settings.php:1308
+#: dist/includes/class-avc-ais-settings.php:1310
+#: includes/class-avc-ais-settings.php:1310
 msgid "English"
 msgstr "英語"
 
-#: dist/includes/class-avc-ais-settings.php:1309
-#: includes/class-avc-ais-settings.php:1309
+#: dist/includes/class-avc-ais-settings.php:1311
+#: includes/class-avc-ais-settings.php:1311
 msgid "Chinese (Simplified)"
 msgstr "中国語 (簡体字)"
 
-#: dist/includes/class-avc-ais-settings.php:1310
-#: includes/class-avc-ais-settings.php:1310
+#: dist/includes/class-avc-ais-settings.php:1312
+#: includes/class-avc-ais-settings.php:1312
 msgid "Chinese (Traditional)"
 msgstr "中国語 (繁体字)"
 
-#: dist/includes/class-avc-ais-settings.php:1311
-#: includes/class-avc-ais-settings.php:1311
+#: dist/includes/class-avc-ais-settings.php:1313
+#: includes/class-avc-ais-settings.php:1313
 msgid "Korean"
 msgstr "韓国語"
 
-#: dist/includes/class-avc-ais-settings.php:1312
-#: includes/class-avc-ais-settings.php:1312
+#: dist/includes/class-avc-ais-settings.php:1314
+#: includes/class-avc-ais-settings.php:1314
 msgid "French"
 msgstr "フランス語"
 
-#: dist/includes/class-avc-ais-settings.php:1313
-#: includes/class-avc-ais-settings.php:1313
+#: dist/includes/class-avc-ais-settings.php:1315
+#: includes/class-avc-ais-settings.php:1315
 msgid "German"
 msgstr "ドイツ語"
 
-#: dist/includes/class-avc-ais-settings.php:1314
-#: includes/class-avc-ais-settings.php:1314
+#: dist/includes/class-avc-ais-settings.php:1316
+#: includes/class-avc-ais-settings.php:1316
 msgid "Spanish"
 msgstr "スペイン語"
 
-#: dist/includes/class-avc-ais-settings.php:1315
-#: includes/class-avc-ais-settings.php:1315
+#: dist/includes/class-avc-ais-settings.php:1317
+#: includes/class-avc-ais-settings.php:1317
 msgid "Portuguese"
 msgstr "ポルトガル語"
 
-#: dist/includes/class-avc-ais-settings.php:1316
-#: includes/class-avc-ais-settings.php:1316
+#: dist/includes/class-avc-ais-settings.php:1318
+#: includes/class-avc-ais-settings.php:1318
 msgid "Italian"
 msgstr "イタリア語"
 
-#: dist/includes/class-avc-ais-settings.php:1317
-#: includes/class-avc-ais-settings.php:1317
+#: dist/includes/class-avc-ais-settings.php:1319
+#: includes/class-avc-ais-settings.php:1319
 msgid "Thai"
 msgstr "タイ語"
 
-#: dist/includes/class-avc-ais-settings.php:1342 dist/src/Wizard/Wizard.php:300
+#: dist/includes/class-avc-ais-settings.php:1344 dist/src/Wizard/Wizard.php:302
 #: dist/templates/wizard/steps/step-4-hours.php:15
-#: includes/class-avc-ais-settings.php:1342 src/Wizard/Wizard.php:300
+#: includes/class-avc-ais-settings.php:1344 src/Wizard/Wizard.php:302
 #: templates/wizard/steps/step-4-hours.php:15
 msgid "Monday"
 msgstr "月曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1343 dist/src/Wizard/Wizard.php:301
+#: dist/includes/class-avc-ais-settings.php:1345 dist/src/Wizard/Wizard.php:303
 #: dist/templates/wizard/steps/step-4-hours.php:16
-#: includes/class-avc-ais-settings.php:1343 src/Wizard/Wizard.php:301
+#: includes/class-avc-ais-settings.php:1345 src/Wizard/Wizard.php:303
 #: templates/wizard/steps/step-4-hours.php:16
 msgid "Tuesday"
 msgstr "火曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1344 dist/src/Wizard/Wizard.php:302
+#: dist/includes/class-avc-ais-settings.php:1346 dist/src/Wizard/Wizard.php:304
 #: dist/templates/wizard/steps/step-4-hours.php:17
-#: includes/class-avc-ais-settings.php:1344 src/Wizard/Wizard.php:302
+#: includes/class-avc-ais-settings.php:1346 src/Wizard/Wizard.php:304
 #: templates/wizard/steps/step-4-hours.php:17
 msgid "Wednesday"
 msgstr "水曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1345 dist/src/Wizard/Wizard.php:303
+#: dist/includes/class-avc-ais-settings.php:1347 dist/src/Wizard/Wizard.php:305
 #: dist/templates/wizard/steps/step-4-hours.php:18
-#: includes/class-avc-ais-settings.php:1345 src/Wizard/Wizard.php:303
+#: includes/class-avc-ais-settings.php:1347 src/Wizard/Wizard.php:305
 #: templates/wizard/steps/step-4-hours.php:18
 msgid "Thursday"
 msgstr "木曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1346 dist/src/Wizard/Wizard.php:304
+#: dist/includes/class-avc-ais-settings.php:1348 dist/src/Wizard/Wizard.php:306
 #: dist/templates/wizard/steps/step-4-hours.php:19
-#: includes/class-avc-ais-settings.php:1346 src/Wizard/Wizard.php:304
+#: includes/class-avc-ais-settings.php:1348 src/Wizard/Wizard.php:306
 #: templates/wizard/steps/step-4-hours.php:19
 msgid "Friday"
 msgstr "金曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1347 dist/src/Wizard/Wizard.php:305
+#: dist/includes/class-avc-ais-settings.php:1349 dist/src/Wizard/Wizard.php:307
 #: dist/templates/wizard/steps/step-4-hours.php:20
-#: includes/class-avc-ais-settings.php:1347 src/Wizard/Wizard.php:305
+#: includes/class-avc-ais-settings.php:1349 src/Wizard/Wizard.php:307
 #: templates/wizard/steps/step-4-hours.php:20
 msgid "Saturday"
 msgstr "土曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1348 dist/src/Wizard/Wizard.php:306
+#: dist/includes/class-avc-ais-settings.php:1350 dist/src/Wizard/Wizard.php:308
 #: dist/templates/wizard/steps/step-4-hours.php:21
-#: includes/class-avc-ais-settings.php:1348 src/Wizard/Wizard.php:306
+#: includes/class-avc-ais-settings.php:1350 src/Wizard/Wizard.php:308
 #: templates/wizard/steps/step-4-hours.php:21
 msgid "Sunday"
 msgstr "日曜日"
 
-#: dist/includes/class-avc-ais-settings.php:1349
-#: includes/class-avc-ais-settings.php:1349
+#: dist/includes/class-avc-ais-settings.php:1351
+#: includes/class-avc-ais-settings.php:1351
 msgid "Public holiday"
 msgstr "祝日"
 
-#: dist/includes/class-avc-ais-settings.php:1591
-#: includes/class-avc-ais-settings.php:1591
+#: dist/includes/class-avc-ais-settings.php:1593
+#: includes/class-avc-ais-settings.php:1593
 msgid "Use global default content model"
 msgstr "グローバルのデフォルトコンテンツモデルを使用"
 
-#: dist/includes/class-avc-ais-settings.php:1599
-#: includes/class-avc-ais-settings.php:1599
+#: dist/includes/class-avc-ais-settings.php:1601
+#: includes/class-avc-ais-settings.php:1601
 msgid "CollectionPage"
 msgstr "コレクションページ"
 
-#: dist/includes/class-avc-ais-settings.php:1600
-#: includes/class-avc-ais-settings.php:1600
+#: dist/includes/class-avc-ais-settings.php:1602
+#: includes/class-avc-ais-settings.php:1602
 msgid "ItemList"
 msgstr "アイテムリスト"
 
-#: dist/includes/class-avc-ais-settings.php:1619
-#: includes/class-avc-ais-settings.php:1619
+#: dist/includes/class-avc-ais-settings.php:1621
+#: includes/class-avc-ais-settings.php:1621
 msgid "AVC schema priority (suppress other plugins)"
 msgstr "Aivec AI Search Schemaを優先（他のプラグインのスキーマ出力を非表示）"
 
-#: dist/includes/class-avc-ais-settings.php:1620
-#: includes/class-avc-ais-settings.php:1620
+#: dist/includes/class-avc-ais-settings.php:1622
+#: includes/class-avc-ais-settings.php:1622
 msgid "Let other SEO plugins output schema"
 msgstr "他のSEOプラグインのスキーマを優先する"
 
-#: dist/includes/class-avc-ais-settings.php:1684
-#: includes/class-avc-ais-settings.php:1684
+#: dist/includes/class-avc-ais-settings.php:1686
+#: includes/class-avc-ais-settings.php:1686
 msgid "Japan"
 msgstr "日本"
 
-#: dist/includes/class-avc-ais-settings.php:1685
-#: includes/class-avc-ais-settings.php:1685
+#: dist/includes/class-avc-ais-settings.php:1687
+#: includes/class-avc-ais-settings.php:1687
 msgid "United States"
 msgstr "アメリカ合衆国"
 
-#: dist/includes/class-avc-ais-settings.php:1686
-#: includes/class-avc-ais-settings.php:1686
+#: dist/includes/class-avc-ais-settings.php:1688
+#: includes/class-avc-ais-settings.php:1688
 msgid "China"
 msgstr "中国"
 
-#: dist/includes/class-avc-ais-settings.php:1687
-#: includes/class-avc-ais-settings.php:1687
+#: dist/includes/class-avc-ais-settings.php:1689
+#: includes/class-avc-ais-settings.php:1689
 msgid "Taiwan"
 msgstr "台湾"
 
-#: dist/includes/class-avc-ais-settings.php:1688
-#: includes/class-avc-ais-settings.php:1688
+#: dist/includes/class-avc-ais-settings.php:1690
+#: includes/class-avc-ais-settings.php:1690
 msgid "Hong Kong"
 msgstr "香港"
 
-#: dist/includes/class-avc-ais-settings.php:1689
-#: includes/class-avc-ais-settings.php:1689
+#: dist/includes/class-avc-ais-settings.php:1691
+#: includes/class-avc-ais-settings.php:1691
 msgid "South Korea"
 msgstr "韓国"
 
-#: dist/includes/class-avc-ais-settings.php:1690
-#: includes/class-avc-ais-settings.php:1690
+#: dist/includes/class-avc-ais-settings.php:1692
+#: includes/class-avc-ais-settings.php:1692
 msgid "Singapore"
 msgstr "シンガポール"
 
-#: dist/includes/class-avc-ais-settings.php:1691
-#: includes/class-avc-ais-settings.php:1691
+#: dist/includes/class-avc-ais-settings.php:1693
+#: includes/class-avc-ais-settings.php:1693
 msgid "Thailand"
 msgstr "タイ"
 
-#: dist/includes/class-avc-ais-settings.php:1692
-#: includes/class-avc-ais-settings.php:1692
+#: dist/includes/class-avc-ais-settings.php:1694
+#: includes/class-avc-ais-settings.php:1694
 msgid "Vietnam"
 msgstr "ベトナム"
 
-#: dist/includes/class-avc-ais-settings.php:1693
-#: includes/class-avc-ais-settings.php:1693
+#: dist/includes/class-avc-ais-settings.php:1695
+#: includes/class-avc-ais-settings.php:1695
 msgid "Philippines"
 msgstr "フィリピン"
 
-#: dist/includes/class-avc-ais-settings.php:1694
-#: includes/class-avc-ais-settings.php:1694
+#: dist/includes/class-avc-ais-settings.php:1696
+#: includes/class-avc-ais-settings.php:1696
 msgid "Malaysia"
 msgstr "マレーシア"
 
-#: dist/includes/class-avc-ais-settings.php:1695
-#: includes/class-avc-ais-settings.php:1695
+#: dist/includes/class-avc-ais-settings.php:1697
+#: includes/class-avc-ais-settings.php:1697
 msgid "Indonesia"
 msgstr "インドネシア"
 
-#: dist/includes/class-avc-ais-settings.php:1696
-#: includes/class-avc-ais-settings.php:1696
+#: dist/includes/class-avc-ais-settings.php:1698
+#: includes/class-avc-ais-settings.php:1698
 msgid "France"
 msgstr "フランス"
 
-#: dist/includes/class-avc-ais-settings.php:1697
-#: includes/class-avc-ais-settings.php:1697
+#: dist/includes/class-avc-ais-settings.php:1699
+#: includes/class-avc-ais-settings.php:1699
 msgid "Germany"
 msgstr "ドイツ"
 
-#: dist/includes/class-avc-ais-settings.php:1698
-#: includes/class-avc-ais-settings.php:1698
+#: dist/includes/class-avc-ais-settings.php:1700
+#: includes/class-avc-ais-settings.php:1700
 msgid "Spain"
 msgstr "スペイン"
 
-#: dist/includes/class-avc-ais-settings.php:1699
-#: includes/class-avc-ais-settings.php:1699
+#: dist/includes/class-avc-ais-settings.php:1701
+#: includes/class-avc-ais-settings.php:1701
 msgid "Italy"
 msgstr "イタリア"
 
-#: dist/includes/class-avc-ais-settings.php:1700
-#: includes/class-avc-ais-settings.php:1700
+#: dist/includes/class-avc-ais-settings.php:1702
+#: includes/class-avc-ais-settings.php:1702
 msgid "United Kingdom"
 msgstr "イギリス"
 
-#: dist/includes/class-avc-ais-settings.php:1701
-#: includes/class-avc-ais-settings.php:1701
+#: dist/includes/class-avc-ais-settings.php:1703
+#: includes/class-avc-ais-settings.php:1703
 msgid "Canada"
 msgstr "カナダ"
 
-#: dist/includes/class-avc-ais-settings.php:1702
-#: includes/class-avc-ais-settings.php:1702
+#: dist/includes/class-avc-ais-settings.php:1704
+#: includes/class-avc-ais-settings.php:1704
 msgid "Australia"
 msgstr "オーストラリア"
 
-#: dist/includes/class-avc-ais-settings.php:1703
-#: includes/class-avc-ais-settings.php:1703
+#: dist/includes/class-avc-ais-settings.php:1705
+#: includes/class-avc-ais-settings.php:1705
 msgid "New Zealand"
 msgstr "ニュージーランド"
 
-#: dist/includes/class-avc-ais-settings.php:1774
-#: includes/class-avc-ais-settings.php:1774
+#: dist/includes/class-avc-ais-settings.php:1776
+#: includes/class-avc-ais-settings.php:1776
 msgid "The site operator is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1778
-#: includes/class-avc-ais-settings.php:1778
+#: dist/includes/class-avc-ais-settings.php:1780
+#: includes/class-avc-ais-settings.php:1780
 msgid ""
 "The site operator name is not set. Entity identification may be difficult."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1786
-#: includes/class-avc-ais-settings.php:1786
+#: dist/includes/class-avc-ais-settings.php:1788
+#: includes/class-avc-ais-settings.php:1788
 msgid "The organization URL is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1790
-#: includes/class-avc-ais-settings.php:1790
+#: dist/includes/class-avc-ais-settings.php:1792
+#: includes/class-avc-ais-settings.php:1792
 msgid ""
 "The organization URL is not set. Entity identification may be difficult."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1798
-#: includes/class-avc-ais-settings.php:1798
+#: dist/includes/class-avc-ais-settings.php:1800
+#: includes/class-avc-ais-settings.php:1800
 msgid "A logo is registered for entity identification."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1799
-#: includes/class-avc-ais-settings.php:1799
+#: dist/includes/class-avc-ais-settings.php:1801
+#: includes/class-avc-ais-settings.php:1801
 msgid "No logo is registered. Credibility assessment may be affected."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1804
-#: includes/class-avc-ais-settings.php:1804
+#: dist/includes/class-avc-ais-settings.php:1806
+#: includes/class-avc-ais-settings.php:1806
 msgid "Social profiles (sameAs) are linked for entity verification."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1805
-#: includes/class-avc-ais-settings.php:1805
+#: dist/includes/class-avc-ais-settings.php:1807
+#: includes/class-avc-ais-settings.php:1807
 msgid "No social profiles are linked. Entity verification may be limited."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1809
-#: includes/class-avc-ais-settings.php:1809
+#: dist/includes/class-avc-ais-settings.php:1811
+#: includes/class-avc-ais-settings.php:1811
 msgid "Organization"
 msgstr "組織・団体・法人"
 
-#: dist/includes/class-avc-ais-settings.php:1828
-#: includes/class-avc-ais-settings.php:1828
+#: dist/includes/class-avc-ais-settings.php:1830
+#: includes/class-avc-ais-settings.php:1830
 msgid "The business name is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1832
-#: includes/class-avc-ais-settings.php:1832
+#: dist/includes/class-avc-ais-settings.php:1834
+#: includes/class-avc-ais-settings.php:1834
 msgid "The business name is not set. Local search visibility may be affected."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1840
-#: includes/class-avc-ais-settings.php:1840
+#: dist/includes/class-avc-ais-settings.php:1842
+#: includes/class-avc-ais-settings.php:1842
 msgid "A phone number is registered for contact purposes."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1841
-#: includes/class-avc-ais-settings.php:1841
+#: dist/includes/class-avc-ais-settings.php:1843
+#: includes/class-avc-ais-settings.php:1843
 #, fuzzy
 msgid "No phone number is set. This is a required field for LocalBusiness."
 msgstr "国際形式の電話番号。LocalBusinessでは必須項目です。"
 
-#: dist/includes/class-avc-ais-settings.php:1848
-#: includes/class-avc-ais-settings.php:1848
+#: dist/includes/class-avc-ais-settings.php:1850
+#: includes/class-avc-ais-settings.php:1850
 msgid "The address is fully defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1849
-#: includes/class-avc-ais-settings.php:1849
+#: dist/includes/class-avc-ais-settings.php:1851
+#: includes/class-avc-ais-settings.php:1851
 msgid "The address is incomplete. Some fields may be missing."
 msgstr ""
 
 #. translators: %s decimal places
-#: dist/includes/class-avc-ais-settings.php:1863
-#: includes/class-avc-ais-settings.php:1863
+#: dist/includes/class-avc-ais-settings.php:1865
+#: includes/class-avc-ais-settings.php:1865
 #, php-format
 msgid ""
 "Geo coordinates are registered (%s decimal places). Map display is ready."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1866
-#: includes/class-avc-ais-settings.php:1866
+#: dist/includes/class-avc-ais-settings.php:1868
+#: includes/class-avc-ais-settings.php:1868
 msgid "Geo coordinates are not set. Map-based local search may be affected."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1872
-#: includes/class-avc-ais-settings.php:1872
+#: dist/includes/class-avc-ais-settings.php:1874
+#: includes/class-avc-ais-settings.php:1874
 msgid "Business hours are defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1873
-#: includes/class-avc-ais-settings.php:1873
+#: dist/includes/class-avc-ais-settings.php:1875
+#: includes/class-avc-ais-settings.php:1875
 msgid "No business hours are set. Open/closed status cannot be determined."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1879
-#: includes/class-avc-ais-settings.php:1879
+#: dist/includes/class-avc-ais-settings.php:1881
+#: includes/class-avc-ais-settings.php:1881
 msgid "The country code is defined for address context."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1880
-#: includes/class-avc-ais-settings.php:1880
+#: dist/includes/class-avc-ais-settings.php:1882
+#: includes/class-avc-ais-settings.php:1882
 msgid "The country code is not set. Regional interpretation may vary."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1884
-#: includes/class-avc-ais-settings.php:1884
+#: dist/includes/class-avc-ais-settings.php:1886
+#: includes/class-avc-ais-settings.php:1886
 msgid "LocalBusiness"
 msgstr "ローカルビジネス"
 
-#: dist/includes/class-avc-ais-settings.php:1895
-#: includes/class-avc-ais-settings.php:1895
+#: dist/includes/class-avc-ais-settings.php:1897
+#: includes/class-avc-ais-settings.php:1897
 msgid "The site name is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1896
-#: includes/class-avc-ais-settings.php:1896
+#: dist/includes/class-avc-ais-settings.php:1898
+#: includes/class-avc-ais-settings.php:1898
 msgid "The site name is not set. Site identification may be unclear."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1901
-#: includes/class-avc-ais-settings.php:1901
+#: dist/includes/class-avc-ais-settings.php:1903
+#: includes/class-avc-ais-settings.php:1903
 #, fuzzy
 msgid "The site URL is defined as the canonical reference."
 msgstr "WebサイトのURL。WebSiteスキーマの正規URLとして使用されます。"
 
-#: dist/includes/class-avc-ais-settings.php:1902
-#: includes/class-avc-ais-settings.php:1902
+#: dist/includes/class-avc-ais-settings.php:1904
+#: includes/class-avc-ais-settings.php:1904
 msgid "The site URL is not set. Canonical identification may fail."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1908
-#: includes/class-avc-ais-settings.php:1908
+#: dist/includes/class-avc-ais-settings.php:1910
+#: includes/class-avc-ais-settings.php:1910
 msgid "The site language is defined for content context."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1909
-#: includes/class-avc-ais-settings.php:1909
+#: dist/includes/class-avc-ais-settings.php:1911
+#: includes/class-avc-ais-settings.php:1911
 msgid "No language is set. Content language context may be ambiguous."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1914
-#: includes/class-avc-ais-settings.php:1914
+#: dist/includes/class-avc-ais-settings.php:1916
+#: includes/class-avc-ais-settings.php:1916
 msgid "The publisher is linked to the site entity."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1915
-#: includes/class-avc-ais-settings.php:1915
+#: dist/includes/class-avc-ais-settings.php:1917
+#: includes/class-avc-ais-settings.php:1917
 msgid "No publisher is set. Site-entity relationship is undefined."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1919
-#: includes/class-avc-ais-settings.php:1919
+#: dist/includes/class-avc-ais-settings.php:1921
+#: includes/class-avc-ais-settings.php:1921
 msgid "WebSite"
 msgstr "WebSite"
 
-#: dist/includes/class-avc-ais-settings.php:1929
-#: includes/class-avc-ais-settings.php:1929
+#: dist/includes/class-avc-ais-settings.php:1931
+#: includes/class-avc-ais-settings.php:1931
 msgid "The WebPage base URL is defined for page identification."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1930
-#: includes/class-avc-ais-settings.php:1930
+#: dist/includes/class-avc-ais-settings.php:1932
+#: includes/class-avc-ais-settings.php:1932
 msgid "The WebPage base URL is not set. Page linking may be affected."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1936
-#: includes/class-avc-ais-settings.php:1936
+#: dist/includes/class-avc-ais-settings.php:1938
+#: includes/class-avc-ais-settings.php:1938
 msgid "The page language is defined for content context."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1937
-#: includes/class-avc-ais-settings.php:1937
+#: dist/includes/class-avc-ais-settings.php:1939
+#: includes/class-avc-ais-settings.php:1939
 msgid "No language is set. System default will be used."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1953
-#: includes/class-avc-ais-settings.php:1953
+#: dist/includes/class-avc-ais-settings.php:1955
+#: includes/class-avc-ais-settings.php:1955
 msgid "Posts are output as Article schema for blog content."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1954
-#: includes/class-avc-ais-settings.php:1954
+#: dist/includes/class-avc-ais-settings.php:1956
+#: includes/class-avc-ais-settings.php:1956
 msgid ""
 "Posts are output as WebPage schema. Article may be more suitable for blogs."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1971
-#: includes/class-avc-ais-settings.php:1971
+#: dist/includes/class-avc-ais-settings.php:1973
+#: includes/class-avc-ais-settings.php:1973
 #, fuzzy
 msgid "No published posts found. Sample check cannot be performed."
 msgstr "公開済み投稿が見つかりません。Article スキーマのチェックができません。"
 
-#: dist/includes/class-avc-ais-settings.php:1974
-#: dist/includes/class-avc-ais-settings.php:2023
-#: includes/class-avc-ais-settings.php:1974
-#: includes/class-avc-ais-settings.php:2023
+#: dist/includes/class-avc-ais-settings.php:1976
+#: dist/includes/class-avc-ais-settings.php:2025
+#: includes/class-avc-ais-settings.php:1976
+#: includes/class-avc-ais-settings.php:2025
 msgid "Article (sample post)"
 msgstr "Article（サンプル投稿）"
 
-#: dist/includes/class-avc-ais-settings.php:1982
-#: includes/class-avc-ais-settings.php:1982
+#: dist/includes/class-avc-ais-settings.php:1984
+#: includes/class-avc-ais-settings.php:1984
 #, fuzzy
 msgid "The headline is defined in the sample post."
 msgstr "サンプル投稿にアイキャッチ画像がありません。"
 
-#: dist/includes/class-avc-ais-settings.php:1983
-#: includes/class-avc-ais-settings.php:1983
+#: dist/includes/class-avc-ais-settings.php:1985
+#: includes/class-avc-ais-settings.php:1985
 #, fuzzy
 msgid "The headline is missing from the sample post."
 msgstr "サンプル投稿にアイキャッチ画像がありません。"
 
-#: dist/includes/class-avc-ais-settings.php:1988
-#: includes/class-avc-ais-settings.php:1988
+#: dist/includes/class-avc-ais-settings.php:1990
+#: includes/class-avc-ais-settings.php:1990
 msgid "The publication date is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1989
-#: includes/class-avc-ais-settings.php:1989
+#: dist/includes/class-avc-ais-settings.php:1991
+#: includes/class-avc-ais-settings.php:1991
 msgid "The publication date is missing. Freshness signals may be affected."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1994
-#: includes/class-avc-ais-settings.php:1994
+#: dist/includes/class-avc-ais-settings.php:1996
+#: includes/class-avc-ais-settings.php:1996
 msgid "The modification date is defined for content freshness."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:1995
-#: includes/class-avc-ais-settings.php:1995
+#: dist/includes/class-avc-ais-settings.php:1997
+#: includes/class-avc-ais-settings.php:1997
 #, fuzzy
 msgid "The modification date is not available."
 msgstr "ライセンス検証APIはまだ利用できません。"
 
-#: dist/includes/class-avc-ais-settings.php:2002
-#: includes/class-avc-ais-settings.php:2002
+#: dist/includes/class-avc-ais-settings.php:2004
+#: includes/class-avc-ais-settings.php:2004
 msgid "The author is defined for content attribution."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2003
-#: includes/class-avc-ais-settings.php:2003
+#: dist/includes/class-avc-ais-settings.php:2005
+#: includes/class-avc-ais-settings.php:2005
 msgid "No author is set. Content attribution may be unclear."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2012
-#: includes/class-avc-ais-settings.php:2012
+#: dist/includes/class-avc-ais-settings.php:2014
+#: includes/class-avc-ais-settings.php:2014
 #, fuzzy
 msgid "A featured image is set for the sample post."
 msgstr "サンプル投稿にアイキャッチ画像がありません。"
 
-#: dist/includes/class-avc-ais-settings.php:2016
-#: includes/class-avc-ais-settings.php:2016
+#: dist/includes/class-avc-ais-settings.php:2018
+#: includes/class-avc-ais-settings.php:2018
 #, fuzzy
 msgid "No featured image on the sample post. Rich results may be limited."
 msgstr "サンプル投稿にアイキャッチ画像があります。"
 
-#: dist/includes/class-avc-ais-settings.php:2045
-#: includes/class-avc-ais-settings.php:2045
+#: dist/includes/class-avc-ais-settings.php:2047
+#: includes/class-avc-ais-settings.php:2047
 #, fuzzy
 msgid "FAQ schema extraction is enabled for at least one post type."
 msgstr "FAQPage スキーマが少なくとも1つの投稿タイプで有効です。"
 
-#: dist/includes/class-avc-ais-settings.php:2049
-#: includes/class-avc-ais-settings.php:2049
+#: dist/includes/class-avc-ais-settings.php:2051
+#: includes/class-avc-ais-settings.php:2051
 msgid ""
 "FAQ content requires both question and answer elements with matching CSS "
 "classes."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2054
-#: includes/class-avc-ais-settings.php:2054
+#: dist/includes/class-avc-ais-settings.php:2056
+#: includes/class-avc-ais-settings.php:2056
 msgid ""
 "FAQ schema extraction is not enabled. Enable it if your content contains Q&A "
 "sections."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2099
-#: includes/class-avc-ais-settings.php:2099
+#: dist/includes/class-avc-ais-settings.php:2101
+#: includes/class-avc-ais-settings.php:2101
 msgid "Breadcrumb navigation is defined in the structured data."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2100
-#: includes/class-avc-ais-settings.php:2100
+#: dist/includes/class-avc-ais-settings.php:2102
+#: includes/class-avc-ais-settings.php:2102
 msgid "The breadcrumb trail is empty. Site hierarchy may be unclear."
 msgstr ""
 
-#: dist/includes/class-avc-ais-settings.php:2104
-#: includes/class-avc-ais-settings.php:2104
+#: dist/includes/class-avc-ais-settings.php:2106
+#: includes/class-avc-ais-settings.php:2106
 msgid "BreadcrumbList"
 msgstr "パンくずリスト (BreadcrumbList)"
 
-#: dist/includes/functions.php:162 dist/templates/admin-settings.php:390
-#: includes/functions.php:162 templates/admin-settings.php:390
+#: dist/includes/functions.php:170 dist/templates/admin-settings.php:395
+#: includes/functions.php:170 templates/admin-settings.php:395
 msgid "Help"
 msgstr "ヘルプ"
 
-#: dist/src/Wizard/Wizard.php:85 src/Wizard/Wizard.php:85
+#: dist/src/Wizard/Wizard.php:87 src/Wizard/Wizard.php:87
 msgid "Welcome"
 msgstr "ようこそ"
 
-#: dist/src/Wizard/Wizard.php:90
-#: dist/templates/wizard/steps/step-1-basics.php:19 src/Wizard/Wizard.php:90
+#: dist/src/Wizard/Wizard.php:92
+#: dist/templates/wizard/steps/step-1-basics.php:19 src/Wizard/Wizard.php:92
 #: templates/wizard/steps/step-1-basics.php:19
 msgid "Basic Information"
 msgstr "基本情報"
 
-#: dist/src/Wizard/Wizard.php:95
+#: dist/src/Wizard/Wizard.php:97
 #: dist/templates/wizard/components/progress-bar.php:19
-#: dist/templates/wizard/steps/step-5-complete.php:50 src/Wizard/Wizard.php:95
+#: dist/templates/wizard/steps/step-5-complete.php:50 src/Wizard/Wizard.php:97
 #: templates/wizard/components/progress-bar.php:19
 #: templates/wizard/steps/step-5-complete.php:50
 msgid "Site Type"
 msgstr "サイトタイプ"
 
-#: dist/src/Wizard/Wizard.php:100 src/Wizard/Wizard.php:100
+#: dist/src/Wizard/Wizard.php:102 src/Wizard/Wizard.php:102
 msgid "API Key"
 msgstr "APIキー"
 
-#: dist/src/Wizard/Wizard.php:105
+#: dist/src/Wizard/Wizard.php:107
 #: dist/templates/wizard/components/progress-bar.php:20
-#: src/Wizard/Wizard.php:105 templates/wizard/components/progress-bar.php:20
+#: src/Wizard/Wizard.php:107 templates/wizard/components/progress-bar.php:20
 msgid "Location"
 msgstr "所在地"
 
-#: dist/src/Wizard/Wizard.php:110
-#: dist/templates/wizard/steps/step-4-hours.php:36 src/Wizard/Wizard.php:110
+#: dist/src/Wizard/Wizard.php:112
+#: dist/templates/wizard/steps/step-4-hours.php:36 src/Wizard/Wizard.php:112
 #: templates/wizard/steps/step-4-hours.php:36
 #, fuzzy
 msgid "Business Hours"
 msgstr "営業時間"
 
-#: dist/src/Wizard/Wizard.php:115
+#: dist/src/Wizard/Wizard.php:117
 #: dist/templates/wizard/components/progress-bar.php:22
-#: src/Wizard/Wizard.php:115 templates/wizard/components/progress-bar.php:22
+#: src/Wizard/Wizard.php:117 templates/wizard/components/progress-bar.php:22
 msgid "Complete"
 msgstr "完了"
 
-#: dist/src/Wizard/Wizard.php:130 dist/src/Wizard/Wizard.php:148
-#: dist/templates/wizard/wizard-page.php:24 src/Wizard/Wizard.php:130
-#: src/Wizard/Wizard.php:148 templates/wizard/wizard-page.php:24
+#: dist/src/Wizard/Wizard.php:132 dist/src/Wizard/Wizard.php:150
+#: dist/templates/wizard/wizard-page.php:24 src/Wizard/Wizard.php:132
+#: src/Wizard/Wizard.php:150 templates/wizard/wizard-page.php:24
 msgid "AI Search Schema Setup"
 msgstr "Aivec AI Search Schema セットアップ"
 
-#: dist/src/Wizard/Wizard.php:131 src/Wizard/Wizard.php:131
+#: dist/src/Wizard/Wizard.php:133 src/Wizard/Wizard.php:133
 msgid "Setup Wizard"
 msgstr "セットアップウィザード"
 
-#: dist/src/Wizard/Wizard.php:223 src/Wizard/Wizard.php:223
+#: dist/src/Wizard/Wizard.php:225 src/Wizard/Wizard.php:225
 #, fuzzy
 msgid "Complete the setup wizard to optimize your site for Google search."
 msgstr ""
 "これらの項目を入力すると、ローカル検索結果や Google マップでの表示が最大化さ"
 "れます。"
 
-#: dist/src/Wizard/Wizard.php:225 src/Wizard/Wizard.php:225
+#: dist/src/Wizard/Wizard.php:227 src/Wizard/Wizard.php:227
 msgid "Start Setup"
 msgstr "セットアップを開始"
 
-#: dist/src/Wizard/Wizard.php:279 src/Wizard/Wizard.php:279
+#: dist/src/Wizard/Wizard.php:281 src/Wizard/Wizard.php:281
 msgid "Saved"
 msgstr "保存しました"
 
-#: dist/src/Wizard/Wizard.php:280 src/Wizard/Wizard.php:280
+#: dist/src/Wizard/Wizard.php:282 src/Wizard/Wizard.php:282
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: dist/src/Wizard/Wizard.php:281 src/Wizard/Wizard.php:281
+#: dist/src/Wizard/Wizard.php:283 src/Wizard/Wizard.php:283
 msgid "Error saving. Please try again."
 msgstr "保存中にエラーが発生しました。再度お試しください。"
 
-#: dist/src/Wizard/Wizard.php:282 src/Wizard/Wizard.php:282
+#: dist/src/Wizard/Wizard.php:284 src/Wizard/Wizard.php:284
 msgid "This field is required"
 msgstr "この項目は必須です"
 
-#: dist/src/Wizard/Wizard.php:283 src/Wizard/Wizard.php:283
+#: dist/src/Wizard/Wizard.php:285 src/Wizard/Wizard.php:285
 msgid "Please enter a valid URL"
 msgstr "有効なURLを入力してください"
 
-#: dist/src/Wizard/Wizard.php:284 src/Wizard/Wizard.php:284
+#: dist/src/Wizard/Wizard.php:286 src/Wizard/Wizard.php:286
 #, fuzzy
 msgid "Select Logo"
 msgstr "ロゴを選択"
 
-#: dist/src/Wizard/Wizard.php:285 src/Wizard/Wizard.php:285
+#: dist/src/Wizard/Wizard.php:287 src/Wizard/Wizard.php:287
 #, fuzzy
 msgid "Use this logo"
 msgstr "ロゴを挿入"
 
-#: dist/src/Wizard/Wizard.php:286
-#: dist/templates/wizard/steps/step-1-basics.php:65 src/Wizard/Wizard.php:286
+#: dist/src/Wizard/Wizard.php:288
+#: dist/templates/wizard/steps/step-1-basics.php:65 src/Wizard/Wizard.php:288
 #: templates/wizard/steps/step-1-basics.php:65
 msgid "No logo selected"
 msgstr "ロゴが選択されていません"
 
-#: dist/src/Wizard/Wizard.php:287 dist/templates/wizard/steps/welcome.php:153
-#: src/Wizard/Wizard.php:287 templates/wizard/steps/welcome.php:153
+#: dist/src/Wizard/Wizard.php:289 dist/templates/wizard/steps/welcome.php:154
+#: src/Wizard/Wizard.php:289 templates/wizard/steps/welcome.php:154
 msgid "Import"
 msgstr "インポート"
 
-#: dist/src/Wizard/Wizard.php:288 src/Wizard/Wizard.php:288
+#: dist/src/Wizard/Wizard.php:290 src/Wizard/Wizard.php:290
 #, fuzzy
 msgid "Importing..."
 msgstr "取得中…"
 
-#: dist/src/Wizard/Wizard.php:289 src/Wizard/Wizard.php:289
+#: dist/src/Wizard/Wizard.php:291 src/Wizard/Wizard.php:291
 msgid "Imported!"
 msgstr "インポート完了！"
 
-#: dist/src/Wizard/Wizard.php:290 src/Wizard/Wizard.php:290
+#: dist/src/Wizard/Wizard.php:292 src/Wizard/Wizard.php:292
 msgid "Import failed. Please try again."
 msgstr "インポートに失敗しました。再度お試しください。"
 
-#: dist/src/Wizard/Wizard.php:291 src/Wizard/Wizard.php:291
+#: dist/src/Wizard/Wizard.php:293 src/Wizard/Wizard.php:293
 #, fuzzy
 msgid "Please enter an address first."
 msgstr "住所情報を入力してください。"
 
-#: dist/src/Wizard/Wizard.php:293
+#: dist/src/Wizard/Wizard.php:295
 #: dist/templates/wizard/steps/step-3-location.php:147
-#: src/Wizard/Wizard.php:293 templates/wizard/steps/step-3-location.php:147
+#: src/Wizard/Wizard.php:295 templates/wizard/steps/step-3-location.php:147
 msgid "Get Coordinates"
 msgstr "座標を取得"
 
-#: dist/src/Wizard/Wizard.php:294 src/Wizard/Wizard.php:294
+#: dist/src/Wizard/Wizard.php:296 src/Wizard/Wizard.php:296
 msgid "Could not fetch coordinates."
 msgstr "座標を取得できませんでした。"
 
-#: dist/src/Wizard/Wizard.php:295
+#: dist/src/Wizard/Wizard.php:297
 #: dist/templates/wizard/steps/step-5-complete.php:112
-#: src/Wizard/Wizard.php:295 templates/wizard/steps/step-5-complete.php:112
+#: src/Wizard/Wizard.php:297 templates/wizard/steps/step-5-complete.php:112
 msgid "View JSON-LD Schema"
 msgstr "JSON-LDスキーマを表示"
 
-#: dist/src/Wizard/Wizard.php:296 src/Wizard/Wizard.php:296
+#: dist/src/Wizard/Wizard.php:298 src/Wizard/Wizard.php:298
 msgid "Hide JSON-LD Schema"
 msgstr "JSON-LDスキーマを非表示"
 
-#: dist/src/Wizard/Wizard.php:297 src/Wizard/Wizard.php:297
+#: dist/src/Wizard/Wizard.php:299 src/Wizard/Wizard.php:299
 msgid "No schema generated yet."
 msgstr "スキーマはまだ生成されていません。"
 
-#: dist/src/Wizard/Wizard.php:298 src/Wizard/Wizard.php:298
+#: dist/src/Wizard/Wizard.php:300 src/Wizard/Wizard.php:300
 msgid "Could not load schema."
 msgstr "スキーマを読み込めませんでした。"
 
-#: dist/src/Wizard/Wizard.php:299
-#: dist/templates/wizard/steps/step-4-hours.php:141 src/Wizard/Wizard.php:299
+#: dist/src/Wizard/Wizard.php:301
+#: dist/templates/wizard/steps/step-4-hours.php:141 src/Wizard/Wizard.php:301
 #: templates/wizard/steps/step-4-hours.php:141
 msgid "Set your business hours above to see a preview."
 msgstr "上記で営業時間を設定するとプレビューが表示されます。"
 
-#: dist/src/Wizard/Wizard.php:307 src/Wizard/Wizard.php:307
+#: dist/src/Wizard/Wizard.php:309 src/Wizard/Wizard.php:309
 #, fuzzy
 msgid "Local Business Selected"
 msgstr "LocalBusinessサブタイプ"
 
-#: dist/src/Wizard/Wizard.php:308 src/Wizard/Wizard.php:308
+#: dist/src/Wizard/Wizard.php:310 src/Wizard/Wizard.php:310
 msgid ""
 "You will be able to enter your business address, hours, and contact "
 "information."
 msgstr "ビジネスの住所、営業時間、連絡先情報を入力できます。"
 
-#: dist/src/Wizard/Wizard.php:309 src/Wizard/Wizard.php:309
+#: dist/src/Wizard/Wizard.php:311 src/Wizard/Wizard.php:311
 #, fuzzy
 msgid "Organization Selected"
 msgstr "組織・団体・法人"
 
-#: dist/src/Wizard/Wizard.php:310 src/Wizard/Wizard.php:310
+#: dist/src/Wizard/Wizard.php:312 src/Wizard/Wizard.php:312
 msgid "Perfect for companies, non-profits, and institutions."
 msgstr "企業、非営利団体、教育機関に最適です。"
 
-#: dist/src/Wizard/Wizard.php:311 src/Wizard/Wizard.php:311
+#: dist/src/Wizard/Wizard.php:313 src/Wizard/Wizard.php:313
 msgid "Personal Site Selected"
 msgstr "個人サイトが選択されました"
 
-#: dist/src/Wizard/Wizard.php:312 src/Wizard/Wizard.php:312
+#: dist/src/Wizard/Wizard.php:314 src/Wizard/Wizard.php:314
 msgid "Great for blogs, portfolios, and freelancer websites."
 msgstr "ブログ、ポートフォリオ、フリーランサーのサイトに最適です。"
 
-#: dist/src/Wizard/Wizard.php:313 src/Wizard/Wizard.php:313
+#: dist/src/Wizard/Wizard.php:315 src/Wizard/Wizard.php:315
 msgid "Online Service Selected"
 msgstr "オンラインサービスが選択されました"
 
-#: dist/src/Wizard/Wizard.php:314 src/Wizard/Wizard.php:314
+#: dist/src/Wizard/Wizard.php:316 src/Wizard/Wizard.php:316
 msgid "Ideal for news sites, web apps, and online tools."
 msgstr "ニュースサイト、Webアプリ、オンラインツールに最適です。"
 
-#: dist/src/Wizard/Wizard.php:421 dist/src/Wizard/Wizard.php:468
-#: dist/src/Wizard/Wizard.php:498 dist/src/Wizard/Wizard.php:518
-#: dist/src/Wizard/Wizard.php:540 dist/src/Wizard/Wizard.php:916
-#: src/Wizard/Wizard.php:421 src/Wizard/Wizard.php:468
-#: src/Wizard/Wizard.php:498 src/Wizard/Wizard.php:518
-#: src/Wizard/Wizard.php:540 src/Wizard/Wizard.php:916
+#: dist/src/Wizard/Wizard.php:423 dist/src/Wizard/Wizard.php:470
+#: dist/src/Wizard/Wizard.php:500 dist/src/Wizard/Wizard.php:520
+#: dist/src/Wizard/Wizard.php:542 dist/src/Wizard/Wizard.php:918
+#: src/Wizard/Wizard.php:423 src/Wizard/Wizard.php:470
+#: src/Wizard/Wizard.php:500 src/Wizard/Wizard.php:520
+#: src/Wizard/Wizard.php:542 src/Wizard/Wizard.php:918
 msgid "Permission denied"
 msgstr "権限がありません"
 
-#: dist/src/Wizard/Wizard.php:428 dist/src/Wizard/Wizard.php:474
-#: src/Wizard/Wizard.php:428 src/Wizard/Wizard.php:474
+#: dist/src/Wizard/Wizard.php:430 dist/src/Wizard/Wizard.php:476
+#: src/Wizard/Wizard.php:430 src/Wizard/Wizard.php:476
 msgid "Invalid step"
 msgstr "無効なステップです"
 
-#: dist/src/Wizard/Wizard.php:455 src/Wizard/Wizard.php:455
+#: dist/src/Wizard/Wizard.php:457 src/Wizard/Wizard.php:457
 msgid "Step saved"
 msgstr "ステップを保存しました"
 
-#: dist/src/Wizard/Wizard.php:485 src/Wizard/Wizard.php:485
+#: dist/src/Wizard/Wizard.php:487 src/Wizard/Wizard.php:487
 msgid "Step skipped"
 msgstr "ステップをスキップしました"
 
-#: dist/src/Wizard/Wizard.php:505 src/Wizard/Wizard.php:505
+#: dist/src/Wizard/Wizard.php:507 src/Wizard/Wizard.php:507
 msgid "Setup completed!"
 msgstr "セットアップ完了！"
 
-#: dist/src/Wizard/Wizard.php:527 src/Wizard/Wizard.php:527
+#: dist/src/Wizard/Wizard.php:529 src/Wizard/Wizard.php:529
 msgid "Wizard reset"
 msgstr "ウィザードをリセットしました"
 
-#: dist/src/Wizard/Wizard.php:566 src/Wizard/Wizard.php:566
+#: dist/src/Wizard/Wizard.php:568 src/Wizard/Wizard.php:568
 msgid "Settings imported successfully"
 msgstr "設定のインポートが完了しました"
 
-#: dist/src/Wizard/Wizard.php:938 src/Wizard/Wizard.php:938
+#: dist/src/Wizard/Wizard.php:940 src/Wizard/Wizard.php:940
 msgid "No schema generated yet. Please complete the wizard steps first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:947 src/Wizard/Wizard.php:947
+#: dist/src/Wizard/Wizard.php:949 src/Wizard/Wizard.php:949
 #, fuzzy
 msgid "Error generating schema."
 msgstr "生成されたスキーマ"
 
-#: dist/src/Wizard/Wizard_Importer.php:86 src/Wizard/Wizard_Importer.php:86
+#: dist/src/Wizard/Wizard_Importer.php:88 src/Wizard/Wizard_Importer.php:88
 msgid "Invalid import source"
 msgstr "無効なインポート元です"
 
-#: dist/src/Wizard/Wizard_Importer.php:92 src/Wizard/Wizard_Importer.php:92
+#: dist/src/Wizard/Wizard_Importer.php:94 src/Wizard/Wizard_Importer.php:94
 msgid "Import callback not found"
 msgstr "インポートコールバックが見つかりません"
 
-#: dist/src/Wizard/Wizard_Importer.php:144
-#: dist/src/Wizard/Wizard_Importer.php:244
-#: dist/src/Wizard/Wizard_Importer.php:252
-#: dist/src/Wizard/Wizard_Importer.php:370 src/Wizard/Wizard_Importer.php:144
-#: src/Wizard/Wizard_Importer.php:244 src/Wizard/Wizard_Importer.php:252
-#: src/Wizard/Wizard_Importer.php:370
+#: dist/src/Wizard/Wizard_Importer.php:146
+#: dist/src/Wizard/Wizard_Importer.php:246
+#: dist/src/Wizard/Wizard_Importer.php:254
+#: dist/src/Wizard/Wizard_Importer.php:372 src/Wizard/Wizard_Importer.php:146
+#: src/Wizard/Wizard_Importer.php:246 src/Wizard/Wizard_Importer.php:254
+#: src/Wizard/Wizard_Importer.php:372
 msgid "Set"
 msgstr "設定済み"
 
@@ -1343,12 +1343,12 @@ msgstr "メイン国コード"
 msgid "Entity Type"
 msgstr "エンティティ"
 
-#: dist/templates/admin-settings.php:172 templates/admin-settings.php:172
+#: dist/templates/admin-settings.php:173 templates/admin-settings.php:173
 msgid "Schema Validation Summary"
 msgstr "スキーマバリデーションサマリー"
 
 #. translators: %d: number of errors
-#: dist/templates/admin-settings.php:178 templates/admin-settings.php:178
+#: dist/templates/admin-settings.php:179 templates/admin-settings.php:179
 #, fuzzy, php-format
 msgid "%d error"
 msgid_plural "%d errors"
@@ -1356,32 +1356,32 @@ msgstr[0] "エラー"
 msgstr[1] "エラー"
 
 #. translators: %d: number of warnings
-#: dist/templates/admin-settings.php:186 templates/admin-settings.php:186
+#: dist/templates/admin-settings.php:187 templates/admin-settings.php:187
 #, fuzzy, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] "警告"
 msgstr[1] "警告"
 
-#: dist/templates/admin-settings.php:193 templates/admin-settings.php:193
+#: dist/templates/admin-settings.php:194 templates/admin-settings.php:194
 msgid "Toggle details"
 msgstr "詳細を表示/非表示"
 
-#: dist/templates/admin-settings.php:200 templates/admin-settings.php:200
+#: dist/templates/admin-settings.php:201 templates/admin-settings.php:201
 #, fuzzy
 msgid "Errors"
 msgstr "エラー"
 
-#: dist/templates/admin-settings.php:213 templates/admin-settings.php:213
+#: dist/templates/admin-settings.php:214 templates/admin-settings.php:214
 #, fuzzy
 msgid "Warnings"
 msgstr "警告:"
 
-#: dist/templates/admin-settings.php:234 templates/admin-settings.php:234
+#: dist/templates/admin-settings.php:235 templates/admin-settings.php:235
 msgid "Brand & Site"
 msgstr "ブランドとサイト"
 
-#: dist/templates/admin-settings.php:235 templates/admin-settings.php:235
+#: dist/templates/admin-settings.php:236 templates/admin-settings.php:236
 #, fuzzy
 msgid ""
 "Tell search engines who you are. This information forms the foundation of "
@@ -1391,11 +1391,11 @@ msgstr ""
 "組織・事業者の基本情報を入力します。OrganizationおよびWebSiteスキーマとして出"
 "力され、検索エンジンのナレッジパネル表示に使用されます。"
 
-#: dist/templates/admin-settings.php:240 templates/admin-settings.php:240
+#: dist/templates/admin-settings.php:241 templates/admin-settings.php:241
 msgid "Company or individual name"
 msgstr "会社名/個人名"
 
-#: dist/templates/admin-settings.php:240 templates/admin-settings.php:240
+#: dist/templates/admin-settings.php:241 templates/admin-settings.php:241
 msgid ""
 "The official name of your organization or personal name. Used in "
 "Organization/LocalBusiness schema."
@@ -1403,128 +1403,128 @@ msgstr ""
 "組織の正式名称または個人名。Organization/LocalBusinessスキーマで使用されま"
 "す。"
 
-#: dist/templates/admin-settings.php:241 templates/admin-settings.php:241
+#: dist/templates/admin-settings.php:242 templates/admin-settings.php:242
 msgid "Example: Acme Inc. / Taro Yamada"
 msgstr "例: 株式会社AIVEC / 山田太郎"
 
-#: dist/templates/admin-settings.php:244 templates/admin-settings.php:244
+#: dist/templates/admin-settings.php:245 templates/admin-settings.php:245
 msgid "Site name"
 msgstr "サイト名"
 
-#: dist/templates/admin-settings.php:244 templates/admin-settings.php:244
+#: dist/templates/admin-settings.php:245 templates/admin-settings.php:245
 msgid ""
 "The name of your website. Used in WebSite schema for sitelinks search box."
 msgstr ""
 "Webサイトの名前。WebSiteスキーマのサイトリンク検索ボックスで使用されます。"
 
-#: dist/templates/admin-settings.php:245 templates/admin-settings.php:245
+#: dist/templates/admin-settings.php:246 templates/admin-settings.php:246
 msgid "Example: My Company Blog"
 msgstr "例: AIVECブログ"
 
-#: dist/templates/admin-settings.php:248 templates/admin-settings.php:248
+#: dist/templates/admin-settings.php:249 templates/admin-settings.php:249
 msgid "Phone number"
 msgstr "電話番号"
 
-#: dist/templates/admin-settings.php:248 dist/templates/admin-settings.php:728
-#: templates/admin-settings.php:248 templates/admin-settings.php:728
+#: dist/templates/admin-settings.php:249 dist/templates/admin-settings.php:734
+#: templates/admin-settings.php:249 templates/admin-settings.php:734
 #, fuzzy
 msgid "Required for LocalBusiness"
 msgstr "ローカルビジネス"
 
-#: dist/templates/admin-settings.php:248 templates/admin-settings.php:248
+#: dist/templates/admin-settings.php:249 templates/admin-settings.php:249
 msgid ""
 "Contact phone number in international format. Required for LocalBusiness."
 msgstr "国際形式の電話番号。LocalBusinessでは必須項目です。"
 
-#: dist/templates/admin-settings.php:249 templates/admin-settings.php:249
+#: dist/templates/admin-settings.php:250 templates/admin-settings.php:250
 msgid "Example: +81-3-1234-5678"
 msgstr "例: +81-3-1234-5678"
 
-#: dist/templates/admin-settings.php:252 dist/templates/admin-settings.php:767
-#: templates/admin-settings.php:252 templates/admin-settings.php:767
+#: dist/templates/admin-settings.php:253 dist/templates/admin-settings.php:773
+#: templates/admin-settings.php:253 templates/admin-settings.php:773
 msgid "Country code"
 msgstr "国コード"
 
-#: dist/templates/admin-settings.php:252 templates/admin-settings.php:252
+#: dist/templates/admin-settings.php:253 templates/admin-settings.php:253
 msgid "Select the primary country or region."
 msgstr "対象となる国/地域を選択してください。"
 
-#: dist/templates/admin-settings.php:261 templates/admin-settings.php:261
+#: dist/templates/admin-settings.php:262 templates/admin-settings.php:262
 msgid "Site URL"
 msgstr "サイトURL"
 
-#: dist/templates/admin-settings.php:261 templates/admin-settings.php:261
+#: dist/templates/admin-settings.php:262 templates/admin-settings.php:262
 msgid "Your website URL. Used as the canonical URL in WebSite schema."
 msgstr "WebサイトのURL。WebSiteスキーマの正規URLとして使用されます。"
 
-#: dist/templates/admin-settings.php:262 templates/admin-settings.php:262
+#: dist/templates/admin-settings.php:263 templates/admin-settings.php:263
 msgid "Example: https://example.com"
 msgstr "例: https://example.com"
 
-#: dist/templates/admin-settings.php:264 templates/admin-settings.php:264
+#: dist/templates/admin-settings.php:265 templates/admin-settings.php:265
 msgid "Open Google Rich Results Test"
 msgstr "Google リッチリザルトテストで検証"
 
-#: dist/templates/admin-settings.php:265 templates/admin-settings.php:265
+#: dist/templates/admin-settings.php:266 templates/admin-settings.php:266
 msgid "Save first, then click again to test the latest URL."
 msgstr "最新のURLで検証するには保存後に再度クリックしてください。"
 
-#: dist/templates/admin-settings.php:269 templates/admin-settings.php:269
+#: dist/templates/admin-settings.php:270 templates/admin-settings.php:270
 msgid "Supported languages"
 msgstr "対応言語"
 
-#: dist/templates/admin-settings.php:291 templates/admin-settings.php:291
+#: dist/templates/admin-settings.php:292 templates/admin-settings.php:292
 msgid "Select a language..."
 msgstr "言語を選択..."
 
-#: dist/templates/admin-settings.php:301 templates/admin-settings.php:301
+#: dist/templates/admin-settings.php:302 templates/admin-settings.php:302
 msgid "Added languages appear as tags. Remove them with the × action."
 msgstr "追加された言語はタグとして表示されます。×アクションで削除できます。"
 
-#: dist/templates/admin-settings.php:308 templates/admin-settings.php:308
+#: dist/templates/admin-settings.php:309 templates/admin-settings.php:309
 msgid "Brand assets & social"
 msgstr "ブランドアセットとSNS"
 
-#: dist/templates/admin-settings.php:309 templates/admin-settings.php:309
+#: dist/templates/admin-settings.php:310 templates/admin-settings.php:310
 msgid ""
 "Build trust and recognition. Your logo and social profiles help search "
 "engines verify your identity and display richer, more credible results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:314 templates/admin-settings.php:314
+#: dist/templates/admin-settings.php:315 templates/admin-settings.php:315
 msgid "Logo"
 msgstr "ロゴ"
 
-#: dist/templates/admin-settings.php:314 templates/admin-settings.php:314
+#: dist/templates/admin-settings.php:315 templates/admin-settings.php:315
 msgid ""
 "Your organization logo. Used in Organization schema and as publisher logo "
 "for articles."
 msgstr ""
 "組織のロゴ。Organizationスキーマと記事のpublisherロゴとして使用されます。"
 
-#: dist/templates/admin-settings.php:321 templates/admin-settings.php:321
+#: dist/templates/admin-settings.php:322 templates/admin-settings.php:322
 msgid "Select logo"
 msgstr "ロゴを選択"
 
-#: dist/templates/admin-settings.php:321 templates/admin-settings.php:321
+#: dist/templates/admin-settings.php:322 templates/admin-settings.php:322
 msgid "Insert logo"
 msgstr "ロゴを挿入"
 
-#: dist/templates/admin-settings.php:321 dist/templates/admin-settings.php:335
-#: dist/templates/admin-settings.php:349 templates/admin-settings.php:321
-#: templates/admin-settings.php:335 templates/admin-settings.php:349
+#: dist/templates/admin-settings.php:322 dist/templates/admin-settings.php:337
+#: dist/templates/admin-settings.php:352 templates/admin-settings.php:322
+#: templates/admin-settings.php:337 templates/admin-settings.php:352
 msgid "Select from media library"
 msgstr "メディアライブラリから選択"
 
-#: dist/templates/admin-settings.php:322 templates/admin-settings.php:322
+#: dist/templates/admin-settings.php:324 templates/admin-settings.php:324
 msgid "Clear logo"
 msgstr "ロゴをクリア"
 
-#: dist/templates/admin-settings.php:328 templates/admin-settings.php:328
+#: dist/templates/admin-settings.php:330 templates/admin-settings.php:330
 msgid "Storefront image"
 msgstr "店舗イメージ画像"
 
-#: dist/templates/admin-settings.php:328 templates/admin-settings.php:328
+#: dist/templates/admin-settings.php:330 templates/admin-settings.php:330
 msgid ""
 "Used for the LocalBusiness image property. Upload a storefront photo that "
 "differs from the logo."
@@ -1532,38 +1532,38 @@ msgstr ""
 "LocalBusiness の image に使用されます。ロゴとは別に店舗写真などを登録してくだ"
 "さい。"
 
-#: dist/templates/admin-settings.php:335 templates/admin-settings.php:335
+#: dist/templates/admin-settings.php:337 templates/admin-settings.php:337
 msgid "Select storefront image"
 msgstr "店舗イメージを選択"
 
-#: dist/templates/admin-settings.php:335 dist/templates/admin-settings.php:349
-#: templates/admin-settings.php:335 templates/admin-settings.php:349
+#: dist/templates/admin-settings.php:337 dist/templates/admin-settings.php:352
+#: templates/admin-settings.php:337 templates/admin-settings.php:352
 msgid "Insert image"
 msgstr "画像を挿入"
 
-#: dist/templates/admin-settings.php:336 dist/templates/admin-settings.php:350
-#: templates/admin-settings.php:336 templates/admin-settings.php:350
+#: dist/templates/admin-settings.php:339 dist/templates/admin-settings.php:354
+#: templates/admin-settings.php:339 templates/admin-settings.php:354
 msgid "Clear image"
 msgstr "画像をクリア"
 
-#: dist/templates/admin-settings.php:342 templates/admin-settings.php:342
+#: dist/templates/admin-settings.php:345 templates/admin-settings.php:345
 msgid "Store photo (LocalBusiness image)"
 msgstr "店舗写真（LocalBusiness 画像）"
 
-#: dist/templates/admin-settings.php:342 templates/admin-settings.php:342
+#: dist/templates/admin-settings.php:345 templates/admin-settings.php:345
 msgid "Used only for LocalBusiness image. Logo will not be used as a fallback."
 msgstr "LocalBusiness 画像としてのみ使用されます。ロゴは代替に使用されません。"
 
-#: dist/templates/admin-settings.php:349 templates/admin-settings.php:349
+#: dist/templates/admin-settings.php:352 templates/admin-settings.php:352
 #, fuzzy
 msgid "Select store photo"
 msgstr "店舗写真を選択"
 
-#: dist/templates/admin-settings.php:357 templates/admin-settings.php:357
+#: dist/templates/admin-settings.php:361 templates/admin-settings.php:361
 msgid "Social profiles"
 msgstr "SNSアカウント"
 
-#: dist/templates/admin-settings.php:357 templates/admin-settings.php:357
+#: dist/templates/admin-settings.php:361 templates/admin-settings.php:361
 msgid ""
 "Add your social media profiles. Used in Organization/LocalBusiness sameAs "
 "property for knowledge panel."
@@ -1571,59 +1571,59 @@ msgstr ""
 "SNSプロフィールを追加。Organization/LocalBusinessのsameAsプロパティとしてナ"
 "レッジパネルに使用されます。"
 
-#: dist/templates/admin-settings.php:371 dist/templates/admin-settings.php:1033
-#: templates/admin-settings.php:371 templates/admin-settings.php:1033
+#: dist/templates/admin-settings.php:375 dist/templates/admin-settings.php:1039
+#: templates/admin-settings.php:375 templates/admin-settings.php:1039
 msgid "Account name or profile URL"
 msgstr "アカウント名またはURL"
 
-#: dist/templates/admin-settings.php:372 dist/templates/admin-settings.php:1034
-#: templates/admin-settings.php:372 templates/admin-settings.php:1034
+#: dist/templates/admin-settings.php:377 dist/templates/admin-settings.php:1040
+#: templates/admin-settings.php:377 templates/admin-settings.php:1040
 msgid "Other service label"
 msgstr "その他のサービス名"
 
-#: dist/templates/admin-settings.php:373 dist/templates/admin-settings.php:913
-#: dist/templates/admin-settings.php:1035
-#: dist/templates/admin-settings.php:1050
+#: dist/templates/admin-settings.php:378 dist/templates/admin-settings.php:919
+#: dist/templates/admin-settings.php:1041
+#: dist/templates/admin-settings.php:1056
 #: dist/templates/wizard/steps/step-1-basics.php:77
-#: templates/admin-settings.php:373 templates/admin-settings.php:913
-#: templates/admin-settings.php:1035 templates/admin-settings.php:1050
+#: templates/admin-settings.php:378 templates/admin-settings.php:919
+#: templates/admin-settings.php:1041 templates/admin-settings.php:1056
 #: templates/wizard/steps/step-1-basics.php:77
 msgid "Remove"
 msgstr "削除"
 
-#: dist/templates/admin-settings.php:377 templates/admin-settings.php:377
+#: dist/templates/admin-settings.php:382 templates/admin-settings.php:382
 msgid "Add social profile"
 msgstr "SNSを追加"
 
-#: dist/templates/admin-settings.php:384 templates/admin-settings.php:384
+#: dist/templates/admin-settings.php:389 templates/admin-settings.php:389
 msgid "Schema output"
 msgstr "スキーマ出力"
 
-#: dist/templates/admin-settings.php:385 templates/admin-settings.php:385
+#: dist/templates/admin-settings.php:390 templates/admin-settings.php:390
 msgid ""
 "Control how structured data is delivered. JSON-LD is invisible to visitors "
 "but essential for search engines and AI systems to understand your content."
 msgstr ""
 
-#: dist/templates/admin-settings.php:390 templates/admin-settings.php:390
+#: dist/templates/admin-settings.php:395 templates/admin-settings.php:395
 msgid "Primary role of this site"
 msgstr "このサイトの主な役割"
 
-#: dist/templates/admin-settings.php:392 templates/admin-settings.php:392
+#: dist/templates/admin-settings.php:397 templates/admin-settings.php:397
 #, fuzzy
 msgid "Organization (corporate or brand site)"
 msgstr "Organization (ブランドサイト)"
 
-#: dist/templates/admin-settings.php:393 templates/admin-settings.php:393
+#: dist/templates/admin-settings.php:398 templates/admin-settings.php:398
 #, fuzzy
 msgid "Store / Business location (storefront or service site)"
 msgstr "LocalBusiness (店舗サイト)"
 
-#: dist/templates/admin-settings.php:397 templates/admin-settings.php:397
+#: dist/templates/admin-settings.php:402 templates/admin-settings.php:402
 msgid "Content model"
 msgstr "コンテンツモデル"
 
-#: dist/templates/admin-settings.php:397 templates/admin-settings.php:397
+#: dist/templates/admin-settings.php:402 templates/admin-settings.php:402
 #, fuzzy
 msgid ""
 "Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-"
@@ -1634,31 +1634,31 @@ msgstr ""
 "企業情報ページに適しています。ECサイト: WooCommerceがアクティブな場合Product"
 "スキーマを使用します。"
 
-#: dist/templates/admin-settings.php:405 dist/templates/admin-settings.php:465
-#: dist/templates/admin-settings.php:529 templates/admin-settings.php:405
-#: templates/admin-settings.php:465 templates/admin-settings.php:529
+#: dist/templates/admin-settings.php:410 dist/templates/admin-settings.php:470
+#: dist/templates/admin-settings.php:534 templates/admin-settings.php:410
+#: templates/admin-settings.php:470 templates/admin-settings.php:534
 msgid "Schema priority"
 msgstr "スキーマの優先度"
 
-#: dist/templates/admin-settings.php:405 templates/admin-settings.php:405
+#: dist/templates/admin-settings.php:410 templates/admin-settings.php:410
 msgid ""
 "When external priority is selected, this plugin will stop printing JSON-LD "
 "and will not disable Yoast, Rank Math, or AIOSEO schema."
 msgstr "外部優先が選択されると、このプラグインはJSON-LDの出力を停止します。"
 
-#: dist/templates/admin-settings.php:408 templates/admin-settings.php:408
+#: dist/templates/admin-settings.php:413 templates/admin-settings.php:413
 msgid "Use AI Search Schema output (disable other plugins)"
 msgstr "Aivec AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
 
-#: dist/templates/admin-settings.php:412 templates/admin-settings.php:412
+#: dist/templates/admin-settings.php:417 templates/admin-settings.php:417
 msgid "Prefer external SEO plugin schema"
 msgstr "外部SEOプラグインのスキーマを優先する"
 
-#: dist/templates/admin-settings.php:416 templates/admin-settings.php:416
+#: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
 msgid "Website publisher"
 msgstr "WebSite publisher"
 
-#: dist/templates/admin-settings.php:416 templates/admin-settings.php:416
+#: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
 #, fuzzy
 msgid ""
 "Sets the publisher reference for Article and WebPage schemas. Independent "
@@ -1669,19 +1669,19 @@ msgstr ""
 "主な役割」とは独立しています。サイトの役割をOrganizationに設定しつつ、記事が"
 "店舗によって執筆される場合はLocalBusinessをpublisherとして使用できます。"
 
-#: dist/templates/admin-settings.php:418 templates/admin-settings.php:418
+#: dist/templates/admin-settings.php:423 templates/admin-settings.php:423
 msgid "Organization (brand site)"
 msgstr "Organization (ブランドサイト)"
 
-#: dist/templates/admin-settings.php:419 templates/admin-settings.php:419
+#: dist/templates/admin-settings.php:424 templates/admin-settings.php:424
 msgid "LocalBusiness (storefront site)"
 msgstr "LocalBusiness (店舗サイト)"
 
-#: dist/templates/admin-settings.php:423 templates/admin-settings.php:423
+#: dist/templates/admin-settings.php:428 templates/admin-settings.php:428
 msgid "LocalBusiness subtype"
 msgstr "LocalBusinessサブタイプ"
 
-#: dist/templates/admin-settings.php:423 templates/admin-settings.php:423
+#: dist/templates/admin-settings.php:428 templates/admin-settings.php:428
 msgid ""
 "Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, "
 "AutoRepair, LegalService"
@@ -1689,56 +1689,56 @@ msgstr ""
 "より具体的なタイプを指定。例: Restaurant, Dentist, HairSalon, AutoRepair, "
 "LegalService"
 
-#: dist/templates/admin-settings.php:424 templates/admin-settings.php:424
+#: dist/templates/admin-settings.php:429 templates/admin-settings.php:429
 msgid "Example: Store, Restaurant"
 msgstr "例: Store, Restaurant など"
 
-#: dist/templates/admin-settings.php:427 templates/admin-settings.php:427
+#: dist/templates/admin-settings.php:432 templates/admin-settings.php:432
 msgid "Location label"
 msgstr "拠点ラベル"
 
-#: dist/templates/admin-settings.php:427 templates/admin-settings.php:427
+#: dist/templates/admin-settings.php:432 templates/admin-settings.php:432
 msgid "Appends after the Organization name to clarify each location."
 msgstr "Organization名の後ろに付与され、拠点ごとの名称を明示できます。"
 
-#: dist/templates/admin-settings.php:428 templates/admin-settings.php:428
+#: dist/templates/admin-settings.php:433 templates/admin-settings.php:433
 msgid "Example: HQ / Shinjuku"
 msgstr "例: 本店 / 新宿店"
 
-#: dist/templates/admin-settings.php:432 dist/templates/admin-settings.php:463
-#: dist/templates/admin-settings.php:527 templates/admin-settings.php:432
-#: templates/admin-settings.php:463 templates/admin-settings.php:527
+#: dist/templates/admin-settings.php:437 dist/templates/admin-settings.php:468
+#: dist/templates/admin-settings.php:532 templates/admin-settings.php:437
+#: templates/admin-settings.php:468 templates/admin-settings.php:532
 msgid "Breadcrumbs"
 msgstr "パンくずリスト"
 
-#: dist/templates/admin-settings.php:435 templates/admin-settings.php:435
+#: dist/templates/admin-settings.php:440 templates/admin-settings.php:440
 msgid "Include BreadcrumbList in JSON-LD output"
 msgstr "JSON-LD出力にBreadcrumbListを含める"
 
-#: dist/templates/admin-settings.php:437 templates/admin-settings.php:437
+#: dist/templates/admin-settings.php:442 templates/admin-settings.php:442
 msgid ""
 "ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for "
 "SEO."
 msgstr ""
 "ON: Googleリッチスニペット用のBreadcrumbListスキーマを出力。SEOに推奨。"
 
-#: dist/templates/admin-settings.php:440 templates/admin-settings.php:440
+#: dist/templates/admin-settings.php:445 templates/admin-settings.php:445
 #, fuzzy
 msgid "Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()"
 msgstr "HTML パンくずリスト (nav) をレンダリングします。"
 
-#: dist/templates/admin-settings.php:442 templates/admin-settings.php:442
+#: dist/templates/admin-settings.php:447 templates/admin-settings.php:447
 msgid ""
 "ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme "
 "already has breadcrumbs."
 msgstr ""
 "ON: ページにパンくずナビを表示。テーマにパンくずがある場合はOFFのまま。"
 
-#: dist/templates/admin-settings.php:452 templates/admin-settings.php:452
+#: dist/templates/admin-settings.php:457 templates/admin-settings.php:457
 msgid "Page-type schema controls"
 msgstr "ページタイプ別スキーマ設定"
 
-#: dist/templates/admin-settings.php:452 templates/admin-settings.php:452
+#: dist/templates/admin-settings.php:457 templates/admin-settings.php:457
 msgid ""
 "Column guide: Schema type = Force a specific schema (Article, FAQPage, "
 "WebPage) regardless of content model. Breadcrumbs = Include in "
@@ -1750,39 +1750,39 @@ msgstr ""
 "める。FAQ抽出 = Q&Aコンテンツを自動検出しFAQPageスキーマを生成。スキーマ優先"
 "度 = コンテンツタイプごとにグローバル優先度を上書き。"
 
-#: dist/templates/admin-settings.php:453 templates/admin-settings.php:453
+#: dist/templates/admin-settings.php:458 templates/admin-settings.php:458
 msgid ""
 "Fine-tune schema per content type. Choose the right schema for each post "
 "type or taxonomy to maximize how your content appears in search results."
 msgstr ""
 
-#: dist/templates/admin-settings.php:458 templates/admin-settings.php:458
+#: dist/templates/admin-settings.php:463 templates/admin-settings.php:463
 msgid "Post type overrides"
 msgstr "投稿タイプ別の上書き設定"
 
-#: dist/templates/admin-settings.php:461 dist/templates/admin-settings.php:525
-#: templates/admin-settings.php:461 templates/admin-settings.php:525
+#: dist/templates/admin-settings.php:466 dist/templates/admin-settings.php:530
+#: templates/admin-settings.php:466 templates/admin-settings.php:530
 msgid "Content"
 msgstr "コンテンツ"
 
-#: dist/templates/admin-settings.php:462 dist/templates/admin-settings.php:526
-#: templates/admin-settings.php:462 templates/admin-settings.php:526
+#: dist/templates/admin-settings.php:467 dist/templates/admin-settings.php:531
+#: templates/admin-settings.php:467 templates/admin-settings.php:531
 msgid "Schema type"
 msgstr "スキーマタイプ"
 
-#: dist/templates/admin-settings.php:464 dist/templates/admin-settings.php:528
-#: templates/admin-settings.php:464 templates/admin-settings.php:528
+#: dist/templates/admin-settings.php:469 dist/templates/admin-settings.php:533
+#: templates/admin-settings.php:469 templates/admin-settings.php:533
 msgid "FAQ extraction"
 msgstr "FAQ 自動抽出"
 
-#: dist/templates/admin-settings.php:496 dist/templates/admin-settings.php:503
-#: dist/templates/admin-settings.php:560 dist/templates/admin-settings.php:567
-#: templates/admin-settings.php:496 templates/admin-settings.php:503
-#: templates/admin-settings.php:560 templates/admin-settings.php:567
+#: dist/templates/admin-settings.php:501 dist/templates/admin-settings.php:508
+#: dist/templates/admin-settings.php:565 dist/templates/admin-settings.php:572
+#: templates/admin-settings.php:501 templates/admin-settings.php:508
+#: templates/admin-settings.php:565 templates/admin-settings.php:572
 msgid "Enabled"
 msgstr "有効"
 
-#: dist/templates/admin-settings.php:516 templates/admin-settings.php:516
+#: dist/templates/admin-settings.php:521 templates/admin-settings.php:521
 msgid ""
 "Override schema defaults per post type so you can force Article, FAQPage, or "
 "WebPage output without editing individual posts."
@@ -1791,15 +1791,15 @@ msgstr ""
 "これにより、個別の投稿を編集せずに、\n"
 "Article / FAQPage / WebPage などのスキーマを強制的に指定できます。"
 
-#: dist/templates/admin-settings.php:519 templates/admin-settings.php:519
+#: dist/templates/admin-settings.php:524 templates/admin-settings.php:524
 msgid "Taxonomy overrides"
 msgstr "タクソノミー別の上書き設定"
 
-#: dist/templates/admin-settings.php:521 templates/admin-settings.php:521
+#: dist/templates/admin-settings.php:526 templates/admin-settings.php:526
 msgid "No public taxonomies were detected on this site."
 msgstr "このサイトには「公開タクソノミー」がありません。"
 
-#: dist/templates/admin-settings.php:580 templates/admin-settings.php:580
+#: dist/templates/admin-settings.php:585 templates/admin-settings.php:585
 msgid ""
 "Taxonomy archives can inherit the breadcrumbs/FAQ toggles and schema "
 "priority settings just like posts."
@@ -1807,21 +1807,21 @@ msgstr ""
 "タクソノミーアーカイブ（カテゴリやタグなど）は、\n"
 "投稿と同じように パンくず表示・FAQ抽出・スキーマ優先度 を継承できます。"
 
-#: dist/templates/admin-settings.php:588 templates/admin-settings.php:588
+#: dist/templates/admin-settings.php:593 templates/admin-settings.php:593
 msgid "Local details & hours"
 msgstr "ローカル情報と営業時間"
 
-#: dist/templates/admin-settings.php:589 templates/admin-settings.php:589
+#: dist/templates/admin-settings.php:594 templates/admin-settings.php:594
 msgid ""
 "Get found locally. Address, coordinates, and business hours power "
 "LocalBusiness schema for Google Maps, local search, and \"near me\" queries."
 msgstr ""
 
-#: dist/templates/admin-settings.php:597 templates/admin-settings.php:597
+#: dist/templates/admin-settings.php:602 templates/admin-settings.php:602
 msgid "Google Recommended Properties for LocalBusiness"
 msgstr "LocalBusiness の Google 推奨プロパティ"
 
-#: dist/templates/admin-settings.php:598 templates/admin-settings.php:598
+#: dist/templates/admin-settings.php:603 templates/admin-settings.php:603
 msgid ""
 "Complete these fields to maximize your visibility in local search results "
 "and Google Maps."
@@ -1829,75 +1829,75 @@ msgstr ""
 "これらの項目を入力すると、ローカル検索結果や Google マップでの表示が最大化さ"
 "れます。"
 
-#: dist/templates/admin-settings.php:605 templates/admin-settings.php:605
+#: dist/templates/admin-settings.php:610 templates/admin-settings.php:610
 msgid "name"
 msgstr "name"
 
-#: dist/templates/admin-settings.php:606 templates/admin-settings.php:606
+#: dist/templates/admin-settings.php:611 templates/admin-settings.php:611
 msgid "Business name (Company name field)"
 msgstr "店舗名（会社名フィールド）"
 
-#: dist/templates/admin-settings.php:612 templates/admin-settings.php:612
+#: dist/templates/admin-settings.php:617 templates/admin-settings.php:617
 msgid "address"
 msgstr "address"
 
-#: dist/templates/admin-settings.php:613 templates/admin-settings.php:613
+#: dist/templates/admin-settings.php:618 templates/admin-settings.php:618
 msgid "Full postal address"
 msgstr "完全な住所"
 
-#: dist/templates/admin-settings.php:619 templates/admin-settings.php:619
+#: dist/templates/admin-settings.php:624 templates/admin-settings.php:624
 msgid "telephone"
 msgstr "telephone"
 
-#: dist/templates/admin-settings.php:620 templates/admin-settings.php:620
+#: dist/templates/admin-settings.php:625 templates/admin-settings.php:625
 msgid "Contact phone number"
 msgstr "電話番号"
 
-#: dist/templates/admin-settings.php:626 templates/admin-settings.php:626
+#: dist/templates/admin-settings.php:631 templates/admin-settings.php:631
 msgid "geo"
 msgstr "geo"
 
-#: dist/templates/admin-settings.php:627 templates/admin-settings.php:627
+#: dist/templates/admin-settings.php:632 templates/admin-settings.php:632
 msgid "Latitude and longitude"
 msgstr "緯度・経度"
 
-#: dist/templates/admin-settings.php:633 templates/admin-settings.php:633
+#: dist/templates/admin-settings.php:638 templates/admin-settings.php:638
 msgid "openingHours"
 msgstr "openingHours"
 
-#: dist/templates/admin-settings.php:634 templates/admin-settings.php:634
+#: dist/templates/admin-settings.php:639 templates/admin-settings.php:639
 msgid "Business hours"
 msgstr "営業時間"
 
-#: dist/templates/admin-settings.php:640 templates/admin-settings.php:640
+#: dist/templates/admin-settings.php:645 templates/admin-settings.php:645
 msgid "image"
 msgstr "image"
 
-#: dist/templates/admin-settings.php:641 templates/admin-settings.php:641
+#: dist/templates/admin-settings.php:646 templates/admin-settings.php:646
 msgid "Storefront photo"
 msgstr "店舗写真"
 
-#: dist/templates/admin-settings.php:647 templates/admin-settings.php:647
+#: dist/templates/admin-settings.php:652 templates/admin-settings.php:652
 msgid "url"
 msgstr "url"
 
-#: dist/templates/admin-settings.php:648 templates/admin-settings.php:648
+#: dist/templates/admin-settings.php:653 templates/admin-settings.php:653
 msgid "Website URL"
 msgstr "WebサイトURL"
 
-#: dist/templates/admin-settings.php:654 templates/admin-settings.php:654
+#: dist/templates/admin-settings.php:659 templates/admin-settings.php:659
 msgid "priceRange"
 msgstr "priceRange"
 
-#: dist/templates/admin-settings.php:655 templates/admin-settings.php:655
+#: dist/templates/admin-settings.php:660 templates/admin-settings.php:660
 msgid "Price range ($, $$, $$$)"
 msgstr "価格帯（$, $$, $$$）"
 
-#: dist/templates/admin-settings.php:661 templates/admin-settings.php:661
+#: dist/templates/admin-settings.php:666 templates/admin-settings.php:666
 msgid "View Google LocalBusiness documentation →"
 msgstr "Google LocalBusiness ドキュメントを見る →"
 
-#: dist/templates/admin-settings.php:664 templates/admin-settings.php:664
+#: dist/templates/admin-settings.php:669 templates/admin-settings.php:669
 msgid ""
 "LocalBusiness output relies on these fields. When skip on incomplete is "
 "enabled, missing items here will suppress output."
@@ -1905,60 +1905,60 @@ msgstr ""
 "LocalBusiness出力はこれらのフィールドに依存します。「未完成時スキップ」が有効"
 "な場合、不足項目があると出力が抑制されます。"
 
-#: dist/templates/admin-settings.php:669 templates/admin-settings.php:669
+#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
 msgid "Price range"
 msgstr "価格帯"
 
-#: dist/templates/admin-settings.php:669 templates/admin-settings.php:669
+#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
 msgid ""
 "Select the price level for your business. Google displays this in search "
 "results."
 msgstr "ビジネスの価格帯を選択してください。Google検索結果に表示されます。"
 
-#: dist/templates/admin-settings.php:671 templates/admin-settings.php:671
+#: dist/templates/admin-settings.php:676 templates/admin-settings.php:676
 msgid "— Not specified —"
 msgstr "— 未設定 —"
 
-#: dist/templates/admin-settings.php:672 templates/admin-settings.php:672
+#: dist/templates/admin-settings.php:677 templates/admin-settings.php:677
 msgid "$ (Budget)"
 msgstr "$ (格安)"
 
-#: dist/templates/admin-settings.php:673 templates/admin-settings.php:673
+#: dist/templates/admin-settings.php:678 templates/admin-settings.php:678
 msgid "$$ (Moderate)"
 msgstr "$$ (手頃)"
 
-#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
+#: dist/templates/admin-settings.php:679 templates/admin-settings.php:679
 msgid "$$$ (Expensive)"
 msgstr "$$$ (やや高め)"
 
-#: dist/templates/admin-settings.php:675 templates/admin-settings.php:675
+#: dist/templates/admin-settings.php:680 templates/admin-settings.php:680
 msgid "$$$$ (Luxury)"
 msgstr "$$$$ (高級)"
 
-#: dist/templates/admin-settings.php:679 templates/admin-settings.php:679
+#: dist/templates/admin-settings.php:684 templates/admin-settings.php:684
 msgid "Accepted payment methods"
 msgstr "受け付ける支払い方法"
 
-#: dist/templates/admin-settings.php:679 templates/admin-settings.php:679
+#: dist/templates/admin-settings.php:684 templates/admin-settings.php:684
 msgid ""
 "List payment methods separated by commas. Examples: Cash, Credit Card, "
 "PayPay, Suica"
 msgstr ""
 "支払い方法をカンマ区切りで入力。例: 現金, クレジットカード, PayPay, Suica"
 
-#: dist/templates/admin-settings.php:680 templates/admin-settings.php:680
+#: dist/templates/admin-settings.php:685 templates/admin-settings.php:685
 msgid "Example: Cash, Credit Card"
 msgstr "例: Cash, Credit Card"
 
-#: dist/templates/admin-settings.php:683 templates/admin-settings.php:683
+#: dist/templates/admin-settings.php:688 templates/admin-settings.php:688
 msgid "Reservations"
 msgstr "予約の受け付け"
 
-#: dist/templates/admin-settings.php:686 templates/admin-settings.php:686
+#: dist/templates/admin-settings.php:691 templates/admin-settings.php:691
 msgid "Accept reservations"
 msgstr "予約を受け付ける"
 
-#: dist/templates/admin-settings.php:688 templates/admin-settings.php:688
+#: dist/templates/admin-settings.php:693 templates/admin-settings.php:693
 msgid ""
 "ON: Adds acceptsReservations property to LocalBusiness schema. Enable for "
 "restaurants, salons, or any business that takes bookings."
@@ -1966,39 +1966,39 @@ msgstr ""
 "ON: LocalBusinessスキーマにacceptsReservationsプロパティを追加します。レスト"
 "ラン、サロン、予約を受け付けるビジネスで有効にしてください。"
 
-#: dist/templates/admin-settings.php:692
+#: dist/templates/admin-settings.php:698
 #: dist/templates/wizard/steps/step-api-key.php:17
 #: dist/templates/wizard/steps/step-api-key.php:49
-#: templates/admin-settings.php:692 templates/wizard/steps/step-api-key.php:17
+#: templates/admin-settings.php:698 templates/wizard/steps/step-api-key.php:17
 #: templates/wizard/steps/step-api-key.php:49
 msgid "Google Maps API Key"
 msgstr "Google Maps APIキー"
 
-#: dist/templates/admin-settings.php:699 templates/admin-settings.php:699
+#: dist/templates/admin-settings.php:705 templates/admin-settings.php:705
 msgid "Stored API key"
 msgstr "APIキーは保存済みです"
 
-#: dist/templates/admin-settings.php:699 templates/admin-settings.php:699
+#: dist/templates/admin-settings.php:705 templates/admin-settings.php:705
 msgid "Example: AIzaSyB..."
 msgstr "例: AIzaSyB..."
 
-#: dist/templates/admin-settings.php:705 templates/admin-settings.php:705
+#: dist/templates/admin-settings.php:711 templates/admin-settings.php:711
 msgid "Save key"
 msgstr "キーを保存"
 
-#: dist/templates/admin-settings.php:711 templates/admin-settings.php:711
+#: dist/templates/admin-settings.php:717 templates/admin-settings.php:717
 msgid "An API key is already stored. Delete it first if you need to change it."
 msgstr "APIキーは保存済みです。変更する場合は一度削除してください。"
 
-#: dist/templates/admin-settings.php:718 templates/admin-settings.php:718
+#: dist/templates/admin-settings.php:724 templates/admin-settings.php:724
 msgid "Delete the stored API key?"
 msgstr "保存済みのAPIキーを削除しますか？"
 
-#: dist/templates/admin-settings.php:720 templates/admin-settings.php:720
+#: dist/templates/admin-settings.php:726 templates/admin-settings.php:726
 msgid "Delete stored key"
 msgstr "保存済みキーを削除"
 
-#: dist/templates/admin-settings.php:723 templates/admin-settings.php:723
+#: dist/templates/admin-settings.php:729 templates/admin-settings.php:729
 msgid ""
 "Enter a Google Maps Geocoding API key to use Google for geocoding. When "
 "empty, OpenStreetMap is used for development purposes."
@@ -2006,16 +2006,16 @@ msgstr ""
 "ジオコーディングに Google Maps Geocoding API を利用する場合はAPIキーを入力し"
 "てください。未入力時は OpenStreetMap を使用します。"
 
-#: dist/templates/admin-settings.php:728
+#: dist/templates/admin-settings.php:734
 #: dist/templates/wizard/steps/step-3-location.php:88
 #: dist/templates/wizard/steps/step-5-complete.php:86
-#: templates/admin-settings.php:728
+#: templates/admin-settings.php:734
 #: templates/wizard/steps/step-3-location.php:88
 #: templates/wizard/steps/step-5-complete.php:86
 msgid "Address"
 msgstr "住所"
 
-#: dist/templates/admin-settings.php:728 templates/admin-settings.php:728
+#: dist/templates/admin-settings.php:734 templates/admin-settings.php:734
 msgid ""
 "Required for LocalBusiness. Enter your full postal address for the "
 "PostalAddress schema property."
@@ -2023,52 +2023,52 @@ msgstr ""
 "LocalBusinessに必須。PostalAddressスキーマプロパティに完全な住所を入力してく"
 "ださい。"
 
-#: dist/templates/admin-settings.php:730 templates/admin-settings.php:730
+#: dist/templates/admin-settings.php:736 templates/admin-settings.php:736
 msgid "Postal code (e.g. 150-0001)"
 msgstr "郵便番号 (例: 150-0001)"
 
-#: dist/templates/admin-settings.php:736 templates/admin-settings.php:736
+#: dist/templates/admin-settings.php:742 templates/admin-settings.php:742
 #, fuzzy
 msgid "Select prefecture"
 msgstr "都道府県を選択"
 
-#: dist/templates/admin-settings.php:754 templates/admin-settings.php:754
+#: dist/templates/admin-settings.php:760 templates/admin-settings.php:760
 msgid "市区町村（例：草津市）"
 msgstr "市区町村（例：草津市）"
 
-#: dist/templates/admin-settings.php:755 templates/admin-settings.php:755
+#: dist/templates/admin-settings.php:761 templates/admin-settings.php:761
 msgid "市区町村"
 msgstr "市区町村"
 
-#: dist/templates/admin-settings.php:762 templates/admin-settings.php:762
+#: dist/templates/admin-settings.php:768 templates/admin-settings.php:768
 msgid "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 msgstr "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 
-#: dist/templates/admin-settings.php:763 templates/admin-settings.php:763
+#: dist/templates/admin-settings.php:769 templates/admin-settings.php:769
 msgid "町名・番地・建物名"
 msgstr "町名・番地・建物名"
 
-#: dist/templates/admin-settings.php:768 templates/admin-settings.php:768
+#: dist/templates/admin-settings.php:774 templates/admin-settings.php:774
 msgid "Country (e.g. JP)"
 msgstr "国名 (例: JP)"
 
-#: dist/templates/admin-settings.php:770 templates/admin-settings.php:770
+#: dist/templates/admin-settings.php:776 templates/admin-settings.php:776
 msgid "ISO 3166-2 updates automatically from the prefecture selection."
 msgstr "ISO 3166-2コードは都道府県の選択に応じて自動更新されます。"
 
-#: dist/templates/admin-settings.php:774 templates/admin-settings.php:774
+#: dist/templates/admin-settings.php:780 templates/admin-settings.php:780
 msgid "ISO 3166-2"
 msgstr "ISO 3166-2"
 
-#: dist/templates/admin-settings.php:785 templates/admin-settings.php:785
+#: dist/templates/admin-settings.php:791 templates/admin-settings.php:791
 msgid "郵便番号から住所を自動補完する"
 msgstr "郵便番号から住所を自動補完する"
 
-#: dist/templates/admin-settings.php:790 templates/admin-settings.php:790
+#: dist/templates/admin-settings.php:796 templates/admin-settings.php:796
 msgid "Latitude & longitude"
 msgstr "緯度・経度"
 
-#: dist/templates/admin-settings.php:790 templates/admin-settings.php:790
+#: dist/templates/admin-settings.php:796 templates/admin-settings.php:796
 msgid ""
 "Required for LocalBusiness. Click \"Fetch coordinates\" to auto-fill from "
 "address."
@@ -2076,24 +2076,24 @@ msgstr ""
 "LocalBusinessに必須。「座標を取得」をクリックして住所から自動入力してくださ"
 "い。"
 
-#: dist/templates/admin-settings.php:792 templates/admin-settings.php:792
+#: dist/templates/admin-settings.php:798 templates/admin-settings.php:798
 msgid "Latitude 35.123456"
 msgstr "緯度 35.123456"
 
-#: dist/templates/admin-settings.php:793 templates/admin-settings.php:793
+#: dist/templates/admin-settings.php:799 templates/admin-settings.php:799
 msgid "Longitude 139.123456"
 msgstr "経度 139.123456"
 
-#: dist/templates/admin-settings.php:801 templates/admin-settings.php:801
+#: dist/templates/admin-settings.php:807 templates/admin-settings.php:807
 #, fuzzy
 msgid "Google Map link"
 msgstr "Googleマップのリンク"
 
-#: dist/templates/admin-settings.php:810 templates/admin-settings.php:810
+#: dist/templates/admin-settings.php:816 templates/admin-settings.php:816
 msgid "Generate hasMap from saved coordinates"
 msgstr "保存された座標から hasMap を生成する"
 
-#: dist/templates/admin-settings.php:813 templates/admin-settings.php:813
+#: dist/templates/admin-settings.php:819 templates/admin-settings.php:819
 msgid ""
 "When enabled, hasMap becomes https://www.google.com/maps/search/?"
 "api=1&query=latitude,longitude. Coordinates are required."
@@ -2101,16 +2101,16 @@ msgstr ""
 "有効にするには座標が必須になります。hasMapは、ビジネスの位置情報を正確に示し"
 "ます。"
 
-#: dist/templates/admin-settings.php:818 templates/admin-settings.php:818
+#: dist/templates/admin-settings.php:824 templates/admin-settings.php:824
 #, fuzzy
 msgid "LocalBusiness output control"
 msgstr "LocalBusinessの出力制御"
 
-#: dist/templates/admin-settings.php:827 templates/admin-settings.php:827
+#: dist/templates/admin-settings.php:833 templates/admin-settings.php:833
 msgid "Do not output LocalBusiness when required fields are missing"
 msgstr "必須項目が不足している場合は LocalBusiness を出力しない"
 
-#: dist/templates/admin-settings.php:830 templates/admin-settings.php:830
+#: dist/templates/admin-settings.php:836 templates/admin-settings.php:836
 msgid ""
 "When enabled, LocalBusiness will be skipped unless name, address, and "
 "telephone are complete. A warning will appear in debug mode."
@@ -2118,172 +2118,172 @@ msgstr ""
 "有効にすると、名称・住所・電話番号がすべて揃っていない LocalBusiness は出力さ"
 "れません。デバッグモードでは警告が表示されます。"
 
-#: dist/templates/admin-settings.php:834 templates/admin-settings.php:834
+#: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
 msgid "Opening hours"
 msgstr "営業時間"
 
-#: dist/templates/admin-settings.php:834 templates/admin-settings.php:834
+#: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
 #, fuzzy
 msgid ""
 "Add as many day and time combinations as needed. Use templates for quick "
 "setup."
 msgstr "曜日と営業時間の組み合わせを必要な分だけ追加してください。"
 
-#: dist/templates/admin-settings.php:835 templates/admin-settings.php:835
+#: dist/templates/admin-settings.php:841 templates/admin-settings.php:841
 #, fuzzy
 msgid "Opening hour templates"
 msgstr "営業時間テンプレート"
 
-#: dist/templates/admin-settings.php:836 templates/admin-settings.php:836
+#: dist/templates/admin-settings.php:842 templates/admin-settings.php:842
 msgid "平日 10:00–19:00"
 msgstr "平日 10:00–19:00"
 
-#: dist/templates/admin-settings.php:837 templates/admin-settings.php:837
+#: dist/templates/admin-settings.php:843 templates/admin-settings.php:843
 msgid "土日祝 10:00–17:00"
 msgstr "土日祝 10:00–17:00"
 
-#: dist/templates/admin-settings.php:838 templates/admin-settings.php:838
+#: dist/templates/admin-settings.php:844 templates/admin-settings.php:844
 msgid "24時間営業（毎日 00:00–23:59）"
 msgstr "24時間営業（毎日 00:00–23:59）"
 
-#: dist/templates/admin-settings.php:839 templates/admin-settings.php:839
+#: dist/templates/admin-settings.php:845 templates/admin-settings.php:845
 msgid "クリア"
 msgstr "クリア"
 
-#: dist/templates/admin-settings.php:844 templates/admin-settings.php:844
+#: dist/templates/admin-settings.php:850 templates/admin-settings.php:850
 msgid "月曜を含める"
 msgstr "月曜を含める"
 
-#: dist/templates/admin-settings.php:848 templates/admin-settings.php:848
+#: dist/templates/admin-settings.php:854 templates/admin-settings.php:854
 msgid "火曜を含める"
 msgstr "火曜を含める"
 
-#: dist/templates/admin-settings.php:852 templates/admin-settings.php:852
+#: dist/templates/admin-settings.php:858 templates/admin-settings.php:858
 msgid "水曜を含める"
 msgstr "水曜を含める"
 
-#: dist/templates/admin-settings.php:856 templates/admin-settings.php:856
+#: dist/templates/admin-settings.php:862 templates/admin-settings.php:862
 msgid "木曜を含める"
 msgstr "木曜を含める"
 
-#: dist/templates/admin-settings.php:860 templates/admin-settings.php:860
+#: dist/templates/admin-settings.php:866 templates/admin-settings.php:866
 msgid "金曜を含める"
 msgstr "金曜を含める"
 
-#: dist/templates/admin-settings.php:864 templates/admin-settings.php:864
+#: dist/templates/admin-settings.php:870 templates/admin-settings.php:870
 msgid "土曜を含める"
 msgstr "土曜を含める"
 
-#: dist/templates/admin-settings.php:868 templates/admin-settings.php:868
+#: dist/templates/admin-settings.php:874 templates/admin-settings.php:874
 msgid "日曜を含める"
 msgstr "日曜を含める"
 
-#: dist/templates/admin-settings.php:872 dist/templates/admin-settings.php:878
-#: templates/admin-settings.php:872 templates/admin-settings.php:878
+#: dist/templates/admin-settings.php:878 dist/templates/admin-settings.php:884
+#: templates/admin-settings.php:878 templates/admin-settings.php:884
 msgid "祝日を含める"
 msgstr "祝日を含める"
 
-#: dist/templates/admin-settings.php:881 templates/admin-settings.php:881
+#: dist/templates/admin-settings.php:887 templates/admin-settings.php:887
 msgid "祝日の営業時間"
 msgstr "祝日の営業時間"
 
-#: dist/templates/admin-settings.php:884 templates/admin-settings.php:884
+#: dist/templates/admin-settings.php:890 templates/admin-settings.php:890
 msgid "平日と同じ"
 msgstr "平日と同じ"
 
-#: dist/templates/admin-settings.php:888 templates/admin-settings.php:888
+#: dist/templates/admin-settings.php:894 templates/admin-settings.php:894
 msgid "土日祝テンプレと同じ"
 msgstr "土日祝テンプレと同じ"
 
-#: dist/templates/admin-settings.php:892 templates/admin-settings.php:892
+#: dist/templates/admin-settings.php:898 templates/admin-settings.php:898
 msgid "カスタム設定"
 msgstr "カスタム設定"
 
-#: dist/templates/admin-settings.php:911 templates/admin-settings.php:911
+#: dist/templates/admin-settings.php:917 templates/admin-settings.php:917
 msgid "to"
 msgstr "〜"
 
-#: dist/templates/admin-settings.php:917 templates/admin-settings.php:917
+#: dist/templates/admin-settings.php:923 templates/admin-settings.php:923
 msgid "Add time slot"
 msgstr "時間帯を追加"
 
-#: dist/templates/admin-settings.php:924 templates/admin-settings.php:924
+#: dist/templates/admin-settings.php:930 templates/admin-settings.php:930
 msgid "AEO/GEO Diagnostics"
 msgstr ""
 
-#: dist/templates/admin-settings.php:925 templates/admin-settings.php:925
+#: dist/templates/admin-settings.php:931 templates/admin-settings.php:931
 msgid ""
 "Check your schema readiness. This diagnostic validates required fields and "
 "highlights issues that may prevent rich results or AI visibility."
 msgstr ""
 
-#: dist/templates/admin-settings.php:938 templates/admin-settings.php:938
+#: dist/templates/admin-settings.php:944 templates/admin-settings.php:944
 msgid "OK"
 msgstr "OK"
 
-#: dist/templates/admin-settings.php:939 templates/admin-settings.php:939
+#: dist/templates/admin-settings.php:945 templates/admin-settings.php:945
 msgid "Info"
 msgstr ""
 
-#: dist/templates/admin-settings.php:940 dist/templates/admin-settings.php:943
-#: templates/admin-settings.php:940 templates/admin-settings.php:943
+#: dist/templates/admin-settings.php:946 dist/templates/admin-settings.php:949
+#: templates/admin-settings.php:946 templates/admin-settings.php:949
 msgid "Warning"
 msgstr "警告"
 
-#: dist/templates/admin-settings.php:941 templates/admin-settings.php:941
+#: dist/templates/admin-settings.php:947 templates/admin-settings.php:947
 msgid "Error"
 msgstr "エラー"
 
-#: dist/templates/admin-settings.php:954 templates/admin-settings.php:954
+#: dist/templates/admin-settings.php:960 templates/admin-settings.php:960
 msgid "まだ診断結果がありません。"
 msgstr "まだ診断結果がありません。"
 
 #. translators: %s: datetime string
-#: dist/templates/admin-settings.php:962 templates/admin-settings.php:962
+#: dist/templates/admin-settings.php:968 templates/admin-settings.php:968
 #, php-format
 msgid "最終診断: %s（再読み込みで更新）"
 msgstr "最終診断: %s（再読み込みで更新）"
 
-#: dist/templates/admin-settings.php:973 templates/admin-settings.php:973
+#: dist/templates/admin-settings.php:979 templates/admin-settings.php:979
 msgid "llms.txt"
 msgstr "llms.txt"
 
-#: dist/templates/admin-settings.php:974 templates/admin-settings.php:974
+#: dist/templates/admin-settings.php:980 templates/admin-settings.php:980
 msgid ""
 "Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude "
 "understand your site structure for better AI-powered search visibility."
 msgstr ""
 
-#: dist/templates/admin-settings.php:988 templates/admin-settings.php:988
+#: dist/templates/admin-settings.php:994 templates/admin-settings.php:994
 msgid "Enable llms.txt"
 msgstr "llms.txt を有効化"
 
-#: dist/templates/admin-settings.php:991 templates/admin-settings.php:991
+#: dist/templates/admin-settings.php:997 templates/admin-settings.php:997
 msgid "When enabled, the file is served at:"
 msgstr "有効にすると、以下の URL で配信されます："
 
-#: dist/templates/admin-settings.php:997 templates/admin-settings.php:997
+#: dist/templates/admin-settings.php:1003 templates/admin-settings.php:1003
 msgid "Content (Markdown)"
 msgstr "内容（Markdown）"
 
-#: dist/templates/admin-settings.php:1000 templates/admin-settings.php:1000
+#: dist/templates/admin-settings.php:1006 templates/admin-settings.php:1006
 msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
 msgstr ""
 "llms.txt の内容を編集できます。空欄にするとサイトデータから自動生成されます。"
 
-#: dist/templates/admin-settings.php:1020 templates/admin-settings.php:1020
+#: dist/templates/admin-settings.php:1026 templates/admin-settings.php:1026
 msgid "Save settings"
 msgstr "設定を保存"
 
-#: dist/templates/admin-settings.php:1048 templates/admin-settings.php:1048
+#: dist/templates/admin-settings.php:1054 templates/admin-settings.php:1054
 msgid "〜"
 msgstr "〜"
 
-#: dist/templates/admin-settings.php:1056 templates/admin-settings.php:1056
+#: dist/templates/admin-settings.php:1062 templates/admin-settings.php:1062
 msgid "Open Test Manager"
 msgstr "テストマネージャーを開く"
 
-#: dist/templates/admin-settings.php:1058 templates/admin-settings.php:1058
+#: dist/templates/admin-settings.php:1064 templates/admin-settings.php:1064
 msgid "Test Manager"
 msgstr "テストマネージャー"
 
@@ -2357,12 +2357,12 @@ msgid "Recommended size: 600x60 pixels. PNG or SVG format."
 msgstr "推奨サイズ: 600x60ピクセル。PNG または SVG形式。"
 
 #: dist/templates/wizard/steps/step-1-basics.php:94
-#: dist/templates/wizard/steps/step-2-type.php:82
+#: dist/templates/wizard/steps/step-2-type.php:92
 #: dist/templates/wizard/steps/step-3-location.php:198
 #: dist/templates/wizard/steps/step-4-hours.php:152
 #: dist/templates/wizard/steps/step-api-key.php:92
 #: templates/wizard/steps/step-1-basics.php:94
-#: templates/wizard/steps/step-2-type.php:82
+#: templates/wizard/steps/step-2-type.php:92
 #: templates/wizard/steps/step-3-location.php:198
 #: templates/wizard/steps/step-4-hours.php:152
 #: templates/wizard/steps/step-api-key.php:92
@@ -2370,12 +2370,12 @@ msgid "Back"
 msgstr "戻る"
 
 #: dist/templates/wizard/steps/step-1-basics.php:97
-#: dist/templates/wizard/steps/step-2-type.php:85
+#: dist/templates/wizard/steps/step-2-type.php:95
 #: dist/templates/wizard/steps/step-3-location.php:201
 #: dist/templates/wizard/steps/step-4-hours.php:155
 #: dist/templates/wizard/steps/step-api-key.php:99
 #: templates/wizard/steps/step-1-basics.php:97
-#: templates/wizard/steps/step-2-type.php:85
+#: templates/wizard/steps/step-2-type.php:95
 #: templates/wizard/steps/step-3-location.php:201
 #: templates/wizard/steps/step-4-hours.php:155
 #: templates/wizard/steps/step-api-key.php:99
@@ -2979,24 +2979,24 @@ msgid ""
 msgstr ""
 "以下のSEOプラグインを検出しました。設定をインポートして素早く開始できます。"
 
-#: dist/templates/wizard/steps/welcome.php:158
-#: templates/wizard/steps/welcome.php:158
+#: dist/templates/wizard/steps/welcome.php:159
+#: templates/wizard/steps/welcome.php:159
 #, fuzzy
 msgid "Not detected"
 msgstr "未設定"
 
-#: dist/templates/wizard/steps/welcome.php:167
-#: templates/wizard/steps/welcome.php:167
+#: dist/templates/wizard/steps/welcome.php:168
+#: templates/wizard/steps/welcome.php:168
 msgid "Continue without importing"
 msgstr "インポートせずに続行"
 
-#: dist/templates/wizard/wizard-page.php:66 templates/wizard/wizard-page.php:66
+#: dist/templates/wizard/wizard-page.php:70 templates/wizard/wizard-page.php:70
 #, fuzzy
 msgid "Step template not found."
 msgstr "設定テンプレートが見つかりませんでした。"
 
 #. translators: %s: plugin version
-#: dist/templates/wizard/wizard-page.php:78 templates/wizard/wizard-page.php:78
+#: dist/templates/wizard/wizard-page.php:82 templates/wizard/wizard-page.php:82
 #, php-format
 msgid "AI Search Schema v%s"
 msgstr "Aivec AI Search Schema v%s"
@@ -3046,466 +3046,7 @@ msgstr ""
 msgid "Diagnostic evaluator not available."
 msgstr "ライセンス検証APIはまだ利用できません。"
 
-#: tools/test-manager.php:257
+#: tools/test-manager.php:673
 #, fuzzy
 msgid "AI Search Schema Test Manager"
 msgstr "AEOスキーマ設定"
-
-#~ msgid "License validation API is not yet available."
-#~ msgstr "ライセンス検証APIはまだ利用できません。"
-
-#~ msgid "Please enter a license key."
-#~ msgstr "ライセンスキーを入力してください。"
-
-#~ msgid "License activated successfully."
-#~ msgstr "ライセンスが正常に有効化されました。"
-
-#~ msgid "License validation failed."
-#~ msgstr "ライセンス検証に失敗しました。"
-
-#~ msgid "License deactivated."
-#~ msgstr "ライセンスが無効化されました。"
-
-#~ msgid "Active"
-#~ msgstr "有効"
-
-#~ msgid "Expired"
-#~ msgstr "期限切れ"
-
-#~ msgid "Invalid"
-#~ msgstr "無効"
-
-#~ msgid "Inactive"
-#~ msgstr "未使用"
-
-#~ msgid "Multi-Location Support"
-#~ msgstr "マルチロケーション対応"
-
-#~ msgid ""
-#~ "Manage multiple LocalBusiness locations from a single WordPress "
-#~ "installation."
-#~ msgstr ""
-#~ "単一のWordPressインストールから複数のLocalBusinessロケーションを管理できま"
-#~ "す。"
-
-#~ msgid "Custom Schema Templates"
-#~ msgstr "カスタムスキーマテンプレート"
-
-#~ msgid "Create and save custom schema templates for different content types."
-#~ msgstr ""
-#~ "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成・保存できま"
-#~ "す。"
-
-#~ msgid "Priority Support"
-#~ msgstr "優先サポート"
-
-#~ msgid "Get priority email support from our development team."
-#~ msgstr "開発チームからの優先メールサポートを受けられます。"
-
-#~ msgid "Advanced Validation"
-#~ msgstr "高度な検証機能"
-
-#~ msgid "Scheduled automatic schema validation with email reports."
-#~ msgstr "メールレポート付きのスケジュール自動スキーマ検証。"
-
-#~ msgid "Pro"
-#~ msgstr "Pro"
-
-#, php-format
-#~ msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
-#~ msgstr ""
-#~ "%s はPro機能です。アップグレードしてすべてのPro機能をアンロックしてくださ"
-#~ "い。"
-
-#~ msgid "Upgrade to Pro to unlock all advanced features."
-#~ msgstr "Proにアップグレードしてすべての高度な機能をアンロックしてください。"
-
-#~ msgid "Learn More"
-#~ msgstr "詳しく見る"
-
-#~ msgid "Activating..."
-#~ msgstr "有効化中..."
-
-#~ msgid "Deactivating..."
-#~ msgstr "無効化中..."
-
-#~ msgid "Activate"
-#~ msgstr "有効化"
-
-#~ msgid "Deactivate"
-#~ msgstr "無効化"
-
-#~ msgid "License"
-#~ msgstr "ライセンス"
-
-#~ msgid "Manage your AI Search Schema Pro license."
-#~ msgstr "Aivec AI Search Schema Proライセンスを管理します。"
-
-#~ msgid "Status:"
-#~ msgstr "ステータス:"
-
-#~ msgid "License Key"
-#~ msgstr "ライセンスキー"
-
-#~ msgid "Enter your license key"
-#~ msgstr "ライセンスキーを入力してください"
-
-#~ msgid "Enter your Pro license key to unlock advanced features."
-#~ msgstr "Proライセンスキーを入力して高度な機能をアンロックしてください。"
-
-#~ msgid "Get a license"
-#~ msgstr "ライセンスを取得"
-
-#~ msgid "Pro Features"
-#~ msgstr "Pro機能"
-
-#~ msgid "Manage multiple LocalBusiness locations."
-#~ msgstr "複数のLocalBusinessロケーションを管理できます。"
-
-#~ msgid "Create custom schema templates for different content types."
-#~ msgstr ""
-#~ "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成できます。"
-
-#~ msgid "Get priority email support."
-#~ msgstr "優先メールサポートを受けられます。"
-
-#~ msgid "Scheduled automatic schema validation."
-#~ msgstr "スケジュール自動スキーマ検証。"
-
-#, fuzzy
-#~ msgid ""
-#~ "Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()"
-#~ msgstr "HTML パンくずリスト (nav) をレンダリングします。"
-
-#~ msgid "Organization name is set."
-#~ msgstr "組織名が設定されています。"
-
-#~ msgid "Organization name is missing."
-#~ msgstr "組織名がありません。"
-
-#~ msgid "Organization URL is set."
-#~ msgstr "組織のURLが設定されています。"
-
-#~ msgid "Organization URL is missing."
-#~ msgstr "組織のURLがありません。"
-
-#~ msgid "Logo is set."
-#~ msgstr "ロゴが設定されています。"
-
-#~ msgid "Logo is not set. Set a square logo image."
-#~ msgstr "ロゴが未設定です。正方形のロゴ画像を設定してください。"
-
-#~ msgid "SameAs / social profiles are present."
-#~ msgstr "SameAs / ソーシャルプロフィールが設定されています。"
-
-#~ msgid "SameAs profiles are missing. Add social links."
-#~ msgstr ""
-#~ "SameAs プロフィールが未設定です。ソーシャルリンクを追加してください。"
-
-#~ msgid "LocalBusiness name is set."
-#~ msgstr "ローカルビジネス名が設定されています。"
-
-#~ msgid "LocalBusiness name is missing."
-#~ msgstr "ローカルビジネス名がありません。"
-
-#~ msgid "Telephone is set."
-#~ msgstr "電話番号が設定されています。"
-
-#~ msgid "Telephone is missing."
-#~ msgstr "電話番号が未設定です。"
-
-#~ msgid "Address fields are set."
-#~ msgstr "住所が設定されています。"
-
-#~ msgid ""
-#~ "Address is incomplete. Set prefecture, city, street, and postal code."
-#~ msgstr ""
-#~ "住所が不完全です。郵便番号・都道府県・市区町村・丁目番地を入力してくださ"
-#~ "い。"
-
-#, php-format
-#~ msgid "Geo coordinates set (lat/long, %s decimals)."
-#~ msgstr "緯度経度が設定されています（小数点 %s 桁）。"
-
-#~ msgid "Geo coordinates are missing. Fetch via address or enter lat/long."
-#~ msgstr "緯度経度が未設定です。住所から取得するか手入力してください。"
-
-#~ msgid "Opening hours are configured."
-#~ msgstr "営業時間が設定されています。"
-
-#~ msgid "Opening hours are empty. Add at least one slot."
-#~ msgstr "営業時間が空です。少なくとも1つ追加してください。"
-
-#~ msgid "addressCountry is set."
-#~ msgstr "addressCountry が設定されています。"
-
-#~ msgid "addressCountry is missing."
-#~ msgstr "addressCountry が未設定です。"
-
-#~ msgid "WebSite name is set."
-#~ msgstr "Webサイト名が設定されています。"
-
-#~ msgid "WebSite name is missing."
-#~ msgstr "WebSite 名が未設定です。"
-
-#~ msgid "WebSite URL is set."
-#~ msgstr "WebSite URL が設定されています。"
-
-#~ msgid "WebSite URL is missing."
-#~ msgstr "WebSite URL が未設定です。"
-
-#~ msgid "Language (inLanguage) is set."
-#~ msgstr "言語 (inLanguage) が設定されています。"
-
-#~ msgid "Language is missing. Add at least one language."
-#~ msgstr "言語が未設定です。少なくとも1件追加してください。"
-
-#~ msgid "Publisher is set."
-#~ msgstr "publisher が設定されています。"
-
-#~ msgid "Publisher is missing. Set Organization first."
-#~ msgstr "publisher が未設定です。先に Organization を設定してください。"
-
-#~ msgid "WebPage @id/url base is set."
-#~ msgstr "WebPage の @id/URL ベースが設定されています。"
-
-#~ msgid "WebPage base URL is missing."
-#~ msgstr "WebPage のベースURLが未設定です。"
-
-#~ msgid "WebPage inLanguage ready."
-#~ msgstr "WebPage の inLanguage が設定されています。"
-
-#~ msgid "WebPage inLanguage will fallback. Consider setting languages."
-#~ msgstr ""
-#~ "WebPage の inLanguage はフォールバックします。言語を設定してください。"
-
-#, fuzzy
-#~ msgid "Article schema is preferred for content."
-#~ msgstr "コンテンツに Article スキーマが推奨されています。"
-
-#~ msgid "Content model is not set to Article by default."
-#~ msgstr "デフォルトのコンテンツモデルが Article になっていません。"
-
-#~ msgid "No published posts found. Article schema cannot be checked."
-#~ msgstr ""
-#~ "公開済み投稿が見つかりません。Article スキーマのチェックができません。"
-
-#~ msgid "Headline is present."
-#~ msgstr "見出しがあります。"
-
-#~ msgid "Headline is missing."
-#~ msgstr "見出しがありません。"
-
-#~ msgid "datePublished is present."
-#~ msgstr "datePublished が設定されています。"
-
-#~ msgid "datePublished is missing."
-#~ msgstr "datePublished が未設定です。"
-
-#~ msgid "dateModified is present."
-#~ msgstr "dateModified が設定されています。"
-
-#~ msgid "dateModified is missing."
-#~ msgstr "dateModified が未設定です。"
-
-#~ msgid "Author is set."
-#~ msgstr "投稿者が設定されています。"
-
-#~ msgid "Author information is missing."
-#~ msgstr "投稿者情報が未設定です。"
-
-#~ msgid "Featured image found for the sample post."
-#~ msgstr "サンプル投稿にアイキャッチ画像があります。"
-
-#~ msgid "Featured image missing on the sample post."
-#~ msgstr "サンプル投稿にアイキャッチ画像がありません。"
-
-#~ msgid "FAQPage schema is enabled for at least one post type."
-#~ msgstr "FAQPage スキーマが少なくとも1つの投稿タイプで有効です。"
-
-#~ msgid "Ensure each FAQ has both question and answer in the page content."
-#~ msgstr "各FAQに質問と回答が揃っていることを確認してください。"
-
-#~ msgid ""
-#~ "FAQPage schema is disabled. Enable it on relevant post types if needed."
-#~ msgstr "FAQPage スキーマが無効です。必要な投稿タイプで有効にしてください。"
-
-#~ msgid "BreadcrumbList can be generated."
-#~ msgstr "BreadcrumbList を生成できます。"
-
-#~ msgid "Breadcrumb trail is empty. Check HTML output or enable breadcrumbs."
-#~ msgstr "パンくずリストが空です。HTML出力を確認するか有効化してください。"
-
-#~ msgid "Register brand, site, and contact information."
-#~ msgstr "ブランド名・サイト情報・連絡先を登録します。"
-
-#~ msgid "Manage logos, storefront imagery, and social profiles."
-#~ msgstr "ロゴや店舗イメージ、SNSアカウントを整理します。"
-
-#~ msgid "Control entity types and content models."
-#~ msgstr "エンティティタイプやコンテンツモデルを制御します。"
-
-#~ msgid ""
-#~ "Adjust schema types, breadcrumb output, FAQ extraction, and priority per "
-#~ "content area."
-#~ msgstr ""
-#~ "各コンテンツ（投稿・固定ページ・カスタム投稿など）ごとに、\n"
-#~ "スキーマタイプ・パンくずリスト出力・FAQ抽出・スキーマ優先度を調整できま"
-#~ "す。"
-
-#~ msgid ""
-#~ "Capture address, coordinates, and hours to enrich the LocalBusiness "
-#~ "schema."
-#~ msgstr "住所や緯度経度、営業時間を登録して LocalBusiness を充実させます。"
-
-#~ msgid "AEO/GEO チェック"
-#~ msgstr "AEO/GEO チェック"
-
-#~ msgid "主要スキーマの必須項目が揃っているかを自己診断します。"
-#~ msgstr "主要スキーマの必須項目が揃っているかを自己診断します。"
-
-#~ msgid "Generate llms.txt to help AI systems understand your site structure."
-#~ msgstr ""
-#~ "llms.txt を生成して、AI システムがサイト構造を理解できるようにします。"
-
-#, fuzzy
-#~ msgid "Corporate website, non-profit, educational institution"
-#~ msgstr "企業サイト、非営利団体、教育機関"
-
-#, fuzzy
-#~ msgid "e.g., Corporation, NPO, University"
-#~ msgstr "例: 株式会社、NPO法人、大学"
-
-#~ msgid "Personal / Individual"
-#~ msgstr "個人 / フリーランス"
-
-#~ msgid "Personal blog, portfolio, freelancer website"
-#~ msgstr "個人ブログ、ポートフォリオ、フリーランサーのサイト"
-
-#~ msgid "e.g., Blog, Portfolio, Artist"
-#~ msgstr "例: ブログ、ポートフォリオ、アーティスト"
-
-#~ msgid "Online Service / Media"
-#~ msgstr "オンラインサービス / メディア"
-
-#~ msgid "News site, online tool, web application"
-#~ msgstr "ニュースサイト、オンラインツール、Webアプリケーション"
-
-#~ msgid "e.g., News, SaaS, Web App"
-#~ msgstr "例: ニュース、SaaS、Webアプリ"
-
-#~ msgid ""
-#~ "Visual assets and social links for entity enrichment. These help search "
-#~ "engines connect your site to official profiles and display rich results."
-#~ msgstr ""
-#~ "ロゴ画像とSNSプロフィールを設定します。検索エンジンがサイトと公式SNSを関連"
-#~ "付け、リッチリザルト表示に活用します。"
-
-#~ msgid ""
-#~ "Outputs JSON-LD structured data for search engines. This does not change "
-#~ "page appearance—it provides machine-readable metadata about your site "
-#~ "entity and content."
-#~ msgstr ""
-#~ "検索エンジン向けのJSON-LD構造化データを出力します。ページの見た目には影響"
-#~ "せず、サイト運営主体やコンテンツの情報を機械可読形式で提供します。"
-
-#~ msgid ""
-#~ "Override schema output per post type or taxonomy. These settings control "
-#~ "structured data output only—they do not affect page layout or design."
-#~ msgstr ""
-#~ "投稿タイプ・タクソノミー別にスキーマ出力を上書きします。構造化データの出力"
-#~ "設定のみで、ページのレイアウトやデザインには影響しません。"
-
-#~ msgid "AIVEC LLC."
-#~ msgstr "AIVEC LLC."
-
-#~ msgid "AEO Schema Settings"
-#~ msgstr "AEOスキーマ設定"
-
-#~ msgid "AEO Schema"
-#~ msgstr "AEOスキーマ"
-
-#~ msgid "AVC AEO Schema – Development Mode Warning"
-#~ msgstr "AVC AEO Schema – 開発モード警告"
-
-#, fuzzy
-#~ msgid "AEO Schema Setup"
-#~ msgstr "AEOスキーマ設定"
-
-#~ msgid "Use AEO Schema output (disable other plugins)"
-#~ msgstr "AEO スキーマ出力を優先する（他のプラグインを無効にする）"
-
-#, fuzzy
-#~ msgid "Welcome to AVC AEO Schema"
-#~ msgstr "AEO スキーマ"
-
-#~ msgid "AVC AEO Schema"
-#~ msgstr "AEO スキーマ"
-
-#~ msgid ""
-#~ "Choose a network for each row and enter an account ID (without @) or a "
-#~ "profile URL."
-#~ msgstr ""
-#~ "各行でSNSを選択し、アカウント名（@を除いたID）またはプロフィールURLを入力"
-#~ "してください。各行でSNSを選択し、アカウント名（@を除いたID）またはプロ"
-#~ "フィールURLを入力してください。"
-
-#~ msgid ""
-#~ "Select how your content is structured. Blog: Article schema. Corporate: "
-#~ "WebPage schema. E-commerce: Product schema."
-#~ msgstr ""
-#~ "コンテンツの構成を選択。ブログ: Articleスキーマ。企業: WebPageスキーマ。"
-#~ "EC: Productスキーマ。"
-
-#~ msgid ""
-#~ "Use Organization for most sites. Switch to LocalBusiness only when the "
-#~ "storefront is the primary entity."
-#~ msgstr ""
-#~ "通常は Organization を選択し、店舗専用サイトなど LocalBusiness を主体にし"
-#~ "たい場合のみ切り替えてください。通常は Organization を選択し、店舗専用サイ"
-#~ "トなど LocalBusiness を主体にしたい場合のみ切り替えてください。"
-
-#~ msgid "Example: $$"
-#~ msgstr "例: $$"
-
-#~ msgid ""
-#~ "Use $, $$, $$$, or $$$$ to indicate price level. Google displays this in "
-#~ "search results."
-#~ msgstr ""
-#~ "価格帯を$記号で入力します（$ = 格安、$$ = 手頃、$$$ = やや高め、$$$$ = 高"
-#~ "級）。入力例: 手頃な価格帯なら「$$」と入力。Google検索結果に表示されます。"
-
-#~ msgid "Add as many day and time combinations as needed."
-#~ msgstr "曜日と営業時間の組み合わせを必要な分だけ追加してください。"
-
-#~ msgid ""
-#~ "Determines the default schema type for your content. Blog: Uses Article "
-#~ "schema for posts, ideal for news/blog sites. Corporate: Uses WebPage "
-#~ "schema, suitable for company info pages. E-commerce: Uses Product schema "
-#~ "when WooCommerce is active."
-#~ msgstr ""
-#~ "コンテンツのデフォルトスキーマタイプを決定します。ブログ: 投稿にArticleス"
-#~ "キーマを使用、ニュース/ブログサイトに最適。コーポレート: WebPageスキーマを"
-#~ "使用、企業情報ページに適しています。ECサイト: WooCommerceがアクティブな場"
-#~ "合Productスキーマを使用します。"
-
-#~ msgid ""
-#~ "Sets the publisher reference for Article and WebPage schemas. This is "
-#~ "independent from \"Primary role of this site\"—you can set the site role "
-#~ "to Organization while using LocalBusiness as the publisher when articles "
-#~ "are authored by the store."
-#~ msgstr ""
-#~ "ArticleおよびWebPageスキーマのpublisher参照を設定します。これは「このサイ"
-#~ "トの主な役割」とは独立しています。サイトの役割をOrganizationに設定しつつ、"
-#~ "記事が店舗によって執筆される場合はLocalBusinessをpublisherとして使用できま"
-#~ "す。"
-
-#~ msgid "Entity type"
-#~ msgstr "エンティティタイプ"
-
-#~ msgid ""
-#~ "Organization: For companies, nonprofits, or brands. LocalBusiness: For "
-#~ "physical stores, restaurants, or service providers with a location."
-#~ msgstr ""
-#~ "Organization: 企業・非営利団体・ブランド向け。LocalBusiness: 実店舗・レス"
-#~ "トラン・所在地のあるサービス業向け。"

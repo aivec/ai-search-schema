@@ -146,7 +146,7 @@ class AVC_AIS_Settings {
 		$script_version = file_exists( $script_path ) ? filemtime( $script_path ) : AVC_AIS_VERSION;
 
 		wp_enqueue_script(
-			'ais-settings',
+			'avc-ais-settings',
 			AVC_AIS_URL . 'assets/js/admin-settings.js',
 			array( 'jquery' ),
 			$script_version,
@@ -156,7 +156,7 @@ class AVC_AIS_Settings {
 		$gmaps_api_key = $this->get_google_maps_api_key();
 
 		wp_localize_script(
-			'ais-settings',
+			'avc-ais-settings',
 			'avcAisSettings',
 			array(
 				'socialOptions'             => $this->get_social_network_choices(),

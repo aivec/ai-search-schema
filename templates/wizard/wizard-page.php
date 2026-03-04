@@ -23,8 +23,8 @@ $total_steps = count( $step_keys );
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo esc_html( get_admin_page_title() ?: __( 'AI Search Schema Setup', 'aivec-ai-search-schema' ) ); ?></title>
 	<?php
-	wp_enqueue_style( 'ais-wizard' );
-	wp_print_styles( 'ais-wizard' );
+	wp_enqueue_style( 'avc-ais-wizard' );
+	wp_print_styles( 'avc-ais-wizard' );
 	wp_print_styles( 'dashicons' );
 	?>
 </head>
@@ -33,7 +33,11 @@ $total_steps = count( $step_keys );
 		<!-- Header -->
 		<header class="ais-wizard__header">
 			<div class="ais-wizard__logo">
-				<img src="<?php echo esc_url( AVC_AIS_URL . 'assets/icon-256x256.png' ); ?>" alt="AI Search Schema" class="ais-wizard__logo-icon" width="40" height="40">
+				<svg class="ais-wizard__logo-icon" width="40" height="40" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					<rect width="256" height="256" rx="32" fill="#4F46E5"/>
+					<path d="M128 48L188 208H148L138 178H90L80 208H40L100 48H128ZM114 68L98 148H130L114 68Z" fill="white"/>
+					<circle cx="192" cy="80" r="24" fill="#22D3EE"/>
+				</svg>
 				<span class="ais-wizard__logo-text">AI Search Schema</span>
 			</div>
 			<div class="ais-wizard__lang">
@@ -42,9 +46,9 @@ $total_steps = count( $step_keys );
 				$current_lang = $current_lang ?: 'en';
 				$is_japanese  = strpos( $current_lang, 'ja' ) === 0;
 				?>
-				<a href="<?php echo esc_url( add_query_arg( 'lang', 'ja' ) ); ?>" class="<?php echo $is_japanese ? 'active' : ''; ?>">JA</a>
+				<a href="<?php echo esc_url( add_query_arg( 'lang', 'ja' ) ); ?>" class="<?php echo esc_attr( $is_japanese ? 'active' : '' ); ?>">JA</a>
 				<span class="ais-wizard__lang-sep">|</span>
-				<a href="<?php echo esc_url( add_query_arg( 'lang', 'en' ) ); ?>" class="<?php echo ! $is_japanese ? 'active' : ''; ?>">EN</a>
+				<a href="<?php echo esc_url( add_query_arg( 'lang', 'en' ) ); ?>" class="<?php echo esc_attr( ! $is_japanese ? 'active' : '' ); ?>">EN</a>
 			</div>
 		</header>
 
@@ -91,8 +95,8 @@ $total_steps = count( $step_keys );
 	wp_enqueue_script( 'jquery' );
 	wp_enqueue_script( 'wp-util' );
 	wp_enqueue_media();
-	wp_enqueue_script( 'ais-wizard' );
-	wp_print_scripts( array( 'jquery', 'wp-util', 'media-upload', 'ais-wizard' ) );
+	wp_enqueue_script( 'avc-ais-wizard' );
+	wp_print_scripts( array( 'jquery', 'wp-util', 'media-upload', 'avc-ais-wizard' ) );
 	?>
 </body>
 </html>

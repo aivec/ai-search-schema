@@ -219,7 +219,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_get_wizard_url_returns_correct_url() {
 		$url = $this->wizard->get_wizard_url();
 
-		$this->assertStringContainsString( 'page=ais-wizard', $url );
+		$this->assertStringContainsString( 'page=avc-ais-wizard', $url );
 		$this->assertStringContainsString( 'admin.php', $url );
 	}
 
@@ -229,7 +229,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_get_wizard_url_with_step_parameter() {
 		$url = $this->wizard->get_wizard_url( 'basics' );
 
-		$this->assertStringContainsString( 'page=ais-wizard', $url );
+		$this->assertStringContainsString( 'page=avc-ais-wizard', $url );
 		$this->assertStringContainsString( 'step=basics', $url );
 	}
 

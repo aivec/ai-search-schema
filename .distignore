@@ -18,7 +18,8 @@
 /out
 
 # Package management
-# Note: /vendor is NOT excluded because this plugin uses Composer autoload in production
+# Note: /vendor is excluded - plugin uses PSR-4 fallback autoloader for WP.org distribution
+/vendor
 /package.json
 /package-lock.json
 /composer.json
@@ -27,6 +28,9 @@
 /node_modules
 /.git
 /.github
+
+# License client (Pro only - not for WP.org)
+/src/License
 
 # Build configuration
 /gulpfile.js
