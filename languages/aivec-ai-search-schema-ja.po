@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AI Search Schema 1.2.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/ai-search-schema\n"
-"POT-Creation-Date: 2026-03-04T03:59:27+00:00\n"
+"POT-Creation-Date: 2026-03-04T07:49:32+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
 "Last-Translator: Aivec LLC. <info@aivec.co.jp>\n"
 "Language-Team: Aivec LLC. <info@aivec.co.jp>\n"
@@ -291,8 +291,8 @@ msgid "Remove \"%s\""
 msgstr "「%s」を削除"
 
 #: dist/includes/class-avc-ais-settings.php:168
-#: dist/templates/admin-settings.php:800
-#: includes/class-avc-ais-settings.php:168 templates/admin-settings.php:800
+#: dist/templates/admin-settings.php:802
+#: includes/class-avc-ais-settings.php:168 templates/admin-settings.php:802
 msgid "Fetch coordinates from address"
 msgstr "住所から緯度・経度を取得"
 
@@ -355,8 +355,8 @@ msgid "Regenerating..."
 msgstr "再生成中…"
 
 #: dist/includes/class-avc-ais-settings.php:191
-#: dist/templates/admin-settings.php:1013
-#: includes/class-avc-ais-settings.php:191 templates/admin-settings.php:1013
+#: dist/templates/admin-settings.php:1015
+#: includes/class-avc-ais-settings.php:191 templates/admin-settings.php:1015
 msgid "Regenerate from site data"
 msgstr "サイトデータから再生成"
 
@@ -366,8 +366,8 @@ msgid "Saving..."
 msgstr "保存中…"
 
 #: dist/includes/class-avc-ais-settings.php:193
-#: dist/templates/admin-settings.php:1010
-#: includes/class-avc-ais-settings.php:193 templates/admin-settings.php:1010
+#: dist/templates/admin-settings.php:1012
+#: includes/class-avc-ais-settings.php:193 templates/admin-settings.php:1012
 msgid "Save edits"
 msgstr "編集を保存"
 
@@ -1041,8 +1041,8 @@ msgstr "パンくずリストが空です。サイト階層が不明確な状態
 msgid "BreadcrumbList"
 msgstr "パンくずリスト (BreadcrumbList)"
 
-#: dist/includes/functions.php:170 dist/templates/admin-settings.php:393
-#: includes/functions.php:170 templates/admin-settings.php:393
+#: dist/includes/functions.php:170 dist/templates/admin-settings.php:395
+#: includes/functions.php:170 templates/admin-settings.php:395
 msgid "Help"
 msgstr "ヘルプ"
 
@@ -1432,8 +1432,8 @@ msgstr "例: AIVECブログ"
 msgid "Phone number"
 msgstr "電話番号"
 
-#: dist/templates/admin-settings.php:249 dist/templates/admin-settings.php:732
-#: templates/admin-settings.php:249 templates/admin-settings.php:732
+#: dist/templates/admin-settings.php:249 dist/templates/admin-settings.php:734
+#: templates/admin-settings.php:249 templates/admin-settings.php:734
 #, fuzzy
 msgid "Required for LocalBusiness"
 msgstr "ローカルビジネス"
@@ -1447,8 +1447,8 @@ msgstr "国際形式の電話番号。LocalBusinessでは必須項目です。"
 msgid "Example: +81-3-1234-5678"
 msgstr "例: +81-3-1234-5678"
 
-#: dist/templates/admin-settings.php:253 dist/templates/admin-settings.php:771
-#: templates/admin-settings.php:253 templates/admin-settings.php:771
+#: dist/templates/admin-settings.php:253 dist/templates/admin-settings.php:773
+#: templates/admin-settings.php:253 templates/admin-settings.php:773
 msgid "Country code"
 msgstr "国コード"
 
@@ -1551,8 +1551,8 @@ msgstr "店舗イメージを選択"
 msgid "Insert image"
 msgstr "画像を挿入"
 
-#: dist/templates/admin-settings.php:339 dist/templates/admin-settings.php:353
-#: templates/admin-settings.php:339 templates/admin-settings.php:353
+#: dist/templates/admin-settings.php:339 dist/templates/admin-settings.php:354
+#: templates/admin-settings.php:339 templates/admin-settings.php:354
 msgid "Clear image"
 msgstr "画像をクリア"
 
@@ -1569,11 +1569,11 @@ msgstr "LocalBusiness 画像としてのみ使用されます。ロゴは代替�
 msgid "Select store photo"
 msgstr "店舗写真を選択"
 
-#: dist/templates/admin-settings.php:360 templates/admin-settings.php:360
+#: dist/templates/admin-settings.php:361 templates/admin-settings.php:361
 msgid "Social profiles"
 msgstr "SNSアカウント"
 
-#: dist/templates/admin-settings.php:360 templates/admin-settings.php:360
+#: dist/templates/admin-settings.php:361 templates/admin-settings.php:361
 msgid ""
 "Add your social media profiles. Used in Organization/LocalBusiness sameAs "
 "property for knowledge panel."
@@ -1581,35 +1581,35 @@ msgstr ""
 "SNSプロフィールを追加。Organization/LocalBusinessのsameAsプロパティとしてナ"
 "レッジパネルに使用されます。"
 
-#: dist/templates/admin-settings.php:374 dist/templates/admin-settings.php:1037
-#: templates/admin-settings.php:374 templates/admin-settings.php:1037
+#: dist/templates/admin-settings.php:375 dist/templates/admin-settings.php:1039
+#: templates/admin-settings.php:375 templates/admin-settings.php:1039
 msgid "Account name or profile URL"
 msgstr "アカウント名またはURL"
 
-#: dist/templates/admin-settings.php:375 dist/templates/admin-settings.php:1038
-#: templates/admin-settings.php:375 templates/admin-settings.php:1038
+#: dist/templates/admin-settings.php:377 dist/templates/admin-settings.php:1040
+#: templates/admin-settings.php:377 templates/admin-settings.php:1040
 msgid "Other service label"
 msgstr "その他のサービス名"
 
-#: dist/templates/admin-settings.php:376 dist/templates/admin-settings.php:917
-#: dist/templates/admin-settings.php:1039
-#: dist/templates/admin-settings.php:1054
+#: dist/templates/admin-settings.php:378 dist/templates/admin-settings.php:919
+#: dist/templates/admin-settings.php:1041
+#: dist/templates/admin-settings.php:1056
 #: dist/templates/wizard/steps/step-1-basics.php:77
-#: templates/admin-settings.php:376 templates/admin-settings.php:917
-#: templates/admin-settings.php:1039 templates/admin-settings.php:1054
+#: templates/admin-settings.php:378 templates/admin-settings.php:919
+#: templates/admin-settings.php:1041 templates/admin-settings.php:1056
 #: templates/wizard/steps/step-1-basics.php:77
 msgid "Remove"
 msgstr "削除"
 
-#: dist/templates/admin-settings.php:380 templates/admin-settings.php:380
+#: dist/templates/admin-settings.php:382 templates/admin-settings.php:382
 msgid "Add social profile"
 msgstr "SNSを追加"
 
-#: dist/templates/admin-settings.php:387 templates/admin-settings.php:387
+#: dist/templates/admin-settings.php:389 templates/admin-settings.php:389
 msgid "Schema output"
 msgstr "スキーマ出力"
 
-#: dist/templates/admin-settings.php:388 templates/admin-settings.php:388
+#: dist/templates/admin-settings.php:390 templates/admin-settings.php:390
 msgid ""
 "Control how structured data is delivered. JSON-LD is invisible to visitors "
 "but essential for search engines and AI systems to understand your content."
@@ -1617,25 +1617,25 @@ msgstr ""
 "構造化データの出力方法を設定します。JSON-LDは訪問者には見えませんが、検索エン"
 "ジンやAIシステムがコンテンツを理解するために不可欠なデータです。"
 
-#: dist/templates/admin-settings.php:393 templates/admin-settings.php:393
+#: dist/templates/admin-settings.php:395 templates/admin-settings.php:395
 msgid "Primary role of this site"
 msgstr "このサイトの主な役割"
 
-#: dist/templates/admin-settings.php:395 templates/admin-settings.php:395
+#: dist/templates/admin-settings.php:397 templates/admin-settings.php:397
 #, fuzzy
 msgid "Organization (corporate or brand site)"
 msgstr "Organization (ブランドサイト)"
 
-#: dist/templates/admin-settings.php:396 templates/admin-settings.php:396
+#: dist/templates/admin-settings.php:398 templates/admin-settings.php:398
 #, fuzzy
 msgid "Store / Business location (storefront or service site)"
 msgstr "LocalBusiness (店舗サイト)"
 
-#: dist/templates/admin-settings.php:400 templates/admin-settings.php:400
+#: dist/templates/admin-settings.php:402 templates/admin-settings.php:402
 msgid "Content model"
 msgstr "コンテンツモデル"
 
-#: dist/templates/admin-settings.php:400 templates/admin-settings.php:400
+#: dist/templates/admin-settings.php:402 templates/admin-settings.php:402
 #, fuzzy
 msgid ""
 "Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-"
@@ -1646,31 +1646,31 @@ msgstr ""
 "企業情報ページに適しています。ECサイト: WooCommerceがアクティブな場合Product"
 "スキーマを使用します。"
 
-#: dist/templates/admin-settings.php:408 dist/templates/admin-settings.php:468
-#: dist/templates/admin-settings.php:532 templates/admin-settings.php:408
-#: templates/admin-settings.php:468 templates/admin-settings.php:532
+#: dist/templates/admin-settings.php:410 dist/templates/admin-settings.php:470
+#: dist/templates/admin-settings.php:534 templates/admin-settings.php:410
+#: templates/admin-settings.php:470 templates/admin-settings.php:534
 msgid "Schema priority"
 msgstr "スキーマの優先度"
 
-#: dist/templates/admin-settings.php:408 templates/admin-settings.php:408
+#: dist/templates/admin-settings.php:410 templates/admin-settings.php:410
 msgid ""
 "When external priority is selected, this plugin will stop printing JSON-LD "
 "and will not disable Yoast, Rank Math, or AIOSEO schema."
 msgstr "外部優先が選択されると、このプラグインはJSON-LDの出力を停止します。"
 
-#: dist/templates/admin-settings.php:411 templates/admin-settings.php:411
+#: dist/templates/admin-settings.php:413 templates/admin-settings.php:413
 msgid "Use AI Search Schema output (disable other plugins)"
 msgstr "Aivec AI Search Schema を優先（他のプラグインのスキーマ出力を抑制）"
 
-#: dist/templates/admin-settings.php:415 templates/admin-settings.php:415
+#: dist/templates/admin-settings.php:417 templates/admin-settings.php:417
 msgid "Prefer external SEO plugin schema"
 msgstr "外部SEOプラグインのスキーマを優先する"
 
-#: dist/templates/admin-settings.php:419 templates/admin-settings.php:419
+#: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
 msgid "Website publisher"
 msgstr "WebSite publisher"
 
-#: dist/templates/admin-settings.php:419 templates/admin-settings.php:419
+#: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
 #, fuzzy
 msgid ""
 "Sets the publisher reference for Article and WebPage schemas. Independent "
@@ -1681,19 +1681,19 @@ msgstr ""
 "主な役割」とは独立しています。サイトの役割をOrganizationに設定しつつ、記事が"
 "店舗によって執筆される場合はLocalBusinessをpublisherとして使用できます。"
 
-#: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
+#: dist/templates/admin-settings.php:423 templates/admin-settings.php:423
 msgid "Organization (brand site)"
 msgstr "Organization (ブランドサイト)"
 
-#: dist/templates/admin-settings.php:422 templates/admin-settings.php:422
+#: dist/templates/admin-settings.php:424 templates/admin-settings.php:424
 msgid "LocalBusiness (storefront site)"
 msgstr "LocalBusiness (店舗サイト)"
 
-#: dist/templates/admin-settings.php:426 templates/admin-settings.php:426
+#: dist/templates/admin-settings.php:428 templates/admin-settings.php:428
 msgid "LocalBusiness subtype"
 msgstr "LocalBusinessサブタイプ"
 
-#: dist/templates/admin-settings.php:426 templates/admin-settings.php:426
+#: dist/templates/admin-settings.php:428 templates/admin-settings.php:428
 msgid ""
 "Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, "
 "AutoRepair, LegalService"
@@ -1701,56 +1701,56 @@ msgstr ""
 "より具体的なタイプを指定。例: Restaurant, Dentist, HairSalon, AutoRepair, "
 "LegalService"
 
-#: dist/templates/admin-settings.php:427 templates/admin-settings.php:427
+#: dist/templates/admin-settings.php:429 templates/admin-settings.php:429
 msgid "Example: Store, Restaurant"
 msgstr "例: Store, Restaurant など"
 
-#: dist/templates/admin-settings.php:430 templates/admin-settings.php:430
+#: dist/templates/admin-settings.php:432 templates/admin-settings.php:432
 msgid "Location label"
 msgstr "拠点ラベル"
 
-#: dist/templates/admin-settings.php:430 templates/admin-settings.php:430
+#: dist/templates/admin-settings.php:432 templates/admin-settings.php:432
 msgid "Appends after the Organization name to clarify each location."
 msgstr "Organization名の後ろに付与され、拠点ごとの名称を明示できます。"
 
-#: dist/templates/admin-settings.php:431 templates/admin-settings.php:431
+#: dist/templates/admin-settings.php:433 templates/admin-settings.php:433
 msgid "Example: HQ / Shinjuku"
 msgstr "例: 本店 / 新宿店"
 
-#: dist/templates/admin-settings.php:435 dist/templates/admin-settings.php:466
-#: dist/templates/admin-settings.php:530 templates/admin-settings.php:435
-#: templates/admin-settings.php:466 templates/admin-settings.php:530
+#: dist/templates/admin-settings.php:437 dist/templates/admin-settings.php:468
+#: dist/templates/admin-settings.php:532 templates/admin-settings.php:437
+#: templates/admin-settings.php:468 templates/admin-settings.php:532
 msgid "Breadcrumbs"
 msgstr "パンくずリスト"
 
-#: dist/templates/admin-settings.php:438 templates/admin-settings.php:438
+#: dist/templates/admin-settings.php:440 templates/admin-settings.php:440
 msgid "Include BreadcrumbList in JSON-LD output"
 msgstr "JSON-LD出力にBreadcrumbListを含める"
 
-#: dist/templates/admin-settings.php:440 templates/admin-settings.php:440
+#: dist/templates/admin-settings.php:442 templates/admin-settings.php:442
 msgid ""
 "ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for "
 "SEO."
 msgstr ""
 "ON: Googleリッチスニペット用のBreadcrumbListスキーマを出力。SEOに推奨。"
 
-#: dist/templates/admin-settings.php:443 templates/admin-settings.php:443
+#: dist/templates/admin-settings.php:445 templates/admin-settings.php:445
 #, fuzzy
 msgid "Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()"
 msgstr "HTML パンくずリスト (nav) をレンダリングします。"
 
-#: dist/templates/admin-settings.php:445 templates/admin-settings.php:445
+#: dist/templates/admin-settings.php:447 templates/admin-settings.php:447
 msgid ""
 "ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme "
 "already has breadcrumbs."
 msgstr ""
 "ON: ページにパンくずナビを表示。テーマにパンくずがある場合はOFFのまま。"
 
-#: dist/templates/admin-settings.php:455 templates/admin-settings.php:455
+#: dist/templates/admin-settings.php:457 templates/admin-settings.php:457
 msgid "Page-type schema controls"
 msgstr "ページタイプ別スキーマ設定"
 
-#: dist/templates/admin-settings.php:455 templates/admin-settings.php:455
+#: dist/templates/admin-settings.php:457 templates/admin-settings.php:457
 msgid ""
 "Column guide: Schema type = Force a specific schema (Article, FAQPage, "
 "WebPage) regardless of content model. Breadcrumbs = Include in "
@@ -1762,7 +1762,7 @@ msgstr ""
 "める。FAQ抽出 = Q&Aコンテンツを自動検出しFAQPageスキーマを生成。スキーマ優先"
 "度 = コンテンツタイプごとにグローバル優先度を上書き。"
 
-#: dist/templates/admin-settings.php:456 templates/admin-settings.php:456
+#: dist/templates/admin-settings.php:458 templates/admin-settings.php:458
 msgid ""
 "Fine-tune schema per content type. Choose the right schema for each post "
 "type or taxonomy to maximize how your content appears in search results."
@@ -1770,33 +1770,33 @@ msgstr ""
 "コンテンツタイプごとにスキーマを調整します。投稿タイプやタクソノミーに適切な"
 "スキーマを選択して、検索結果での表示効果を最大化しましょう。"
 
-#: dist/templates/admin-settings.php:461 templates/admin-settings.php:461
+#: dist/templates/admin-settings.php:463 templates/admin-settings.php:463
 msgid "Post type overrides"
 msgstr "投稿タイプ別の上書き設定"
 
-#: dist/templates/admin-settings.php:464 dist/templates/admin-settings.php:528
-#: templates/admin-settings.php:464 templates/admin-settings.php:528
+#: dist/templates/admin-settings.php:466 dist/templates/admin-settings.php:530
+#: templates/admin-settings.php:466 templates/admin-settings.php:530
 msgid "Content"
 msgstr "コンテンツ"
 
-#: dist/templates/admin-settings.php:465 dist/templates/admin-settings.php:529
-#: templates/admin-settings.php:465 templates/admin-settings.php:529
+#: dist/templates/admin-settings.php:467 dist/templates/admin-settings.php:531
+#: templates/admin-settings.php:467 templates/admin-settings.php:531
 msgid "Schema type"
 msgstr "スキーマタイプ"
 
-#: dist/templates/admin-settings.php:467 dist/templates/admin-settings.php:531
-#: templates/admin-settings.php:467 templates/admin-settings.php:531
+#: dist/templates/admin-settings.php:469 dist/templates/admin-settings.php:533
+#: templates/admin-settings.php:469 templates/admin-settings.php:533
 msgid "FAQ extraction"
 msgstr "FAQ 自動抽出"
 
-#: dist/templates/admin-settings.php:499 dist/templates/admin-settings.php:506
-#: dist/templates/admin-settings.php:563 dist/templates/admin-settings.php:570
-#: templates/admin-settings.php:499 templates/admin-settings.php:506
-#: templates/admin-settings.php:563 templates/admin-settings.php:570
+#: dist/templates/admin-settings.php:501 dist/templates/admin-settings.php:508
+#: dist/templates/admin-settings.php:565 dist/templates/admin-settings.php:572
+#: templates/admin-settings.php:501 templates/admin-settings.php:508
+#: templates/admin-settings.php:565 templates/admin-settings.php:572
 msgid "Enabled"
 msgstr "有効"
 
-#: dist/templates/admin-settings.php:519 templates/admin-settings.php:519
+#: dist/templates/admin-settings.php:521 templates/admin-settings.php:521
 msgid ""
 "Override schema defaults per post type so you can force Article, FAQPage, or "
 "WebPage output without editing individual posts."
@@ -1805,15 +1805,15 @@ msgstr ""
 "これにより、個別の投稿を編集せずに、\n"
 "Article / FAQPage / WebPage などのスキーマを強制的に指定できます。"
 
-#: dist/templates/admin-settings.php:522 templates/admin-settings.php:522
+#: dist/templates/admin-settings.php:524 templates/admin-settings.php:524
 msgid "Taxonomy overrides"
 msgstr "タクソノミー別の上書き設定"
 
-#: dist/templates/admin-settings.php:524 templates/admin-settings.php:524
+#: dist/templates/admin-settings.php:526 templates/admin-settings.php:526
 msgid "No public taxonomies were detected on this site."
 msgstr "このサイトには「公開タクソノミー」がありません。"
 
-#: dist/templates/admin-settings.php:583 templates/admin-settings.php:583
+#: dist/templates/admin-settings.php:585 templates/admin-settings.php:585
 msgid ""
 "Taxonomy archives can inherit the breadcrumbs/FAQ toggles and schema "
 "priority settings just like posts."
@@ -1821,11 +1821,11 @@ msgstr ""
 "タクソノミーアーカイブ（カテゴリやタグなど）は、\n"
 "投稿と同じように パンくず表示・FAQ抽出・スキーマ優先度 を継承できます。"
 
-#: dist/templates/admin-settings.php:591 templates/admin-settings.php:591
+#: dist/templates/admin-settings.php:593 templates/admin-settings.php:593
 msgid "Local details & hours"
 msgstr "ローカル情報と営業時間"
 
-#: dist/templates/admin-settings.php:592 templates/admin-settings.php:592
+#: dist/templates/admin-settings.php:594 templates/admin-settings.php:594
 msgid ""
 "Get found locally. Address, coordinates, and business hours power "
 "LocalBusiness schema for Google Maps, local search, and \"near me\" queries."
@@ -1833,11 +1833,11 @@ msgstr ""
 "地域検索で見つけてもらいましょう。住所・緯度経度・営業時間を設定すると、"
 "Googleマップやローカル検索、「近くの〇〇」クエリでの表示に役立ちます。"
 
-#: dist/templates/admin-settings.php:600 templates/admin-settings.php:600
+#: dist/templates/admin-settings.php:602 templates/admin-settings.php:602
 msgid "Google Recommended Properties for LocalBusiness"
 msgstr "LocalBusiness の Google 推奨プロパティ"
 
-#: dist/templates/admin-settings.php:601 templates/admin-settings.php:601
+#: dist/templates/admin-settings.php:603 templates/admin-settings.php:603
 msgid ""
 "Complete these fields to maximize your visibility in local search results "
 "and Google Maps."
@@ -1845,75 +1845,75 @@ msgstr ""
 "これらの項目を入力すると、ローカル検索結果や Google マップでの表示が最大化さ"
 "れます。"
 
-#: dist/templates/admin-settings.php:608 templates/admin-settings.php:608
+#: dist/templates/admin-settings.php:610 templates/admin-settings.php:610
 msgid "name"
 msgstr "name"
 
-#: dist/templates/admin-settings.php:609 templates/admin-settings.php:609
+#: dist/templates/admin-settings.php:611 templates/admin-settings.php:611
 msgid "Business name (Company name field)"
 msgstr "店舗名（会社名フィールド）"
 
-#: dist/templates/admin-settings.php:615 templates/admin-settings.php:615
+#: dist/templates/admin-settings.php:617 templates/admin-settings.php:617
 msgid "address"
 msgstr "address"
 
-#: dist/templates/admin-settings.php:616 templates/admin-settings.php:616
+#: dist/templates/admin-settings.php:618 templates/admin-settings.php:618
 msgid "Full postal address"
 msgstr "完全な住所"
 
-#: dist/templates/admin-settings.php:622 templates/admin-settings.php:622
+#: dist/templates/admin-settings.php:624 templates/admin-settings.php:624
 msgid "telephone"
 msgstr "telephone"
 
-#: dist/templates/admin-settings.php:623 templates/admin-settings.php:623
+#: dist/templates/admin-settings.php:625 templates/admin-settings.php:625
 msgid "Contact phone number"
 msgstr "電話番号"
 
-#: dist/templates/admin-settings.php:629 templates/admin-settings.php:629
+#: dist/templates/admin-settings.php:631 templates/admin-settings.php:631
 msgid "geo"
 msgstr "geo"
 
-#: dist/templates/admin-settings.php:630 templates/admin-settings.php:630
+#: dist/templates/admin-settings.php:632 templates/admin-settings.php:632
 msgid "Latitude and longitude"
 msgstr "緯度・経度"
 
-#: dist/templates/admin-settings.php:636 templates/admin-settings.php:636
+#: dist/templates/admin-settings.php:638 templates/admin-settings.php:638
 msgid "openingHours"
 msgstr "openingHours"
 
-#: dist/templates/admin-settings.php:637 templates/admin-settings.php:637
+#: dist/templates/admin-settings.php:639 templates/admin-settings.php:639
 msgid "Business hours"
 msgstr "営業時間"
 
-#: dist/templates/admin-settings.php:643 templates/admin-settings.php:643
+#: dist/templates/admin-settings.php:645 templates/admin-settings.php:645
 msgid "image"
 msgstr "image"
 
-#: dist/templates/admin-settings.php:644 templates/admin-settings.php:644
+#: dist/templates/admin-settings.php:646 templates/admin-settings.php:646
 msgid "Storefront photo"
 msgstr "店舗写真"
 
-#: dist/templates/admin-settings.php:650 templates/admin-settings.php:650
+#: dist/templates/admin-settings.php:652 templates/admin-settings.php:652
 msgid "url"
 msgstr "url"
 
-#: dist/templates/admin-settings.php:651 templates/admin-settings.php:651
+#: dist/templates/admin-settings.php:653 templates/admin-settings.php:653
 msgid "Website URL"
 msgstr "WebサイトURL"
 
-#: dist/templates/admin-settings.php:657 templates/admin-settings.php:657
+#: dist/templates/admin-settings.php:659 templates/admin-settings.php:659
 msgid "priceRange"
 msgstr "priceRange"
 
-#: dist/templates/admin-settings.php:658 templates/admin-settings.php:658
+#: dist/templates/admin-settings.php:660 templates/admin-settings.php:660
 msgid "Price range ($, $$, $$$)"
 msgstr "価格帯（$, $$, $$$）"
 
-#: dist/templates/admin-settings.php:664 templates/admin-settings.php:664
+#: dist/templates/admin-settings.php:666 templates/admin-settings.php:666
 msgid "View Google LocalBusiness documentation →"
 msgstr "Google LocalBusiness ドキュメントを見る →"
 
-#: dist/templates/admin-settings.php:667 templates/admin-settings.php:667
+#: dist/templates/admin-settings.php:669 templates/admin-settings.php:669
 msgid ""
 "LocalBusiness output relies on these fields. When skip on incomplete is "
 "enabled, missing items here will suppress output."
@@ -1921,60 +1921,60 @@ msgstr ""
 "LocalBusiness出力はこれらのフィールドに依存します。「未完成時スキップ」が有効"
 "な場合、不足項目があると出力が抑制されます。"
 
-#: dist/templates/admin-settings.php:672 templates/admin-settings.php:672
+#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
 msgid "Price range"
 msgstr "価格帯"
 
-#: dist/templates/admin-settings.php:672 templates/admin-settings.php:672
+#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
 msgid ""
 "Select the price level for your business. Google displays this in search "
 "results."
 msgstr "ビジネスの価格帯を選択してください。Google検索結果に表示されます。"
 
-#: dist/templates/admin-settings.php:674 templates/admin-settings.php:674
+#: dist/templates/admin-settings.php:676 templates/admin-settings.php:676
 msgid "— Not specified —"
 msgstr "— 未設定 —"
 
-#: dist/templates/admin-settings.php:675 templates/admin-settings.php:675
+#: dist/templates/admin-settings.php:677 templates/admin-settings.php:677
 msgid "$ (Budget)"
 msgstr "$ (格安)"
 
-#: dist/templates/admin-settings.php:676 templates/admin-settings.php:676
+#: dist/templates/admin-settings.php:678 templates/admin-settings.php:678
 msgid "$$ (Moderate)"
 msgstr "$$ (手頃)"
 
-#: dist/templates/admin-settings.php:677 templates/admin-settings.php:677
+#: dist/templates/admin-settings.php:679 templates/admin-settings.php:679
 msgid "$$$ (Expensive)"
 msgstr "$$$ (やや高め)"
 
-#: dist/templates/admin-settings.php:678 templates/admin-settings.php:678
+#: dist/templates/admin-settings.php:680 templates/admin-settings.php:680
 msgid "$$$$ (Luxury)"
 msgstr "$$$$ (高級)"
 
-#: dist/templates/admin-settings.php:682 templates/admin-settings.php:682
+#: dist/templates/admin-settings.php:684 templates/admin-settings.php:684
 msgid "Accepted payment methods"
 msgstr "受け付ける支払い方法"
 
-#: dist/templates/admin-settings.php:682 templates/admin-settings.php:682
+#: dist/templates/admin-settings.php:684 templates/admin-settings.php:684
 msgid ""
 "List payment methods separated by commas. Examples: Cash, Credit Card, "
 "PayPay, Suica"
 msgstr ""
 "支払い方法をカンマ区切りで入力。例: 現金, クレジットカード, PayPay, Suica"
 
-#: dist/templates/admin-settings.php:683 templates/admin-settings.php:683
+#: dist/templates/admin-settings.php:685 templates/admin-settings.php:685
 msgid "Example: Cash, Credit Card"
 msgstr "例: Cash, Credit Card"
 
-#: dist/templates/admin-settings.php:686 templates/admin-settings.php:686
+#: dist/templates/admin-settings.php:688 templates/admin-settings.php:688
 msgid "Reservations"
 msgstr "予約の受け付け"
 
-#: dist/templates/admin-settings.php:689 templates/admin-settings.php:689
+#: dist/templates/admin-settings.php:691 templates/admin-settings.php:691
 msgid "Accept reservations"
 msgstr "予約を受け付ける"
 
-#: dist/templates/admin-settings.php:691 templates/admin-settings.php:691
+#: dist/templates/admin-settings.php:693 templates/admin-settings.php:693
 msgid ""
 "ON: Adds acceptsReservations property to LocalBusiness schema. Enable for "
 "restaurants, salons, or any business that takes bookings."
@@ -1982,39 +1982,39 @@ msgstr ""
 "ON: LocalBusinessスキーマにacceptsReservationsプロパティを追加します。レスト"
 "ラン、サロン、予約を受け付けるビジネスで有効にしてください。"
 
-#: dist/templates/admin-settings.php:696
+#: dist/templates/admin-settings.php:698
 #: dist/templates/wizard/steps/step-api-key.php:17
 #: dist/templates/wizard/steps/step-api-key.php:49
-#: templates/admin-settings.php:696 templates/wizard/steps/step-api-key.php:17
+#: templates/admin-settings.php:698 templates/wizard/steps/step-api-key.php:17
 #: templates/wizard/steps/step-api-key.php:49
 msgid "Google Maps API Key"
 msgstr "Google Maps APIキー"
 
-#: dist/templates/admin-settings.php:703 templates/admin-settings.php:703
+#: dist/templates/admin-settings.php:705 templates/admin-settings.php:705
 msgid "Stored API key"
 msgstr "APIキーは保存済みです"
 
-#: dist/templates/admin-settings.php:703 templates/admin-settings.php:703
+#: dist/templates/admin-settings.php:705 templates/admin-settings.php:705
 msgid "Example: AIzaSyB..."
 msgstr "例: AIzaSyB..."
 
-#: dist/templates/admin-settings.php:709 templates/admin-settings.php:709
+#: dist/templates/admin-settings.php:711 templates/admin-settings.php:711
 msgid "Save key"
 msgstr "キーを保存"
 
-#: dist/templates/admin-settings.php:715 templates/admin-settings.php:715
+#: dist/templates/admin-settings.php:717 templates/admin-settings.php:717
 msgid "An API key is already stored. Delete it first if you need to change it."
 msgstr "APIキーは保存済みです。変更する場合は一度削除してください。"
 
-#: dist/templates/admin-settings.php:722 templates/admin-settings.php:722
+#: dist/templates/admin-settings.php:724 templates/admin-settings.php:724
 msgid "Delete the stored API key?"
 msgstr "保存済みのAPIキーを削除しますか？"
 
-#: dist/templates/admin-settings.php:724 templates/admin-settings.php:724
+#: dist/templates/admin-settings.php:726 templates/admin-settings.php:726
 msgid "Delete stored key"
 msgstr "保存済みキーを削除"
 
-#: dist/templates/admin-settings.php:727 templates/admin-settings.php:727
+#: dist/templates/admin-settings.php:729 templates/admin-settings.php:729
 msgid ""
 "Enter a Google Maps Geocoding API key to use Google for geocoding. When "
 "empty, OpenStreetMap is used for development purposes."
@@ -2022,16 +2022,16 @@ msgstr ""
 "ジオコーディングに Google Maps Geocoding API を利用する場合はAPIキーを入力し"
 "てください。未入力時は OpenStreetMap を使用します。"
 
-#: dist/templates/admin-settings.php:732
+#: dist/templates/admin-settings.php:734
 #: dist/templates/wizard/steps/step-3-location.php:88
 #: dist/templates/wizard/steps/step-5-complete.php:86
-#: templates/admin-settings.php:732
+#: templates/admin-settings.php:734
 #: templates/wizard/steps/step-3-location.php:88
 #: templates/wizard/steps/step-5-complete.php:86
 msgid "Address"
 msgstr "住所"
 
-#: dist/templates/admin-settings.php:732 templates/admin-settings.php:732
+#: dist/templates/admin-settings.php:734 templates/admin-settings.php:734
 msgid ""
 "Required for LocalBusiness. Enter your full postal address for the "
 "PostalAddress schema property."
@@ -2039,52 +2039,52 @@ msgstr ""
 "LocalBusinessに必須。PostalAddressスキーマプロパティに完全な住所を入力してく"
 "ださい。"
 
-#: dist/templates/admin-settings.php:734 templates/admin-settings.php:734
+#: dist/templates/admin-settings.php:736 templates/admin-settings.php:736
 msgid "Postal code (e.g. 150-0001)"
 msgstr "郵便番号 (例: 150-0001)"
 
-#: dist/templates/admin-settings.php:740 templates/admin-settings.php:740
+#: dist/templates/admin-settings.php:742 templates/admin-settings.php:742
 #, fuzzy
 msgid "Select prefecture"
 msgstr "都道府県を選択"
 
-#: dist/templates/admin-settings.php:758 templates/admin-settings.php:758
+#: dist/templates/admin-settings.php:760 templates/admin-settings.php:760
 msgid "市区町村（例：草津市）"
 msgstr "市区町村（例：草津市）"
 
-#: dist/templates/admin-settings.php:759 templates/admin-settings.php:759
+#: dist/templates/admin-settings.php:761 templates/admin-settings.php:761
 msgid "市区町村"
 msgstr "市区町村"
 
-#: dist/templates/admin-settings.php:766 templates/admin-settings.php:766
+#: dist/templates/admin-settings.php:768 templates/admin-settings.php:768
 msgid "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 msgstr "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 
-#: dist/templates/admin-settings.php:767 templates/admin-settings.php:767
+#: dist/templates/admin-settings.php:769 templates/admin-settings.php:769
 msgid "町名・番地・建物名"
 msgstr "町名・番地・建物名"
 
-#: dist/templates/admin-settings.php:772 templates/admin-settings.php:772
+#: dist/templates/admin-settings.php:774 templates/admin-settings.php:774
 msgid "Country (e.g. JP)"
 msgstr "国名 (例: JP)"
 
-#: dist/templates/admin-settings.php:774 templates/admin-settings.php:774
+#: dist/templates/admin-settings.php:776 templates/admin-settings.php:776
 msgid "ISO 3166-2 updates automatically from the prefecture selection."
 msgstr "ISO 3166-2コードは都道府県の選択に応じて自動更新されます。"
 
-#: dist/templates/admin-settings.php:778 templates/admin-settings.php:778
+#: dist/templates/admin-settings.php:780 templates/admin-settings.php:780
 msgid "ISO 3166-2"
 msgstr "ISO 3166-2"
 
-#: dist/templates/admin-settings.php:789 templates/admin-settings.php:789
+#: dist/templates/admin-settings.php:791 templates/admin-settings.php:791
 msgid "郵便番号から住所を自動補完する"
 msgstr "郵便番号から住所を自動補完する"
 
-#: dist/templates/admin-settings.php:794 templates/admin-settings.php:794
+#: dist/templates/admin-settings.php:796 templates/admin-settings.php:796
 msgid "Latitude & longitude"
 msgstr "緯度・経度"
 
-#: dist/templates/admin-settings.php:794 templates/admin-settings.php:794
+#: dist/templates/admin-settings.php:796 templates/admin-settings.php:796
 msgid ""
 "Required for LocalBusiness. Click \"Fetch coordinates\" to auto-fill from "
 "address."
@@ -2092,24 +2092,24 @@ msgstr ""
 "LocalBusinessに必須。「座標を取得」をクリックして住所から自動入力してくださ"
 "い。"
 
-#: dist/templates/admin-settings.php:796 templates/admin-settings.php:796
+#: dist/templates/admin-settings.php:798 templates/admin-settings.php:798
 msgid "Latitude 35.123456"
 msgstr "緯度 35.123456"
 
-#: dist/templates/admin-settings.php:797 templates/admin-settings.php:797
+#: dist/templates/admin-settings.php:799 templates/admin-settings.php:799
 msgid "Longitude 139.123456"
 msgstr "経度 139.123456"
 
-#: dist/templates/admin-settings.php:805 templates/admin-settings.php:805
+#: dist/templates/admin-settings.php:807 templates/admin-settings.php:807
 #, fuzzy
 msgid "Google Map link"
 msgstr "Googleマップのリンク"
 
-#: dist/templates/admin-settings.php:814 templates/admin-settings.php:814
+#: dist/templates/admin-settings.php:816 templates/admin-settings.php:816
 msgid "Generate hasMap from saved coordinates"
 msgstr "保存された座標から hasMap を生成する"
 
-#: dist/templates/admin-settings.php:817 templates/admin-settings.php:817
+#: dist/templates/admin-settings.php:819 templates/admin-settings.php:819
 msgid ""
 "When enabled, hasMap becomes https://www.google.com/maps/search/?"
 "api=1&query=latitude,longitude. Coordinates are required."
@@ -2117,16 +2117,16 @@ msgstr ""
 "有効にするには座標が必須になります。hasMapは、ビジネスの位置情報を正確に示し"
 "ます。"
 
-#: dist/templates/admin-settings.php:822 templates/admin-settings.php:822
+#: dist/templates/admin-settings.php:824 templates/admin-settings.php:824
 #, fuzzy
 msgid "LocalBusiness output control"
 msgstr "LocalBusinessの出力制御"
 
-#: dist/templates/admin-settings.php:831 templates/admin-settings.php:831
+#: dist/templates/admin-settings.php:833 templates/admin-settings.php:833
 msgid "Do not output LocalBusiness when required fields are missing"
 msgstr "必須項目が不足している場合は LocalBusiness を出力しない"
 
-#: dist/templates/admin-settings.php:834 templates/admin-settings.php:834
+#: dist/templates/admin-settings.php:836 templates/admin-settings.php:836
 msgid ""
 "When enabled, LocalBusiness will be skipped unless name, address, and "
 "telephone are complete. A warning will appear in debug mode."
@@ -2134,100 +2134,100 @@ msgstr ""
 "有効にすると、名称・住所・電話番号がすべて揃っていない LocalBusiness は出力さ"
 "れません。デバッグモードでは警告が表示されます。"
 
-#: dist/templates/admin-settings.php:838 templates/admin-settings.php:838
+#: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
 msgid "Opening hours"
 msgstr "営業時間"
 
-#: dist/templates/admin-settings.php:838 templates/admin-settings.php:838
+#: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
 #, fuzzy
 msgid ""
 "Add as many day and time combinations as needed. Use templates for quick "
 "setup."
 msgstr "曜日と営業時間の組み合わせを必要な分だけ追加してください。"
 
-#: dist/templates/admin-settings.php:839 templates/admin-settings.php:839
+#: dist/templates/admin-settings.php:841 templates/admin-settings.php:841
 #, fuzzy
 msgid "Opening hour templates"
 msgstr "営業時間テンプレート"
 
-#: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
+#: dist/templates/admin-settings.php:842 templates/admin-settings.php:842
 msgid "平日 10:00–19:00"
 msgstr "平日 10:00–19:00"
 
-#: dist/templates/admin-settings.php:841 templates/admin-settings.php:841
+#: dist/templates/admin-settings.php:843 templates/admin-settings.php:843
 msgid "土日祝 10:00–17:00"
 msgstr "土日祝 10:00–17:00"
 
-#: dist/templates/admin-settings.php:842 templates/admin-settings.php:842
+#: dist/templates/admin-settings.php:844 templates/admin-settings.php:844
 msgid "24時間営業（毎日 00:00–23:59）"
 msgstr "24時間営業（毎日 00:00–23:59）"
 
-#: dist/templates/admin-settings.php:843 templates/admin-settings.php:843
+#: dist/templates/admin-settings.php:845 templates/admin-settings.php:845
 msgid "クリア"
 msgstr "クリア"
 
-#: dist/templates/admin-settings.php:848 templates/admin-settings.php:848
+#: dist/templates/admin-settings.php:850 templates/admin-settings.php:850
 msgid "月曜を含める"
 msgstr "月曜を含める"
 
-#: dist/templates/admin-settings.php:852 templates/admin-settings.php:852
+#: dist/templates/admin-settings.php:854 templates/admin-settings.php:854
 msgid "火曜を含める"
 msgstr "火曜を含める"
 
-#: dist/templates/admin-settings.php:856 templates/admin-settings.php:856
+#: dist/templates/admin-settings.php:858 templates/admin-settings.php:858
 msgid "水曜を含める"
 msgstr "水曜を含める"
 
-#: dist/templates/admin-settings.php:860 templates/admin-settings.php:860
+#: dist/templates/admin-settings.php:862 templates/admin-settings.php:862
 msgid "木曜を含める"
 msgstr "木曜を含める"
 
-#: dist/templates/admin-settings.php:864 templates/admin-settings.php:864
+#: dist/templates/admin-settings.php:866 templates/admin-settings.php:866
 msgid "金曜を含める"
 msgstr "金曜を含める"
 
-#: dist/templates/admin-settings.php:868 templates/admin-settings.php:868
+#: dist/templates/admin-settings.php:870 templates/admin-settings.php:870
 msgid "土曜を含める"
 msgstr "土曜を含める"
 
-#: dist/templates/admin-settings.php:872 templates/admin-settings.php:872
+#: dist/templates/admin-settings.php:874 templates/admin-settings.php:874
 msgid "日曜を含める"
 msgstr "日曜を含める"
 
-#: dist/templates/admin-settings.php:876 dist/templates/admin-settings.php:882
-#: templates/admin-settings.php:876 templates/admin-settings.php:882
+#: dist/templates/admin-settings.php:878 dist/templates/admin-settings.php:884
+#: templates/admin-settings.php:878 templates/admin-settings.php:884
 msgid "祝日を含める"
 msgstr "祝日を含める"
 
-#: dist/templates/admin-settings.php:885 templates/admin-settings.php:885
+#: dist/templates/admin-settings.php:887 templates/admin-settings.php:887
 msgid "祝日の営業時間"
 msgstr "祝日の営業時間"
 
-#: dist/templates/admin-settings.php:888 templates/admin-settings.php:888
+#: dist/templates/admin-settings.php:890 templates/admin-settings.php:890
 msgid "平日と同じ"
 msgstr "平日と同じ"
 
-#: dist/templates/admin-settings.php:892 templates/admin-settings.php:892
+#: dist/templates/admin-settings.php:894 templates/admin-settings.php:894
 msgid "土日祝テンプレと同じ"
 msgstr "土日祝テンプレと同じ"
 
-#: dist/templates/admin-settings.php:896 templates/admin-settings.php:896
+#: dist/templates/admin-settings.php:898 templates/admin-settings.php:898
 msgid "カスタム設定"
 msgstr "カスタム設定"
 
-#: dist/templates/admin-settings.php:915 templates/admin-settings.php:915
+#: dist/templates/admin-settings.php:917 templates/admin-settings.php:917
 msgid "to"
 msgstr "〜"
 
-#: dist/templates/admin-settings.php:921 templates/admin-settings.php:921
+#: dist/templates/admin-settings.php:923 templates/admin-settings.php:923
 msgid "Add time slot"
 msgstr "時間帯を追加"
 
-#: dist/templates/admin-settings.php:928 templates/admin-settings.php:928
+#: dist/templates/admin-settings.php:930 templates/admin-settings.php:930
 msgid "AEO/GEO Diagnostics"
 msgstr "AEO/GEO 診断"
 
-#: dist/templates/admin-settings.php:929 templates/admin-settings.php:929
+#: dist/templates/admin-settings.php:931 templates/admin-settings.php:931
 msgid ""
 "Check your schema readiness. This diagnostic validates required fields and "
 "highlights issues that may prevent rich results or AI visibility."
@@ -2235,38 +2235,38 @@ msgstr ""
 "スキーマの設定状況を確認できます。必須項目のチェックを行い、リッチリザルトや"
 "AI検索での表示を妨げる可能性がある問題を指摘します。"
 
-#: dist/templates/admin-settings.php:942 templates/admin-settings.php:942
+#: dist/templates/admin-settings.php:944 templates/admin-settings.php:944
 msgid "OK"
 msgstr "OK"
 
-#: dist/templates/admin-settings.php:943 templates/admin-settings.php:943
+#: dist/templates/admin-settings.php:945 templates/admin-settings.php:945
 msgid "Info"
 msgstr "情報"
 
-#: dist/templates/admin-settings.php:944 dist/templates/admin-settings.php:947
-#: templates/admin-settings.php:944 templates/admin-settings.php:947
+#: dist/templates/admin-settings.php:946 dist/templates/admin-settings.php:949
+#: templates/admin-settings.php:946 templates/admin-settings.php:949
 msgid "Warning"
 msgstr "警告"
 
-#: dist/templates/admin-settings.php:945 templates/admin-settings.php:945
+#: dist/templates/admin-settings.php:947 templates/admin-settings.php:947
 msgid "Error"
 msgstr "エラー"
 
-#: dist/templates/admin-settings.php:958 templates/admin-settings.php:958
+#: dist/templates/admin-settings.php:960 templates/admin-settings.php:960
 msgid "まだ診断結果がありません。"
 msgstr "まだ診断結果がありません。"
 
 #. translators: %s: datetime string
-#: dist/templates/admin-settings.php:966 templates/admin-settings.php:966
+#: dist/templates/admin-settings.php:968 templates/admin-settings.php:968
 #, php-format
 msgid "最終診断: %s（再読み込みで更新）"
 msgstr "最終診断: %s（再読み込みで更新）"
 
-#: dist/templates/admin-settings.php:977 templates/admin-settings.php:977
+#: dist/templates/admin-settings.php:979 templates/admin-settings.php:979
 msgid "llms.txt"
 msgstr "llms.txt"
 
-#: dist/templates/admin-settings.php:978 templates/admin-settings.php:978
+#: dist/templates/admin-settings.php:980 templates/admin-settings.php:980
 msgid ""
 "Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude "
 "understand your site structure for better AI-powered search visibility."
@@ -2274,36 +2274,36 @@ msgstr ""
 "AIに直接情報を伝えます。llms.txtファイルにより、ChatGPTやClaudeなどのLLMがサ"
 "イト構造を理解し、AI検索での可視性が向上します。"
 
-#: dist/templates/admin-settings.php:992 templates/admin-settings.php:992
+#: dist/templates/admin-settings.php:994 templates/admin-settings.php:994
 msgid "Enable llms.txt"
 msgstr "llms.txt を有効化"
 
-#: dist/templates/admin-settings.php:995 templates/admin-settings.php:995
+#: dist/templates/admin-settings.php:997 templates/admin-settings.php:997
 msgid "When enabled, the file is served at:"
 msgstr "有効にすると、以下の URL で配信されます："
 
-#: dist/templates/admin-settings.php:1001 templates/admin-settings.php:1001
+#: dist/templates/admin-settings.php:1003 templates/admin-settings.php:1003
 msgid "Content (Markdown)"
 msgstr "内容（Markdown）"
 
-#: dist/templates/admin-settings.php:1004 templates/admin-settings.php:1004
+#: dist/templates/admin-settings.php:1006 templates/admin-settings.php:1006
 msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
 msgstr ""
 "llms.txt の内容を編集できます。空欄にするとサイトデータから自動生成されます。"
 
-#: dist/templates/admin-settings.php:1024 templates/admin-settings.php:1024
+#: dist/templates/admin-settings.php:1026 templates/admin-settings.php:1026
 msgid "Save settings"
 msgstr "設定を保存"
 
-#: dist/templates/admin-settings.php:1052 templates/admin-settings.php:1052
+#: dist/templates/admin-settings.php:1054 templates/admin-settings.php:1054
 msgid "〜"
 msgstr "〜"
 
-#: dist/templates/admin-settings.php:1060 templates/admin-settings.php:1060
+#: dist/templates/admin-settings.php:1062 templates/admin-settings.php:1062
 msgid "Open Test Manager"
 msgstr "テストマネージャーを開く"
 
-#: dist/templates/admin-settings.php:1062 templates/admin-settings.php:1062
+#: dist/templates/admin-settings.php:1064 templates/admin-settings.php:1064
 msgid "Test Manager"
 msgstr "テストマネージャー"
 
@@ -3010,13 +3010,13 @@ msgstr "未設定"
 msgid "Continue without importing"
 msgstr "インポートせずに続行"
 
-#: dist/templates/wizard/wizard-page.php:66 templates/wizard/wizard-page.php:66
+#: dist/templates/wizard/wizard-page.php:70 templates/wizard/wizard-page.php:70
 #, fuzzy
 msgid "Step template not found."
 msgstr "設定テンプレートが見つかりませんでした。"
 
 #. translators: %s: plugin version
-#: dist/templates/wizard/wizard-page.php:78 templates/wizard/wizard-page.php:78
+#: dist/templates/wizard/wizard-page.php:82 templates/wizard/wizard-page.php:82
 #, php-format
 msgid "AI Search Schema v%s"
 msgstr "Aivec AI Search Schema v%s"
@@ -3069,466 +3069,3 @@ msgstr "診断エバリュエーターが利用できません。"
 #, fuzzy
 msgid "AI Search Schema Test Manager"
 msgstr "AEOスキーマ設定"
-
-#~ msgid "License validation API is not yet available."
-#~ msgstr "ライセンス検証APIはまだ利用できません。"
-
-#~ msgid "Please enter a license key."
-#~ msgstr "ライセンスキーを入力してください。"
-
-#~ msgid "License activated successfully."
-#~ msgstr "ライセンスが正常に有効化されました。"
-
-#~ msgid "License validation failed."
-#~ msgstr "ライセンス検証に失敗しました。"
-
-#~ msgid "License deactivated."
-#~ msgstr "ライセンスが無効化されました。"
-
-#~ msgid "Active"
-#~ msgstr "有効"
-
-#~ msgid "Expired"
-#~ msgstr "期限切れ"
-
-#~ msgid "Invalid"
-#~ msgstr "無効"
-
-#~ msgid "Inactive"
-#~ msgstr "未使用"
-
-#~ msgid "Multi-Location Support"
-#~ msgstr "マルチロケーション対応"
-
-#~ msgid ""
-#~ "Manage multiple LocalBusiness locations from a single WordPress "
-#~ "installation."
-#~ msgstr ""
-#~ "単一のWordPressインストールから複数のLocalBusinessロケーションを管理できま"
-#~ "す。"
-
-#~ msgid "Custom Schema Templates"
-#~ msgstr "カスタムスキーマテンプレート"
-
-#~ msgid "Create and save custom schema templates for different content types."
-#~ msgstr ""
-#~ "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成・保存できま"
-#~ "す。"
-
-#~ msgid "Priority Support"
-#~ msgstr "優先サポート"
-
-#~ msgid "Get priority email support from our development team."
-#~ msgstr "開発チームからの優先メールサポートを受けられます。"
-
-#~ msgid "Advanced Validation"
-#~ msgstr "高度な検証機能"
-
-#~ msgid "Scheduled automatic schema validation with email reports."
-#~ msgstr "メールレポート付きのスケジュール自動スキーマ検証。"
-
-#~ msgid "Pro"
-#~ msgstr "Pro"
-
-#, php-format
-#~ msgid "%s is a Pro feature. Upgrade to unlock all Pro features."
-#~ msgstr ""
-#~ "%s はPro機能です。アップグレードしてすべてのPro機能をアンロックしてくださ"
-#~ "い。"
-
-#~ msgid "Upgrade to Pro to unlock all advanced features."
-#~ msgstr "Proにアップグレードしてすべての高度な機能をアンロックしてください。"
-
-#~ msgid "Learn More"
-#~ msgstr "詳しく見る"
-
-#~ msgid "Activating..."
-#~ msgstr "有効化中..."
-
-#~ msgid "Deactivating..."
-#~ msgstr "無効化中..."
-
-#~ msgid "Activate"
-#~ msgstr "有効化"
-
-#~ msgid "Deactivate"
-#~ msgstr "無効化"
-
-#~ msgid "License"
-#~ msgstr "ライセンス"
-
-#~ msgid "Manage your AI Search Schema Pro license."
-#~ msgstr "Aivec AI Search Schema Proライセンスを管理します。"
-
-#~ msgid "Status:"
-#~ msgstr "ステータス:"
-
-#~ msgid "License Key"
-#~ msgstr "ライセンスキー"
-
-#~ msgid "Enter your license key"
-#~ msgstr "ライセンスキーを入力してください"
-
-#~ msgid "Enter your Pro license key to unlock advanced features."
-#~ msgstr "Proライセンスキーを入力して高度な機能をアンロックしてください。"
-
-#~ msgid "Get a license"
-#~ msgstr "ライセンスを取得"
-
-#~ msgid "Pro Features"
-#~ msgstr "Pro機能"
-
-#~ msgid "Manage multiple LocalBusiness locations."
-#~ msgstr "複数のLocalBusinessロケーションを管理できます。"
-
-#~ msgid "Create custom schema templates for different content types."
-#~ msgstr ""
-#~ "異なるコンテンツタイプ用のカスタムスキーマテンプレートを作成できます。"
-
-#~ msgid "Get priority email support."
-#~ msgstr "優先メールサポートを受けられます。"
-
-#~ msgid "Scheduled automatic schema validation."
-#~ msgstr "スケジュール自動スキーマ検証。"
-
-#, fuzzy
-#~ msgid ""
-#~ "Render HTML breadcrumbs (nav) via AI_Search_Schema_Breadcrumbs::render()"
-#~ msgstr "HTML パンくずリスト (nav) をレンダリングします。"
-
-#~ msgid "Organization name is set."
-#~ msgstr "組織名が設定されています。"
-
-#~ msgid "Organization name is missing."
-#~ msgstr "組織名がありません。"
-
-#~ msgid "Organization URL is set."
-#~ msgstr "組織のURLが設定されています。"
-
-#~ msgid "Organization URL is missing."
-#~ msgstr "組織のURLがありません。"
-
-#~ msgid "Logo is set."
-#~ msgstr "ロゴが設定されています。"
-
-#~ msgid "Logo is not set. Set a square logo image."
-#~ msgstr "ロゴが未設定です。正方形のロゴ画像を設定してください。"
-
-#~ msgid "SameAs / social profiles are present."
-#~ msgstr "SameAs / ソーシャルプロフィールが設定されています。"
-
-#~ msgid "SameAs profiles are missing. Add social links."
-#~ msgstr ""
-#~ "SameAs プロフィールが未設定です。ソーシャルリンクを追加してください。"
-
-#~ msgid "LocalBusiness name is set."
-#~ msgstr "ローカルビジネス名が設定されています。"
-
-#~ msgid "LocalBusiness name is missing."
-#~ msgstr "ローカルビジネス名がありません。"
-
-#~ msgid "Telephone is set."
-#~ msgstr "電話番号が設定されています。"
-
-#~ msgid "Telephone is missing."
-#~ msgstr "電話番号が未設定です。"
-
-#~ msgid "Address fields are set."
-#~ msgstr "住所が設定されています。"
-
-#~ msgid ""
-#~ "Address is incomplete. Set prefecture, city, street, and postal code."
-#~ msgstr ""
-#~ "住所が不完全です。郵便番号・都道府県・市区町村・丁目番地を入力してくださ"
-#~ "い。"
-
-#, php-format
-#~ msgid "Geo coordinates set (lat/long, %s decimals)."
-#~ msgstr "緯度経度が設定されています（小数点 %s 桁）。"
-
-#~ msgid "Geo coordinates are missing. Fetch via address or enter lat/long."
-#~ msgstr "緯度経度が未設定です。住所から取得するか手入力してください。"
-
-#~ msgid "Opening hours are configured."
-#~ msgstr "営業時間が設定されています。"
-
-#~ msgid "Opening hours are empty. Add at least one slot."
-#~ msgstr "営業時間が空です。少なくとも1つ追加してください。"
-
-#~ msgid "addressCountry is set."
-#~ msgstr "addressCountry が設定されています。"
-
-#~ msgid "addressCountry is missing."
-#~ msgstr "addressCountry が未設定です。"
-
-#~ msgid "WebSite name is set."
-#~ msgstr "Webサイト名が設定されています。"
-
-#~ msgid "WebSite name is missing."
-#~ msgstr "WebSite 名が未設定です。"
-
-#~ msgid "WebSite URL is set."
-#~ msgstr "WebSite URL が設定されています。"
-
-#~ msgid "WebSite URL is missing."
-#~ msgstr "WebSite URL が未設定です。"
-
-#~ msgid "Language (inLanguage) is set."
-#~ msgstr "言語 (inLanguage) が設定されています。"
-
-#~ msgid "Language is missing. Add at least one language."
-#~ msgstr "言語が未設定です。少なくとも1件追加してください。"
-
-#~ msgid "Publisher is set."
-#~ msgstr "publisher が設定されています。"
-
-#~ msgid "Publisher is missing. Set Organization first."
-#~ msgstr "publisher が未設定です。先に Organization を設定してください。"
-
-#~ msgid "WebPage @id/url base is set."
-#~ msgstr "WebPage の @id/URL ベースが設定されています。"
-
-#~ msgid "WebPage base URL is missing."
-#~ msgstr "WebPage のベースURLが未設定です。"
-
-#~ msgid "WebPage inLanguage ready."
-#~ msgstr "WebPage の inLanguage が設定されています。"
-
-#~ msgid "WebPage inLanguage will fallback. Consider setting languages."
-#~ msgstr ""
-#~ "WebPage の inLanguage はフォールバックします。言語を設定してください。"
-
-#, fuzzy
-#~ msgid "Article schema is preferred for content."
-#~ msgstr "コンテンツに Article スキーマが推奨されています。"
-
-#~ msgid "Content model is not set to Article by default."
-#~ msgstr "デフォルトのコンテンツモデルが Article になっていません。"
-
-#~ msgid "No published posts found. Article schema cannot be checked."
-#~ msgstr ""
-#~ "公開済み投稿が見つかりません。Article スキーマのチェックができません。"
-
-#~ msgid "Headline is present."
-#~ msgstr "見出しがあります。"
-
-#~ msgid "Headline is missing."
-#~ msgstr "見出しがありません。"
-
-#~ msgid "datePublished is present."
-#~ msgstr "datePublished が設定されています。"
-
-#~ msgid "datePublished is missing."
-#~ msgstr "datePublished が未設定です。"
-
-#~ msgid "dateModified is present."
-#~ msgstr "dateModified が設定されています。"
-
-#~ msgid "dateModified is missing."
-#~ msgstr "dateModified が未設定です。"
-
-#~ msgid "Author is set."
-#~ msgstr "投稿者が設定されています。"
-
-#~ msgid "Author information is missing."
-#~ msgstr "投稿者情報が未設定です。"
-
-#~ msgid "Featured image found for the sample post."
-#~ msgstr "サンプル投稿にアイキャッチ画像があります。"
-
-#~ msgid "Featured image missing on the sample post."
-#~ msgstr "サンプル投稿にアイキャッチ画像がありません。"
-
-#~ msgid "FAQPage schema is enabled for at least one post type."
-#~ msgstr "FAQPage スキーマが少なくとも1つの投稿タイプで有効です。"
-
-#~ msgid "Ensure each FAQ has both question and answer in the page content."
-#~ msgstr "各FAQに質問と回答が揃っていることを確認してください。"
-
-#~ msgid ""
-#~ "FAQPage schema is disabled. Enable it on relevant post types if needed."
-#~ msgstr "FAQPage スキーマが無効です。必要な投稿タイプで有効にしてください。"
-
-#~ msgid "BreadcrumbList can be generated."
-#~ msgstr "BreadcrumbList を生成できます。"
-
-#~ msgid "Breadcrumb trail is empty. Check HTML output or enable breadcrumbs."
-#~ msgstr "パンくずリストが空です。HTML出力を確認するか有効化してください。"
-
-#~ msgid "Register brand, site, and contact information."
-#~ msgstr "ブランド名・サイト情報・連絡先を登録します。"
-
-#~ msgid "Manage logos, storefront imagery, and social profiles."
-#~ msgstr "ロゴや店舗イメージ、SNSアカウントを整理します。"
-
-#~ msgid "Control entity types and content models."
-#~ msgstr "エンティティタイプやコンテンツモデルを制御します。"
-
-#~ msgid ""
-#~ "Adjust schema types, breadcrumb output, FAQ extraction, and priority per "
-#~ "content area."
-#~ msgstr ""
-#~ "各コンテンツ（投稿・固定ページ・カスタム投稿など）ごとに、\n"
-#~ "スキーマタイプ・パンくずリスト出力・FAQ抽出・スキーマ優先度を調整できま"
-#~ "す。"
-
-#~ msgid ""
-#~ "Capture address, coordinates, and hours to enrich the LocalBusiness "
-#~ "schema."
-#~ msgstr "住所や緯度経度、営業時間を登録して LocalBusiness を充実させます。"
-
-#~ msgid "AEO/GEO チェック"
-#~ msgstr "AEO/GEO チェック"
-
-#~ msgid "主要スキーマの必須項目が揃っているかを自己診断します。"
-#~ msgstr "主要スキーマの必須項目が揃っているかを自己診断します。"
-
-#~ msgid "Generate llms.txt to help AI systems understand your site structure."
-#~ msgstr ""
-#~ "llms.txt を生成して、AI システムがサイト構造を理解できるようにします。"
-
-#, fuzzy
-#~ msgid "Corporate website, non-profit, educational institution"
-#~ msgstr "企業サイト、非営利団体、教育機関"
-
-#, fuzzy
-#~ msgid "e.g., Corporation, NPO, University"
-#~ msgstr "例: 株式会社、NPO法人、大学"
-
-#~ msgid "Personal / Individual"
-#~ msgstr "個人 / フリーランス"
-
-#~ msgid "Personal blog, portfolio, freelancer website"
-#~ msgstr "個人ブログ、ポートフォリオ、フリーランサーのサイト"
-
-#~ msgid "e.g., Blog, Portfolio, Artist"
-#~ msgstr "例: ブログ、ポートフォリオ、アーティスト"
-
-#~ msgid "Online Service / Media"
-#~ msgstr "オンラインサービス / メディア"
-
-#~ msgid "News site, online tool, web application"
-#~ msgstr "ニュースサイト、オンラインツール、Webアプリケーション"
-
-#~ msgid "e.g., News, SaaS, Web App"
-#~ msgstr "例: ニュース、SaaS、Webアプリ"
-
-#, fuzzy
-#~ msgid "Article schema is enabled for posts."
-#~ msgstr "コンテンツに Article スキーマが推奨されています。"
-
-#~ msgid ""
-#~ "Visual assets and social links for entity enrichment. These help search "
-#~ "engines connect your site to official profiles and display rich results."
-#~ msgstr ""
-#~ "ロゴ画像とSNSプロフィールを設定します。検索エンジンがサイトと公式SNSを関連"
-#~ "付け、リッチリザルト表示に活用します。"
-
-#~ msgid ""
-#~ "Outputs JSON-LD structured data for search engines. This does not change "
-#~ "page appearance—it provides machine-readable metadata about your site "
-#~ "entity and content."
-#~ msgstr ""
-#~ "検索エンジン向けのJSON-LD構造化データを出力します。ページの見た目には影響"
-#~ "せず、サイト運営主体やコンテンツの情報を機械可読形式で提供します。"
-
-#~ msgid ""
-#~ "Override schema output per post type or taxonomy. These settings control "
-#~ "structured data output only—they do not affect page layout or design."
-#~ msgstr ""
-#~ "投稿タイプ・タクソノミー別にスキーマ出力を上書きします。構造化データの出力"
-#~ "設定のみで、ページのレイアウトやデザインには影響しません。"
-
-#~ msgid "AIVEC LLC."
-#~ msgstr "AIVEC LLC."
-
-#~ msgid "AEO Schema Settings"
-#~ msgstr "AEOスキーマ設定"
-
-#~ msgid "AEO Schema"
-#~ msgstr "AEOスキーマ"
-
-#~ msgid "AVC AEO Schema – Development Mode Warning"
-#~ msgstr "AVC AEO Schema – 開発モード警告"
-
-#, fuzzy
-#~ msgid "AEO Schema Setup"
-#~ msgstr "AEOスキーマ設定"
-
-#~ msgid "Use AEO Schema output (disable other plugins)"
-#~ msgstr "AEO スキーマ出力を優先する（他のプラグインを無効にする）"
-
-#, fuzzy
-#~ msgid "Welcome to AVC AEO Schema"
-#~ msgstr "AEO スキーマ"
-
-#~ msgid "AVC AEO Schema"
-#~ msgstr "AEO スキーマ"
-
-#~ msgid ""
-#~ "Choose a network for each row and enter an account ID (without @) or a "
-#~ "profile URL."
-#~ msgstr ""
-#~ "各行でSNSを選択し、アカウント名（@を除いたID）またはプロフィールURLを入力"
-#~ "してください。各行でSNSを選択し、アカウント名（@を除いたID）またはプロ"
-#~ "フィールURLを入力してください。"
-
-#~ msgid ""
-#~ "Select how your content is structured. Blog: Article schema. Corporate: "
-#~ "WebPage schema. E-commerce: Product schema."
-#~ msgstr ""
-#~ "コンテンツの構成を選択。ブログ: Articleスキーマ。企業: WebPageスキーマ。"
-#~ "EC: Productスキーマ。"
-
-#~ msgid ""
-#~ "Use Organization for most sites. Switch to LocalBusiness only when the "
-#~ "storefront is the primary entity."
-#~ msgstr ""
-#~ "通常は Organization を選択し、店舗専用サイトなど LocalBusiness を主体にし"
-#~ "たい場合のみ切り替えてください。通常は Organization を選択し、店舗専用サイ"
-#~ "トなど LocalBusiness を主体にしたい場合のみ切り替えてください。"
-
-#~ msgid "Example: $$"
-#~ msgstr "例: $$"
-
-#~ msgid ""
-#~ "Use $, $$, $$$, or $$$$ to indicate price level. Google displays this in "
-#~ "search results."
-#~ msgstr ""
-#~ "価格帯を$記号で入力します（$ = 格安、$$ = 手頃、$$$ = やや高め、$$$$ = 高"
-#~ "級）。入力例: 手頃な価格帯なら「$$」と入力。Google検索結果に表示されます。"
-
-#~ msgid "Add as many day and time combinations as needed."
-#~ msgstr "曜日と営業時間の組み合わせを必要な分だけ追加してください。"
-
-#~ msgid ""
-#~ "Determines the default schema type for your content. Blog: Uses Article "
-#~ "schema for posts, ideal for news/blog sites. Corporate: Uses WebPage "
-#~ "schema, suitable for company info pages. E-commerce: Uses Product schema "
-#~ "when WooCommerce is active."
-#~ msgstr ""
-#~ "コンテンツのデフォルトスキーマタイプを決定します。ブログ: 投稿にArticleス"
-#~ "キーマを使用、ニュース/ブログサイトに最適。コーポレート: WebPageスキーマを"
-#~ "使用、企業情報ページに適しています。ECサイト: WooCommerceがアクティブな場"
-#~ "合Productスキーマを使用します。"
-
-#~ msgid ""
-#~ "Sets the publisher reference for Article and WebPage schemas. This is "
-#~ "independent from \"Primary role of this site\"—you can set the site role "
-#~ "to Organization while using LocalBusiness as the publisher when articles "
-#~ "are authored by the store."
-#~ msgstr ""
-#~ "ArticleおよびWebPageスキーマのpublisher参照を設定します。これは「このサイ"
-#~ "トの主な役割」とは独立しています。サイトの役割をOrganizationに設定しつつ、"
-#~ "記事が店舗によって執筆される場合はLocalBusinessをpublisherとして使用できま"
-#~ "す。"
-
-#~ msgid "Entity type"
-#~ msgstr "エンティティタイプ"
-
-#~ msgid ""
-#~ "Organization: For companies, nonprofits, or brands. LocalBusiness: For "
-#~ "physical stores, restaurants, or service providers with a location."
-#~ msgstr ""
-#~ "Organization: 企業・非営利団体・ブランド向け。LocalBusiness: 実店舗・レス"
-#~ "トラン・所在地のあるサービス業向け。"

@@ -1,13 +1,13 @@
 # Developer Hooks Reference / 開発者向けフックリファレンス
 
-This document lists all available WordPress hooks (filters and actions) provided by AVC AEO Schema.
-このドキュメントでは、AVC AEO Schema が提供するすべての WordPress フック（フィルターとアクション）を一覧にしています。
+This document lists all available WordPress hooks (filters and actions) provided by AI Search Schema.
+このドキュメントでは、AI Search Schema が提供するすべての WordPress フック（フィルターとアクション）を一覧にしています。
 
 ---
 
 ## Schema Control Filters / スキーマ制御フィルター
 
-### `avc_aeo_schema_enabled`
+### `avc_ais_schema_enabled`
 
 Controls whether schema output is enabled for the current page.
 現在のページでスキーマ出力を有効にするかどうかを制御します。
@@ -18,7 +18,7 @@ Controls whether schema output is enabled for the current page.
 **Example:**
 ```php
 // Disable schema on specific pages
-add_filter( 'avc_aeo_schema_enabled', function( $enabled ) {
+add_filter( 'avc_ais_schema_enabled', function( $enabled ) {
     if ( is_page( 'no-schema-page' ) ) {
         return false;
     }
@@ -28,7 +28,7 @@ add_filter( 'avc_aeo_schema_enabled', function( $enabled ) {
 
 ---
 
-### `avc_aeo_competing_schema_patterns`
+### `avc_ais_competing_schema_patterns`
 
 Add custom regex patterns to detect and suppress competing schema output from other plugins.
 他のプラグインからの競合スキーマ出力を検出・抑制するためのカスタム正規表現パターンを追加します。
@@ -38,7 +38,7 @@ Add custom regex patterns to detect and suppress competing schema output from ot
 
 **Example:**
 ```php
-add_filter( 'avc_aeo_competing_schema_patterns', function( $patterns ) {
+add_filter( 'avc_ais_competing_schema_patterns', function( $patterns ) {
     // Add pattern to suppress custom schema plugin
     $patterns[] = '/<script[^>]*class="my-other-schema"[^>]*>/';
     return $patterns;
@@ -49,7 +49,7 @@ add_filter( 'avc_aeo_competing_schema_patterns', function( $patterns ) {
 
 ## Breadcrumb Filters / パンくずフィルター
 
-### `avc_aeo_show_breadcrumbs`
+### `avc_ais_show_breadcrumbs`
 
 Controls whether breadcrumb HTML/JSON-LD is displayed.
 パンくず HTML/JSON-LD を表示するかどうかを制御します。
@@ -60,7 +60,7 @@ Controls whether breadcrumb HTML/JSON-LD is displayed.
 **Example:**
 ```php
 // Hide breadcrumbs on archive pages
-add_filter( 'avc_aeo_show_breadcrumbs', function( $show ) {
+add_filter( 'avc_ais_show_breadcrumbs', function( $show ) {
     if ( is_archive() ) {
         return false;
     }
@@ -70,7 +70,7 @@ add_filter( 'avc_aeo_show_breadcrumbs', function( $show ) {
 
 ---
 
-### `avc_aeo_breadcrumb_items`
+### `avc_ais_breadcrumb_items`
 
 Modify the breadcrumb items array before rendering.
 レンダリング前にパンくずアイテムの配列を変更します。
@@ -81,7 +81,7 @@ Modify the breadcrumb items array before rendering.
 
 **Example:**
 ```php
-add_filter( 'avc_aeo_breadcrumb_items', function( $items, $context ) {
+add_filter( 'avc_ais_breadcrumb_items', function( $items, $context ) {
     // Add a custom item after home
     $custom_item = [
         'name' => 'Products',
@@ -94,7 +94,7 @@ add_filter( 'avc_aeo_breadcrumb_items', function( $items, $context ) {
 
 ---
 
-### `avc_aeo_breadcrumb_home_label`
+### `avc_ais_breadcrumb_home_label`
 
 Customize the "Home" breadcrumb label.
 「ホーム」パンくずのラベルをカスタマイズします。
@@ -104,7 +104,7 @@ Customize the "Home" breadcrumb label.
 
 **Example:**
 ```php
-add_filter( 'avc_aeo_breadcrumb_home_label', function( $label ) {
+add_filter( 'avc_ais_breadcrumb_home_label', function( $label ) {
     return 'トップページ';
 });
 ```
@@ -113,7 +113,7 @@ add_filter( 'avc_aeo_breadcrumb_home_label', function( $label ) {
 
 ## Metabox Filters / メタボックスフィルター
 
-### `avc_aeo_allowed_post_types`
+### `avc_ais_allowed_post_types`
 
 Control which post types show the AI Search Schema metabox.
 AI Search Schema メタボックスを表示する投稿タイプを制御します。
@@ -123,7 +123,7 @@ AI Search Schema メタボックスを表示する投稿タイプを制御しま
 
 **Example:**
 ```php
-add_filter( 'avc_aeo_allowed_post_types', function( $post_types ) {
+add_filter( 'avc_ais_allowed_post_types', function( $post_types ) {
     // Add custom post type
     $post_types[] = 'product';
     $post_types[] = 'portfolio';
@@ -135,7 +135,7 @@ add_filter( 'avc_aeo_allowed_post_types', function( $post_types ) {
 
 ## API Filters / API フィルター
 
-### `avc_aeo_google_maps_api_key`
+### `avc_ais_google_maps_api_key`
 
 Filter the Google Maps API key before use.
 使用前に Google Maps API キーをフィルタリングします。
@@ -145,7 +145,7 @@ Filter the Google Maps API key before use.
 
 **Example:**
 ```php
-add_filter( 'avc_aeo_google_maps_api_key', function( $api_key ) {
+add_filter( 'avc_ais_google_maps_api_key', function( $api_key ) {
     // Use different key for specific environments
     if ( defined( 'WP_ENV' ) && WP_ENV === 'production' ) {
         return 'production-api-key';
@@ -156,7 +156,7 @@ add_filter( 'avc_aeo_google_maps_api_key', function( $api_key ) {
 
 ---
 
-### `avc_aeo_bypass_geocode_nonce`
+### `avc_ais_bypass_geocode_nonce`
 
 **SECURITY WARNING:** This filter should only be used in test environments.
 **セキュリティ警告:** このフィルターはテスト環境でのみ使用してください。
@@ -176,7 +176,7 @@ Bypass nonce verification for geocode AJAX requests. Only works when:
 
 ## Action Hooks / アクションフック
 
-### `avc_aeo_json_responder`
+### `avc_ais_json_responder`
 
 Fired when sending JSON response from geocode request. Useful for testing.
 ジオコードリクエストから JSON レスポンスを送信する際に発火します。テストに有用です。
@@ -224,7 +224,7 @@ Fired when the setup wizard is completed.
 ```php
 add_action( 'avc_wizard_completed', function( $progress ) {
     // Log completion or trigger other actions
-    error_log( 'AVC AEO Schema wizard completed' );
+    error_log( 'AI Search Schema wizard completed' );
 });
 ```
 
@@ -288,7 +288,7 @@ When testing custom hook implementations:
 
 ```php
 // In your test file
-add_filter( 'avc_aeo_schema_enabled', '__return_false' );
+add_filter( 'avc_ais_schema_enabled', '__return_false' );
 
 // Verify schema is disabled
 $schema = new AVC_AEO_Schema();

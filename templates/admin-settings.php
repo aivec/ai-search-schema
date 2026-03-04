@@ -350,7 +350,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 									<input type="text" id="ais-store-image-url" name="<?php echo esc_attr( $option_name ); ?>[store_image_url]" value="<?php echo esc_attr( $options['store_image_url'] ?? '' ); ?>" readonly />
 									<div class="ais-button-row">
 										<button type="button" class="button" id="ais-store-image-select" data-title="<?php esc_attr_e( 'Select store photo', 'aivec-ai-search-schema' ); ?>" data-button="<?php esc_attr_e( 'Insert image', 'aivec-ai-search-schema' ); ?>"><?php esc_html_e( 'Select from media library', 'aivec-ai-search-schema' ); ?></button>
-										<button type="button" class="button-link ais-inline-link <?php echo ! empty( $options['store_image_url'] ) ? '' : 'hidden'; ?>" id="ais-store-image-remove"><?php esc_html_e( 'Clear image', 'aivec-ai-search-schema' ); ?></button>
+										<?php $store_remove_class = 'button-link ais-inline-link' . ( empty( $options['store_image_url'] ) ? ' hidden' : '' ); ?>
+										<button type="button" class="<?php echo esc_attr( $store_remove_class ); ?>" id="ais-store-image-remove"><?php esc_html_e( 'Clear image', 'aivec-ai-search-schema' ); ?></button>
 									</div>
 								</div>
 							</div>
@@ -372,7 +373,8 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 										<?php endforeach; ?>
 									</select>
 									<input type="text" name="<?php echo esc_attr( $option_name ); ?>[social_links][<?php echo esc_attr( $index ); ?>][account]" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][account]" value="<?php echo esc_attr( $account ); ?>" placeholder="<?php esc_attr_e( 'Account name or profile URL', 'aivec-ai-search-schema' ); ?>" />
-									<input type="text" class="ais-social-other-label <?php echo 'other' === $network ? '' : 'hidden'; ?>" name="<?php echo esc_attr( $option_name ); ?>[social_links][<?php echo esc_attr( $index ); ?>][label]" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][label]" value="<?php echo esc_attr( $label ); ?>" placeholder="<?php esc_attr_e( 'Other service label', 'aivec-ai-search-schema' ); ?>" />
+									<?php $social_other_class = 'ais-social-other-label' . ( 'other' !== $network ? ' hidden' : '' ); ?>
+									<input type="text" class="<?php echo esc_attr( $social_other_class ); ?>" name="<?php echo esc_attr( $option_name ); ?>[social_links][<?php echo esc_attr( $index ); ?>][label]" data-name="<?php echo esc_attr( $option_name ); ?>[social_links][__index__][label]" value="<?php echo esc_attr( $label ); ?>" placeholder="<?php esc_attr_e( 'Other service label', 'aivec-ai-search-schema' ); ?>" />
 									<button type="button" class="button-link-delete ais-remove-social"><?php esc_html_e( 'Remove', 'aivec-ai-search-schema' ); ?></button>
 								</div>
 							<?php endforeach; ?>

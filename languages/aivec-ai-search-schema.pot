@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-03-04T03:59:09+00:00\n"
+"POT-Creation-Date: 2026-03-04T07:54:51+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.11.0\n"
+"X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: aivec-ai-search-schema\n"
 
 #. Plugin Name of the plugin
@@ -61,26 +61,31 @@ msgstr ""
 
 #. translators: %s: schema type name
 #: includes/class-avc-ais-diagnostic-evaluator.php:148
+#, php-format
 msgid "Target schema type \"%s\" not found in JSON-LD."
 msgstr ""
 
 #. translators: %s: comma-separated list of field names
 #: includes/class-avc-ais-diagnostic-evaluator.php:205
+#, php-format
 msgid "Required fields missing: %s"
 msgstr ""
 
 #. translators: %s: comma-separated list of field names
 #: includes/class-avc-ais-diagnostic-evaluator.php:261
+#, php-format
 msgid "Recommended fields missing: %s"
 msgstr ""
 
 #. translators: 1: field name, 2: minimum count, 3: actual count
 #: includes/class-avc-ais-diagnostic-evaluator.php:280
+#, php-format
 msgid "%1$s has %3$d items (minimum: %2$d)."
 msgstr ""
 
 #. translators: 1: field name, 2: minimum length, 3: actual length
 #: includes/class-avc-ais-diagnostic-evaluator.php:301
+#, php-format
 msgid "%1$s is %3$d characters (minimum: %2$d)."
 msgstr ""
 
@@ -90,6 +95,7 @@ msgstr ""
 
 #. translators: %s: comma-separated list of field names
 #: includes/class-avc-ais-diagnostic-evaluator.php:364
+#, php-format
 msgid "Partial data: some fields in group are missing: %s"
 msgstr ""
 
@@ -163,6 +169,7 @@ msgstr ""
 
 #. translators: %s: comma separated list of missing fields
 #: includes/class-avc-ais-schema.php:130
+#, php-format
 msgid "Missing fields: %s."
 msgstr ""
 
@@ -170,6 +177,7 @@ msgstr ""
 #: includes/class-avc-ais-schema.php:927
 #: src/ContentResolver.php:126
 #: src/Schema/class-avc-ais-contentresolver.php:117
+#, php-format
 msgid "Search results for \"%s\""
 msgstr ""
 
@@ -213,11 +221,12 @@ msgstr ""
 #. translators: %s: The language label shown as a tag.
 #: includes/class-avc-ais-settings.php:165
 #: templates/admin-settings.php:279
+#, php-format
 msgid "Remove \"%s\""
 msgstr ""
 
 #: includes/class-avc-ais-settings.php:168
-#: templates/admin-settings.php:800
+#: templates/admin-settings.php:802
 msgid "Fetch coordinates from address"
 msgstr ""
 
@@ -258,7 +267,7 @@ msgid "Regenerating..."
 msgstr ""
 
 #: includes/class-avc-ais-settings.php:191
-#: templates/admin-settings.php:1013
+#: templates/admin-settings.php:1015
 msgid "Regenerate from site data"
 msgstr ""
 
@@ -268,7 +277,7 @@ msgid "Saving..."
 msgstr ""
 
 #: includes/class-avc-ais-settings.php:193
-#: templates/admin-settings.php:1010
+#: templates/admin-settings.php:1012
 msgid "Save edits"
 msgstr ""
 
@@ -284,6 +293,7 @@ msgstr ""
 
 #. translators: %d: number of seconds an admin must wait before requesting new coordinates.
 #: includes/class-avc-ais-settings.php:235
+#, php-format
 msgid "Please wait %d seconds before requesting new coordinates."
 msgstr ""
 
@@ -623,6 +633,7 @@ msgstr ""
 
 #. translators: %s decimal places
 #: includes/class-avc-ais-settings.php:1865
+#, php-format
 msgid "Geo coordinates are registered (%s decimal places). Map display is ready."
 msgstr ""
 
@@ -784,7 +795,7 @@ msgid "BreadcrumbList"
 msgstr ""
 
 #: includes/functions.php:170
-#: templates/admin-settings.php:393
+#: templates/admin-settings.php:395
 msgid "Help"
 msgstr ""
 
@@ -1065,6 +1076,7 @@ msgstr ""
 
 #. translators: %d: number of errors
 #: templates/admin-settings.php:179
+#, php-format
 msgid "%d error"
 msgid_plural "%d errors"
 msgstr[0] ""
@@ -1072,6 +1084,7 @@ msgstr[1] ""
 
 #. translators: %d: number of warnings
 #: templates/admin-settings.php:187
+#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
 msgstr[0] ""
@@ -1126,7 +1139,7 @@ msgid "Phone number"
 msgstr ""
 
 #: templates/admin-settings.php:249
-#: templates/admin-settings.php:732
+#: templates/admin-settings.php:734
 msgid "Required for LocalBusiness"
 msgstr ""
 
@@ -1139,7 +1152,7 @@ msgid "Example: +81-3-1234-5678"
 msgstr ""
 
 #: templates/admin-settings.php:253
-#: templates/admin-settings.php:771
+#: templates/admin-settings.php:773
 msgid "Country code"
 msgstr ""
 
@@ -1231,7 +1244,7 @@ msgid "Insert image"
 msgstr ""
 
 #: templates/admin-settings.php:339
-#: templates/admin-settings.php:353
+#: templates/admin-settings.php:354
 msgid "Clear image"
 msgstr ""
 
@@ -1247,618 +1260,619 @@ msgstr ""
 msgid "Select store photo"
 msgstr ""
 
-#: templates/admin-settings.php:360
+#: templates/admin-settings.php:361
 msgid "Social profiles"
 msgstr ""
 
-#: templates/admin-settings.php:360
+#: templates/admin-settings.php:361
 msgid "Add your social media profiles. Used in Organization/LocalBusiness sameAs property for knowledge panel."
 msgstr ""
 
-#: templates/admin-settings.php:374
-#: templates/admin-settings.php:1037
+#: templates/admin-settings.php:375
+#: templates/admin-settings.php:1039
 msgid "Account name or profile URL"
 msgstr ""
 
-#: templates/admin-settings.php:375
-#: templates/admin-settings.php:1038
+#: templates/admin-settings.php:377
+#: templates/admin-settings.php:1040
 msgid "Other service label"
 msgstr ""
 
-#: templates/admin-settings.php:376
-#: templates/admin-settings.php:917
-#: templates/admin-settings.php:1039
-#: templates/admin-settings.php:1054
+#: templates/admin-settings.php:378
+#: templates/admin-settings.php:919
+#: templates/admin-settings.php:1041
+#: templates/admin-settings.php:1056
 #: templates/wizard/steps/step-1-basics.php:77
 msgid "Remove"
 msgstr ""
 
-#: templates/admin-settings.php:380
+#: templates/admin-settings.php:382
 msgid "Add social profile"
 msgstr ""
 
-#: templates/admin-settings.php:387
+#: templates/admin-settings.php:389
 msgid "Schema output"
 msgstr ""
 
-#: templates/admin-settings.php:388
+#: templates/admin-settings.php:390
 msgid "Control how structured data is delivered. JSON-LD is invisible to visitors but essential for search engines and AI systems to understand your content."
 msgstr ""
 
-#: templates/admin-settings.php:393
+#: templates/admin-settings.php:395
 msgid "Primary role of this site"
 msgstr ""
 
-#: templates/admin-settings.php:395
+#: templates/admin-settings.php:397
 msgid "Organization (corporate or brand site)"
 msgstr ""
 
-#: templates/admin-settings.php:396
+#: templates/admin-settings.php:398
 msgid "Store / Business location (storefront or service site)"
 msgstr ""
 
-#: templates/admin-settings.php:400
+#: templates/admin-settings.php:402
 msgid "Content model"
 msgstr ""
 
-#: templates/admin-settings.php:400
+#: templates/admin-settings.php:402
 msgid "Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-commerce: Uses Product schema when WooCommerce is active."
 msgstr ""
 
-#: templates/admin-settings.php:408
-#: templates/admin-settings.php:468
-#: templates/admin-settings.php:532
+#: templates/admin-settings.php:410
+#: templates/admin-settings.php:470
+#: templates/admin-settings.php:534
 msgid "Schema priority"
 msgstr ""
 
-#: templates/admin-settings.php:408
+#: templates/admin-settings.php:410
 msgid "When external priority is selected, this plugin will stop printing JSON-LD and will not disable Yoast, Rank Math, or AIOSEO schema."
 msgstr ""
 
-#: templates/admin-settings.php:411
+#: templates/admin-settings.php:413
 msgid "Use AI Search Schema output (disable other plugins)"
 msgstr ""
 
-#: templates/admin-settings.php:415
+#: templates/admin-settings.php:417
 msgid "Prefer external SEO plugin schema"
 msgstr ""
 
-#: templates/admin-settings.php:419
+#: templates/admin-settings.php:421
 msgid "Website publisher"
 msgstr ""
 
-#: templates/admin-settings.php:419
+#: templates/admin-settings.php:421
 msgid "Sets the publisher reference for Article and WebPage schemas. Independent from \"Primary role\" — you can use LocalBusiness as publisher when articles are authored by the store."
 msgstr ""
 
-#: templates/admin-settings.php:421
+#: templates/admin-settings.php:423
 msgid "Organization (brand site)"
 msgstr ""
 
-#: templates/admin-settings.php:422
+#: templates/admin-settings.php:424
 msgid "LocalBusiness (storefront site)"
 msgstr ""
 
-#: templates/admin-settings.php:426
+#: templates/admin-settings.php:428
 msgid "LocalBusiness subtype"
 msgstr ""
 
-#: templates/admin-settings.php:426
+#: templates/admin-settings.php:428
 msgid "Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService"
 msgstr ""
 
-#: templates/admin-settings.php:427
+#: templates/admin-settings.php:429
 msgid "Example: Store, Restaurant"
 msgstr ""
 
-#: templates/admin-settings.php:430
+#: templates/admin-settings.php:432
 msgid "Location label"
 msgstr ""
 
-#: templates/admin-settings.php:430
+#: templates/admin-settings.php:432
 msgid "Appends after the Organization name to clarify each location."
 msgstr ""
 
-#: templates/admin-settings.php:431
+#: templates/admin-settings.php:433
 msgid "Example: HQ / Shinjuku"
 msgstr ""
 
-#: templates/admin-settings.php:435
-#: templates/admin-settings.php:466
-#: templates/admin-settings.php:530
+#: templates/admin-settings.php:437
+#: templates/admin-settings.php:468
+#: templates/admin-settings.php:532
 msgid "Breadcrumbs"
 msgstr ""
 
-#: templates/admin-settings.php:438
+#: templates/admin-settings.php:440
 msgid "Include BreadcrumbList in JSON-LD output"
 msgstr ""
 
-#: templates/admin-settings.php:440
+#: templates/admin-settings.php:442
 msgid "ON: Outputs BreadcrumbList schema for Google rich snippets. Recommended for SEO."
 msgstr ""
 
-#: templates/admin-settings.php:443
+#: templates/admin-settings.php:445
 msgid "Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()"
 msgstr ""
 
-#: templates/admin-settings.php:445
+#: templates/admin-settings.php:447
 msgid "ON: Displays visible breadcrumb navigation on pages. Leave OFF if your theme already has breadcrumbs."
 msgstr ""
 
-#: templates/admin-settings.php:455
+#: templates/admin-settings.php:457
 msgid "Page-type schema controls"
 msgstr ""
 
-#: templates/admin-settings.php:455
+#: templates/admin-settings.php:457
 msgid "Column guide: Schema type = Force a specific schema (Article, FAQPage, WebPage) regardless of content model. Breadcrumbs = Include in BreadcrumbList output. FAQ extraction = Auto-detect Q&A content and generate FAQPage schema. Schema priority = Override global priority per content type."
 msgstr ""
 
-#: templates/admin-settings.php:456
+#: templates/admin-settings.php:458
 msgid "Fine-tune schema per content type. Choose the right schema for each post type or taxonomy to maximize how your content appears in search results."
 msgstr ""
 
-#: templates/admin-settings.php:461
+#: templates/admin-settings.php:463
 msgid "Post type overrides"
 msgstr ""
 
-#: templates/admin-settings.php:464
-#: templates/admin-settings.php:528
+#: templates/admin-settings.php:466
+#: templates/admin-settings.php:530
 msgid "Content"
-msgstr ""
-
-#: templates/admin-settings.php:465
-#: templates/admin-settings.php:529
-msgid "Schema type"
 msgstr ""
 
 #: templates/admin-settings.php:467
 #: templates/admin-settings.php:531
+msgid "Schema type"
+msgstr ""
+
+#: templates/admin-settings.php:469
+#: templates/admin-settings.php:533
 msgid "FAQ extraction"
 msgstr ""
 
-#: templates/admin-settings.php:499
-#: templates/admin-settings.php:506
-#: templates/admin-settings.php:563
-#: templates/admin-settings.php:570
+#: templates/admin-settings.php:501
+#: templates/admin-settings.php:508
+#: templates/admin-settings.php:565
+#: templates/admin-settings.php:572
 msgid "Enabled"
 msgstr ""
 
-#: templates/admin-settings.php:519
+#: templates/admin-settings.php:521
 msgid "Override schema defaults per post type so you can force Article, FAQPage, or WebPage output without editing individual posts."
 msgstr ""
 
-#: templates/admin-settings.php:522
+#: templates/admin-settings.php:524
 msgid "Taxonomy overrides"
 msgstr ""
 
-#: templates/admin-settings.php:524
+#: templates/admin-settings.php:526
 msgid "No public taxonomies were detected on this site."
 msgstr ""
 
-#: templates/admin-settings.php:583
+#: templates/admin-settings.php:585
 msgid "Taxonomy archives can inherit the breadcrumbs/FAQ toggles and schema priority settings just like posts."
 msgstr ""
 
-#: templates/admin-settings.php:591
+#: templates/admin-settings.php:593
 msgid "Local details & hours"
 msgstr ""
 
-#: templates/admin-settings.php:592
+#: templates/admin-settings.php:594
 msgid "Get found locally. Address, coordinates, and business hours power LocalBusiness schema for Google Maps, local search, and \"near me\" queries."
 msgstr ""
 
-#: templates/admin-settings.php:600
+#: templates/admin-settings.php:602
 msgid "Google Recommended Properties for LocalBusiness"
 msgstr ""
 
-#: templates/admin-settings.php:601
+#: templates/admin-settings.php:603
 msgid "Complete these fields to maximize your visibility in local search results and Google Maps."
 msgstr ""
 
-#: templates/admin-settings.php:608
+#: templates/admin-settings.php:610
 msgid "name"
 msgstr ""
 
-#: templates/admin-settings.php:609
+#: templates/admin-settings.php:611
 msgid "Business name (Company name field)"
 msgstr ""
 
-#: templates/admin-settings.php:615
+#: templates/admin-settings.php:617
 msgid "address"
 msgstr ""
 
-#: templates/admin-settings.php:616
+#: templates/admin-settings.php:618
 msgid "Full postal address"
 msgstr ""
 
-#: templates/admin-settings.php:622
+#: templates/admin-settings.php:624
 msgid "telephone"
 msgstr ""
 
-#: templates/admin-settings.php:623
+#: templates/admin-settings.php:625
 msgid "Contact phone number"
 msgstr ""
 
-#: templates/admin-settings.php:629
+#: templates/admin-settings.php:631
 msgid "geo"
 msgstr ""
 
-#: templates/admin-settings.php:630
+#: templates/admin-settings.php:632
 msgid "Latitude and longitude"
 msgstr ""
 
-#: templates/admin-settings.php:636
+#: templates/admin-settings.php:638
 msgid "openingHours"
 msgstr ""
 
-#: templates/admin-settings.php:637
+#: templates/admin-settings.php:639
 msgid "Business hours"
 msgstr ""
 
-#: templates/admin-settings.php:643
+#: templates/admin-settings.php:645
 msgid "image"
 msgstr ""
 
-#: templates/admin-settings.php:644
+#: templates/admin-settings.php:646
 msgid "Storefront photo"
 msgstr ""
 
-#: templates/admin-settings.php:650
+#: templates/admin-settings.php:652
 msgid "url"
 msgstr ""
 
-#: templates/admin-settings.php:651
+#: templates/admin-settings.php:653
 msgid "Website URL"
 msgstr ""
 
-#: templates/admin-settings.php:657
+#: templates/admin-settings.php:659
 msgid "priceRange"
 msgstr ""
 
-#: templates/admin-settings.php:658
+#: templates/admin-settings.php:660
 msgid "Price range ($, $$, $$$)"
 msgstr ""
 
-#: templates/admin-settings.php:664
+#: templates/admin-settings.php:666
 msgid "View Google LocalBusiness documentation →"
 msgstr ""
 
-#: templates/admin-settings.php:667
+#: templates/admin-settings.php:669
 msgid "LocalBusiness output relies on these fields. When skip on incomplete is enabled, missing items here will suppress output."
 msgstr ""
 
-#: templates/admin-settings.php:672
+#: templates/admin-settings.php:674
 msgid "Price range"
 msgstr ""
 
-#: templates/admin-settings.php:672
+#: templates/admin-settings.php:674
 msgid "Select the price level for your business. Google displays this in search results."
 msgstr ""
 
-#: templates/admin-settings.php:674
+#: templates/admin-settings.php:676
 msgid "— Not specified —"
 msgstr ""
 
-#: templates/admin-settings.php:675
+#: templates/admin-settings.php:677
 msgid "$ (Budget)"
 msgstr ""
 
-#: templates/admin-settings.php:676
+#: templates/admin-settings.php:678
 msgid "$$ (Moderate)"
 msgstr ""
 
-#: templates/admin-settings.php:677
+#: templates/admin-settings.php:679
 msgid "$$$ (Expensive)"
 msgstr ""
 
-#: templates/admin-settings.php:678
+#: templates/admin-settings.php:680
 msgid "$$$$ (Luxury)"
 msgstr ""
 
-#: templates/admin-settings.php:682
+#: templates/admin-settings.php:684
 msgid "Accepted payment methods"
 msgstr ""
 
-#: templates/admin-settings.php:682
+#: templates/admin-settings.php:684
 msgid "List payment methods separated by commas. Examples: Cash, Credit Card, PayPay, Suica"
 msgstr ""
 
-#: templates/admin-settings.php:683
+#: templates/admin-settings.php:685
 msgid "Example: Cash, Credit Card"
 msgstr ""
 
-#: templates/admin-settings.php:686
+#: templates/admin-settings.php:688
 msgid "Reservations"
 msgstr ""
 
-#: templates/admin-settings.php:689
+#: templates/admin-settings.php:691
 msgid "Accept reservations"
 msgstr ""
 
-#: templates/admin-settings.php:691
+#: templates/admin-settings.php:693
 msgid "ON: Adds acceptsReservations property to LocalBusiness schema. Enable for restaurants, salons, or any business that takes bookings."
 msgstr ""
 
-#: templates/admin-settings.php:696
+#: templates/admin-settings.php:698
 #: templates/wizard/steps/step-api-key.php:17
 #: templates/wizard/steps/step-api-key.php:49
 msgid "Google Maps API Key"
 msgstr ""
 
-#: templates/admin-settings.php:703
+#: templates/admin-settings.php:705
 msgid "Stored API key"
 msgstr ""
 
-#: templates/admin-settings.php:703
+#: templates/admin-settings.php:705
 msgid "Example: AIzaSyB..."
 msgstr ""
 
-#: templates/admin-settings.php:709
+#: templates/admin-settings.php:711
 msgid "Save key"
 msgstr ""
 
-#: templates/admin-settings.php:715
+#: templates/admin-settings.php:717
 msgid "An API key is already stored. Delete it first if you need to change it."
 msgstr ""
 
-#: templates/admin-settings.php:722
+#: templates/admin-settings.php:724
 msgid "Delete the stored API key?"
 msgstr ""
 
-#: templates/admin-settings.php:724
+#: templates/admin-settings.php:726
 msgid "Delete stored key"
 msgstr ""
 
-#: templates/admin-settings.php:727
+#: templates/admin-settings.php:729
 msgid "Enter a Google Maps Geocoding API key to use Google for geocoding. When empty, OpenStreetMap is used for development purposes."
 msgstr ""
 
-#: templates/admin-settings.php:732
+#: templates/admin-settings.php:734
 #: templates/wizard/steps/step-3-location.php:88
 #: templates/wizard/steps/step-5-complete.php:86
 msgid "Address"
 msgstr ""
 
-#: templates/admin-settings.php:732
+#: templates/admin-settings.php:734
 msgid "Required for LocalBusiness. Enter your full postal address for the PostalAddress schema property."
 msgstr ""
 
-#: templates/admin-settings.php:734
+#: templates/admin-settings.php:736
 msgid "Postal code (e.g. 150-0001)"
 msgstr ""
 
-#: templates/admin-settings.php:740
+#: templates/admin-settings.php:742
 msgid "Select prefecture"
 msgstr ""
 
-#: templates/admin-settings.php:758
+#: templates/admin-settings.php:760
 msgid "市区町村（例：草津市）"
 msgstr ""
 
-#: templates/admin-settings.php:759
+#: templates/admin-settings.php:761
 msgid "市区町村"
 msgstr ""
 
-#: templates/admin-settings.php:766
+#: templates/admin-settings.php:768
 msgid "町名・番地・建物名（例：大路1丁目11-14 フロント草津ビル5F）"
 msgstr ""
 
-#: templates/admin-settings.php:767
+#: templates/admin-settings.php:769
 msgid "町名・番地・建物名"
 msgstr ""
 
-#: templates/admin-settings.php:772
+#: templates/admin-settings.php:774
 msgid "Country (e.g. JP)"
 msgstr ""
 
-#: templates/admin-settings.php:774
+#: templates/admin-settings.php:776
 msgid "ISO 3166-2 updates automatically from the prefecture selection."
 msgstr ""
 
-#: templates/admin-settings.php:778
+#: templates/admin-settings.php:780
 msgid "ISO 3166-2"
 msgstr ""
 
-#: templates/admin-settings.php:789
+#: templates/admin-settings.php:791
 msgid "郵便番号から住所を自動補完する"
 msgstr ""
 
-#: templates/admin-settings.php:794
+#: templates/admin-settings.php:796
 msgid "Latitude & longitude"
 msgstr ""
 
-#: templates/admin-settings.php:794
+#: templates/admin-settings.php:796
 msgid "Required for LocalBusiness. Click \"Fetch coordinates\" to auto-fill from address."
 msgstr ""
 
-#: templates/admin-settings.php:796
+#: templates/admin-settings.php:798
 msgid "Latitude 35.123456"
 msgstr ""
 
-#: templates/admin-settings.php:797
+#: templates/admin-settings.php:799
 msgid "Longitude 139.123456"
 msgstr ""
 
-#: templates/admin-settings.php:805
+#: templates/admin-settings.php:807
 msgid "Google Map link"
 msgstr ""
 
-#: templates/admin-settings.php:814
+#: templates/admin-settings.php:816
 msgid "Generate hasMap from saved coordinates"
 msgstr ""
 
-#: templates/admin-settings.php:817
+#: templates/admin-settings.php:819
 msgid "When enabled, hasMap becomes https://www.google.com/maps/search/?api=1&query=latitude,longitude. Coordinates are required."
 msgstr ""
 
-#: templates/admin-settings.php:822
+#: templates/admin-settings.php:824
 msgid "LocalBusiness output control"
 msgstr ""
 
-#: templates/admin-settings.php:831
+#: templates/admin-settings.php:833
 msgid "Do not output LocalBusiness when required fields are missing"
 msgstr ""
 
-#: templates/admin-settings.php:834
+#: templates/admin-settings.php:836
 msgid "When enabled, LocalBusiness will be skipped unless name, address, and telephone are complete. A warning will appear in debug mode."
 msgstr ""
 
-#: templates/admin-settings.php:838
+#: templates/admin-settings.php:840
 msgid "Opening hours"
 msgstr ""
 
-#: templates/admin-settings.php:838
+#: templates/admin-settings.php:840
 msgid "Add as many day and time combinations as needed. Use templates for quick setup."
 msgstr ""
 
-#: templates/admin-settings.php:839
+#: templates/admin-settings.php:841
 msgid "Opening hour templates"
 msgstr ""
 
-#: templates/admin-settings.php:840
+#: templates/admin-settings.php:842
 msgid "平日 10:00–19:00"
 msgstr ""
 
-#: templates/admin-settings.php:841
+#: templates/admin-settings.php:843
 msgid "土日祝 10:00–17:00"
 msgstr ""
 
-#: templates/admin-settings.php:842
+#: templates/admin-settings.php:844
 msgid "24時間営業（毎日 00:00–23:59）"
 msgstr ""
 
-#: templates/admin-settings.php:843
+#: templates/admin-settings.php:845
 msgid "クリア"
 msgstr ""
 
-#: templates/admin-settings.php:848
+#: templates/admin-settings.php:850
 msgid "月曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:852
+#: templates/admin-settings.php:854
 msgid "火曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:856
+#: templates/admin-settings.php:858
 msgid "水曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:860
+#: templates/admin-settings.php:862
 msgid "木曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:864
+#: templates/admin-settings.php:866
 msgid "金曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:868
+#: templates/admin-settings.php:870
 msgid "土曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:872
+#: templates/admin-settings.php:874
 msgid "日曜を含める"
 msgstr ""
 
-#: templates/admin-settings.php:876
-#: templates/admin-settings.php:882
+#: templates/admin-settings.php:878
+#: templates/admin-settings.php:884
 msgid "祝日を含める"
 msgstr ""
 
-#: templates/admin-settings.php:885
+#: templates/admin-settings.php:887
 msgid "祝日の営業時間"
 msgstr ""
 
-#: templates/admin-settings.php:888
+#: templates/admin-settings.php:890
 msgid "平日と同じ"
 msgstr ""
 
-#: templates/admin-settings.php:892
+#: templates/admin-settings.php:894
 msgid "土日祝テンプレと同じ"
 msgstr ""
 
-#: templates/admin-settings.php:896
+#: templates/admin-settings.php:898
 msgid "カスタム設定"
 msgstr ""
 
-#: templates/admin-settings.php:915
+#: templates/admin-settings.php:917
 msgid "to"
 msgstr ""
 
-#: templates/admin-settings.php:921
+#: templates/admin-settings.php:923
 msgid "Add time slot"
 msgstr ""
 
-#: templates/admin-settings.php:928
+#: templates/admin-settings.php:930
 msgid "AEO/GEO Diagnostics"
 msgstr ""
 
-#: templates/admin-settings.php:929
+#: templates/admin-settings.php:931
 msgid "Check your schema readiness. This diagnostic validates required fields and highlights issues that may prevent rich results or AI visibility."
 msgstr ""
 
-#: templates/admin-settings.php:942
+#: templates/admin-settings.php:944
 msgid "OK"
 msgstr ""
 
-#: templates/admin-settings.php:943
+#: templates/admin-settings.php:945
 msgid "Info"
 msgstr ""
 
-#: templates/admin-settings.php:944
-#: templates/admin-settings.php:947
+#: templates/admin-settings.php:946
+#: templates/admin-settings.php:949
 msgid "Warning"
 msgstr ""
 
-#: templates/admin-settings.php:945
+#: templates/admin-settings.php:947
 msgid "Error"
 msgstr ""
 
-#: templates/admin-settings.php:958
+#: templates/admin-settings.php:960
 msgid "まだ診断結果がありません。"
 msgstr ""
 
 #. translators: %s: datetime string
-#: templates/admin-settings.php:966
+#: templates/admin-settings.php:968
+#, php-format
 msgid "最終診断: %s（再読み込みで更新）"
 msgstr ""
 
-#: templates/admin-settings.php:977
+#: templates/admin-settings.php:979
 msgid "llms.txt"
 msgstr ""
 
-#: templates/admin-settings.php:978
+#: templates/admin-settings.php:980
 msgid "Speak directly to AI. The llms.txt file helps LLMs like ChatGPT and Claude understand your site structure for better AI-powered search visibility."
 msgstr ""
 
-#: templates/admin-settings.php:992
+#: templates/admin-settings.php:994
 msgid "Enable llms.txt"
 msgstr ""
 
-#: templates/admin-settings.php:995
+#: templates/admin-settings.php:997
 msgid "When enabled, the file is served at:"
 msgstr ""
 
-#: templates/admin-settings.php:1001
+#: templates/admin-settings.php:1003
 msgid "Content (Markdown)"
 msgstr ""
 
-#: templates/admin-settings.php:1004
+#: templates/admin-settings.php:1006
 msgid "Edit the llms.txt content. Leave empty to auto-generate from site data."
 msgstr ""
 
-#: templates/admin-settings.php:1024
+#: templates/admin-settings.php:1026
 msgid "Save settings"
 msgstr ""
 
-#: templates/admin-settings.php:1052
+#: templates/admin-settings.php:1054
 msgid "〜"
 msgstr ""
 
-#: templates/admin-settings.php:1060
+#: templates/admin-settings.php:1062
 msgid "Open Test Manager"
 msgstr ""
 
-#: templates/admin-settings.php:1062
+#: templates/admin-settings.php:1064
 msgid "Test Manager"
 msgstr ""
 
@@ -2151,6 +2165,7 @@ msgstr ""
 
 #. translators: %s: example time range
 #: templates/wizard/steps/step-4-hours.php:45
+#, php-format
 msgid "Example: %s"
 msgstr ""
 
@@ -2234,6 +2249,7 @@ msgstr ""
 
 #. translators: %s: link to Google Rich Results Test
 #: templates/wizard/steps/step-5-complete.php:135
+#, php-format
 msgid "Test your schema with %s"
 msgstr ""
 
@@ -2365,11 +2381,56 @@ msgstr ""
 msgid "Continue without importing"
 msgstr ""
 
-#: templates/wizard/wizard-page.php:66
+#: templates/wizard/wizard-page.php:70
 msgid "Step template not found."
 msgstr ""
 
 #. translators: %s: plugin version
-#: templates/wizard/wizard-page.php:78
+#: templates/wizard/wizard-page.php:82
+#, php-format
 msgid "AI Search Schema v%s"
+msgstr ""
+
+#: tools/test-manager.php:48
+msgid "You do not have sufficient permissions to access this page."
+msgstr ""
+
+#: tools/test-manager.php:49
+msgid "Access Denied"
+msgstr ""
+
+#: tools/test-manager.php:60
+msgid "Security check failed."
+msgstr ""
+
+#: tools/test-manager.php:80
+msgid "Data saved successfully."
+msgstr ""
+
+#: tools/test-manager.php:84
+msgid "Invalid JSON data."
+msgstr ""
+
+#: tools/test-manager.php:133
+msgid "Screenshot uploaded."
+msgstr ""
+
+#: tools/test-manager.php:140
+msgid "Failed to create attachment."
+msgstr ""
+
+#: tools/test-manager.php:146
+msgid "No file uploaded."
+msgstr ""
+
+#: tools/test-manager.php:177
+msgid "This test requires manual verification."
+msgstr ""
+
+#: tools/test-manager.php:187
+msgid "Diagnostic evaluator not available."
+msgstr ""
+
+#: tools/test-manager.php:673
+msgid "AI Search Schema Test Manager"
 msgstr ""
