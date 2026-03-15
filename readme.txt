@@ -1,5 +1,5 @@
 === Aivec AI Search Schema ===
-Contributors: Aivec LLC
+Contributors: aivectai
 Tags: schema, structured-data, ai-search, local-seo, llms-txt
 Requires at least: 6.0
 Tested up to: 6.9
