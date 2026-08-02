@@ -116,6 +116,9 @@ function copy() {
   });
 
   const excludes = [
+    // WP.org準拠: 隠しファイル除外
+    '!.*',
+    '!**/.*',
     '!node_modules/**',
     `!${DIST}/**`,
     '!bundled/**',
@@ -220,6 +223,19 @@ function resolveGitVersionInfo() {
   };
 }
 
+/**
+ * プラグインヘッダーの Plugin Name を読み取る。
+ * 翻訳ファイルの Project-Id-Version に埋め込む名前をハードコードすると
+ * プラグイン名の変更時に古い名前へ書き戻されるため、常にヘッダーを正とする。
+ */
+function readPluginName() {
+  const pluginPath = path.resolve(PLUGIN_FILE);
+  if (!fs.existsSync(pluginPath)) return null;
+
+  const match = fs.readFileSync(pluginPath, 'utf8').match(/\*\s*Plugin Name:\s*([^\r\n]+)/);
+  return match ? match[1].trim() : null;
+}
+
 function updatePluginFileVersion(version) {
   const pluginPath = path.resolve(PLUGIN_FILE);
   if (!fs.existsSync(pluginPath)) return;
@@ -265,6 +281,11 @@ function updatePoHeaders(version) {
     return;
   }
 
+  const pluginName = readPluginName();
+  if (!pluginName) {
+    return;
+  }
+
   const files = fs.readdirSync(languagesDir);
   const regex = /(Project-Id-Version:\s*)([^\n]*)(\\n)/;
   files.forEach((file) => {
@@ -278,7 +299,7 @@ function updatePoHeaders(version) {
       return;
     }
 
-    const updated = original.replace(regex, `$1AI Search Schema ${version}$3`);
+    const updated = original.replace(regex, `$1${pluginName} ${version}$3`);
     if (updated !== original) {
       fs.writeFileSync(filePath, updated);
     }

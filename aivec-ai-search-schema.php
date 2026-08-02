@@ -4,7 +4,7 @@
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
  * Version:           1.2.3
- * Requires at least: 6.0
+ * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Aivec LLC
  * Author URI:        https://aivec.co.jp/

@@ -96,27 +96,20 @@ jobs:
       - name: Create dev ZIP package
         run: |
           mkdir -p dist/${{ env.PLUGIN_SLUG }}
-          
-          # 必要なファイルをコピー（tools/を含む、WP.org準拠：vendor/License除外）
+
+          # 必要なファイルをコピー（tools/を含む、WP.org準拠：vendor/License/隠しファイル除外）
           rsync -av --progress \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='.gitignore' \
-            --exclude='.gitattributes' \
+            --exclude='.*' \
             --exclude='node_modules' \
             --exclude='vendor' \
             --exclude='src/License' \
             --exclude='tests' \
             --exclude='phpunit.xml*' \
             --exclude='phpcs.xml*' \
-            --exclude='.phpcs.xml*' \
             --exclude='composer.json' \
             --exclude='composer.lock' \
             --exclude='package.json' \
             --exclude='package-lock.json' \
-            --exclude='.editorconfig' \
-            --exclude='.eslintrc*' \
-            --exclude='.stylelintrc*' \
             --exclude='*.map' \
             --exclude='scss/' \
             --exclude='gulpfile.js' \
@@ -124,20 +117,16 @@ jobs:
             --exclude='bin/' \
             --exclude='bundle' \
             --exclude='/dist/' \
-            --exclude='.ai/' \
-            --exclude='.claude/' \
-            --exclude='.cursor/' \
-            --exclude='.vscode/' \
             --exclude='bundled/' \
             --exclude='ARCHITECTURE.md' \
             --exclude='CLAUDE.md' \
             --exclude='docs/' \
             ./ dist/${{ env.PLUGIN_SLUG }}/
-          
+
           # ZIP作成
           cd dist
           zip -r ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}-dev.zip ${{ env.PLUGIN_SLUG }}
-          
+
           echo "Created: ${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}-dev.zip"
           ls -lh *.zip
 
