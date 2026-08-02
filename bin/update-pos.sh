@@ -2,7 +2,8 @@
 set -euo pipefail
 
 LANG_DIR="${1:-languages}"
-POT_FILE="${2:-languages/messages.pot}"
+# POT ファイル名はテキストドメインに合わせる（WordPress の慣例）。
+POT_FILE="${2:-languages/aivec-ai-search-schema.pot}"
 
 if [[ ! -d "$LANG_DIR" ]]; then
   echo "[i18n] language directory not found: $LANG_DIR" >&2

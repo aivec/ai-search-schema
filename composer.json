@@ -29,8 +29,8 @@
     "lint": "./vendor/bin/phpcs -ps .",
     "lint:fix": "./vendor/bin/phpcbf -ps .",
     "i18n:update-pos": [
-      "./vendor/bin/wp i18n make-pot . languages/messages.pot",
-      "bash bin/update-pos.sh"
+      "./vendor/bin/wp i18n make-pot . languages/aivec-ai-search-schema.pot --slug=aivec-ai-search-schema --headers='{\"Report-Msgid-Bugs-To\":\"https://wordpress.org/support/plugin/aivec-ai-search-schema\"}'",
+      "bash bin/update-pos.sh languages languages/aivec-ai-search-schema.pot"
     ],
     "i18n:make-mo": "./vendor/bin/wp i18n make-mo languages",
     "i18n:make-json": "./vendor/bin/wp i18n make-json languages --no-purge --pretty-print",
