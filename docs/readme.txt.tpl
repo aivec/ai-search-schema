@@ -1,10 +1,10 @@
 === Aivec AI Search Schema ===
 Contributors: aivectai
 Tags: schema, structured-data, ai-search, local-seo, llms-txt
-Requires at least: 6.0
-Tested up to: 6.9
+Requires at least: 6.5
+Tested up to: 7.0
 Requires PHP: 8.0
-Stable tag: 1.2.3
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,7 +78,11 @@ llms.txt is a standard for helping AI systems understand your site structure. Se
 Yes! This plugin automatically suppresses conflicting schema output from Yoast SEO, Rank Math, and All in One SEO.
 
 == Screenshots ==
-1. Settings → AI Search Schema (card-based UI with brand/site, local business, schema output, geocoding)
+1. Schema console — manage brand, site identity, and JSON-LD output from a single settings screen.
+2. Page-type schema controls — override schema type, breadcrumbs, FAQ extraction, and priority per post type and taxonomy.
+3. Local details & hours — Google's recommended LocalBusiness properties with a real-time completeness check.
+4. AEO/GEO diagnostics — validates Organization, LocalBusiness, WebSite, and WebPage schema before it ships.
+5. Setup wizard — guided configuration that gets structured data live in about five minutes.
 
 == Changelog ==
 {{CHANGELOG}}
