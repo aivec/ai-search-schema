@@ -7,7 +7,7 @@
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Aivec LLC
- * Author URI:        https://aivec.co.jp/
+ * Author URI:        https://aivec.co.jp/apps
  * License:           GPLv2 or later
  * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain:       aivec-ai-search-schema

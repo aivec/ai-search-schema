@@ -195,6 +195,24 @@ class Wizard {
 	}
 
 	/**
+	 * 主要な設定が入力済みかを判定する。
+	 *
+	 * `company_name` はウィザードの必須ステップ（Basic Information）と
+	 * 設定画面の双方で必須項目として扱われる共通の値であり、
+	 * これが入っていればセットアップは実質的に完了しているとみなせる。
+	 *
+	 * @return bool 入力済みなら true.
+	 */
+	public function has_essential_settings() {
+		$options = \get_option( 'avc_ais_options', array() );
+		if ( ! is_array( $options ) ) {
+			return false;
+		}
+
+		return '' !== trim( (string) ( $options['company_name'] ?? '' ) );
+	}
+
+	/**
 	 * Show setup notice if wizard not completed.
 	 */
 	public function show_setup_notice() {
@@ -210,6 +228,13 @@ class Wizard {
 
 		// Don't show if wizard is completed.
 		if ( $this->is_completed() ) {
+			return;
+		}
+
+		// ウィザードを通さず設定画面から直接入力した場合も「設定済み」とみなす。
+		// 完了フラグはウィザード完走時にしか立たないため、これを見ないと
+		// 設定が埋まっているサイトにも案内が出続けてしまう。
+		if ( $this->has_essential_settings() ) {
 			return;
 		}
 
