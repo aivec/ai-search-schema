@@ -318,33 +318,30 @@ function resolveVersionLabel() {
   return resolveGitVersionInfo().label;
 }
 
+/**
+ * ソースにバージョンを書き込むタスク。
+ *
+ * copy より前に実行する必要がある。copy の後に実行すると、dist へは更新前の
+ * バージョンが入ったファイルがコピーされてしまい、ビルドを 2 回実行しないと
+ * dist のバージョンが揃わない。
+ */
+function syncVersion(done) {
+  syncVersionMetadata();
+  done();
+}
+
+/**
+ * dist 側の成果物（readme.txt の Stable tag / Changelog、翻訳）を整えるタスク。
+ *
+ * copy が生成した dist/readme.txt を書き換えるため、copy の後に実行する。
+ * LICENSE.txt はリポジトリ直下の実ファイルを copy 対象に含めているため、
+ * ここでは生成しない（生成方式ではリポジトリから固める配布経路に入らなかった）。
+ */
 function generateMetadata() {
   const distDir = path.resolve(DIST);
   fs.mkdirSync(distDir, { recursive: true });
 
-  const version = syncVersionMetadata();
-  const year = new Date().getFullYear();
-
-  const licenseText = [
-    'AI Search Schema',
-    `Copyright (c) ${year} Aivec LLC contributors`,
-    '',
-    'This program is free software; you can redistribute it and/or modify',
-    'it under the terms of the GNU General Public License as published by',
-    'the Free Software Foundation; either version 2 of the License, or',
-    '(at your option) any later version.',
-    '',
-    'This program is distributed in the hope that it will be useful,',
-    'but WITHOUT ANY WARRANTY; without even the implied warranty of',
-    'MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the',
-    'GNU General Public License for more details.',
-    '',
-    'You should have received a copy of the GNU General Public License',
-    'along with this program. If not, see https://www.gnu.org/licenses/gpl-2.0.html.',
-    ''
-  ].join('\n');
-
-  fs.writeFileSync(path.join(distDir, 'LICENSE.txt'), `${licenseText}`);
+  const version = resolveGitVersionInfo().baseVersion;
 
   const distReadmePath = path.join(distDir, 'readme.txt');
   const sourceReadmePath = path.resolve('readme.txt');
@@ -462,7 +459,9 @@ function zipTask() {
 
 function watch() { gulp.watch(paths.scss, gulp.series(scss)); }
 
-const build = gulp.series(clean, gulp.parallel(scss, copy), generateMetadata);
+// syncVersion は copy より前、generateMetadata は copy より後に置く必要がある。
+// 詳細は各関数の説明を参照。
+const build = gulp.series(clean, syncVersion, gulp.parallel(scss, copy), generateMetadata);
 
 exports.clean = clean;
 exports.scss = scss;
