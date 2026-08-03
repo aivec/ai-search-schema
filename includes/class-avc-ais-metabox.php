@@ -63,7 +63,9 @@ class AVC_AIS_MetaBox {
 	 */
 	public function render_meta_box( $post ) {
 		// メタデータを取得.
+		// get_post_meta() はメタ未登録時に空文字列を返すため配列へ正規化しておく.
 		$meta               = get_post_meta( $post->ID, '_avc_ais_meta', true );
+		$meta               = is_array( $meta ) ? $meta : array();
 		$page_type          = isset( $meta['page_type'] ) ? esc_attr( $meta['page_type'] ) : 'auto';
 		$faq_question_class = isset( $meta['faq_question_class'] ) ? esc_attr( $meta['faq_question_class'] ) : '';
 		$faq_answer_class   = isset( $meta['faq_answer_class'] ) ? esc_attr( $meta['faq_answer_class'] ) : '';

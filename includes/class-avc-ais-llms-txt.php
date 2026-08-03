@@ -50,6 +50,24 @@ class AVC_AIS_Llms_Txt {
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
 		add_action( 'template_redirect', array( $this, 'serve_llms_txt' ) );
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
+		add_filter( 'redirect_canonical', array( $this, 'disable_canonical_redirect' ) );
+	}
+
+	/**
+	 * llms.txt へのリクエストで正規化リダイレクトを抑止する。
+	 *
+	 * WordPress の redirect_canonical() は /llms.txt を「末尾スラッシュ付き」へ
+	 * 301 リダイレクトしてしまう。llms.txt は仕様上ルート直下の単一ファイルとして
+	 * 参照されるため、リダイレクトを追わない取得クライアントに届かなくなる。
+	 *
+	 * @param string|false $redirect_url リダイレクト先 URL.
+	 * @return string|false llms.txt リクエストの場合は false（リダイレクトしない）.
+	 */
+	public function disable_canonical_redirect( $redirect_url ) {
+		if ( get_query_var( 'llms_txt' ) ) {
+			return false;
+		}
+		return $redirect_url;
 	}
 
 	/**
@@ -99,8 +117,56 @@ class AVC_AIS_Llms_Txt {
 
 		header( 'Content-Type: text/plain; charset=utf-8' );
 		header( 'X-Robots-Tag: noindex' );
-		echo esc_html( $this->get_content() );
+		// ブラウザによる MIME スニッフィングを禁止し、text/plain が HTML として
+		// 解釈されることを防ぐ（下の非エスケープ出力を安全にするための前提条件）.
+		header( 'X-Content-Type-Options: nosniff' );
+
+		// llms.txt は HTML ではなく Markdown（text/plain）として配信する。
+		// esc_html() を通すと '>' が '&gt;' に変換され、llms.txt 仕様の
+		// 引用ブロック（> サイト説明）や本文が壊れるため、ここではエスケープしない。
+		// 安全性は以下で担保している:
+		//   - Content-Type が text/plain かつ X-Content-Type-Options: nosniff
+		//   - 手動入力は save_content() の sanitize_textarea_field() で無害化済み
+		//   - 自動生成分は制御文字を除去する sanitize_output() を通す
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $this->sanitize_output( $this->get_content() );
 		exit;
+	}
+
+	/**
+	 * HTML エスケープ済みの文字列をプレーンテキストへ戻す。
+	 *
+	 * llms.txt は text/plain の Markdown として配信するため、WordPress が
+	 * 保存時に付与した HTML エンティティ（&amp; / &#039; など）は復号する必要がある。
+	 * 復号後の値は sanitize_output() で制御文字を除去したうえで出力される。
+	 *
+	 * @param string $text 対象の文字列.
+	 * @return string 復号済みの文字列.
+	 */
+	private static function to_plain_text( $text ) {
+		return html_entity_decode( (string) $text, ENT_QUOTES | ENT_HTML5, 'UTF-8' );
+	}
+
+	/**
+	 * text/plain として配信する前に出力を無害化する。
+	 *
+	 * HTML エスケープは行わない（Markdown が壊れるため）。代わりに、
+	 * レスポンス分割やヘッダー汚染に悪用されうる制御文字と NUL バイトを除去し、
+	 * 改行コードを LF に統一する。
+	 *
+	 * @param string $content 出力予定の内容.
+	 * @return string 無害化済みの内容.
+	 */
+	private function sanitize_output( $content ) {
+		$content = (string) $content;
+
+		// 改行コードを LF に正規化.
+		$content = str_replace( array( "\r\n", "\r" ), "\n", $content );
+
+		// タブ・改行以外の制御文字（C0 制御文字と DEL）を除去.
+		$content = preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $content );
+
+		return null === $content ? '' : $content;
 	}
 
 	/**
@@ -122,8 +188,11 @@ class AVC_AIS_Llms_Txt {
 	 * @return string
 	 */
 	public function generate_default_content() {
-		$site_name = get_bloginfo( 'name' );
-		$site_desc = get_bloginfo( 'description' );
+		// WordPress は blogname / blogdescription を sanitize_option() で HTML
+		// エスケープした状態で保存する。llms.txt は text/plain として配信するため、
+		// エンティティのまま出すと「&amp;」等がそのまま見えてしまう。ここで復号する。
+		$site_name = self::to_plain_text( get_bloginfo( 'name' ) );
+		$site_desc = self::to_plain_text( get_bloginfo( 'description' ) );
 
 		$content  = "# {$site_name}\n\n";
 		$content .= "> {$site_desc}\n\n";
@@ -139,8 +208,10 @@ class AVC_AIS_Llms_Txt {
 		if ( ! empty( $pages ) ) {
 			foreach ( $pages as $page ) {
 				$url     = get_permalink( $page );
-				$title   = $page->post_title;
-				$excerpt = wp_trim_words( wp_strip_all_tags( $page->post_content ), 20, '...' );
+				$title   = self::to_plain_text( $page->post_title );
+				$excerpt = self::to_plain_text(
+					wp_trim_words( wp_strip_all_tags( $page->post_content ), 20, '...' )
+				);
 				if ( empty( $excerpt ) ) {
 					$excerpt = $title;
 				}
@@ -154,8 +225,10 @@ class AVC_AIS_Llms_Txt {
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
 				$url     = get_permalink( $post );
-				$title   = $post->post_title;
-				$excerpt = wp_trim_words( wp_strip_all_tags( $post->post_content ), 20, '...' );
+				$title   = self::to_plain_text( $post->post_title );
+				$excerpt = self::to_plain_text(
+					wp_trim_words( wp_strip_all_tags( $post->post_content ), 20, '...' )
+				);
 				if ( empty( $excerpt ) ) {
 					$excerpt = $title;
 				}
