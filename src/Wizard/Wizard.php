@@ -197,9 +197,12 @@ class Wizard {
 	/**
 	 * 主要な設定が入力済みかを判定する。
 	 *
-	 * `company_name` はウィザードの必須ステップ（Basic Information）と
-	 * 設定画面の双方で必須項目として扱われる共通の値であり、
-	 * これが入っていればセットアップは実質的に完了しているとみなせる。
+	 * ウィザードの必須ステップ（Basic Information と Site Type）が生成する値が
+	 * すべて揃っているかで判断する。`company_name` だけを見ると、ウィザードの
+	 * 1 ステップ目だけ保存して離脱したユーザーにも案内が出なくなってしまうため、
+	 * Site Type が保存する `entity_type` も条件に含める。
+	 * 設定画面から保存した場合は両方が必ず書き込まれるため、
+	 * ウィザードを通していないサイトでは案内が抑止される。
 	 *
 	 * @return bool 入力済みなら true.
 	 */
@@ -209,7 +212,13 @@ class Wizard {
 			return false;
 		}
 
-		return '' !== trim( (string) ( $options['company_name'] ?? '' ) );
+		foreach ( array( 'company_name', 'entity_type' ) as $key ) {
+			if ( '' === trim( (string) ( $options[ $key ] ?? '' ) ) ) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

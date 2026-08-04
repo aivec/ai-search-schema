@@ -70,11 +70,38 @@ class WizardNoticeTest extends WP_UnitTestCase {
 	 * ウィザードは未完了のまま（これが本来の再現ケース）。
 	 */
 	public function test_notice_is_hidden_when_settings_are_filled_without_wizard() {
-		update_option( 'avc_ais_options', array( 'company_name' => 'Aivec LLC' ) );
+		update_option(
+			'avc_ais_options',
+			array(
+				'company_name' => 'Aivec LLC',
+				'entity_type'  => 'Organization',
+			)
+		);
 
 		$this->assertFalse( $this->wizard->is_completed(), 'ウィザードは未完了のままであること' );
 		$this->assertTrue( $this->wizard->has_essential_settings() );
 		$this->assertSame( '', $this->capture_notice() );
+	}
+
+	/**
+	 * ウィザードの 1 ステップ目だけ保存して離脱した場合は通知を出し続けること。
+	 * Basic Information は company_name しか書き込まないため、
+	 * これだけで「設定済み」と判定してはいけない。
+	 */
+	public function test_notice_is_shown_when_only_the_first_wizard_step_is_saved() {
+		update_option( 'avc_ais_options', array( 'company_name' => 'Aivec LLC' ) );
+
+		$this->assertFalse( $this->wizard->has_essential_settings() );
+		$this->assertStringContainsString( 'ais-wizard-notice', $this->capture_notice() );
+	}
+
+	/**
+	 * entity_type だけでは「設定済み」と判定しないこと。
+	 */
+	public function test_entity_type_alone_is_not_enough() {
+		update_option( 'avc_ais_options', array( 'entity_type' => 'Organization' ) );
+
+		$this->assertFalse( $this->wizard->has_essential_settings() );
 	}
 
 	/**
@@ -90,7 +117,13 @@ class WizardNoticeTest extends WP_UnitTestCase {
 	 * 空文字や空白のみの company_name は未設定として扱うこと。
 	 */
 	public function test_blank_company_name_is_treated_as_unconfigured() {
-		update_option( 'avc_ais_options', array( 'company_name' => '   ' ) );
+		update_option(
+			'avc_ais_options',
+			array(
+				'company_name' => '   ',
+				'entity_type'  => 'Organization',
+			)
+		);
 
 		$this->assertFalse( $this->wizard->has_essential_settings() );
 		$this->assertStringContainsString( 'ais-wizard-notice', $this->capture_notice() );
