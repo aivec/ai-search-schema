@@ -195,6 +195,33 @@ class Wizard {
 	}
 
 	/**
+	 * 主要な設定が入力済みかを判定する。
+	 *
+	 * ウィザードの必須ステップ（Basic Information と Site Type）が生成する値が
+	 * すべて揃っているかで判断する。`company_name` だけを見ると、ウィザードの
+	 * 1 ステップ目だけ保存して離脱したユーザーにも案内が出なくなってしまうため、
+	 * Site Type が保存する `entity_type` も条件に含める。
+	 * 設定画面から保存した場合は両方が必ず書き込まれるため、
+	 * ウィザードを通していないサイトでは案内が抑止される。
+	 *
+	 * @return bool 入力済みなら true.
+	 */
+	public function has_essential_settings() {
+		$options = \get_option( 'avc_ais_options', array() );
+		if ( ! is_array( $options ) ) {
+			return false;
+		}
+
+		foreach ( array( 'company_name', 'entity_type' ) as $key ) {
+			if ( '' === trim( (string) ( $options[ $key ] ?? '' ) ) ) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Show setup notice if wizard not completed.
 	 */
 	public function show_setup_notice() {
@@ -210,6 +237,13 @@ class Wizard {
 
 		// Don't show if wizard is completed.
 		if ( $this->is_completed() ) {
+			return;
+		}
+
+		// ウィザードを通さず設定画面から直接入力した場合も「設定済み」とみなす。
+		// 完了フラグはウィザード完走時にしか立たないため、これを見ないと
+		// 設定が埋まっているサイトにも案内が出続けてしまう。
+		if ( $this->has_essential_settings() ) {
 			return;
 		}
 

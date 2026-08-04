@@ -1,9 +1,9 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: Aivec AI Search Schema 1.2.3\n"
+"Project-Id-Version: Aivec AI Search Schema 1.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aivec-ai-search-"
 "schema\n"
-"POT-Creation-Date: 2026-08-01T18:49:07+00:00\n"
+"POT-Creation-Date: 2026-08-03T19:10:26+00:00\n"
 "PO-Revision-Date: 2025-11-24 14:46+0900\n"
 "Last-Translator: Aivec LLC. <info@aivec.co.jp>\n"
 "Language-Team: Aivec LLC. <info@aivec.co.jp>\n"
@@ -26,18 +26,17 @@ msgstr ""
 
 #. Plugin Name of the plugin
 #: aivec-ai-search-schema.php
-#, fuzzy
 msgid "Aivec AI Search Schema"
 msgstr "Aivec AI Search Schema"
 
 #. Plugin URI of the plugin
+#. Author URI of the plugin
 #: aivec-ai-search-schema.php
 msgid "https://aivec.co.jp/apps"
 msgstr "https://aivec.co.jp/apps"
 
 #. Description of the plugin
 #: aivec-ai-search-schema.php
-#, fuzzy
 msgid ""
 "Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ."
 msgstr "AI検索最適化・ローカルSEO（MEO）対応のWordPressプラグイン。"
@@ -46,12 +45,6 @@ msgstr "AI検索最適化・ローカルSEO（MEO）対応のWordPressプラグ�
 #: aivec-ai-search-schema.php
 msgid "Aivec LLC"
 msgstr ""
-
-#. Author URI of the plugin
-#: aivec-ai-search-schema.php
-#, fuzzy
-msgid "https://aivec.co.jp/"
-msgstr "https://aivec.co.jp/apps"
 
 #: dist/includes/class-avc-ais-breadcrumbs.php:215
 #: includes/class-avc-ais-breadcrumbs.php:215
@@ -88,9 +81,9 @@ msgstr ""
 #. translators: %s: comma-separated list of field names
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:205
 #: includes/class-avc-ais-diagnostic-evaluator.php:205
-#, fuzzy, php-format
+#, php-format
 msgid "Required fields missing: %s"
-msgstr "datePublished が未設定です。"
+msgstr "必須項目が未設定です: %s"
 
 #. translators: %s: comma-separated list of field names
 #: dist/includes/class-avc-ais-diagnostic-evaluator.php:261
@@ -129,13 +122,12 @@ msgstr ""
 #: dist/includes/class-avc-ais-metabox.php:80
 #: dist/includes/class-avc-ais-settings.php:69 dist/src/Wizard/Wizard.php:224
 #: includes/class-avc-ais-metabox.php:51 includes/class-avc-ais-metabox.php:80
-#: includes/class-avc-ais-settings.php:69 src/Wizard/Wizard.php:224
+#: includes/class-avc-ais-settings.php:69 src/Wizard/Wizard.php:249
 msgid "AI Search Schema"
 msgstr "Aivec AI Search Schema"
 
 #: dist/includes/class-avc-ais-metabox.php:83
 #: includes/class-avc-ais-metabox.php:83
-#, fuzzy
 msgid "Page schema settings"
 msgstr "AEOスキーマ設定"
 
@@ -298,7 +290,7 @@ msgid "Fetch coordinates from address"
 msgstr "住所から緯度・経度を取得"
 
 #: dist/includes/class-avc-ais-settings.php:169 dist/src/Wizard/Wizard.php:294
-#: includes/class-avc-ais-settings.php:169 src/Wizard/Wizard.php:294
+#: includes/class-avc-ais-settings.php:169 src/Wizard/Wizard.php:319
 msgid "Fetching..."
 msgstr "取得中…"
 
@@ -362,7 +354,7 @@ msgid "Regenerate from site data"
 msgstr "サイトデータから再生成"
 
 #: dist/includes/class-avc-ais-settings.php:192 dist/src/Wizard/Wizard.php:280
-#: includes/class-avc-ais-settings.php:192 src/Wizard/Wizard.php:280
+#: includes/class-avc-ais-settings.php:192 src/Wizard/Wizard.php:305
 msgid "Saving..."
 msgstr "保存中…"
 
@@ -562,49 +554,49 @@ msgstr "タイ語"
 
 #: dist/includes/class-avc-ais-settings.php:1344 dist/src/Wizard/Wizard.php:302
 #: dist/templates/wizard/steps/step-4-hours.php:15
-#: includes/class-avc-ais-settings.php:1344 src/Wizard/Wizard.php:302
+#: includes/class-avc-ais-settings.php:1344 src/Wizard/Wizard.php:327
 #: templates/wizard/steps/step-4-hours.php:15
 msgid "Monday"
 msgstr "月曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1345 dist/src/Wizard/Wizard.php:303
 #: dist/templates/wizard/steps/step-4-hours.php:16
-#: includes/class-avc-ais-settings.php:1345 src/Wizard/Wizard.php:303
+#: includes/class-avc-ais-settings.php:1345 src/Wizard/Wizard.php:328
 #: templates/wizard/steps/step-4-hours.php:16
 msgid "Tuesday"
 msgstr "火曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1346 dist/src/Wizard/Wizard.php:304
 #: dist/templates/wizard/steps/step-4-hours.php:17
-#: includes/class-avc-ais-settings.php:1346 src/Wizard/Wizard.php:304
+#: includes/class-avc-ais-settings.php:1346 src/Wizard/Wizard.php:329
 #: templates/wizard/steps/step-4-hours.php:17
 msgid "Wednesday"
 msgstr "水曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1347 dist/src/Wizard/Wizard.php:305
 #: dist/templates/wizard/steps/step-4-hours.php:18
-#: includes/class-avc-ais-settings.php:1347 src/Wizard/Wizard.php:305
+#: includes/class-avc-ais-settings.php:1347 src/Wizard/Wizard.php:330
 #: templates/wizard/steps/step-4-hours.php:18
 msgid "Thursday"
 msgstr "木曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1348 dist/src/Wizard/Wizard.php:306
 #: dist/templates/wizard/steps/step-4-hours.php:19
-#: includes/class-avc-ais-settings.php:1348 src/Wizard/Wizard.php:306
+#: includes/class-avc-ais-settings.php:1348 src/Wizard/Wizard.php:331
 #: templates/wizard/steps/step-4-hours.php:19
 msgid "Friday"
 msgstr "金曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1349 dist/src/Wizard/Wizard.php:307
 #: dist/templates/wizard/steps/step-4-hours.php:20
-#: includes/class-avc-ais-settings.php:1349 src/Wizard/Wizard.php:307
+#: includes/class-avc-ais-settings.php:1349 src/Wizard/Wizard.php:332
 #: templates/wizard/steps/step-4-hours.php:20
 msgid "Saturday"
 msgstr "土曜日"
 
 #: dist/includes/class-avc-ais-settings.php:1350 dist/src/Wizard/Wizard.php:308
 #: dist/templates/wizard/steps/step-4-hours.php:21
-#: includes/class-avc-ais-settings.php:1350 src/Wizard/Wizard.php:308
+#: includes/class-avc-ais-settings.php:1350 src/Wizard/Wizard.php:333
 #: templates/wizard/steps/step-4-hours.php:21
 msgid "Sunday"
 msgstr "日曜日"
@@ -803,9 +795,8 @@ msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1843
 #: includes/class-avc-ais-settings.php:1843
-#, fuzzy
 msgid "No phone number is set. This is a required field for LocalBusiness."
-msgstr "国際形式の電話番号。LocalBusinessでは必須項目です。"
+msgstr "電話番号が未設定です。LocalBusiness では必須項目です。"
 
 #: dist/includes/class-avc-ais-settings.php:1850
 #: includes/class-avc-ais-settings.php:1850
@@ -867,9 +858,8 @@ msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1903
 #: includes/class-avc-ais-settings.php:1903
-#, fuzzy
 msgid "The site URL is defined as the canonical reference."
-msgstr "WebサイトのURL。WebSiteスキーマの正規URLとして使用されます。"
+msgstr "サイト URL が正規 URL として設定されています。"
 
 #: dist/includes/class-avc-ais-settings.php:1904
 #: includes/class-avc-ais-settings.php:1904
@@ -934,9 +924,8 @@ msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1973
 #: includes/class-avc-ais-settings.php:1973
-#, fuzzy
 msgid "No published posts found. Sample check cannot be performed."
-msgstr "公開済み投稿が見つかりません。Article スキーマのチェックができません。"
+msgstr "公開済みの投稿が見つかりません。サンプルチェックを実行できません。"
 
 #: dist/includes/class-avc-ais-settings.php:1976
 #: dist/includes/class-avc-ais-settings.php:2025
@@ -947,15 +936,13 @@ msgstr "Article（サンプル投稿）"
 
 #: dist/includes/class-avc-ais-settings.php:1984
 #: includes/class-avc-ais-settings.php:1984
-#, fuzzy
 msgid "The headline is defined in the sample post."
-msgstr "サンプル投稿にアイキャッチ画像がありません。"
+msgstr "サンプル投稿に見出し（headline）が設定されています。"
 
 #: dist/includes/class-avc-ais-settings.php:1985
 #: includes/class-avc-ais-settings.php:1985
-#, fuzzy
 msgid "The headline is missing from the sample post."
-msgstr "サンプル投稿にアイキャッチ画像がありません。"
+msgstr "サンプル投稿に見出し（headline）がありません。"
 
 #: dist/includes/class-avc-ais-settings.php:1990
 #: includes/class-avc-ais-settings.php:1990
@@ -974,9 +961,8 @@ msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1997
 #: includes/class-avc-ais-settings.php:1997
-#, fuzzy
 msgid "The modification date is not available."
-msgstr "ライセンス検証APIはまだ利用できません。"
+msgstr "更新日を取得できません。"
 
 #: dist/includes/class-avc-ais-settings.php:2004
 #: includes/class-avc-ais-settings.php:2004
@@ -990,19 +976,18 @@ msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:2014
 #: includes/class-avc-ais-settings.php:2014
-#, fuzzy
 msgid "A featured image is set for the sample post."
-msgstr "サンプル投稿にアイキャッチ画像がありません。"
+msgstr "サンプル投稿にアイキャッチ画像が設定されています。"
 
 #: dist/includes/class-avc-ais-settings.php:2018
 #: includes/class-avc-ais-settings.php:2018
-#, fuzzy
 msgid "No featured image on the sample post. Rich results may be limited."
-msgstr "サンプル投稿にアイキャッチ画像があります。"
+msgstr ""
+"サンプル投稿にアイキャッチ画像がありません。リッチリザルトが制限される可能性"
+"があります。"
 
 #: dist/includes/class-avc-ais-settings.php:2047
 #: includes/class-avc-ais-settings.php:2047
-#, fuzzy
 msgid "FAQ schema extraction is enabled for at least one post type."
 msgstr "FAQPage スキーマが少なくとも1つの投稿タイプで有効です。"
 
@@ -1071,9 +1056,9 @@ msgstr "所在地"
 #: dist/src/Wizard/Wizard.php:112
 #: dist/templates/wizard/steps/step-4-hours.php:36 src/Wizard/Wizard.php:112
 #: templates/wizard/steps/step-4-hours.php:36
-#, fuzzy
 msgid "Business Hours"
 msgstr "営業時間"
+
 
 #: dist/src/Wizard/Wizard.php:117
 #: dist/templates/wizard/components/progress-bar.php:22
@@ -1091,188 +1076,180 @@ msgstr "Aivec AI Search Schema セットアップ"
 msgid "Setup Wizard"
 msgstr "セットアップウィザード"
 
-#: dist/src/Wizard/Wizard.php:225 src/Wizard/Wizard.php:225
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:225 src/Wizard/Wizard.php:250
 msgid "Complete the setup wizard to optimize your site for Google search."
-msgstr ""
-"これらの項目を入力すると、ローカル検索結果や Google マップでの表示が最大化さ"
-"れます。"
+msgstr "セットアップウィザードを完了して、Google 検索向けに最適化しましょう。"
 
-#: dist/src/Wizard/Wizard.php:227 src/Wizard/Wizard.php:227
+#: dist/src/Wizard/Wizard.php:227 src/Wizard/Wizard.php:252
 msgid "Start Setup"
 msgstr "セットアップを開始"
 
-#: dist/src/Wizard/Wizard.php:281 src/Wizard/Wizard.php:281
+#: dist/src/Wizard/Wizard.php:281 src/Wizard/Wizard.php:306
 msgid "Saved"
 msgstr "保存しました"
 
-#: dist/src/Wizard/Wizard.php:282 src/Wizard/Wizard.php:282
+#: dist/src/Wizard/Wizard.php:282 src/Wizard/Wizard.php:307
 msgid "An error occurred"
 msgstr "エラーが発生しました"
 
-#: dist/src/Wizard/Wizard.php:283 src/Wizard/Wizard.php:283
+#: dist/src/Wizard/Wizard.php:283 src/Wizard/Wizard.php:308
 msgid "Error saving. Please try again."
 msgstr "保存中にエラーが発生しました。再度お試しください。"
 
-#: dist/src/Wizard/Wizard.php:284 src/Wizard/Wizard.php:284
+#: dist/src/Wizard/Wizard.php:284 src/Wizard/Wizard.php:309
 msgid "This field is required"
 msgstr "この項目は必須です"
 
-#: dist/src/Wizard/Wizard.php:285 src/Wizard/Wizard.php:285
+#: dist/src/Wizard/Wizard.php:285 src/Wizard/Wizard.php:310
 msgid "Please enter a valid URL"
 msgstr "有効なURLを入力してください"
 
-#: dist/src/Wizard/Wizard.php:286 src/Wizard/Wizard.php:286
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:286 src/Wizard/Wizard.php:311
 msgid "Select Logo"
 msgstr "ロゴを選択"
 
-#: dist/src/Wizard/Wizard.php:287 src/Wizard/Wizard.php:287
-#, fuzzy
+
+#: dist/src/Wizard/Wizard.php:287 src/Wizard/Wizard.php:312
 msgid "Use this logo"
 msgstr "ロゴを挿入"
 
 #: dist/src/Wizard/Wizard.php:288
-#: dist/templates/wizard/steps/step-1-basics.php:65 src/Wizard/Wizard.php:288
+#: dist/templates/wizard/steps/step-1-basics.php:65 src/Wizard/Wizard.php:313
 #: templates/wizard/steps/step-1-basics.php:65
 msgid "No logo selected"
 msgstr "ロゴが選択されていません"
 
 #: dist/src/Wizard/Wizard.php:289 dist/templates/wizard/steps/welcome.php:154
-#: src/Wizard/Wizard.php:289 templates/wizard/steps/welcome.php:154
+#: src/Wizard/Wizard.php:314 templates/wizard/steps/welcome.php:154
 msgid "Import"
 msgstr "インポート"
 
-#: dist/src/Wizard/Wizard.php:290 src/Wizard/Wizard.php:290
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:290 src/Wizard/Wizard.php:315
 msgid "Importing..."
-msgstr "取得中…"
+msgstr "インポート中…"
 
-#: dist/src/Wizard/Wizard.php:291 src/Wizard/Wizard.php:291
+#: dist/src/Wizard/Wizard.php:291 src/Wizard/Wizard.php:316
 msgid "Imported!"
 msgstr "インポート完了！"
 
-#: dist/src/Wizard/Wizard.php:292 src/Wizard/Wizard.php:292
+#: dist/src/Wizard/Wizard.php:292 src/Wizard/Wizard.php:317
 msgid "Import failed. Please try again."
 msgstr "インポートに失敗しました。再度お試しください。"
 
-#: dist/src/Wizard/Wizard.php:293 src/Wizard/Wizard.php:293
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:293 src/Wizard/Wizard.php:318
 msgid "Please enter an address first."
 msgstr "住所情報を入力してください。"
 
 #: dist/src/Wizard/Wizard.php:295
 #: dist/templates/wizard/steps/step-3-location.php:147
-#: src/Wizard/Wizard.php:295 templates/wizard/steps/step-3-location.php:147
+#: src/Wizard/Wizard.php:320 templates/wizard/steps/step-3-location.php:147
 msgid "Get Coordinates"
 msgstr "座標を取得"
 
-#: dist/src/Wizard/Wizard.php:296 src/Wizard/Wizard.php:296
+#: dist/src/Wizard/Wizard.php:296 src/Wizard/Wizard.php:321
 msgid "Could not fetch coordinates."
 msgstr "座標を取得できませんでした。"
 
 #: dist/src/Wizard/Wizard.php:297
 #: dist/templates/wizard/steps/step-5-complete.php:112
-#: src/Wizard/Wizard.php:297 templates/wizard/steps/step-5-complete.php:112
+#: src/Wizard/Wizard.php:322 templates/wizard/steps/step-5-complete.php:112
 msgid "View JSON-LD Schema"
 msgstr "JSON-LDスキーマを表示"
 
-#: dist/src/Wizard/Wizard.php:298 src/Wizard/Wizard.php:298
+#: dist/src/Wizard/Wizard.php:298 src/Wizard/Wizard.php:323
 msgid "Hide JSON-LD Schema"
 msgstr "JSON-LDスキーマを非表示"
 
-#: dist/src/Wizard/Wizard.php:299 src/Wizard/Wizard.php:299
+#: dist/src/Wizard/Wizard.php:299 src/Wizard/Wizard.php:324
 msgid "No schema generated yet."
 msgstr "スキーマはまだ生成されていません。"
 
-#: dist/src/Wizard/Wizard.php:300 src/Wizard/Wizard.php:300
+#: dist/src/Wizard/Wizard.php:300 src/Wizard/Wizard.php:325
 msgid "Could not load schema."
 msgstr "スキーマを読み込めませんでした。"
 
 #: dist/src/Wizard/Wizard.php:301
-#: dist/templates/wizard/steps/step-4-hours.php:141 src/Wizard/Wizard.php:301
+#: dist/templates/wizard/steps/step-4-hours.php:141 src/Wizard/Wizard.php:326
 #: templates/wizard/steps/step-4-hours.php:141
 msgid "Set your business hours above to see a preview."
 msgstr "上記で営業時間を設定するとプレビューが表示されます。"
 
-#: dist/src/Wizard/Wizard.php:309 src/Wizard/Wizard.php:309
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:309 src/Wizard/Wizard.php:334
 msgid "Local Business Selected"
-msgstr "LocalBusinessサブタイプ"
+msgstr "ローカルビジネスを選択中"
 
-#: dist/src/Wizard/Wizard.php:310 src/Wizard/Wizard.php:310
+#: dist/src/Wizard/Wizard.php:310 src/Wizard/Wizard.php:335
 msgid ""
 "You will be able to enter your business address, hours, and contact "
 "information."
 msgstr "ビジネスの住所、営業時間、連絡先情報を入力できます。"
 
-#: dist/src/Wizard/Wizard.php:311 src/Wizard/Wizard.php:311
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:311 src/Wizard/Wizard.php:336
 msgid "Organization Selected"
-msgstr "組織・団体・法人"
+msgstr "組織・団体・法人を選択中"
 
-#: dist/src/Wizard/Wizard.php:312 src/Wizard/Wizard.php:312
+
+#: dist/src/Wizard/Wizard.php:312 src/Wizard/Wizard.php:337
 msgid "Perfect for companies, non-profits, and institutions."
 msgstr "企業、非営利団体、教育機関に最適です。"
 
-#: dist/src/Wizard/Wizard.php:313 src/Wizard/Wizard.php:313
+#: dist/src/Wizard/Wizard.php:313 src/Wizard/Wizard.php:338
 msgid "Personal Site Selected"
 msgstr "個人サイトが選択されました"
 
-#: dist/src/Wizard/Wizard.php:314 src/Wizard/Wizard.php:314
+#: dist/src/Wizard/Wizard.php:314 src/Wizard/Wizard.php:339
 msgid "Great for blogs, portfolios, and freelancer websites."
 msgstr "ブログ、ポートフォリオ、フリーランサーのサイトに最適です。"
 
-#: dist/src/Wizard/Wizard.php:315 src/Wizard/Wizard.php:315
+#: dist/src/Wizard/Wizard.php:315 src/Wizard/Wizard.php:340
 msgid "Online Service Selected"
 msgstr "オンラインサービスが選択されました"
 
-#: dist/src/Wizard/Wizard.php:316 src/Wizard/Wizard.php:316
+#: dist/src/Wizard/Wizard.php:316 src/Wizard/Wizard.php:341
 msgid "Ideal for news sites, web apps, and online tools."
 msgstr "ニュースサイト、Webアプリ、オンラインツールに最適です。"
 
 #: dist/src/Wizard/Wizard.php:423 dist/src/Wizard/Wizard.php:470
 #: dist/src/Wizard/Wizard.php:500 dist/src/Wizard/Wizard.php:520
 #: dist/src/Wizard/Wizard.php:542 dist/src/Wizard/Wizard.php:918
-#: src/Wizard/Wizard.php:423 src/Wizard/Wizard.php:470
-#: src/Wizard/Wizard.php:500 src/Wizard/Wizard.php:520
-#: src/Wizard/Wizard.php:542 src/Wizard/Wizard.php:918
+#: src/Wizard/Wizard.php:448 src/Wizard/Wizard.php:495
+#: src/Wizard/Wizard.php:525 src/Wizard/Wizard.php:545
+#: src/Wizard/Wizard.php:567 src/Wizard/Wizard.php:943
 msgid "Permission denied"
 msgstr "権限がありません"
 
 #: dist/src/Wizard/Wizard.php:430 dist/src/Wizard/Wizard.php:476
-#: src/Wizard/Wizard.php:430 src/Wizard/Wizard.php:476
+#: src/Wizard/Wizard.php:455 src/Wizard/Wizard.php:501
 msgid "Invalid step"
 msgstr "無効なステップです"
 
-#: dist/src/Wizard/Wizard.php:457 src/Wizard/Wizard.php:457
+#: dist/src/Wizard/Wizard.php:457 src/Wizard/Wizard.php:482
 msgid "Step saved"
 msgstr "ステップを保存しました"
 
-#: dist/src/Wizard/Wizard.php:487 src/Wizard/Wizard.php:487
+#: dist/src/Wizard/Wizard.php:487 src/Wizard/Wizard.php:512
 msgid "Step skipped"
 msgstr "ステップをスキップしました"
 
-#: dist/src/Wizard/Wizard.php:507 src/Wizard/Wizard.php:507
+#: dist/src/Wizard/Wizard.php:507 src/Wizard/Wizard.php:532
 msgid "Setup completed!"
 msgstr "セットアップ完了！"
 
-#: dist/src/Wizard/Wizard.php:529 src/Wizard/Wizard.php:529
+#: dist/src/Wizard/Wizard.php:529 src/Wizard/Wizard.php:554
 msgid "Wizard reset"
 msgstr "ウィザードをリセットしました"
 
-#: dist/src/Wizard/Wizard.php:568 src/Wizard/Wizard.php:568
+#: dist/src/Wizard/Wizard.php:568 src/Wizard/Wizard.php:593
 msgid "Settings imported successfully"
 msgstr "設定のインポートが完了しました"
 
-#: dist/src/Wizard/Wizard.php:940 src/Wizard/Wizard.php:940
+#: dist/src/Wizard/Wizard.php:940 src/Wizard/Wizard.php:965
 msgid "No schema generated yet. Please complete the wizard steps first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:949 src/Wizard/Wizard.php:949
-#, fuzzy
+#: dist/src/Wizard/Wizard.php:949 src/Wizard/Wizard.php:974
 msgid "Error generating schema."
-msgstr "生成されたスキーマ"
+msgstr "スキーマの生成に失敗しました。"
 
 #: dist/src/Wizard/Wizard_Importer.php:88 src/Wizard/Wizard_Importer.php:88
 msgid "Invalid import source"
@@ -1350,40 +1327,39 @@ msgstr "スキーマバリデーションサマリー"
 
 #. translators: %d: number of errors
 #: dist/templates/admin-settings.php:179 templates/admin-settings.php:179
-#, fuzzy, php-format
+#, php-format
 msgid "%d error"
 msgid_plural "%d errors"
-msgstr[0] "エラー"
-msgstr[1] "エラー"
+msgstr[0] "%d 件のエラー"
+msgstr[1] "%d 件のエラー"
+
 
 #. translators: %d: number of warnings
 #: dist/templates/admin-settings.php:187 templates/admin-settings.php:187
-#, fuzzy, php-format
+#, php-format
 msgid "%d warning"
 msgid_plural "%d warnings"
-msgstr[0] "警告"
-msgstr[1] "警告"
+msgstr[0] "%d 件の警告"
+msgstr[1] "%d 件の警告"
+
 
 #: dist/templates/admin-settings.php:194 templates/admin-settings.php:194
 msgid "Toggle details"
 msgstr "詳細を表示/非表示"
 
 #: dist/templates/admin-settings.php:201 templates/admin-settings.php:201
-#, fuzzy
 msgid "Errors"
 msgstr "エラー"
 
 #: dist/templates/admin-settings.php:214 templates/admin-settings.php:214
-#, fuzzy
 msgid "Warnings"
-msgstr "警告:"
+msgstr "警告"
 
 #: dist/templates/admin-settings.php:235 templates/admin-settings.php:235
 msgid "Brand & Site"
 msgstr "ブランドとサイト"
 
 #: dist/templates/admin-settings.php:236 templates/admin-settings.php:236
-#, fuzzy
 msgid ""
 "Tell search engines who you are. This information forms the foundation of "
 "Organization and WebSite schemas, helping you appear in knowledge panels and "
@@ -1428,9 +1404,8 @@ msgstr "電話番号"
 
 #: dist/templates/admin-settings.php:249 dist/templates/admin-settings.php:734
 #: templates/admin-settings.php:249 templates/admin-settings.php:734
-#, fuzzy
 msgid "Required for LocalBusiness"
-msgstr "ローカルビジネス"
+msgstr "LocalBusiness に必須"
 
 #: dist/templates/admin-settings.php:249 templates/admin-settings.php:249
 msgid ""
@@ -1556,9 +1531,9 @@ msgid "Used only for LocalBusiness image. Logo will not be used as a fallback."
 msgstr "LocalBusiness 画像としてのみ使用されます。ロゴは代替に使用されません。"
 
 #: dist/templates/admin-settings.php:352 templates/admin-settings.php:352
-#, fuzzy
 msgid "Select store photo"
 msgstr "店舗写真を選択"
+
 
 #: dist/templates/admin-settings.php:361 templates/admin-settings.php:361
 msgid "Social profiles"
@@ -1611,12 +1586,10 @@ msgid "Primary role of this site"
 msgstr "このサイトの主な役割"
 
 #: dist/templates/admin-settings.php:397 templates/admin-settings.php:397
-#, fuzzy
 msgid "Organization (corporate or brand site)"
 msgstr "Organization (ブランドサイト)"
 
 #: dist/templates/admin-settings.php:398 templates/admin-settings.php:398
-#, fuzzy
 msgid "Store / Business location (storefront or service site)"
 msgstr "LocalBusiness (店舗サイト)"
 
@@ -1625,7 +1598,6 @@ msgid "Content model"
 msgstr "コンテンツモデル"
 
 #: dist/templates/admin-settings.php:402 templates/admin-settings.php:402
-#, fuzzy
 msgid ""
 "Blog: Uses Article schema for posts. Corporate: Uses WebPage schema. E-"
 "commerce: Uses Product schema when WooCommerce is active."
@@ -1660,7 +1632,6 @@ msgid "Website publisher"
 msgstr "WebSite publisher"
 
 #: dist/templates/admin-settings.php:421 templates/admin-settings.php:421
-#, fuzzy
 msgid ""
 "Sets the publisher reference for Article and WebPage schemas. Independent "
 "from \"Primary role\" — you can use LocalBusiness as publisher when articles "
@@ -1724,7 +1695,6 @@ msgstr ""
 "ON: Googleリッチスニペット用のBreadcrumbListスキーマを出力。SEOに推奨。"
 
 #: dist/templates/admin-settings.php:445 templates/admin-settings.php:445
-#, fuzzy
 msgid "Render HTML breadcrumbs (nav) via AVC_AIS_Breadcrumbs::render()"
 msgstr "HTML パンくずリスト (nav) をレンダリングします。"
 
@@ -2029,9 +1999,9 @@ msgid "Postal code (e.g. 150-0001)"
 msgstr "郵便番号 (例: 150-0001)"
 
 #: dist/templates/admin-settings.php:742 templates/admin-settings.php:742
-#, fuzzy
 msgid "Select prefecture"
 msgstr "都道府県を選択"
+
 
 #: dist/templates/admin-settings.php:760 templates/admin-settings.php:760
 msgid "市区町村（例：草津市）"
@@ -2086,7 +2056,6 @@ msgid "Longitude 139.123456"
 msgstr "経度 139.123456"
 
 #: dist/templates/admin-settings.php:807 templates/admin-settings.php:807
-#, fuzzy
 msgid "Google Map link"
 msgstr "Googleマップのリンク"
 
@@ -2103,7 +2072,6 @@ msgstr ""
 "ます。"
 
 #: dist/templates/admin-settings.php:824 templates/admin-settings.php:824
-#, fuzzy
 msgid "LocalBusiness output control"
 msgstr "LocalBusinessの出力制御"
 
@@ -2124,14 +2092,12 @@ msgid "Opening hours"
 msgstr "営業時間"
 
 #: dist/templates/admin-settings.php:840 templates/admin-settings.php:840
-#, fuzzy
 msgid ""
 "Add as many day and time combinations as needed. Use templates for quick "
 "setup."
 msgstr "曜日と営業時間の組み合わせを必要な分だけ追加してください。"
 
 #: dist/templates/admin-settings.php:841 templates/admin-settings.php:841
-#, fuzzy
 msgid "Opening hour templates"
 msgstr "営業時間テンプレート"
 
@@ -2315,16 +2281,13 @@ msgstr ""
 #: dist/templates/wizard/steps/step-5-complete.php:46
 #: templates/wizard/steps/step-1-basics.php:31
 #: templates/wizard/steps/step-5-complete.php:46
-#, fuzzy
 msgid "Site Name"
 msgstr "サイト名"
 
 #: dist/templates/wizard/steps/step-1-basics.php:36
 #: templates/wizard/steps/step-1-basics.php:36
-#, fuzzy
 msgid "The name of your website as it should appear in search results."
-msgstr ""
-"Webサイトの名前。WebSiteスキーマのサイトリンク検索ボックスで使用されます。"
+msgstr "検索結果に表示される Web サイトの名前。"
 
 #: dist/templates/wizard/steps/step-1-basics.php:43
 #: templates/wizard/steps/step-1-basics.php:43
@@ -2338,9 +2301,8 @@ msgstr "Webサイトの簡単な説明（任意）。"
 
 #: dist/templates/wizard/steps/step-1-basics.php:54
 #: templates/wizard/steps/step-1-basics.php:54
-#, fuzzy
 msgid "Site Logo"
-msgstr "サイトURL"
+msgstr "サイトロゴ"
 
 #: dist/templates/wizard/steps/step-1-basics.php:59
 #: templates/wizard/steps/step-1-basics.php:59
@@ -2385,7 +2347,6 @@ msgstr "続行"
 
 #: dist/templates/wizard/steps/step-2-type.php:17
 #: templates/wizard/steps/step-2-type.php:17
-#, fuzzy
 msgid "Local Business"
 msgstr "ローカルビジネス"
 
@@ -2401,23 +2362,20 @@ msgstr "例: カフェ、美容室、クリニック"
 
 #: dist/templates/wizard/steps/step-2-type.php:23
 #: templates/wizard/steps/step-2-type.php:23
-#, fuzzy
 msgid "Organization / Company"
 msgstr "組織・団体・法人"
 
 #: dist/templates/wizard/steps/step-2-type.php:24
 #: templates/wizard/steps/step-2-type.php:24
-#, fuzzy
 msgid ""
 "Corporate website, non-profit, educational institution, personal blog, "
 "online service"
-msgstr "企業サイト、非営利団体、教育機関"
+msgstr "企業サイト、非営利団体、教育機関、個人ブログ、オンラインサービス"
 
 #: dist/templates/wizard/steps/step-2-type.php:26
 #: templates/wizard/steps/step-2-type.php:26
-#, fuzzy
 msgid "e.g., Corporation, NPO, Blog, News site"
-msgstr "例: 株式会社、NPO法人、大学"
+msgstr "例: 株式会社、NPO法人、ブログ、ニュースサイト"
 
 #: dist/templates/wizard/steps/step-2-type.php:33
 #: templates/wizard/steps/step-2-type.php:33
@@ -2435,7 +2393,6 @@ msgstr ""
 
 #: dist/templates/wizard/steps/step-3-location.php:15
 #: templates/wizard/steps/step-3-location.php:15
-#, fuzzy
 msgid "General Local Business"
 msgstr "ローカルビジネス"
 
@@ -2536,7 +2493,6 @@ msgstr "住宅・建設サービス"
 
 #: dist/templates/wizard/steps/step-3-location.php:39
 #: templates/wizard/steps/step-3-location.php:39
-#, fuzzy
 msgid "Not specified"
 msgstr "— 未設定 —"
 
@@ -2547,7 +2503,6 @@ msgstr "$ - リーズナブル"
 
 #: dist/templates/wizard/steps/step-3-location.php:41
 #: templates/wizard/steps/step-3-location.php:41
-#, fuzzy
 msgid "$$ - Moderate"
 msgstr "$$ (手頃)"
 
@@ -2558,7 +2513,6 @@ msgstr "$$$ - やや高め"
 
 #: dist/templates/wizard/steps/step-3-location.php:43
 #: templates/wizard/steps/step-3-location.php:43
-#, fuzzy
 msgid "$$$$ - Luxury"
 msgstr "$$$$ (高級)"
 
@@ -2602,9 +2556,8 @@ msgstr "例: 100-0001"
 
 #: dist/templates/wizard/steps/step-3-location.php:100
 #: templates/wizard/steps/step-3-location.php:100
-#, fuzzy
 msgid "Country"
-msgstr "国コード"
+msgstr "国"
 
 #: dist/templates/wizard/steps/step-3-location.php:108
 #: templates/wizard/steps/step-3-location.php:108
@@ -2628,9 +2581,8 @@ msgstr "例: 千代田区"
 
 #: dist/templates/wizard/steps/step-3-location.php:122
 #: templates/wizard/steps/step-3-location.php:122
-#, fuzzy
 msgid "Street Address"
-msgstr "住所"
+msgstr "番地・建物名"
 
 #: dist/templates/wizard/steps/step-3-location.php:124
 #: templates/wizard/steps/step-3-location.php:124
@@ -2639,15 +2591,13 @@ msgstr "例: 丸の内1-1-1"
 
 #: dist/templates/wizard/steps/step-3-location.php:132
 #: templates/wizard/steps/step-3-location.php:132
-#, fuzzy
 msgid "Latitude"
-msgstr "緯度 35.123456"
+msgstr "緯度"
 
 #: dist/templates/wizard/steps/step-3-location.php:138
 #: templates/wizard/steps/step-3-location.php:138
-#, fuzzy
 msgid "Longitude"
-msgstr "経度 139.123456"
+msgstr "経度"
 
 #: dist/templates/wizard/steps/step-3-location.php:158
 #: templates/wizard/steps/step-3-location.php:158
@@ -2656,15 +2606,13 @@ msgstr "連絡先情報"
 
 #: dist/templates/wizard/steps/step-3-location.php:164
 #: templates/wizard/steps/step-3-location.php:164
-#, fuzzy
 msgid "Phone Number"
 msgstr "電話番号"
 
 #: dist/templates/wizard/steps/step-3-location.php:166
 #: templates/wizard/steps/step-3-location.php:166
-#, fuzzy
 msgid "e.g., 03-1234-5678"
-msgstr "例: +81-3-1234-5678"
+msgstr "例: 03-1234-5678"
 
 #: dist/templates/wizard/steps/step-3-location.php:170
 #: templates/wizard/steps/step-3-location.php:170
@@ -2678,7 +2626,6 @@ msgstr "例: info@example.com"
 
 #: dist/templates/wizard/steps/step-3-location.php:180
 #: templates/wizard/steps/step-3-location.php:180
-#, fuzzy
 msgid "Price Range"
 msgstr "価格帯"
 
@@ -2712,9 +2659,8 @@ msgstr "毎日同じ営業時間"
 
 #: dist/templates/wizard/steps/step-4-hours.php:69
 #: templates/wizard/steps/step-4-hours.php:69
-#, fuzzy
 msgid "Clear all"
-msgstr "ロゴをクリア"
+msgstr "すべてクリア"
 
 #: dist/templates/wizard/steps/step-4-hours.php:78
 #: templates/wizard/steps/step-4-hours.php:78
@@ -2730,9 +2676,8 @@ msgstr "営業"
 
 #: dist/templates/wizard/steps/step-4-hours.php:84
 #: templates/wizard/steps/step-4-hours.php:84
-#, fuzzy
 msgid "Opening Time"
-msgstr "営業時間"
+msgstr "開店時刻"
 
 #: dist/templates/wizard/steps/step-4-hours.php:87
 #: templates/wizard/steps/step-4-hours.php:87
@@ -2743,9 +2688,8 @@ msgstr "閉店時間"
 #: dist/templates/wizard/steps/step-4-hours.php:119
 #: templates/wizard/steps/step-4-hours.php:109
 #: templates/wizard/steps/step-4-hours.php:119
-#, fuzzy
 msgid "Select"
-msgstr "ロゴを選択"
+msgstr "選択"
 
 #: dist/templates/wizard/steps/step-4-hours.php:137
 #: templates/wizard/steps/step-4-hours.php:137
@@ -2810,7 +2754,6 @@ msgstr "%s でスキーマをテスト"
 
 #: dist/templates/wizard/steps/step-5-complete.php:136
 #: templates/wizard/steps/step-5-complete.php:136
-#, fuzzy
 msgid "Google Rich Results Test"
 msgstr "Google リッチリザルトテストで検証"
 
@@ -2821,15 +2764,13 @@ msgstr "プラグイン設定ページから詳細設定をカスタマイズで
 
 #: dist/templates/wizard/steps/step-5-complete.php:155
 #: templates/wizard/steps/step-5-complete.php:155
-#, fuzzy
 msgid "Go to Settings"
-msgstr "AEOスキーマ設定"
+msgstr "設定へ移動"
 
 #: dist/templates/wizard/steps/step-5-complete.php:161
 #: templates/wizard/steps/step-5-complete.php:161
-#, fuzzy
 msgid "View Site"
-msgstr "WebSite"
+msgstr "サイトを表示"
 
 #: dist/templates/wizard/steps/step-api-key.php:20
 #: templates/wizard/steps/step-api-key.php:20
@@ -2861,21 +2802,18 @@ msgstr ""
 
 #: dist/templates/wizard/steps/step-api-key.php:51
 #: templates/wizard/steps/step-api-key.php:51
-#, fuzzy
 msgid "e.g., AIzaSyB..."
 msgstr "例: AIzaSyB..."
 
 #: dist/templates/wizard/steps/step-api-key.php:57
 #: templates/wizard/steps/step-api-key.php:57
-#, fuzzy
 msgid "API key is already configured."
-msgstr "営業時間が設定されています。"
+msgstr "API キーは設定済みです。"
 
 #: dist/templates/wizard/steps/step-api-key.php:68
 #: templates/wizard/steps/step-api-key.php:68
-#, fuzzy
 msgid "How to get an API key"
-msgstr "Google Maps APIキー"
+msgstr "API キーの取得方法"
 
 #: dist/templates/wizard/steps/step-api-key.php:71
 #: templates/wizard/steps/step-api-key.php:71
@@ -2938,9 +2876,8 @@ msgstr "あなたの地域"
 
 #: dist/templates/wizard/steps/welcome.php:63
 #: templates/wizard/steps/welcome.php:63
-#, fuzzy
 msgid "Business"
-msgstr "ローカルビジネス"
+msgstr "ビジネス"
 
 #: dist/templates/wizard/steps/welcome.php:68
 #: templates/wizard/steps/welcome.php:68
@@ -2982,9 +2919,8 @@ msgstr ""
 
 #: dist/templates/wizard/steps/welcome.php:159
 #: templates/wizard/steps/welcome.php:159
-#, fuzzy
 msgid "Not detected"
-msgstr "未設定"
+msgstr "検出されませんでした"
 
 #: dist/templates/wizard/steps/welcome.php:168
 #: templates/wizard/steps/welcome.php:168
@@ -2992,7 +2928,6 @@ msgid "Continue without importing"
 msgstr "インポートせずに続行"
 
 #: dist/templates/wizard/wizard-page.php:70 templates/wizard/wizard-page.php:70
-#, fuzzy
 msgid "Step template not found."
 msgstr "設定テンプレートが見つかりませんでした。"
 
@@ -3003,12 +2938,10 @@ msgid "AI Search Schema v%s"
 msgstr "Aivec AI Search Schema v%s"
 
 #: tools/test-manager.php:48
-#, fuzzy
 msgid "You do not have sufficient permissions to access this page."
 msgstr "この操作を実行する権限がありません。"
 
 #: tools/test-manager.php:49
-#, fuzzy
 msgid "Access Denied"
 msgstr "権限がありません"
 
@@ -3017,14 +2950,12 @@ msgid "Security check failed."
 msgstr "セキュリティチェックに失敗しました。"
 
 #: tools/test-manager.php:80
-#, fuzzy
 msgid "Data saved successfully."
-msgstr "設定のインポートが完了しました"
+msgstr "保存しました。"
 
 #: tools/test-manager.php:84
-#, fuzzy
 msgid "Invalid JSON data."
-msgstr "無効なステップです"
+msgstr "JSON データが不正です。"
 
 #: tools/test-manager.php:133
 msgid "Screenshot uploaded."
@@ -3043,11 +2974,12 @@ msgid "This test requires manual verification."
 msgstr ""
 
 #: tools/test-manager.php:187
-#, fuzzy
 msgid "Diagnostic evaluator not available."
-msgstr "ライセンス検証APIはまだ利用できません。"
+msgstr "診断機能を利用できません。"
 
 #: tools/test-manager.php:673
-#, fuzzy
 msgid "AI Search Schema Test Manager"
-msgstr "AEOスキーマ設定"
+msgstr "AI Search Schema テストマネージャー"
+
+#~ msgid "https://aivec.co.jp/"
+#~ msgstr "https://aivec.co.jp/apps"
