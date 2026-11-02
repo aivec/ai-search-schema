@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: ["main", "dev", "v1.0.0"]
 
+# GITHUB_TOKEN の権限は必要最小限に限定する。
+permissions:
+  contents: read
+
 jobs:
   # ---------------------------------------------------------------------------
   # README/readme.txt 同期確認
@@ -137,7 +141,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php-version: ['8.0', '8.1', '8.2', '8.3', '8.4']
+        php-version: ['8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
     services:
       mysql:
         image: mysql:8.0

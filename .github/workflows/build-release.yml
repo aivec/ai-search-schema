@@ -29,6 +29,10 @@ on:
       - '!v*-dev'  # -dev タグは除外
   workflow_dispatch:  # 手動実行も可能
 
+# GITHUB_TOKEN の権限は必要最小限に限定する。
+permissions:
+  contents: read
+
 env:
   PLUGIN_SLUG: aivec-ai-search-schema
   PHP_VERSION: '8.2'
@@ -37,8 +41,10 @@ env:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
-    # CI が成功し main ブランチの場合、タグpush時（-dev除く）、または手動実行時のみ実行
-    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'push' && !contains(github.ref, '-dev')) || github.event_name == 'workflow_dispatch' }}
+    # CI が成功し main ブランチの場合、タグpush時（-dev除く）、または手動実行時のみ実行。
+    # workflow_run はシークレットを使える環境で動くため、fork の PR（ブランチ名は自由に
+    # 付けられる）を確実に除外する。push イベントかつ同一リポジトリの実行のみ許可する。
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.head_branch == 'main') || (github.event_name == 'push' && !contains(github.ref, '-dev')) || github.event_name == 'workflow_dispatch' }}
     # ビルド時に確定したバージョンを後続ジョブへ引き渡す。
     # プラグインヘッダーの Version は gulp が git タグから導出して書き込むため、
     # ビルドを実行しないジョブが同じファイルを読んでも古い値しか得られない。
@@ -52,7 +58,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.workflow_run.head_branch || github.ref }}
+          # CI が検証したコミットを正確にビルドする（ブランチ名だと先へ進んでいる場合がある）。
+          ref: ${{ github.event.workflow_run.head_sha || github.ref }}
+          persist-credentials: false
 
       # -----------------------------------------------------------------------
       # 2. PHP セットアップ
@@ -197,10 +205,15 @@ jobs:
     needs: build-and-upload
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    
+    # GitHub Release の作成に必要。
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - name: Download artifact
         uses: actions/download-artifact@v4
