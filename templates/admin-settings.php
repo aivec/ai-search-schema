@@ -703,7 +703,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 								name="<?php echo esc_attr( $option_name ); ?>[gmaps_api_key]"
 								value=""
 								placeholder="<?php echo esc_attr( $gmaps_api_key_set ? __( 'Stored API key', 'aivec-ai-search-schema' ) : __( 'Example: AIzaSyB...', 'aivec-ai-search-schema' ) ); ?>"
-								autocomplete="off"
+								autocomplete="new-password"
 								<?php disabled( $gmaps_api_key_set ); ?>
 							/>
 							<?php if ( ! $gmaps_api_key_set ) : ?>

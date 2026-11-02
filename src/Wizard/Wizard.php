@@ -37,6 +37,13 @@ class Wizard {
 	const META_PROGRESS = 'avc_ais_wizard_progress';
 
 	/**
+	 * Option key recording that API keys were purged from wizard progress.
+	 *
+	 * @var string
+	 */
+	const OPTION_API_KEY_PURGED = 'avc_ais_wizard_api_key_purged';
+
+	/**
 	 * Available steps.
 	 *
 	 * @var array
@@ -63,6 +70,7 @@ class Wizard {
 	public function register() {
 		add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
 		add_action( 'admin_init', array( $this, 'maybe_redirect_to_wizard' ) );
+		add_action( 'admin_init', array( $this, 'maybe_purge_api_keys_from_progress' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		add_action( 'admin_notices', array( $this, 'show_setup_notice' ) );
 		add_action( 'current_screen', array( $this, 'maybe_set_wizard_title' ) );
@@ -398,7 +406,7 @@ class Wizard {
 			);
 		}
 
-		return $progress;
+		return $this->remove_api_key_from_progress( $progress );
 	}
 
 	/**
@@ -408,7 +416,55 @@ class Wizard {
 	 */
 	public function save_progress( $progress ) {
 		$user_id = get_current_user_id();
-		update_user_meta( $user_id, self::META_PROGRESS, $progress );
+		update_user_meta( $user_id, self::META_PROGRESS, $this->remove_api_key_from_progress( $progress ) );
+	}
+
+	/**
+	 * 以前のバージョンが進捗へ保存した API キーを全ユーザーから一度だけ消し込む。
+	 *
+	 * 今後ログインしないユーザーの分も残さないよう、各自の読み出し時ではなく
+	 * 管理者のアクセスを契機に全ユーザーを処理する。あわせて、以前のバージョンが
+	 * 自動読み込みで保存したキーを全リクエストで読み込まないようにする。
+	 *
+	 * @return void
+	 */
+	public function maybe_purge_api_keys_from_progress() {
+		if ( ! current_user_can( 'manage_options' ) || get_option( self::OPTION_API_KEY_PURGED ) ) {
+			return;
+		}
+
+		$user_ids = get_users(
+			array(
+				'blog_id'  => 0,
+				'fields'   => 'ID',
+				'meta_key' => self::META_PROGRESS, // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_meta_key -- 一度だけ実行する移行処理.
+			)
+		);
+		foreach ( $user_ids as $user_id ) {
+			$progress = get_user_meta( (int) $user_id, self::META_PROGRESS, true );
+			if ( is_array( $progress ) && isset( $progress['data']['api-key']['gmaps_api_key'] ) ) {
+				update_user_meta( (int) $user_id, self::META_PROGRESS, $this->remove_api_key_from_progress( $progress ) );
+			}
+		}
+
+		wp_set_option_autoload( 'avc_ais_gmaps_api_key', false );
+		update_option( self::OPTION_API_KEY_PURGED, true );
+	}
+
+	/**
+	 * 進捗データから Google Maps API キーを取り除く。
+	 *
+	 * API キーは専用オプションにのみ保存する。進捗は user meta に残り AJAX でブラウザへも
+	 * 返すため、秘密情報を含めない。
+	 *
+	 * @param array $progress 進捗データ.
+	 * @return array API キーを除いた進捗データ.
+	 */
+	private function remove_api_key_from_progress( array $progress ) {
+		if ( isset( $progress['data']['api-key']['gmaps_api_key'] ) ) {
+			unset( $progress['data']['api-key']['gmaps_api_key'] );
+		}
+		return $progress;
 	}
 
 	/**
@@ -473,6 +529,7 @@ class Wizard {
 		$progress['current_step']      = $step;
 		$progress['completed_steps'][] = $step;
 		$progress['completed_steps']   = array_unique( $progress['completed_steps'] );
+		$progress                      = $this->remove_api_key_from_progress( $progress );
 
 		$this->save_progress( $progress );
 

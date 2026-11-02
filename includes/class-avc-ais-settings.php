@@ -816,7 +816,7 @@ class AVC_AIS_Settings {
 		if ( 'clear' === $gmaps_key_action ) {
 			delete_option( self::OPTION_GMAPS_KEY );
 		} elseif ( '' !== $gmaps_key_input && null !== $gmaps_key_input ) {
-			update_option( self::OPTION_GMAPS_KEY, sanitize_text_field( $gmaps_key_input ) );
+			update_option( self::OPTION_GMAPS_KEY, sanitize_text_field( $gmaps_key_input ), false );
 		}
 		$output['price_range']                       = sanitize_text_field( $input['price_range'] ?? '' );
 		$output['payment_accepted']                  = sanitize_text_field( $input['payment_accepted'] ?? '' );
