@@ -2,7 +2,7 @@
 Contributors: aivectai
 Tags: schema, structured-data, ai-search, local-seo, llms-txt
 Requires at least: 6.5
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.0
 Stable tag: 1.3.1
 License: GPLv2 or later
