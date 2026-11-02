@@ -2145,38 +2145,8 @@ class AVC_AIS_Schema {
 	 * @param array $schema
 	 */
 	private function print_json_ld( array $schema ) {
-		if ( empty( $schema ) ) {
-			return;
-		}
-
-		$json = wp_json_encode(
-			$schema,
-			JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-		);
-
-		if ( false === $json ) {
-			return;
-		}
-
-		$script_tag = sprintf(
-			'<script type="application/ld+json" class="avc-ais-schema avc-ais-schema-graph" '
-			. 'data-avc-ais-schema="1">%s</script>',
-			$json
-		);
-
-		printf(
-			"<!-- AI Search Schema JSON-LD start -->\n%s\n<!-- AI Search Schema JSON-LD end -->\n",
-			wp_kses(
-				$script_tag,
-				array(
-					'script' => array(
-						'type'                => true,
-						'class'               => true,
-						'data-avc-ais-schema' => true,
-					),
-				)
-			)
-		);
+		$output = new AVC_AIS_Output( new AVC_AIS_Validator() );
+		$output->print( $schema, true );
 	}
 
 	/**
