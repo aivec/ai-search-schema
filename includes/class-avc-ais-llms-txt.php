@@ -25,6 +25,16 @@ class AVC_AIS_Llms_Txt {
 	const OPTION_ENABLED = 'avc_ais_llms_txt_enabled';
 
 	/**
+	 * Option name recording that saved content was scrubbed.
+	 */
+	const OPTION_SCRUBBED = 'avc_ais_llms_txt_scrubbed';
+
+	/**
+	 * 自動生成の一覧に載せる投稿タイプ。
+	 */
+	const LISTED_POST_TYPES = array( 'post', 'page' );
+
+	/**
 	 * Singleton instance.
 	 *
 	 * @var AVC_AIS_Llms_Txt|null
@@ -51,6 +61,8 @@ class AVC_AIS_Llms_Txt {
 		add_action( 'template_redirect', array( $this, 'serve_llms_txt' ) );
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
 		add_filter( 'redirect_canonical', array( $this, 'disable_canonical_redirect' ) );
+		add_action( 'post_updated', array( $this, 'remove_entry_of_hidden_post' ), 10, 3 );
+		add_action( 'before_delete_post', array( $this, 'remove_entry_of_deleted_post' ), 10, 2 );
 	}
 
 	/**
@@ -161,7 +173,7 @@ class AVC_AIS_Llms_Txt {
 		$content = (string) $content;
 
 		// 改行コードを LF に正規化.
-		$content = str_replace( array( "\r\n", "\r" ), "\n", $content );
+		$content = self::normalize_newlines( $content );
 
 		// タブ・改行以外の制御文字（C0 制御文字と DEL）を除去.
 		$content = preg_replace( '/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/', '', $content );
@@ -175,11 +187,164 @@ class AVC_AIS_Llms_Txt {
 	 * @return string
 	 */
 	public function get_content() {
+		$this->maybe_scrub_saved_content();
+
 		$content = get_option( self::OPTION_NAME, '' );
 		if ( empty( $content ) ) {
 			$content = $this->generate_default_content();
 		}
 		return $content;
+	}
+
+	/**
+	 * 保存済みの内容から、公開されていない投稿の行を一度だけ取り除く。
+	 *
+	 * 以前のバージョンでは設定画面を保存すると自動生成の内容が DB に固定され、保護された
+	 * 投稿の抜粋も含まれていた。投稿が多いサイトでは重い処理になるため、一般ページの
+	 * リクエストでは実行せず、内容を読み出す直前（/llms.txt と設定画面）にだけ実行する。
+	 * 途中で失敗しても完了扱いにしないので、掃除前の内容を配信することはない。
+	 *
+	 * @return void
+	 */
+	public function maybe_scrub_saved_content() {
+		if ( get_option( self::OPTION_SCRUBBED ) ) {
+			return;
+		}
+
+		if ( '' !== (string) get_option( self::OPTION_NAME, '' ) ) {
+			$this->remove_entries_of_posts_matching(
+				array(
+					'post_status'  => 'publish',
+					'has_password' => true,
+				)
+			);
+			$this->remove_entries_of_posts_matching( array( 'post_status' => 'private' ) );
+		}
+
+		update_option( self::OPTION_SCRUBBED, true );
+	}
+
+	/**
+	 * 条件に合う投稿の行を、保存済みの内容から少しずつ取り除く。
+	 *
+	 * 対象の投稿が多いサイトでもメモリを使い切らないよう、分割して処理する。
+	 *
+	 * @param array $query 投稿の取得条件.
+	 * @return void
+	 */
+	private function remove_entries_of_posts_matching( array $query ) {
+		$batch_size = 200;
+		$paged      = 1;
+		do {
+			$posts = get_posts(
+				array_merge(
+					array(
+						'post_type'     => self::LISTED_POST_TYPES,
+						'numberposts'   => $batch_size,
+						'paged'         => $paged,
+						'orderby'       => 'ID',
+						'order'         => 'ASC',
+						'cache_results' => false,
+					),
+					$query
+				)
+			);
+			$this->remove_saved_entries( $posts );
+			$fetched = count( $posts );
+			++$paged;
+		} while ( $fetched === $batch_size );
+	}
+
+	/**
+	 * 投稿を非公開にしたときに、保存済みの内容からその行を取り除く。
+	 *
+	 * 一覧に載るのは公開中の投稿だけなので、公開中だった投稿が非公開になったときだけ
+	 * 処理する。下書きはスラッグが空だったり公開済みの投稿と重複したりして、別の投稿の
+	 * URL と一致してしまう。ゴミ箱への移動ではスラッグが変わるため更新前の投稿で照合する。
+	 *
+	 * @param int     $post_id     投稿 ID.
+	 * @param WP_Post $post_after  更新後の投稿.
+	 * @param WP_Post $post_before 更新前の投稿.
+	 * @return void
+	 */
+	public function remove_entry_of_hidden_post( $post_id, $post_after, $post_before ) {
+		unset( $post_id );
+
+		$was_listed = 'publish' === $post_before->post_status && '' === $post_before->post_password;
+		$is_hidden  = 'publish' !== $post_after->post_status || '' !== $post_after->post_password;
+		if ( $was_listed && $is_hidden && in_array( $post_after->post_type, self::LISTED_POST_TYPES, true ) ) {
+			$this->remove_saved_entries( array( $post_before ) );
+		}
+	}
+
+	/**
+	 * 投稿を完全に削除するときに、保存済みの内容からその行を取り除く。
+	 *
+	 * @param int     $post_id 投稿 ID.
+	 * @param WP_Post $post    削除する投稿.
+	 * @return void
+	 */
+	public function remove_entry_of_deleted_post( $post_id, $post ) {
+		unset( $post_id );
+
+		if ( 'publish' === $post->post_status && in_array( $post->post_type, self::LISTED_POST_TYPES, true ) ) {
+			$this->remove_saved_entries( array( $post ) );
+		}
+	}
+
+	/**
+	 * 保存済みの内容から指定した投稿の行を取り除いて保存し直す。
+	 *
+	 * 対象は自動生成の形式の行（- [タイトル](URL): 抜粋）だけとし、管理者が文中に書いた
+	 * リンクは巻き込まない。
+	 *
+	 * @param WP_Post[] $posts 取り除く投稿.
+	 * @return void
+	 */
+	private function remove_saved_entries( array $posts ) {
+		$saved = (string) get_option( self::OPTION_NAME, '' );
+		if ( '' === $saved || empty( $posts ) ) {
+			return;
+		}
+
+		$needles = array();
+		foreach ( $posts as $post ) {
+			if ( '' === $post->post_name ) {
+				continue;
+			}
+
+			// 非公開の投稿は権限のないユーザーには ?p=ID 形式の URL が返るため、
+			// 公開されていたときの URL を求めて照合する。
+			$published              = clone $post;
+			$published->post_status = 'publish';
+			$url                    = get_permalink( $published );
+			$needles[]              = '](' . $url . '):';
+			// 保存時の sanitize_textarea_field() はパーセントエンコードを除去するため、
+			// 日本語スラッグの URL は保存内容では別の文字列になっている。除去後の URL は
+			// 他の投稿と衝突しうるので、タイトルと組み合わせて照合する。
+			$needles[] = '- [' . sanitize_textarea_field( self::to_plain_text( $post->post_title ) ) . ']'
+				. '(' . sanitize_textarea_field( $url ) . '):';
+		}
+
+		$lines = array_filter(
+			explode( "\n", $saved ),
+			static function ( $line ) use ( $needles ) {
+				if ( 0 !== strpos( $line, '- [' ) ) {
+					return true;
+				}
+				foreach ( $needles as $needle ) {
+					if ( false !== strpos( $line, $needle ) ) {
+						return false;
+					}
+				}
+				return true;
+			}
+		);
+
+		$updated = implode( "\n", $lines );
+		if ( $updated !== $saved ) {
+			update_option( self::OPTION_NAME, $updated );
+		}
 	}
 
 	/**
@@ -207,6 +372,12 @@ class AVC_AIS_Llms_Txt {
 		);
 		if ( ! empty( $pages ) ) {
 			foreach ( $pages as $page ) {
+				// パスワード保護された本文を公開の llms.txt へ出さない。
+				// get_pages() には has_password に相当する引数がないため、ここで除外する。
+				if ( '' !== $page->post_password ) {
+					continue;
+				}
+
 				$url     = get_permalink( $page );
 				$title   = self::to_plain_text( $page->post_title );
 				$excerpt = self::to_plain_text(
@@ -221,7 +392,12 @@ class AVC_AIS_Llms_Txt {
 
 		// Recent posts.
 		$content .= "\n## 最新記事 / Recent Posts\n\n";
-		$posts    = get_posts( array( 'numberposts' => 10 ) );
+		$posts    = get_posts(
+			array(
+				'numberposts'  => 10,
+				'has_password' => false,
+			)
+		);
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
 				$url     = get_permalink( $post );
@@ -251,7 +427,28 @@ class AVC_AIS_Llms_Txt {
 	 * @return bool
 	 */
 	public function save_content( $content ) {
-		return update_option( self::OPTION_NAME, sanitize_textarea_field( $content ) );
+		$content = sanitize_textarea_field( $content );
+
+		// 設定画面の textarea には自動生成の内容が入っているため、編集せず保存しただけで
+		// 内容が固定され、後から非公開にした投稿の抜粋まで残り続けていた。自動生成と同じ
+		// 内容なら保存せず、自動生成のままにする。
+		$generated = sanitize_textarea_field( $this->generate_default_content() );
+		if ( self::normalize_newlines( $content ) === self::normalize_newlines( $generated ) ) {
+			delete_option( self::OPTION_NAME );
+			return true;
+		}
+
+		return update_option( self::OPTION_NAME, $content );
+	}
+
+	/**
+	 * 改行コードを LF に統一する。
+	 *
+	 * @param string $text 対象の文字列.
+	 * @return string 改行コードを統一した文字列.
+	 */
+	private static function normalize_newlines( $text ) {
+		return str_replace( array( "\r\n", "\r" ), "\n", (string) $text );
 	}
 
 	/**
