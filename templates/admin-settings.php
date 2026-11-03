@@ -1002,6 +1002,7 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 					<div class="ais-field">
 						<label for="ais-llms-txt-content"><?php esc_html_e( 'Content (Markdown)', 'aivec-ai-search-schema' ); ?></label>
 						<textarea id="ais-llms-txt-content" name="<?php echo esc_attr( $option_name ); ?>[llms_txt_content]" rows="15" class="large-text code" style="font-family: monospace;"><?php echo esc_textarea( $llms_txt_content ); ?></textarea>
+						<input type="hidden" id="ais-llms-txt-content-hash" name="<?php echo esc_attr( $option_name ); ?>[llms_txt_content_hash]" value="<?php echo esc_attr( AVC_AIS_Llms_Txt::content_hash( $llms_txt_content ) ); ?>" />
 						<p class="ais-field__description">
 							<?php esc_html_e( 'Edit the llms.txt content. Leave empty to auto-generate from site data.', 'aivec-ai-search-schema' ); ?>
 						</p>

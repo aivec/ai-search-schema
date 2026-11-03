@@ -4,6 +4,7 @@
  *
  * - 設定画面以外からの保存で llms.txt の設定が変わらないこと
  * - 保存してもパーセントエンコードされた URL が壊れないこと
+ * - 編集せずに保存しても内容が書き込まれないこと
  *
  * @package AVC_AIS_Schema
  */
@@ -435,12 +436,443 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 設定画面を開いて、編集せずに送信するときの項目を返す。
+	 *
+	 * ブラウザは textarea の改行を CRLF で送信する。
+	 *
+	 * @return array 送信する項目.
+	 */
+	private function open_settings_screen() {
+		$content = AVC_AIS_Llms_Txt::init()->get_content();
+
+		return array(
+			'llms_txt_enabled'      => '1',
+			'llms_txt_content'      => str_replace( "\n", "\r\n", $content ),
+			'llms_txt_content_hash' => AVC_AIS_Llms_Txt::content_hash( $content ),
+		);
+	}
+
+	/**
+	 * 保存ボタンの AJAX を実行してレスポンスを返す。
+	 *
+	 * @param string $action  AJAX の処理（avc_ais_save_llms_txt など）.
+	 * @param string $handler 呼び出すメソッド.
+	 * @param array  $fields  送信する項目.
+	 * @return array レスポンスのデータ.
+	 */
+	private function post_llms_txt_ajax( $action, $handler, array $fields = array() ) {
+		$response  = array();
+		$responder = static function ( $success, $data ) use ( &$response ) {
+			$response = $data;
+		};
+		add_action( 'avc_ais_json_responder', $responder, 10, 2 );
+
+		$nonce             = wp_create_nonce( $action );
+		$_REQUEST['nonce'] = $nonce;
+		$_POST             = array_merge( array( 'nonce' => $nonce ), wp_slash( $fields ) );
+		AVC_AIS_Settings::init()->$handler();
+
+		remove_action( 'avc_ais_json_responder', $responder );
+
+		return $response;
+	}
+
+	/**
+	 * 開いている間に投稿が公開されても、編集せずに保存すれば自動生成のままになること。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_stays_generated_when_a_post_is_published_meanwhile() {
+		$fields = $this->open_settings_screen();
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+
+		$this->submit_settings_form( $fields );
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertStringContainsString( 'Published meanwhile', AVC_AIS_Llms_Txt::init()->get_content() );
+	}
+
+	/**
+	 * 開いている間に非公開にした投稿の抜粋が、編集せずに保存しても残らないこと。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_does_not_keep_excerpt_of_post_hidden_meanwhile() {
+		$post_id = self::factory()->post->create( array( 'post_content' => 'TOPSECRETEXCERPT' ) );
+		$fields  = $this->open_settings_screen();
+		$this->assertStringContainsString( 'TOPSECRETEXCERPT', $fields['llms_txt_content'], '前提: 開いたときは載っている' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$this->submit_settings_form( $fields );
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertStringNotContainsString( 'TOPSECRETEXCERPT', AVC_AIS_Llms_Txt::init()->get_content() );
+	}
+
+	/**
+	 * 開いている間に取り除かれたカスタム内容の行が、編集せずに保存しても戻らないこと。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_does_not_restore_entry_removed_meanwhile() {
+		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+		$fields = $this->open_settings_screen();
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$this->submit_settings_form( $fields );
+
+		$this->assertSame( '# 見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 別の画面で保存した内容を、編集していない古い画面の保存で上書きしないこと。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_does_not_overwrite_content_saved_elsewhere() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, self::CUSTOM_CONTENT );
+		$fields = $this->open_settings_screen();
+
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '# 別の画面で保存' );
+		$this->submit_settings_form( $fields );
+
+		$this->assertSame( '# 別の画面で保存', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 編集していなくても、有効と無効の切り替えは保存されること。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_still_saves_enabled_status() {
+		$llms   = AVC_AIS_Llms_Txt::init();
+		$fields = $this->open_settings_screen();
+		unset( $fields['llms_txt_enabled'] );
+
+		$this->submit_settings_form( $fields );
+
+		$this->assertFalse( $llms->is_enabled() );
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 編集した内容は、開いている間に投稿が変わっていても保存されること。
+	 *
+	 * @return void
+	 */
+	public function test_edited_form_is_saved() {
+		$fields = $this->open_settings_screen();
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+
+		$fields['llms_txt_content'] .= "\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$this->assertStringEndsWith( '# 追記', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 編集して保存しても、開いている間に非公開にした投稿の行が残らないこと。
+	 *
+	 * @dataProvider provide_hidden_post_changes
+	 *
+	 * @param array $change 投稿に加える変更.
+	 * @return void
+	 */
+	public function test_edited_form_does_not_keep_entry_of_post_hidden_meanwhile( array $change ) {
+		$post_id = self::factory()->post->create( array( 'post_content' => 'TOPSECRETEXCERPT' ) );
+		$fields  = $this->open_settings_screen();
+		$this->assertStringContainsString( 'TOPSECRETEXCERPT', $fields['llms_txt_content'], '前提: 開いたときは載っている' );
+
+		wp_update_post( array_merge( array( 'ID' => $post_id ), $change ) );
+		$fields['llms_txt_content'] .= "\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$this->assertStringNotContainsString( 'TOPSECRETEXCERPT', $saved );
+		$this->assertStringEndsWith( '# 追記', $saved );
+	}
+
+	/**
+	 * 編集して保存したときに行を取り除く変更。
+	 *
+	 * @return array[]
+	 */
+	public function provide_hidden_post_changes() {
+		return array(
+			'private'            => array( array( 'post_status' => 'private' ) ),
+			'password protected' => array( array( 'post_password' => 'hunter2' ) ),
+		);
+	}
+
+	/**
+	 * 以前のバージョンで固定された内容が自動生成と同じなら、編集せずに保存すると解除されること。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_releases_frozen_content_equal_to_generated() {
+		self::factory()->post->create( array( 'post_title' => '固定された記事' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, AVC_AIS_Llms_Txt::init()->generate_default_content() );
+
+		$this->submit_settings_form( $this->open_settings_screen() );
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 行末が < の内容でも、編集せずに保存すれば自動生成のままになること。
+	 *
+	 * sanitize_textarea_field() は LF の前の < と CRLF の前の < を別々に処理する。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_stays_generated_when_a_line_ends_with_less_than() {
+		update_option( 'blogname', 'Site <' );
+		$fields = $this->open_settings_screen();
+		$this->assertStringContainsString( "# Site <\r\n", $fields['llms_txt_content'], '前提: 行末が <' );
+
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+		$this->submit_settings_form( $fields );
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 編集せずに保存しても、WP-CLI などで入れた保存済みの内容を書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_does_not_rewrite_saved_content() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '<b>太字</b>の見出し' );
+
+		$this->submit_settings_form( $this->open_settings_screen() );
+
+		$this->assertSame( '<b>太字</b>の見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * ハッシュと llms.txt の内容を設定へ保存しないこと。
+	 *
+	 * @return void
+	 */
+	public function test_form_does_not_store_llms_txt_fields_in_settings() {
+		$this->submit_settings_form( $this->open_settings_screen() );
+
+		$options = get_option( 'avc_ais_options' );
+		$this->assertArrayNotHasKey( 'llms_txt_content', $options );
+		$this->assertArrayNotHasKey( 'llms_txt_content_hash', $options );
+	}
+
+	/**
+	 * ハッシュが配列でも警告を出さず、編集された内容として保存すること。
+	 *
+	 * @return void
+	 */
+	public function test_form_treats_non_string_hash_as_edited() {
+		$this->submit_settings_form(
+			array(
+				'llms_txt_content'      => self::CUSTOM_CONTENT,
+				'llms_txt_content_hash' => array( 'x' ),
+			)
+		);
+
+		$this->assertSame( self::CUSTOM_CONTENT, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 設定画面から保存しても本文のバックスラッシュが消えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_settings_form_keeps_backslashes() {
+		$this->submit_settings_form( array( 'llms_txt_content' => '保存先は C:\\Users\\aivec' ) );
+
+		$this->assertSame( '保存先は C:\\Users\\aivec', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 本文にバックスラッシュがある投稿が載っていても、編集せずに保存すれば自動生成のままになること。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_with_backslashes_stays_generated() {
+		self::factory()->post->create( array( 'post_content' => wp_slash( '保存先は C:\\Users\\aivec' ) ) );
+		$fields = $this->open_settings_screen();
+		$this->assertStringContainsString( 'C:\\Users', $fields['llms_txt_content'], '前提: バックスラッシュが載っている' );
+
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+		$this->submit_settings_form( $fields );
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 保存ボタンでも、編集していなければ書き込まないこと。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_save_button_stays_generated() {
+		$fields = $this->open_settings_screen();
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+
+		$response = $this->post_llms_txt_ajax(
+			'avc_ais_save_llms_txt',
+			'handle_save_llms_txt',
+			array(
+				'content'      => $fields['llms_txt_content'],
+				'content_hash' => $fields['llms_txt_content_hash'],
+			)
+		);
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertStringContainsString( 'Published meanwhile', $response['content'], '配信する内容を返す' );
+		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( $response['content'] ), $response['hash'] );
+	}
+
+	/**
+	 * 保存ボタンは、送信された内容ではなく配信する内容を返すこと。
+	 *
+	 * @return void
+	 */
+	public function test_save_button_returns_content_actually_stored() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '非公開の記事',
+				'post_status' => 'private',
+			)
+		);
+		$published = clone get_post( $post_id );
+
+		$published->post_status = 'publish';
+
+		$response = $this->post_llms_txt_ajax(
+			'avc_ais_save_llms_txt',
+			'handle_save_llms_txt',
+			array( 'content' => '- [非公開の記事](' . get_permalink( $published ) . "): 秘密\n<b>太字</b>の見出し" )
+		);
+
+		$this->assertSame( '太字の見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertSame( '太字の見出し', $response['content'] );
+		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( '太字の見出し' ), $response['hash'] );
+	}
+
+	/**
+	 * 保存ボタンのあとは、保存した内容を基準に編集の有無を判定すること。
+	 *
+	 * 保存後に開いたときの内容へ手で戻したら、編集として保存する。
+	 *
+	 * @return void
+	 */
+	public function test_save_button_returns_hash_of_saved_content() {
+		$fields = $this->open_settings_screen();
+
+		$response = $this->post_llms_txt_ajax(
+			'avc_ais_save_llms_txt',
+			'handle_save_llms_txt',
+			array(
+				'content'      => self::CUSTOM_CONTENT,
+				'content_hash' => $fields['llms_txt_content_hash'],
+			)
+		);
+		$this->assertSame( self::CUSTOM_CONTENT, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( self::CUSTOM_CONTENT ), $response['hash'] );
+
+		$fields['llms_txt_content_hash'] = $response['hash'];
+		$fields['llms_txt_content']      = '# 手で書き直した内容';
+		$this->submit_settings_form( $fields );
+
+		$this->assertSame( '# 手で書き直した内容', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 再生成のあと、編集せずに設定を保存しても自動生成のままになること。
+	 *
+	 * @return void
+	 */
+	public function test_unedited_form_after_regenerating_stays_generated() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, self::CUSTOM_CONTENT );
+
+		$response = $this->post_llms_txt_ajax( 'avc_ais_regenerate_llms_txt', 'handle_regenerate_llms_txt' );
+		self::factory()->post->create( array( 'post_title' => 'Published meanwhile' ) );
+
+		$this->submit_settings_form(
+			array(
+				'llms_txt_content'      => $response['content'],
+				'llms_txt_content_hash' => $response['hash'],
+			)
+		);
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 無効化すると /llms.txt のルールが消えること。
+	 *
+	 * @return void
+	 */
+	public function test_deactivation_removes_rewrite_rule() {
+		$llms = AVC_AIS_Llms_Txt::init();
+		$llms->add_rewrite_rules();
+		flush_rewrite_rules( false );
+		$this->assertArrayHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ), '前提: ルールがある' );
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		$this->assertArrayNotHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ) );
+	}
+
+	/**
+	 * 無効化のあと、もう一度有効化するとルールが戻ること。
+	 *
+	 * @return void
+	 */
+	public function test_reactivation_restores_rewrite_rule() {
+		AVC_AIS_Llms_Txt::deactivate();
+
+		AVC_AIS_Llms_Txt::activate();
+
+		$this->assertArrayHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ) );
+	}
+
+	/**
+	 * 無効にしている間に非公開にした投稿の行が、有効化後の読み出しで取り除かれること。
+	 *
+	 * @return void
+	 */
+	public function test_content_is_scrubbed_again_after_deactivation() {
+		global $wpdb;
+
+		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		// 無効の間はフックが動かないので、データベースを直接更新する。
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+
+		$this->assertSame( '# 見出し', AVC_AIS_Llms_Txt::init()->get_content() );
+	}
+
+	/**
 	 * 配列を送られても警告を出さず、空として扱うこと。
 	 *
 	 * @return void
 	 */
 	public function test_sanitize_content_treats_arrays_as_empty() {
 		$this->assertSame( '', AVC_AIS_Llms_Txt::sanitize_content( array( 'x', array( 'y' ) ) ) );
+		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( '' ), AVC_AIS_Llms_Txt::content_hash( array( 'x' ) ) );
 	}
 
 	/**

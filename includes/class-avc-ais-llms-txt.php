@@ -230,7 +230,9 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 保存済みの内容から公開されていない投稿の行を取り除き、壊れた URL を一度だけ直す。
+	 * 保存済みの内容から公開されていない投稿の行を取り除き、壊れた URL を直す。
+	 *
+	 * 更新のあとと、無効化やアンインストールから戻ったあとに一度だけ実行する。
 	 *
 	 * 以前のバージョンでは設定画面を保存すると自動生成の内容が DB に固定され、保護された
 	 * 投稿の抜粋も含まれていた。保存時に URL のパーセントエンコードも除去されていた。
@@ -246,15 +248,7 @@ class AVC_AIS_Llms_Txt {
 			return;
 		}
 
-		if ( '' !== (string) get_option( self::OPTION_NAME, '' ) ) {
-			$this->remove_entries_of_posts_matching(
-				array(
-					'post_status'  => 'publish',
-					'has_password' => true,
-				)
-			);
-			$this->remove_entries_of_posts_matching( array( 'post_status' => 'private' ) );
-		}
+		$this->remove_entries_of_hidden_posts();
 
 		update_option( self::OPTION_SCRUBBED, true );
 
@@ -309,6 +303,25 @@ class AVC_AIS_Llms_Txt {
 		if ( $updated !== $saved ) {
 			update_option( self::OPTION_NAME, $updated );
 		}
+	}
+
+	/**
+	 * 非公開とパスワード保護の投稿の行を、保存済みの内容から取り除く。
+	 *
+	 * @return void
+	 */
+	private function remove_entries_of_hidden_posts() {
+		if ( '' === (string) get_option( self::OPTION_NAME, '' ) ) {
+			return;
+		}
+
+		$this->remove_entries_of_posts_matching(
+			array(
+				'post_status'  => 'publish',
+				'has_password' => true,
+			)
+		);
+		$this->remove_entries_of_posts_matching( array( 'post_status' => 'private' ) );
 	}
 
 	/**
@@ -534,18 +547,71 @@ class AVC_AIS_Llms_Txt {
 	 * @return bool
 	 */
 	public function save_content( $content ) {
-		$content = self::sanitize_content( $content );
-
-		// 設定画面の textarea には自動生成の内容が入っているため、編集せず保存しただけで
-		// 内容が固定され、後から非公開にした投稿の抜粋まで残り続けていた。自動生成と同じ
-		// 内容なら保存せず、自動生成のままにする。
-		$generated = self::sanitize_content( $this->generate_default_content() );
-		if ( self::normalize_newlines( $content ) === self::normalize_newlines( $generated ) ) {
+		// 自動生成と同じ内容なら保存せず、自動生成のままにする。内容を固定すると新しい投稿が
+		// 載らなくなり、後から非公開にした投稿の抜粋まで残り続ける。
+		if ( $this->is_generated_content( $content ) ) {
 			delete_option( self::OPTION_NAME );
 			return true;
 		}
 
-		return update_option( self::OPTION_NAME, $content );
+		return update_option( self::OPTION_NAME, self::sanitize_content( $content ) );
+	}
+
+	/**
+	 * 内容が現在の自動生成と同じかを判定する。
+	 *
+	 * @param mixed $content 内容（無害化する前の値）.
+	 * @return bool 同じなら true.
+	 */
+	private function is_generated_content( $content ) {
+		return self::content_hash( $content ) === self::content_hash( $this->generate_default_content() );
+	}
+
+	/**
+	 * 画面から送信された内容を保存する。
+	 *
+	 * 画面を開いている間に投稿が変わると送信された内容は古くなっているので、そのまま書き込むと
+	 * 自動生成の内容が固定されたり、非公開にした投稿の行が戻ったりする。編集されていなければ
+	 * 送信された内容を使わず、編集されていれば非公開にした投稿の行を取り除く。
+	 *
+	 * @param mixed $content        送信された内容（無害化する前の値）.
+	 * @param mixed $displayed_hash 画面に表示した内容の content_hash().
+	 * @return void
+	 */
+	public function save_submitted_content( $content, $displayed_hash ) {
+		if ( empty( self::sanitize_content( $content ) ) ) {
+			$this->reset_content();
+			return;
+		}
+
+		if ( self::content_hash( $content ) !== $displayed_hash ) {
+			$this->save_content( $content );
+			$this->remove_entries_of_hidden_posts();
+			return;
+		}
+
+		// 以前のバージョンで固定された内容が自動生成と同じなら、ここで固定を解除する。
+		$saved = (string) get_option( self::OPTION_NAME, '' );
+		if ( '' !== $saved && $this->is_generated_content( $saved ) ) {
+			delete_option( self::OPTION_NAME );
+		}
+	}
+
+	/**
+	 * 画面に表示した内容が編集されたかを判定するためのハッシュを返す。
+	 *
+	 * ブラウザは textarea の改行を CRLF で送信するので、改行を統一して計算する。
+	 * sanitize_textarea_field() は行末の < の扱いが改行コードで変わるので、無害化の前に統一する。
+	 *
+	 * @param mixed $content 内容（無害化する前の値）.
+	 * @return string ハッシュ.
+	 */
+	public static function content_hash( $content ) {
+		if ( is_array( $content ) || is_object( $content ) ) {
+			$content = '';
+		}
+
+		return hash( 'sha256', self::sanitize_content( self::normalize_newlines( $content ) ) );
 	}
 
 	/**
@@ -614,8 +680,17 @@ class AVC_AIS_Llms_Txt {
 
 	/**
 	 * Flush rewrite rules on deactivation.
+	 *
+	 * このリクエストの init で登録したルールを外してから再生成する。外さないと /llms.txt の
+	 * ルールが残り、プラグインを削除したあともトップページを返してしまう。
+	 * 無効の間は投稿の変更を追えないので、次に読み出すときに非公開とパスワード保護の投稿の行を
+	 * 取り除き直す。下書きやゴミ箱へ移した投稿、削除した投稿の行は判別できないので残る。
 	 */
 	public static function deactivate() {
+		global $wp_rewrite;
+
+		unset( $wp_rewrite->extra_rules_top[ self::REWRITE_REGEX ] );
 		flush_rewrite_rules();
+		delete_option( self::OPTION_SCRUBBED );
 	}
 }
