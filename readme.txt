@@ -171,18 +171,19 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 
 = 1.3.2 =
 * [Security] Excluded password-protected posts and pages from the generated llms.txt, and removed the entries of private and password-protected posts from previously saved llms.txt content
-* [Security] Saved llms.txt entries are now removed when a published post is later made private, password-protected, unpublished, or deleted
+* [Security] Saved llms.txt entries are now removed when a published post is later made private, password-protected, unpublished, or deleted. While the plugin is deactivated or uninstalled these changes cannot be tracked. Only private and password-protected posts are checked again afterwards, so review llms.txt if other posts were unpublished or deleted in the meantime
 * [Security] Sites that saved llms.txt before this release should review it or use the Regenerate button, because entries whose title or URL has changed since saving, or whose posts were unpublished before this release, cannot be detected automatically
 * [Security] Stopped outputting content-specific schema such as QAPage and Product, and the featured image, for password-protected posts until the password is entered
 * [Security] Hardened JSON-LD output escaping
 * [Security] Stopped printing the Google Maps API key in the setup wizard and storing it in wizard progress data. Keys stored by earlier versions are removed automatically
 * [Security] Prevented browsers from auto-filling the Google Maps API key field with a saved password
 * [Fixed] Fixed ampersands in JSON-LD URLs being rewritten to `&amp;`
-* [Fixed] Fixed the auto-generated llms.txt being frozen when the settings screen was saved without editing it
+* [Fixed] Fixed the auto-generated llms.txt being frozen when the settings screen was saved without editing it, including when posts changed while the screen was open. Saving without editing no longer writes llms.txt content
 * [Fixed] Fixed the setup wizard, and any other save outside the settings screen, turning llms.txt off and deleting custom llms.txt content. Sites affected by this stay off until llms.txt is turned on again in the settings, because this cannot be told apart from turning it off on purpose. Deleted content cannot be restored
 * [Fixed] Fixed `/llms.txt` staying 404 after llms.txt was turned off and on again. Affected sites recover the next time an administrator opens the dashboard
 * [Fixed] Fixed saving llms.txt removing percent-encoded characters, which broke URLs with non-ASCII slugs. Broken URLs in saved content are repaired automatically when the title and URL match exactly one published post. Other broken URLs must be corrected by hand or with the Regenerate button
-* [Changed] Plugin settings, the Google Maps API key, and wizard progress are now deleted on uninstall. Per-post settings are kept
+* [Fixed] Fixed `/llms.txt` showing the front page after the plugin was deactivated or uninstalled. On multisite, network deactivation only updates the current site. The other sites are updated when the plugin is uninstalled
+* [Changed] Temporary data such as wizard progress is now deleted on uninstall. Plugin settings, llms.txt content, the Google Maps API key, and per-post settings are kept, so they do not have to be entered again after reinstalling. To remove the key, use the Delete stored key button in the settings before uninstalling
 * [Changed] Confirmed compatibility with WordPress 7.1
 
 = 1.3.1 =
