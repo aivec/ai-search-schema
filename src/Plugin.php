@@ -97,10 +97,14 @@ class Plugin {
 	/**
 	 * アンインストール時の処理を行う
 	 *
-	 * 設定と Google Maps API キーを残さないよう削除する。投稿ごとの設定
-	 * （_avc_ais_meta / _ais_product）はコンテンツの一部として残す。
+	 * 再インストールのたびに入力し直さなくて済むよう、設定、Google Maps API キー、
+	 * llms.txt の内容、ウィザードの完了状態、投稿ごとの設定は残し、処理のための一時的な
+	 * データだけを削除する。API キーが不要なら設定画面の削除ボタンで消せる。
 	 */
 	public static function uninstall(): void {
+		// 無効な状態で呼ばれるので、このクラスはまだ読み込まれていない。
+		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+
 		if ( \is_multisite() ) {
 			$site_ids = \get_sites(
 				array(
@@ -110,39 +114,42 @@ class Plugin {
 			);
 			foreach ( $site_ids as $site_id ) {
 				\switch_to_blog( $site_id );
-				self::delete_site_data();
+				self::delete_temporary_site_data();
 				\restore_current_blog();
 			}
 		} else {
-			self::delete_site_data();
+			self::delete_temporary_site_data();
 		}
 
+		// ウィザードの入力はステップごとに設定へ保存されるので、進捗を消しても入力は失われない。
 		// user meta はネットワーク全体で共有されるためサイトごとには消さない。
 		\delete_metadata( 'user', 0, Wizard::META_PROGRESS, '', true );
-		\delete_metadata( 'user', 0, 'avc_ais_wizard_notice_dismissed', '', true );
 	}
 
 	/**
-	 * 現在のサイトに保存したプラグインのデータを削除する
+	 * 現在のサイトに保存した処理のための一時的なデータを削除する
 	 *
+	 * 一度きりの処理の記録も消して再インストール後にやり直す。プラグインがない間は投稿の変更を
+	 * 追えないので、残した llms.txt の内容はもう一度掃除する必要がある。
+	 * /llms.txt の rewrite ルールも消す。ネットワーク全体の無効化では現在のサイトのルールしか
+	 * 消えず、残るとトップページを返してしまう。
 	 * ハッシュ付きの一時データ（avc_ais_diag_* / avc_ais_geocode_*）は短時間で失効し、
 	 * WordPress の定期処理で消えるため対象にしない。
 	 */
-	private static function delete_site_data(): void {
+	private static function delete_temporary_site_data(): void {
 		$options = array(
-			'avc_ais_options',
-			'avc_ais_gmaps_api_key',
-			'avc_ais_llms_txt',
-			'avc_ais_llms_txt_enabled',
-			'avc_ais_llms_txt_scrubbed',
-			'avc_ais_llms_txt_rule_restored',
-			Wizard::OPTION_COMPLETED,
-			'avc_ais_wizard_completed_at',
-			'avc_ais_wizard_version',
+			\AVC_AIS_Llms_Txt::OPTION_SCRUBBED,
+			\AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED,
 			Wizard::OPTION_API_KEY_PURGED,
 		);
 		foreach ( $options as $option ) {
 			\delete_option( $option );
+		}
+
+		$rules = \get_option( 'rewrite_rules' );
+		if ( \is_array( $rules ) && isset( $rules[ \AVC_AIS_Llms_Txt::REWRITE_REGEX ] ) ) {
+			unset( $rules[ \AVC_AIS_Llms_Txt::REWRITE_REGEX ] );
+			\update_option( 'rewrite_rules', $rules );
 		}
 
 		\delete_transient( 'avc_ais_wizard_redirect' );
