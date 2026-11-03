@@ -179,6 +179,9 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 * [Security] Prevented browsers from auto-filling the Google Maps API key field with a saved password
 * [Fixed] Fixed ampersands in JSON-LD URLs being rewritten to `&amp;`
 * [Fixed] Fixed the auto-generated llms.txt being frozen when the settings screen was saved without editing it
+* [Fixed] Fixed the setup wizard, and any other save outside the settings screen, turning llms.txt off and deleting custom llms.txt content. Sites affected by this stay off until llms.txt is turned on again in the settings, because this cannot be told apart from turning it off on purpose. Deleted content cannot be restored
+* [Fixed] Fixed `/llms.txt` staying 404 after llms.txt was turned off and on again. Affected sites recover the next time an administrator opens the dashboard
+* [Fixed] Fixed saving llms.txt removing percent-encoded characters, which broke URLs with non-ASCII slugs. Broken URLs in saved content are repaired automatically when the title and URL match exactly one published post. Other broken URLs must be corrected by hand or with the Regenerate button
 * [Changed] Plugin settings, the Google Maps API key, and wizard progress are now deleted on uninstall. Per-post settings are kept
 * [Changed] Confirmed compatibility with WordPress 7.1
 
@@ -225,4 +228,4 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 == Upgrade Notice ==
 
 = 1.3.2 =
-Security release. Updating is recommended.
+Security release. Updating is recommended. If you have used the setup wizard, check that llms.txt is still turned on in the settings.
