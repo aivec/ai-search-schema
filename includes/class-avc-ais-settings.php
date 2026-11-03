@@ -337,10 +337,14 @@ class AVC_AIS_Settings {
 			);
 		}
 
-		$content = isset( $_POST['content'] ) ? sanitize_textarea_field( wp_unslash( $_POST['content'] ) ) : '';
-
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
 		$llms_txt = AVC_AIS_Llms_Txt::init();
+
+		$content = '';
+		if ( isset( $_POST['content'] ) ) {
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitize_content() で無害化する。
+			$content = AVC_AIS_Llms_Txt::sanitize_content( wp_unslash( $_POST['content'] ) );
+		}
 
 		if ( ! empty( $content ) ) {
 			$llms_txt->save_content( $content );
@@ -901,25 +905,31 @@ class AVC_AIS_Settings {
 		);
 
 		// llms.txt settings.
-		$llms_txt_enabled = ! empty( $input['llms_txt_enabled'] );
-		$llms_txt_content = isset( $input['llms_txt_content'] )
-			? sanitize_textarea_field( $input['llms_txt_content'] )
-			: '';
+		// この関数は update_option() のたびに呼ばれるが、ウィザードなど設定画面以外からの
+		// 保存には llms.txt の項目がない。項目がないときに無効化やリセットをしないよう、
+		// フォームから常に送信される textarea の有無で判定する（チェックボックスは未選択だと
+		// 送信されないので判定に使えない）。
+		if ( isset( $input['llms_txt_content'] ) ) {
+			require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
+			$llms_txt         = AVC_AIS_Llms_Txt::init();
+			$llms_txt_enabled = ! empty( $input['llms_txt_enabled'] );
+			$llms_txt_content = AVC_AIS_Llms_Txt::sanitize_content( $input['llms_txt_content'] );
+			$previous_enabled = $llms_txt->is_enabled();
+			$llms_txt->set_enabled( $llms_txt_enabled );
+			if ( ! empty( $llms_txt_content ) ) {
+				$llms_txt->save_content( $llms_txt_content );
+			} else {
+				// If content is empty, reset to auto-generate.
+				$llms_txt->reset_content();
+			}
 
-		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		$llms_txt         = AVC_AIS_Llms_Txt::init();
-		$previous_enabled = $llms_txt->is_enabled();
-		$llms_txt->set_enabled( $llms_txt_enabled );
-		if ( ! empty( $llms_txt_content ) ) {
-			$llms_txt->save_content( $llms_txt_content );
-		} else {
-			// If content is empty, reset to auto-generate.
-			$llms_txt->reset_content();
-		}
-
-		// Flush rewrite rules if llms.txt enabled status changed.
-		if ( $llms_txt_enabled !== $previous_enabled ) {
-			flush_rewrite_rules();
+			// Flush rewrite rules if llms.txt enabled status changed.
+			if ( $llms_txt_enabled !== $previous_enabled ) {
+				// このリクエストの init は変更前の状態で動いたので、有効にしたときはルールを
+				// 登録してから再生成する。登録しないと /llms.txt のルールが消えて 404 になる。
+				$llms_txt->add_rewrite_rules();
+				flush_rewrite_rules();
+			}
 		}
 
 		return $output;

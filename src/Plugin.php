@@ -135,6 +135,7 @@ class Plugin {
 			'avc_ais_llms_txt',
 			'avc_ais_llms_txt_enabled',
 			'avc_ais_llms_txt_scrubbed',
+			'avc_ais_llms_txt_rule_restored',
 			Wizard::OPTION_COMPLETED,
 			'avc_ais_wizard_completed_at',
 			'avc_ais_wizard_version',

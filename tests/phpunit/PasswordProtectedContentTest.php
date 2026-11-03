@@ -403,7 +403,7 @@ class PasswordProtectedContentTest extends WP_UnitTestCase {
 	/**
 	 * 保存時にパーセントエンコードが除去された URL の行も除かれること。
 	 *
-	 * 日本語スラッグの URL は sanitize_textarea_field() で別の文字列になるため、
+	 * 以前の保存処理で日本語スラッグの URL は別の文字列になっているため、
 	 * 除去後の URL が同じ別の投稿の行を巻き込まないことも確認する。
 	 */
 	public function test_scrub_matches_urls_altered_by_sanitization() {
@@ -420,12 +420,15 @@ class PasswordProtectedContentTest extends WP_UnitTestCase {
 		);
 		$llms         = AVC_AIS_Llms_Txt::init();
 
-		$llms->save_content(
-			'- [Protected entry](' . get_permalink( $protected_id ) . '): ' . self::SECRET . "\n"
-			. '- [Public japanese slug](' . get_permalink( $public_id ) . "): Public excerpt\n"
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_NAME,
+			sanitize_textarea_field(
+				'- [Protected entry](' . get_permalink( $protected_id ) . '): ' . self::SECRET . "\n"
+				. '- [Public japanese slug](' . get_permalink( $public_id ) . "): Public excerpt\n"
+			)
 		);
 		$before = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
-		$this->assertStringNotContainsString( '(' . get_permalink( $protected_id ) . ')', $before, '前提: 保存で URL が変わる' );
+		$this->assertStringNotContainsString( '(' . get_permalink( $protected_id ) . ')', $before, '前提: 以前の保存処理で URL が変わる' );
 
 		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
 		$llms->maybe_scrub_saved_content();
