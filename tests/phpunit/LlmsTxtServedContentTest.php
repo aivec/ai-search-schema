@@ -1075,6 +1075,1291 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 投稿に対応しない別のポートの URL は、同じタイトルの投稿があっても残すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_another_port_without_a_post_are_kept() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$host = WP_TESTS_DOMAIN;
+		foreach ( array( "http://{$host}:8080/docs/", "https://{$host}:80/docs/", "http://{$host}:443/docs/" ) as $url ) {
+			$saved = '- [同じタイトル](' . $url . '): 別のポート';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+	}
+
+	/**
+	 * 標準のポートを明示した URL は、このサイトの行として判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_entries_with_a_default_port_are_site_entries() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$host = WP_TESTS_DOMAIN;
+		foreach ( array( "http://{$host}:80/docs/", "https://{$host}:443/docs/", "//{$host}:443/docs/", "//{$host}:80/docs/" ) as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 標準のポート' );
+
+			$this->assertSame( '', $this->served(), $url );
+		}
+	}
+
+	/**
+	 * サブディレクトリのサイトでは、外のパスの行を隠さず、中のパスの行は隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_site_in_a_subdirectory_only_hides_its_own_paths() {
+		$host = WP_TESTS_DOMAIN;
+		update_option( 'home', "http://{$host}/blog" );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+
+		$outside = array(
+			"http://{$host}",
+			"http://{$host}/",
+			"http://{$host}/shop/docs/",
+			"http://{$host}/blogging/docs/",
+			"//{$host}/shop/docs/",
+			"http://www.{$host}/shop/docs/",
+			'/shop/docs/',
+			"http://{$host}/?p=1",
+		);
+		foreach ( $outside as $url ) {
+			$saved = '- [同じタイトル](' . $url . '): 外';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+
+		$inside = array(
+			"http://{$host}/blog/docs/",
+			"https://{$host}/blog/docs/",
+			"http://www.{$host}/blog/docs/",
+			"//{$host}/blog/docs/",
+			"http://{$host}/BLOG/docs/",
+			"http://{$host}/blog//",
+			'/blog/docs/',
+			'docs/',
+		);
+		foreach ( $inside as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 中' );
+
+			$this->assertSame( '', $this->served(), $url );
+		}
+	}
+
+	/**
+	 * エンコードした日本語のサブディレクトリでも、中のパスとして判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_site_in_a_non_ascii_subdirectory_matches_either_encoding() {
+		$host = WP_TESTS_DOMAIN;
+		update_option( 'home', "http://{$host}/%e3%83%96%e3%83%ad%e3%82%b0" );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+
+		foreach ( array( "http://{$host}/ブログ/docs/", "http://{$host}/%E3%83%96%E3%83%AD%E3%82%B0/docs/" ) as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 中' );
+
+			$this->assertSame( '', $this->served(), $url );
+		}
+	}
+
+	/**
+	 * home_url() に言語のディレクトリが足されていても、他の言語の行をこのサイトとして判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_language_directory_in_home_url_keeps_other_languages_inside() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$add_language = static function ( $url, $path ) {
+			return untrailingslashit( get_option( 'home' ) ) . '/ja' . $path;
+		};
+		add_filter( 'home_url', $add_language, 10, 2 );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/en/docs/): 他の言語" );
+		$served = $this->served();
+		remove_filter( 'home_url', $add_language, 10 );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * home_url() だけを別のドメインへ変えるプラグインがあっても、そのドメインの行を隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_filtered_home_url_domain_stays_inside() {
+		update_option( 'home', 'http://' . WP_TESTS_DOMAIN . '/original' );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](http://mapped.example/docs/): 別のドメイン' );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * パスが公開していない投稿と同じなら、別のポートでも抜粋を出さないよう隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_another_port_with_a_hidden_post_path_are_hidden() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '公開していない投稿',
+				'post_name'   => 'docs',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別のタイトル](http://' . WP_TESTS_DOMAIN . ':8443/docs/): 移転前のポート' );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * パスが同じでも別のポートの行は、投稿のスラッグの変更や削除で書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_another_port_survive_post_changes() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '同じタイトル',
+				'post_name'  => 'docs',
+			)
+		);
+		$other   = "- [同じタイトル](http://{$host}:8080/docs/): 別のポート";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/docs/): このサイト\n{$other}" );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'docs-moved',
+			)
+		);
+		$this->assertSame(
+			"- [同じタイトル](http://{$host}/docs-moved/): このサイト\n{$other}",
+			get_option( AVC_AIS_Llms_Txt::OPTION_NAME )
+		);
+
+		wp_delete_post( $post_id, true );
+		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 投稿を削除しても、パスが同じ別のポートの行は消さないこと（保存時の除去も含む）。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_keeps_the_same_path_on_another_port() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '同じタイトル',
+				'post_name'  => 'docs',
+			)
+		);
+		$other   = "- [同じタイトル](http://{$host}:8080/docs/): 別のポート";
+		$own     = "- [同じタイトル](http://{$host}/docs/): このサイト";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "{$own}\n{$other}" );
+
+		wp_delete_post( $post_id, true );
+		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		// 古い画面から保存した内容は、記憶した URL の行だけを取り除く。
+		$remove = new ReflectionMethod( AVC_AIS_Llms_Txt::class, 'remove_entries_of_deleted_posts' );
+		avc_ais_test_make_accessible( $remove );
+		$this->assertSame( $other, $remove->invoke( null, "{$own}\n{$other}" ) );
+	}
+
+	/**
+	 * home に日本語がそのまま入っていても、中のパスとトップページを判定できること。
+	 *
+	 * @return void
+	 */
+	public function test_raw_multibyte_home_matches_its_paths() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$raw_home = static function () use ( $host ) {
+			return "http://{$host}/日本語";
+		};
+		add_filter( 'option_home', $raw_home );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/日本語/docs/): 中" );
+		$inside = $this->served();
+		$front  = "- [同じタイトル](http://{$host}/日本語/): トップページ";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $front );
+		$top = $this->served();
+		remove_filter( 'option_home', $raw_home );
+
+		$this->assertSame( '', $inside );
+		$this->assertSame( $front, $top );
+	}
+
+	/**
+	 * home_url() にクエリが足されていても、トップページとサイトの範囲を判定できること。
+	 *
+	 * @return void
+	 */
+	public function test_query_in_home_url_is_ignored() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$add_query = static function ( $url, $path ) {
+			return '' === $path || '/' === $path ? untrailingslashit( get_option( 'home' ) ) . '/?lang=en' : $url;
+		};
+		add_filter( 'home_url', $add_query, 10, 2 );
+		$front = "- [同じタイトル](http://{$host}/): トップページ";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $front . "\n- [同じタイトル](http://{$host}/docs/): このサイト" );
+		$served = $this->served();
+		remove_filter( 'home_url', $add_query, 10 );
+
+		$this->assertSame( $front, $served );
+	}
+
+	/**
+	 * ?p= の URL は、このサイトの範囲の中でだけ投稿と照合すること。
+	 *
+	 * @return void
+	 */
+	public function test_query_urls_outside_the_site_are_not_matched_by_id() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '公開していない投稿',
+				'post_status' => 'draft',
+			)
+		);
+		update_option( 'home', "http://{$host}/blog" );
+
+		$saved = "- [別のタイトル](http://{$host}/shop/?p={$post_id}): サイトの外";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served() );
+
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別のタイトル](http://{$host}/blog/?p={$post_id}): このサイト" );
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 日本語のサブディレクトリで以前の保存処理が壊した URL は、このサイトの行として隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_legacy_broken_urls_under_an_encoded_home_are_site_entries() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+
+		$homes = array(
+			"http://{$host}/%e3%83%96%e3%83%ad%e3%82%b0" => "http://{$host}//docs/",
+			"http://{$host}/site-%e3%81%82"              => "http://{$host}/site-/docs/",
+		);
+		foreach ( $homes as $home => $url ) {
+			update_option( 'home', $home );
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 壊れた URL' );
+			$this->assertSame( '', $this->served(), $url );
+
+			// 比較の範囲が広がりすぎて、サイトの外の行まで隠さないこと。
+			$outside = "- [同じタイトル](http://{$host}/shop/docs/): サイトの外";
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $outside );
+			$this->assertSame( $outside, $this->served(), $home );
+		}
+	}
+
+	/**
+	 * サブディレクトリのトップページは、大文字やエンコードの違いがあっても隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_home_url_spellings_are_not_judged_by_title() {
+		$host = WP_TESTS_DOMAIN;
+		update_option( 'home', "http://{$host}/%e3%83%96%e3%83%ad%e3%82%b0" );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+
+		$urls = array(
+			"http://{$host}/ブログ",
+			"http://{$host}/ブログ/",
+			"http://{$host}/%E3%83%96%E3%83%AD%E3%82%B0/",
+		);
+		foreach ( $urls as $url ) {
+			$saved = '- [同じタイトル](' . $url . '): トップページ';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+	}
+
+	/**
+	 * http と https のリクエストで、保存した判定結果を共有すること。
+	 *
+	 * @return void
+	 */
+	public function test_cached_result_is_shared_between_schemes() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [タイトル](http://' . WP_TESTS_DOMAIN . '/docs/): 説明' );
+		$this->served();
+
+		$use_https = static function ( $url ) {
+			return set_url_scheme( $url, 'https' );
+		};
+		add_filter( 'home_url', $use_https );
+		$this->served();
+		remove_filter( 'home_url', $use_https );
+
+		$this->assertCount( 1, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
+	 * home_url() が交互に変わっても判定し直さず、保存する数には上限があること。
+	 *
+	 * @return void
+	 */
+	public function test_cached_results_are_kept_per_home_url() {
+		global $wpdb;
+
+		$hosts = array( 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h' );
+		$saved = implode(
+			"\n",
+			array_map(
+				static function ( $host ) {
+					return "- [タイトル](http://{$host}.example/docs/): 説明";
+				},
+				$hosts
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$served_on = function ( $host ) {
+			$map_domain = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $map_domain, 10, 2 );
+			$this->served();
+			remove_filter( 'home_url', $map_domain, 10 );
+		};
+
+		$served_on( 'a.example' );
+		$served_on( 'b.example' );
+		$before = $wpdb->num_queries;
+		$served_on( 'a.example' );
+		$served_on( 'b.example' );
+		$this->assertSame( $before, $wpdb->num_queries, '保存した結果を使えば投稿を検索しない' );
+
+		foreach ( $hosts as $host ) {
+			$served_on( "{$host}.example" );
+		}
+		$this->assertCount( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE_HOMES, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
+	 * ホストの大文字小文字で判定し直さないこと。ポートが違えば別の結果として保存すること。
+	 *
+	 * @return void
+	 */
+	public function test_cached_result_key_normalizes_host_and_includes_port() {
+		$saved = '- [タイトル](http://' . WP_TESTS_DOMAIN . '/docs/): 説明';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->served();
+
+		$upper = static function ( $url, $path ) {
+			return 'http://' . strtoupper( WP_TESTS_DOMAIN ) . $path;
+		};
+		add_filter( 'home_url', $upper, 10, 2 );
+		$this->served();
+		remove_filter( 'home_url', $upper, 10 );
+		$this->assertCount( 1, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+
+		$with_port = static function ( $url, $path ) {
+			return 'http://' . WP_TESTS_DOMAIN . ':8080' . $path;
+		};
+		add_filter( 'home_url', $with_port, 10, 2 );
+		$this->served();
+		remove_filter( 'home_url', $with_port, 10 );
+		$this->assertCount( 2, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
+	 * ホストのすぐ後にクエリや空白が続く行も、そのホストの行として別に保存すること。
+	 *
+	 * @return void
+	 */
+	public function test_hosts_followed_by_a_query_are_found_in_the_content() {
+		$served_on = function ( $host ) {
+			$map_domain = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $map_domain, 10, 2 );
+			$this->served();
+			remove_filter( 'home_url', $map_domain, 10 );
+		};
+
+		foreach ( array( '?p=5', '#top', ' "タイトル"' ) as $rest ) {
+			delete_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [題](https://en.example{$rest}): 抜粋" );
+			$served_on( 'en.example' );
+			$served_on( 'ja.example' );
+			$this->assertCount( 2, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ), $rest );
+		}
+	}
+
+	/**
+	 * 行にないホストは、Host を変えても判定し直さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_hosts_not_in_the_content_share_the_cached_result() {
+		global $wpdb;
+
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [タイトル](http://' . WP_TESTS_DOMAIN . '/docs/): 説明' );
+		$served_on = function ( $host ) {
+			$from_host = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $from_host, 10, 2 );
+			$this->served();
+			remove_filter( 'home_url', $from_host, 10 );
+		};
+
+		$served_on( 'attacker-1.example' );
+		$before = $wpdb->num_queries;
+		$served_on( 'attacker-2.example' );
+		$served_on( 'attacker-3.example' );
+		// 行の URL の一部だけに一致する Host も、行にあるホストとしない。
+		$served_on( 'e' );
+		$served_on( 'example' );
+		// ポートだけを変えても判定し直さない。
+		$served_on( 'attacker-2.example:1' );
+		$served_on( 'attacker-2.example:2' );
+
+		$this->assertSame( $before, $wpdb->num_queries );
+		$this->assertCount( 1, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
+	 * 結果ごとの期限を過ぎた判定結果は、全体の期限が残っていても使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_cached_result_expires_on_its_own() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '記事',
+				'post_name'  => 'cached-post',
+			)
+		);
+		$saved   = '- [記事](http://' . WP_TESTS_DOMAIN . '/cached-post/): 抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served() );
+
+		// 投稿の変更のフックを通らない変更（データベースの直接の編集など）を想定している。
+		global $wpdb;
+		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+		$this->assertSame( $saved, $this->served(), '前提: 期限までは保存した結果を使う' );
+
+		$cached = get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+		foreach ( array_keys( $cached ) as $home ) {
+			$cached[ $home ]['time'] = time() - 5 * MINUTE_IN_SECONDS;
+		}
+		set_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE, $cached, MINUTE_IN_SECONDS );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * home_url() が変わったら、保存した判定結果を使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_cached_result_depends_on_home_url() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$saved = '- [同じタイトル](http://mapped.example/docs/): 別のドメイン';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served() );
+
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * タイトルとスラッグがともに公開していない投稿と一致する行は、リンク先を問わず隠すこと。
+	 *
+	 * サイトを移転した前の URL や、home_url() がリクエストで変わるサイトの行を想定している。
+	 *
+	 * @return void
+	 */
+	public function test_entries_matching_title_and_slug_are_hidden_anywhere() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_name'   => 'secret-post',
+				'post_status' => 'private',
+			)
+		);
+		update_option( 'home', "http://{$host}/new" );
+
+		$urls = array(
+			'https://old-domain.example/secret-post/',
+			"http://{$host}/old/secret-post/",
+			"http://{$host}:8443/old/secret-post/",
+			"http://{$host}/shop/../new/secret-post/",
+			"http://{$host}/old/secret-post.html",
+		);
+		foreach ( $urls as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 移転前' );
+			$this->assertSame( '', $this->served(), $url );
+		}
+
+		// タイトルが違えば別のページとして残す。
+		$saved = '- [別のタイトル](https://old-domain.example/secret-post/): 別のページ';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served() );
+
+		// スラッグが違えば別のページとして残す。
+		$saved = '- [同じタイトル](https://old-domain.example/other-page/): 別のページ';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 別のホストの行は、タイトルとスラッグが同じでも投稿が公開中なら残し、パスが同じだけでも残すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_another_host_need_a_hidden_post_with_the_same_title_and_slug() {
+		self::factory()->post->create(
+			array(
+				'post_title' => '公開中の記事',
+				'post_name'  => 'public-post',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_title'  => '公開していない記事',
+				'post_name'   => 'secret-post',
+				'post_status' => 'private',
+			)
+		);
+		$saved = "- [公開中の記事](https://other.example/public-post/): 公開中\n- [別のタイトル](https://other.example/secret-post/): パスだけ同じ";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * タイトルと ID が公開していない投稿と一致する行は、リンク先を問わず隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_matching_title_and_id_are_hidden_anywhere() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+
+		$urls = array(
+			"https://old-domain.example/?p={$post_id}",
+			"https://old-domain.example/?page_id={$post_id}",
+			"https://old-domain.example/archives/{$post_id}",
+		);
+		foreach ( $urls as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): 移転前' );
+			$this->assertSame( '', $this->served(), $url );
+
+			$saved = '- [別のタイトル](' . $url . '): 別のページ';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+	}
+
+	/**
+	 * タイトルとスラッグが同じ公開中の投稿もあれば、その投稿の行かもしれないので隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_public_twin_keeps_entries_matching_title_and_slug() {
+		$trashed = self::factory()->post->create(
+			array(
+				'post_title' => '作り直した記事',
+				'post_name'  => 'rebuilt',
+			)
+		);
+		wp_trash_post( $trashed );
+		self::factory()->post->create(
+			array(
+				'post_title' => '作り直した記事',
+				'post_name'  => 'rebuilt',
+			)
+		);
+		$saved = '- [作り直した記事](https://old-domain.example/rebuilt/): 公開中';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 計測用のクエリが付いた URL も、タイトルが違っても投稿の状態で判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_tracking_query_does_not_reveal_hidden_posts() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '公開していない投稿',
+				'post_name'   => 'secret-post',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](http://' . WP_TESTS_DOMAIN . '/secret-post/?utm_source=llms): 抜粋' );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 投稿を完全に削除したら、計測用のクエリが付いた行も消すこと。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_removes_its_entry_with_a_tracking_query() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '記事',
+				'post_name'  => 'gone',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別の題](http://{$host}/gone/?x=1): 抜粋" );
+
+		wp_delete_post( $post_id, true );
+		$this->assertSame( '', (string) get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		// 古い画面から保存した内容からも取り除く。
+		$remove = new ReflectionMethod( AVC_AIS_Llms_Txt::class, 'remove_entries_of_deleted_posts' );
+		avc_ais_test_make_accessible( $remove );
+		$this->assertSame( '', $remove->invoke( null, "- [別の題](http://{$host}/gone/?x=1): 抜粋" ) );
+	}
+
+	/**
+	 * 投稿を完全に削除したら、?p=ID の行も消して、隠れていた抜粋を配信しないこと。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_removes_its_entry_with_a_query_id() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create( array( 'post_status' => 'private' ) );
+		$other   = "- [別の題](http://{$host}:8080/?p={$post_id}): 別のポート";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別の題](http://{$host}/?p={$post_id}&utm=1): 抜粋\n{$other}" );
+
+		wp_delete_post( $post_id, true );
+
+		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 投稿の URL が変わったら、クエリとフラグメントを残して行を書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_keeps_query_and_fragment_of_the_entry() {
+		$host = WP_TESTS_DOMAIN;
+		foreach ( array( 'post', 'page' ) as $post_type ) {
+			$post_id = self::factory()->post->create(
+				array(
+					'post_type' => $post_type,
+					'post_name' => "before-{$post_type}",
+				)
+			);
+			update_option(
+				AVC_AIS_Llms_Txt::OPTION_NAME,
+				"- [A](http://{$host}/before-{$post_type}/?x=1): クエリ\n- [B](http://{$host}/before-{$post_type}/#sec): フラグメント"
+			);
+
+			wp_update_post(
+				array(
+					'ID'        => $post_id,
+					'post_name' => "after-{$post_type}",
+				)
+			);
+
+			$this->assertSame(
+				"- [A](http://{$host}/after-{$post_type}/?x=1): クエリ\n- [B](http://{$host}/after-{$post_type}/#sec): フラグメント",
+				get_option( AVC_AIS_Llms_Txt::OPTION_NAME )
+			);
+		}
+	}
+
+	/**
+	 * 投稿の URL そのものにクエリがある形は、スラッグの変更でクエリを二重にしないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_does_not_double_the_query_of_the_permalink() {
+		$add_language = static function ( $url ) {
+			return add_query_arg( 'lang', 'en', $url );
+		};
+		add_filter( 'post_link', $add_language );
+		$post_id = self::factory()->post->create( array( 'post_name' => 'before' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [A](http://' . WP_TESTS_DOMAIN . '/before/?lang=en): 言語' );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'after',
+			)
+		);
+		$updated = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		remove_filter( 'post_link', $add_language );
+
+		$this->assertSame( '- [A](http://' . WP_TESTS_DOMAIN . '/after/?lang=en): 言語', $updated );
+	}
+
+	/**
+	 * パスの %3F はクエリではないので、別のページの行として扱うこと。
+	 *
+	 * @return void
+	 */
+	public function test_encoded_question_mark_in_the_path_is_not_a_query() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '記事',
+				'post_name'  => 'old',
+			)
+		);
+		$saved   = '- [別のページ](http://' . WP_TESTS_DOMAIN . '/old%3Fv2/): 手書き';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$this->assertSame( $saved, $this->served() );
+
+		// 投稿の行が一緒にあり、投稿を取得していても別のページとして扱う。
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [記事](http://' . WP_TESTS_DOMAIN . "/old/): 投稿の行\n{$saved}" );
+		$this->assertSame( $saved, $this->served() );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'new',
+			)
+		);
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		wp_delete_post( $post_id, true );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 作り直した投稿の行は、計測用のクエリが付いていても古い画面の保存で消さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_recreated_post_keeps_its_entry_with_a_tracking_query() {
+		$post_id = self::factory()->post->create( array( 'post_name' => 'gone' ) );
+		wp_delete_post( $post_id, true );
+		self::factory()->post->create( array( 'post_name' => 'gone' ) );
+
+		$remove = new ReflectionMethod( AVC_AIS_Llms_Txt::class, 'remove_entries_of_deleted_posts' );
+		avc_ais_test_make_accessible( $remove );
+		$saved = '- [題](http://' . WP_TESTS_DOMAIN . '/gone/?utm=1): 手書き';
+
+		$this->assertSame( $saved, $remove->invoke( null, $saved ) );
+	}
+
+	/**
+	 * URL が ID から作られるパーマリンクでは、スラッグのない下書きも URL で判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_slugless_draft_is_matched_by_its_id_permalink() {
+		$this->set_permalink_structure( '/archives/%post_id%/' );
+		$post_id = self::factory()->post->create( array( 'post_status' => 'draft' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](http://' . WP_TESTS_DOMAIN . "/archives/{$post_id}/): 抜粋" );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 投稿の URL にクエリがある形でも、同じ URL の別の投稿があれば行を消さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_other_post_at_a_permalink_with_a_query_keeps_the_entry() {
+		$add_language = static function ( $url ) {
+			return add_query_arg( 'lang', 'en', $url );
+		};
+		add_filter( 'post_link', $add_language );
+		self::factory()->post->create( array( 'post_name' => 'dup' ) );
+		$draft = self::factory()->post->create(
+			array(
+				'post_status' => 'draft',
+				'post_name'   => 'dup',
+			)
+		);
+		$saved = '- [題](http://' . WP_TESTS_DOMAIN . '/dup/?lang=en): 手書き';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_delete_post( $draft, true );
+		$after = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		remove_filter( 'post_link', $add_language );
+
+		$this->assertSame( $saved, $after );
+	}
+
+	/**
+	 * タグのあるタイトルの行は、保存時に取り除いた形でもタイトルとスラッグで照合すること。
+	 *
+	 * @return void
+	 */
+	public function test_title_with_tags_is_matched_in_its_saved_form() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '<em>強調</em> タイトル',
+				'post_name'   => 'with-tags',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [強調 タイトル](https://old-domain.example/with-tags/): 抜粋' );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * home_url( '/' ) にクエリがあるサイトでも、スラッグのない下書きをトップページと見なさないこと。
+	 *
+	 * @return void
+	 */
+	public function test_slugless_draft_does_not_claim_a_language_front_page() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create( array( 'post_status' => 'draft' ) );
+		$add     = static function ( $url ) {
+			return add_query_arg( 'lang', 'en', $url );
+		};
+		add_filter( 'home_url', $add );
+		$front = "- [トップ](http://{$host}/?lang=en): トップページ";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "{$front}\n- [別の題](http://{$host}/?p={$post_id}): 下書き" );
+		$served = $this->served();
+		remove_filter( 'home_url', $add );
+
+		$this->assertSame( $front, $served );
+	}
+
+	/**
+	 * http でないスキームの行は、パスが同じでも投稿の変更や削除で書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_other_schemes_survive_post_changes() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create( array( 'post_name' => 'docs' ) );
+		$saved   = "- [FTP](ftp://{$host}/docs/): 別のスキーム";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'docs-moved',
+			)
+		);
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		$other = self::factory()->post->create( array( 'post_name' => 'docs' ) );
+		wp_delete_post( $other, true );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		$remove = new ReflectionMethod( AVC_AIS_Llms_Txt::class, 'remove_entries_of_deleted_posts' );
+		avc_ais_test_make_accessible( $remove );
+		$this->assertSame( $saved, $remove->invoke( null, $saved ) );
+	}
+
+	/**
+	 * home_url() だけが別のドメインでも、option のドメインの行は URL で判定して隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_the_option_domain_are_matched_by_url() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '公開していない投稿',
+				'post_name'   => 'secret-post',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](http://' . WP_TESTS_DOMAIN . '/secret-post/): 抜粋' );
+
+		$map_domain = static function ( $url, $path ) {
+			return 'http://en.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * WP_HOME のドメインの行は、home_url() とデータベースの値が別のドメインでも隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_the_wp_home_domain_are_site_entries() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$wp_home    = static function () {
+			return 'http://constant.example';
+		};
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'option_home', $wp_home );
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](http://constant.example/docs/): このサイト' );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+		remove_filter( 'option_home', $wp_home );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * 別のホストの URL は、パスがサイトのトップページと同じでもトップページとしないこと。
+	 *
+	 * @return void
+	 */
+	public function test_same_path_as_home_on_another_host_is_not_the_home_page() {
+		update_option( 'home', 'http://' . WP_TESTS_DOMAIN . '/blog' );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_name'   => 'blog',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](https://old-domain.example/blog/): 移転前' );
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * ホストとパスは同じ home で比べること。別の home のパスで範囲を広げない。
+	 *
+	 * @return void
+	 */
+	public function test_site_range_compares_host_and_path_of_the_same_home() {
+		$host = WP_TESTS_DOMAIN;
+		update_option( 'home', "http://{$host}/original" );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		$saved = "- [同じタイトル](http://{$host}/shop/docs/): サイトの外";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+
+		$this->assertSame( $saved, $served );
+	}
+
+	/**
+	 * Host ヘッダーから home を作るサイトでも、Host を変えて抜粋を取り出せないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changed_host_does_not_reveal_hidden_entries() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_name'   => 'secret-post',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](http://' . WP_TESTS_DOMAIN . '/secret-post/): 抜粋' );
+
+		$from_host = static function ( $url, $path ) {
+			return 'http://attacker.example' . $path;
+		};
+		$wp_home   = static function () {
+			return 'http://attacker.example';
+		};
+		add_filter( 'home_url', $from_host, 10, 2 );
+		add_filter( 'option_home', $wp_home );
+		$served = $this->served();
+
+		// タイトルを書き換えた行も、データベースの home と比べて URL で判定する。
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](http://' . WP_TESTS_DOMAIN . '/secret-post/): 抜粋' );
+		$retitled = $this->served();
+		remove_filter( 'option_home', $wp_home );
+		remove_filter( 'home_url', $from_host, 10 );
+
+		$this->assertSame( '', $served );
+		$this->assertSame( '', $retitled );
+	}
+
+	/**
+	 * ゴミ箱の投稿と、連続するスペースのタイトルも、タイトルとスラッグで一致すること。
+	 *
+	 * @return void
+	 */
+	public function test_title_and_slug_match_trashed_posts_and_collapsed_spaces() {
+		$trashed = self::factory()->post->create(
+			array(
+				'post_title' => '捨てた記事',
+				'post_name'  => 'trashed-post',
+			)
+		);
+		wp_trash_post( $trashed );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [捨てた記事](https://old-domain.example/trashed-post/): 抜粋' );
+		$this->assertSame( '', $this->served() );
+
+		self::factory()->post->create(
+			array(
+				'post_title'  => 'スペース  二つ',
+				'post_name'   => 'two-spaces',
+				'post_status' => 'draft',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [スペース 二つ](https://old-domain.example/two-spaces/): 抜粋' );
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * ページの中へのリンクと空の URL は、サイトの場所にかかわらず隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_anchor_and_empty_urls_are_never_hidden() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'draft',
+			)
+		);
+		foreach ( array( 'http://' . WP_TESTS_DOMAIN, 'http://' . WP_TESTS_DOMAIN . '/blog' ) as $home ) {
+			update_option( 'home', $home );
+			foreach ( array( '#contact', '' ) as $url ) {
+				$saved = '- [同じタイトル](' . $url . '): 投稿ではない';
+				update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+				$this->assertSame( $saved, $this->served(), $home . ' ' . $url );
+			}
+		}
+	}
+
+	/**
+	 * 別のポートの ?p= の行は、このサイトの同じ ?p= の行があっても隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_query_url_on_another_port_is_independent_of_other_lines() {
+		$host    = WP_TESTS_DOMAIN;
+		$post_id = self::factory()->post->create( array( 'post_status' => 'draft' ) );
+		$other   = "- [別の題](http://{$host}:8080/?p={$post_id}): 別のポート";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別の題](http://{$host}/?p={$post_id}): このサイト\n{$other}" );
+
+		$this->assertSame( $other, $this->served() );
+	}
+
+	/**
+	 * 多言語プラグインが home_url() を変えても、トップページの行をタイトルで隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_language_front_pages_are_not_judged_by_title() {
+		$host = WP_TESTS_DOMAIN;
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'draft',
+			)
+		);
+		$filters = array(
+			static function ( $url, $path ) {
+				return untrailingslashit( get_option( 'home' ) ) . '/ja' . $path;
+			},
+			static function ( $url, $path ) {
+				return '' === $path || '/' === $path ? untrailingslashit( get_option( 'home' ) ) . '/?lang=en' : $url;
+			},
+		);
+		$cases   = array(
+			array( "http://{$host}/", "http://{$host}/ja/" ),
+			array( "http://{$host}/", "http://{$host}/?lang=en" ),
+		);
+		foreach ( $filters as $index => $filter ) {
+			add_filter( 'home_url', $filter, 10, 2 );
+			foreach ( $cases[ $index ] as $url ) {
+				$saved = '- [同じタイトル](' . $url . '): トップページ';
+				update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+				$this->assertSame( $saved, $this->served(), $url );
+			}
+			// ?p= など他のクエリの行はトップページではない。
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/?x=1): トップページではない" );
+			$this->assertSame( '', $this->served() );
+			remove_filter( 'home_url', $filter, 10 );
+		}
+	}
+
+	/**
+	 * home_url() のドメインと違うドメインの行は、投稿の変更や削除で書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_entries_on_the_option_domain_survive_changes_on_a_filtered_domain() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '同じタイトル',
+				'post_name'  => 'docs',
+			)
+		);
+		$other   = '- [手書き](http://' . WP_TESTS_DOMAIN . '/docs/): 別の言語のドメイン';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $other );
+
+		$map_domain = static function ( $url, $path ) {
+			return 'http://en.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'docs-moved',
+			)
+		);
+		$renamed = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_delete_post( $post_id, true );
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		remove_filter( 'home_url', $map_domain, 10 );
+
+		$this->assertSame( $other, $renamed );
+		$this->assertSame( $other, $deleted );
+	}
+
+	/**
+	 * 親ページの URL が変わったら、表記の違う子ページの行も書き換え、別のポートの行は残すこと。
+	 *
+	 * @return void
+	 */
+	public function test_child_entries_follow_the_parent_in_every_spelling() {
+		$host   = WP_TESTS_DOMAIN;
+		$parent = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'parent-page',
+			)
+		);
+		$lines  = array(
+			"- [子A](http://{$host}/parent-page/child/): 同じ表記",
+			"- [子B](http://www.{$host}/parent-page/child/): www",
+			"- [子C](http://{$host}:80/parent-page/child/): ポートの明示",
+			'- [子D](/parent-page/child/): ホストなし',
+			"- [子E](http://{$host}/parent-page/Child/?x=1#top): 大文字とクエリ",
+			"- [子F](http://{$host}/PARENT-page/%E3%81%82/): エンコードの表記",
+			"- [壊れた形](http://{$host}/parent-page//): 判別できない",
+			"- [別のポート](http://{$host}:8080/parent-page/child/): 残す",
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, implode( "\n", $lines ) );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent,
+				'post_name' => 'renamed-page',
+			)
+		);
+
+		$new = "http://{$host}/renamed-page";
+		$this->assertSame(
+			array(
+				"- [子A]({$new}/child/): 同じ表記",
+				"- [子B]({$new}/child/): www",
+				"- [子C]({$new}/child/): ポートの明示",
+				"- [子D]({$new}/child/): ホストなし",
+				"- [子E]({$new}/Child/?x=1#top): 大文字とクエリ",
+				"- [子F]({$new}/%E3%81%82/): エンコードの表記",
+				$lines[6],
+				$lines[7],
+			),
+			explode( "\n", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) )
+		);
+	}
+
+	/**
 	 * 投稿に対応しないサイト内の URL は、同じタイトルの隠した投稿がなければ残ること。
 	 *
 	 * @return void
@@ -1654,6 +2939,474 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		switch_to_blog( $site_id );
 		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
 		restore_current_blog();
+	}
+
+	/**
+	 * マルチサイトで、同じホストの別のサイトへの行を隠さないこと（メインサイトと子サイトの両方）。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_entries_of_sibling_sites_are_never_hidden() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_a = self::factory()->blog->create( array( 'path' => '/site-a/' ) );
+		$site_b = self::factory()->blog->create( array( 'path' => '/site-b/' ) );
+		$host   = get_site( $site_a )->domain;
+
+		$hide_on = static function () {
+			self::factory()->post->create(
+				array(
+					'post_title'  => '同じタイトル',
+					'post_status' => 'private',
+				)
+			);
+		};
+
+		// 子サイトから見た、別の子サイトとメインサイト。
+		switch_to_blog( $site_a );
+		$hide_on();
+		foreach ( array( "http://{$host}/site-b/docs/", "http://{$host}/docs/", "http://{$host}/" ) as $url ) {
+			$saved = '- [同じタイトル](' . $url . '): 別のサイト';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/site-a/docs/): 自分のサイト" );
+		$this->assertSame( '', $this->served() );
+		restore_current_blog();
+
+		// メインサイトから見た子サイト。パスはメインサイトの範囲の中にある。
+		$hide_on();
+		$siblings = array(
+			"http://{$host}/site-b/docs/",
+			"http://{$host}/SITE-B/docs/",
+			"http://{$host}:80/site-b/docs/",
+			"https://{$host}:443/site-b/docs/",
+			"http://www.{$host}/site-b/docs/",
+			'/site-b/docs/',
+		);
+		foreach ( $siblings as $url ) {
+			$saved = '- [同じタイトル](' . $url . '): 別のサイト';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+			$this->assertSame( $saved, $this->served(), $url );
+		}
+		// 相対パスと、以前の保存処理で壊れた // は、子サイトと比べられないので隠す。
+		foreach ( array( 'site-b/docs/', "http://{$host}//site-b/" ) as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](' . $url . '): このサイト' );
+			$this->assertSame( '', $this->served(), $url );
+		}
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/docs/): 自分のサイト" );
+		$this->assertSame( '', $this->served() );
+		// スラッグの一部が同じだけの URL は子サイトではない。
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}/site-b-docs/): 自分のサイト" );
+		$this->assertSame( '', $this->served() );
+
+		wp_delete_site( $site_a );
+		wp_delete_site( $site_b );
+	}
+
+	/**
+	 * 子サイトの home をサイトのパスの外へ変えていても、別のサイトは別のサイトとして判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_child_site_with_a_moved_home() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_a = self::factory()->blog->create( array( 'path' => '/site-a/' ) );
+		$site_b = self::factory()->blog->create( array( 'path' => '/site-b/' ) );
+		$site_c = self::factory()->blog->create( array( 'path' => '/c/' ) );
+		$host   = get_site( $site_a )->domain;
+
+		switch_to_blog( $site_a );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$served = array();
+		foreach ( array( "http://{$host}/custom", "http://{$host}" ) as $home ) {
+			update_option( 'home', $home );
+			$served[ $home ] = array();
+			foreach ( array( '/custom/docs/', '/site-a/docs/', '/site-b/docs/', '/c/docs/' ) as $path ) {
+				update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [同じタイトル](http://{$host}{$path}): 確認" );
+				$served[ $home ][ $path ] = '' === $this->served();
+			}
+		}
+		restore_current_blog();
+		wp_delete_site( $site_a );
+		wp_delete_site( $site_b );
+		wp_delete_site( $site_c );
+
+		$this->assertSame(
+			array(
+				'/custom/docs/' => true,
+				'/site-a/docs/' => false,
+				'/site-b/docs/' => false,
+				'/c/docs/'      => false,
+			),
+			$served[ "http://{$host}/custom" ]
+		);
+		$this->assertSame(
+			array(
+				'/custom/docs/' => true,
+				'/site-a/docs/' => true,
+				'/site-b/docs/' => false,
+				'/c/docs/'      => false,
+			),
+			$served[ "http://{$host}" ]
+		);
+	}
+
+	/**
+	 * ?p= の URL は、別のサイトのものなら ID が同じでも投稿と照合しないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_query_urls_of_sibling_sites_are_not_matched_by_id() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_b  = self::factory()->blog->create( array( 'path' => '/site-b/' ) );
+		$host    = get_site( $site_b )->domain;
+		$post_id = self::factory()->post->create( array( 'post_status' => 'draft' ) );
+
+		$saved = "- [別のタイトル](http://{$host}/site-b/?p={$post_id}): 別のサイト";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$sibling = $this->served();
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別のタイトル](http://{$host}/?p={$post_id}): このサイト" );
+		$own = $this->served();
+		wp_delete_site( $site_b );
+
+		$this->assertSame( $saved, $sibling );
+		$this->assertSame( '', $own );
+	}
+
+	/**
+	 * ネットワークにないドメインへ home_url() を変えたサイトの行は、子サイトと同じパスでも隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_mapped_domain_is_not_compared_with_network_sites() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_a = self::factory()->blog->create( array( 'path' => '/site-a/' ) );
+		$site_b = self::factory()->blog->create( array( 'path' => '/long-site-name/' ) );
+
+		switch_to_blog( $site_a );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](http://mapped.example/long-site-name/docs/): このサイト' );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+		restore_current_blog();
+		wp_delete_site( $site_a );
+		wp_delete_site( $site_b );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * メインサイトのページのパスが子サイトと重なっても、公開していないページの行は隠すこと。
+	 *
+	 * WordPress は子サイトと同じスラッグのページを作らせないが、ページの後に作る子サイトは防がない。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_private_page_under_a_child_site_path_is_hidden() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => 'お知らせ',
+				'post_name'   => 'news',
+				'post_status' => 'private',
+			)
+		);
+		$site_news = self::factory()->blog->create( array( 'path' => '/news/' ) );
+		$host      = get_site( $site_news )->domain;
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [お知らせ](http://{$host}/news/): 抜粋" );
+		$served = $this->served();
+		wp_delete_site( $site_news );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * 子サイトの行は、パスの重なるメインサイトのページが変わっても書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_sibling_entries_survive_page_changes() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$page_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'お知らせ',
+				'post_name'  => 'news',
+			)
+		);
+		$site    = self::factory()->blog->create( array( 'path' => '/news/' ) );
+		$saved   = '- [子サイトの記事](http://' . get_site( $site )->domain . '/news/foo/): 別のサイト';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_update_post(
+			array(
+				'ID'        => $page_id,
+				'post_name' => 'press',
+			)
+		);
+		$after = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_delete_site( $site );
+
+		$this->assertSame( $saved, $after );
+	}
+
+	/**
+	 * パスの重なるメインサイトのページの行は、URL が完全に一致するので書き換えて消すこと。
+	 *
+	 * 別のサイトと判定して残すと、公開していないページや削除したページの抜粋を配信してしまう。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_own_page_entry_under_a_child_site_path_follows_the_page() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$page_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'お知らせ',
+				'post_name'  => 'news',
+			)
+		);
+		$site    = self::factory()->blog->create( array( 'path' => '/news/' ) );
+		$host    = get_site( $site )->domain;
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [お知らせ](http://{$host}/news/): 抜粋" );
+
+		wp_update_post(
+			array(
+				'ID'        => $page_id,
+				'post_name' => 'press',
+			)
+		);
+		$renamed = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [お知らせ](http://{$host}/press/): 抜粋" );
+		wp_delete_post( $page_id, true );
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_delete_site( $site );
+
+		$this->assertSame( "- [お知らせ](http://{$host}/press/): 抜粋", $renamed );
+		$this->assertSame( '', (string) $deleted );
+	}
+
+	/**
+	 * 別のサイトの行は、タイトルとスラッグが公開していない投稿と同じでも隠さないこと。
+	 *
+	 * 同じひな形から作ったサイトでは、タイトルとスラッグが同じになる。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_sibling_entries_with_the_same_title_and_slug_are_kept() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '会社概要',
+				'post_name'   => 'about',
+				'post_status' => 'draft',
+			)
+		);
+		$site  = self::factory()->blog->create( array( 'path' => '/site-b/' ) );
+		$saved = '- [会社概要](http://' . get_site( $site )->domain . '/site-b/about/): 別のサイト';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$served = $this->served();
+		wp_delete_site( $site );
+
+		$this->assertSame( $saved, $served );
+	}
+
+	/**
+	 * 子サイトから、同じ長さのパスの子サイトとメインサイトへの行を隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_child_site_keeps_entries_of_other_sites_with_the_same_title_and_slug() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_a = self::factory()->blog->create( array( 'path' => '/site-a/' ) );
+		$site_b = self::factory()->blog->create( array( 'path' => '/site-b/' ) );
+		$host   = get_site( $site_a )->domain;
+
+		switch_to_blog( $site_a );
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '会社概要',
+				'post_name'   => 'about',
+				'post_status' => 'draft',
+			)
+		);
+		$served = array();
+		foreach ( array( "http://{$host}/site-b/about/", "http://{$host}/about/" ) as $url ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [会社概要](' . $url . '): 別のサイト' );
+			$served[ $url ] = '' !== $this->served();
+		}
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [会社概要](http://{$host}/site-a/old/about/): このサイト" );
+		$own = $this->served();
+		// 別のポートはネットワークのサイトではないので、移転前の URL として隠す。
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [会社概要](http://{$host}:8443/site-b/about/): 移転前" );
+		$other_port = $this->served();
+		restore_current_blog();
+		wp_delete_site( $site_a );
+		wp_delete_site( $site_b );
+
+		$this->assertSame(
+			array(
+				"http://{$host}/site-b/about/" => true,
+				"http://{$host}/about/"        => true,
+			),
+			$served
+		);
+		$this->assertSame( '', $own );
+		$this->assertSame( '', $other_port );
+	}
+
+	/**
+	 * サブドメイン型のように別のホストの別のサイトも、タイトルとスラッグが同じでも隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_entries_of_sites_on_other_hosts_are_kept() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '会社概要',
+				'post_name'   => 'about',
+				'post_status' => 'draft',
+			)
+		);
+		$site  = self::factory()->blog->create(
+			array(
+				'domain' => 'b.example.org',
+				'path'   => '/',
+			)
+		);
+		$saved = '- [会社概要](http://b.example.org/about/): 別のサイト';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$served = $this->served();
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [会社概要](https://not-in-network.example/about/): 移転前' );
+		$moved = $this->served();
+		wp_delete_site( $site );
+
+		$this->assertSame( $saved, $served );
+		$this->assertSame( '', $moved );
+	}
+
+	/**
+	 * ホストのない URL は、home_url() のドメインがネットワークになければ子サイトと比べないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_root_relative_entry_on_a_mapped_domain_is_hidden() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$site_a = self::factory()->blog->create( array( 'path' => '/site-a/' ) );
+		$site_b = self::factory()->blog->create( array( 'path' => '/long-site-name/' ) );
+
+		switch_to_blog( $site_a );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$map_domain = static function ( $url, $path ) {
+			return 'http://mapped.example' . $path;
+		};
+		add_filter( 'home_url', $map_domain, 10, 2 );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](/long-site-name/docs/): このサイト' );
+		$served = $this->served();
+		remove_filter( 'home_url', $map_domain, 10 );
+		restore_current_blog();
+		wp_delete_site( $site_a );
+		wp_delete_site( $site_b );
+
+		$this->assertSame( '', $served );
+	}
+
+	/**
+	 * ポートのあるネットワークでも、同じホストの別のサイトへの行を隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_multisite_with_a_port_keeps_sibling_entries() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイトでのみ実行する。' );
+		}
+
+		$args   = array( 'domain' => 'ms.example:8888' );
+		$main   = self::factory()->blog->create( $args + array( 'path' => '/' ) );
+		$sister = self::factory()->blog->create( $args + array( 'path' => '/site-b/' ) );
+		$domain = get_site( $main )->domain;
+		if ( 'ms.example:8888' !== $domain ) {
+			wp_delete_site( $main );
+			wp_delete_site( $sister );
+			$this->markTestSkipped( 'このバージョンの wp_insert_site() はドメインのポートを保持しない。' );
+		}
+
+		switch_to_blog( $main );
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$saved = '- [同じタイトル](http://ms.example:8888/site-b/docs/): 別のサイト';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$sibling = $this->served();
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [同じタイトル](http://ms.example:8888/docs/): このサイト' );
+		$own = $this->served();
+		restore_current_blog();
+		wp_delete_site( $main );
+		wp_delete_site( $sister );
+
+		$this->assertSame( $saved, $sibling );
+		$this->assertSame( '', $own );
 	}
 
 	/**

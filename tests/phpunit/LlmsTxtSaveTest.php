@@ -1159,7 +1159,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
 		$this->assertArrayNotHasKey( '/expired', $deleted );
 		$this->assertArrayHasKey( '/recent', $deleted );
-		$this->assertArrayHasKey( '/just-deleted', $deleted );
+		$this->assertArrayHasKey( WP_TESTS_DOMAIN . ':0/just-deleted', $deleted );
 
 		$many = array();
 		for ( $i = 0; $i < AVC_AIS_Llms_Txt::DELETED_URL_LIMIT + 5; $i++ ) {
@@ -1172,7 +1172,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 
 		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
 		$this->assertCount( AVC_AIS_Llms_Txt::DELETED_URL_LIMIT, $deleted );
-		$this->assertArrayHasKey( '/over-limit', $deleted );
+		$this->assertArrayHasKey( WP_TESTS_DOMAIN . ':0/over-limit', $deleted );
 	}
 
 	/**
