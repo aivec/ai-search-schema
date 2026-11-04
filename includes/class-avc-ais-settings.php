@@ -7,6 +7,26 @@
  */
 defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Settings {
+	/**
+	 * 管理画面のメニューのアイコン（AIVEC のシンボル）。元の SVG は docs/images/menu-icon.svg。
+	 *
+	 * WordPress が fill を管理画面の配色へ塗り替えるので、1 色で Base64 の data URI にする。
+	 */
+	const MENU_ICON = 'data:image/svg+xml;base64,'
+		. 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTguNSA4MiA4MiI+PHBhdGggZmls'
+		. 'bD0iI2E3YWFhZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wIDAuMDAxKSIgZD0iTTM5LjUxNCwyMi44NTlTMjcuODkyLDYu'
+		. 'NTg4LDI1LjQzOSwzLjIzMXMtOC4xMzUtNS4xNjUtMTEuNzUxLDBTMCwyMi44NTksMCwyMi44NTlsNS42ODEsOC4zOTRoMjAu'
+		. 'NzlsLTUuODU4LTguMzk0SDEwLjg0N0wxOS43NTcsMTAuODUsMzMuNywzMS4yNTNaIi8+PHBhdGggZmlsbD0iI2E3YWFhZCIg'
+		. 'dHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTAuMDc5IDAuMDAxKSIgZD0iTTc2LDMzLjQ3NGwtMTMuOTQ2LDIwLjRMNTMuMTQxLDQx'
+		. 'Ljg2OGwtNi4zODItOS4yMzIsMS0xLjM4M2guMDVsLjgwOC0xLjE4MnYwTDYxLjc2LDEwLjg1bDguOTExLDEyLjAwOSw1LjE2'
+		. 'NSw4LjM5NCw1LjY4MS04LjM5NFM3MS40NDUsOC40LDY3LjgzLDMuMjMxcy05LjMtMy4zNTctMTEuNzUxLDBDNTMuOSw2LjIx'
+		. 'Niw0MC4xMzcsMjYuMDI3LDM3LjEwOCwzMC4zOUgzNy4wOEwyMC4xMDgsNTMuODc3LDExLjIsNDEuODY4aDkuNzY3bDUuODU4'
+		. 'LTguMzk0SDYuMDMyTC4zNSw0MS44NjhTMTAuNDIzLDU2LjMzMSwxNC4wMzgsNjEuNXM5LjMsMy4zNTcsMTEuNzUxLDBjMS40'
+		. 'NjEtMiw5LjI3OC0xMi43NiwxNS4zNjQtMjEuMTQsMS44NjUsMi42NTcsMTEuNTY3LDE2LjQ3OSwxNC44MywyMS4xNCwzLjYx'
+		. 'Niw1LjE2NSw5LjMsMy4zNTcsMTEuNzUxLDBTODEuODA5LDQxLjg2OCw4MS44MDksNDEuODY4WiIvPjxwYXRoIGZpbGw9IiNh'
+		. 'N2FhYWQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNS44MjcgLTcuNTExKSIgZD0iTTg0LjUyMiw0MC40NjlhNi45LDYuOSww'
+		. 'LDEsMS02Ljg5NS02Ljg5NSw2Ljg5NSw2Ljg5NSwwLDAsMSw2Ljg5NSw2Ljg5NSIvPjwvc3ZnPg==';
+
 	private const OPTION_NAME                = 'avc_ais_options';
 	private const OPTION_GMAPS_KEY           = 'avc_ais_gmaps_api_key';
 	private const GEOCODE_RATE_LIMIT_SECONDS = 10;
@@ -78,7 +98,7 @@ class AVC_AIS_Settings {
 			'manage_options',
 			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' ),
-			'dashicons-schema',
+			self::MENU_ICON,
 			81
 		);
 
