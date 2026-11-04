@@ -164,14 +164,29 @@ jobs:
       # 10. S3アップロード
       # -----------------------------------------------------------------------
       - name: Upload to S3 (release)
+        env:
+          BUILD_SHA: ${{ github.event.workflow_run.head_sha || github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          REPOSITORY: ${{ github.repository }}
         run: |
+          # 近い時間に 2 回マージすると実行の順序が入れ替わることがある。古いコミットの ZIP で
+          # 同じバージョンや latest を上書きしないよう、main の先頭のコミットかを確かめる。
+          MAIN_SHA="$(git ls-remote "https://github.com/${REPOSITORY}" refs/heads/main | cut -f1)"
+
+          if [ "$BUILD_SHA" != "$MAIN_SHA" ] && [ "$EVENT_NAME" = "workflow_run" ]; then
+            echo "::notice::main の先頭ではないのでアップロードしません（${BUILD_SHA} / ${MAIN_SHA}）"
+            exit 0
+          fi
+
           aws s3 cp \
             dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
             s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip
-          
-          aws s3 cp \
-            dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
-            s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-latest.zip
+
+          if [ "$BUILD_SHA" = "$MAIN_SHA" ]; then
+            aws s3 cp \
+              dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
+              s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-latest.zip
+          fi
 
       # -----------------------------------------------------------------------
       # 11. GitHub Releaseアーティファクト（オプション）
