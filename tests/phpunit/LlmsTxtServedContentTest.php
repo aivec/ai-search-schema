@@ -423,6 +423,47 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 通常の投稿のスラッグを変えても、下の階層に見える別の行を書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_post_slug_keeps_entries_below_its_url() {
+		$post_id = self::factory()->post->create( array( 'post_name' => 'news' ) );
+		$other   = '- [過去の記事](' . trailingslashit( get_permalink( $post_id ) ) . 'archive/): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $other );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'media',
+			)
+		);
+
+		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * リンクのタイトルがある行も、スラッグを変えると URL を書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_updates_entry_with_link_title() {
+		$post_id = self::factory()->post->create( array( 'post_name' => 'before' ) );
+		$old     = get_permalink( $post_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [記事]({$old} \"補足\"): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'after',
+			)
+		);
+
+		$new = get_permalink( $post_id );
+		$this->assertSame( "- [記事]({$new} \"補足\"): 説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
 	 * 判定の途中で投稿が変わると、そのあとに保存された古い結果を使わないこと。
 	 *
 	 * @return void

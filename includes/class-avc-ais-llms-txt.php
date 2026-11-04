@@ -821,7 +821,7 @@ class AVC_AIS_Llms_Txt {
 	 * @return string 置き換えた行.
 	 */
 	private static function replace_entry_url( $line, array $entry, $url ) {
-		$prefix = str_replace( '](' . $entry['url'] . ')', '](' . $url . ')', $entry['prefix'] );
+		$prefix = str_replace( '](' . $entry['url'], '](' . $url, $entry['prefix'] );
 
 		return $prefix . substr( $line, strlen( $entry['prefix'] ) );
 	}
@@ -857,7 +857,7 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		$old_key    = self::url_key( $old_url );
-		$old_parent = trailingslashit( $old_url );
+		$old_parent = is_post_type_hierarchical( $post_after->post_type ) ? trailingslashit( $old_url ) : '';
 		$lines      = explode( "\n", $saved );
 		foreach ( $lines as $index => $line ) {
 			$entry = self::parse_entry( $line );
@@ -870,7 +870,8 @@ class AVC_AIS_Llms_Txt {
 			}
 			// 親ページの URL が変わると子ページの URL も変わるが、子ページの更新は発生しない。
 			// 以前の保存処理で壊れた /親// は子ページと判別できないので書き換えない。
-			$child = 0 === strpos( $entry['url'], $old_parent ) ? substr( $entry['url'], strlen( $old_parent ) ) : '';
+			$is_child = '' !== $old_parent && 0 === strpos( $entry['url'], $old_parent );
+			$child    = $is_child ? substr( $entry['url'], strlen( $old_parent ) ) : '';
 			if ( '' !== $child && '/' !== $child[0] ) {
 				$lines[ $index ] = self::replace_entry_url( $line, $entry, trailingslashit( $new_url ) . $child );
 			}
