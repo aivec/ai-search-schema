@@ -667,17 +667,10 @@ class AVC_AIS_Settings {
 	 * @return array サニタイズされたオプション
 	 */
 	public function sanitize_options( $input ) {
-		$llms_txt_content = null;
-		if ( ! is_array( $input ) ) {
-			$input = array();
-		} else {
-			// Filter null values before wp_unslash to prevent PHP 8 deprecation warnings.
-			$input = $this->filter_null_values( $input );
-			// options.php がスラッシュを取り除いたあとの値。もう一度取り除くと本文の \ が消え、
-			// 表示したときの内容と一致しなくなる。
-			$llms_txt_content = $input['llms_txt_content'] ?? null;
-			$input            = wp_unslash( $input );
-		}
+		// options.php はスラッシュを取り除いてから update_option() を呼び、ウィザードなど他の
+		// 呼び出し元の値にもスラッシュはない。ここで取り除くと入力した \ が消える。
+		$input            = is_array( $input ) ? $this->filter_null_values( $input ) : array();
+		$llms_txt_content = $input['llms_txt_content'] ?? null;
 
 		$output = $this->get_options();
 
