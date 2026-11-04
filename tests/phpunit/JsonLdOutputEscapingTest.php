@@ -56,7 +56,7 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 		);
 		foreach ( array( AVC_AIS_Settings::class, AVC_AIS_Schema::class ) as $class ) {
 			$ref = new ReflectionProperty( $class, 'instance' );
-			$ref->setAccessible( true );
+			avc_ais_test_make_accessible( $ref );
 			$ref->setValue( null, null );
 		}
 	}
@@ -128,6 +128,9 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'number after <'    => array( 'price<100 and >50' ),
 			'heart'             => array( 'love it <3' ),
 			'looks like a tag'  => array( 'if a<b then c>d' ),
+			'word after tag'    => array( 'if a<i and c>d' ),
+			'html word in text' => array( 'if a<b default c>d' ),
+			'more html words'   => array( 'a<b open late>d' ),
 		);
 	}
 
@@ -167,6 +170,18 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'line break'     => array( 'First<br>Second<br />Third', 'FirstSecondThird' ),
 			'with attribute' => array( 'See <a href="https://example.com/?a=1" title="x">link</a>', 'See link' ),
 			'script tags'    => array( '</script><script>alert(1)</script>', 'alert(1)' ),
+			'bare attribute' => array( '<span hidden>Foo</span>', 'Foo' ),
+			'bare attrs'     => array( '<input disabled checked>Foo', 'Foo' ),
+			'mixed attrs'    => array( '<details open class="x">Foo</details>', 'Foo' ),
+			'nested'         => array( '<<b>i>Foo', 'Foo' ),
+			'single quotes'  => array( "<a href='x' title='y z'>Foo</a>", 'Foo' ),
+			'bracket in attr' => array( '<a title="1>0">Foo</a>', 'Foo' ),
+			'no quotes'      => array( '<a href=x>Foo</a>', 'Foo' ),
+			'mixed bare attr' => array( '<span class="x" data-foo>Foo</span>', 'Foo' ),
+			'unknown bare'   => array( '<a href="x" download>Foo</a>', 'Foo' ),
+			'url value'      => array( '<a href=http://x.example/?a=1>Foo</a>', 'Foo' ),
+			'no space attrs' => array( '<a href="x"class="y">Foo</a>', 'Foo' ),
+			'event handler'  => array( "<img src=x onerror=alert('1')>Foo", 'Foo' ),
 		);
 	}
 

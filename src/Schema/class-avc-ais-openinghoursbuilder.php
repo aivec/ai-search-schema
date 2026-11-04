@@ -185,7 +185,8 @@ class AVC_AIS_OpeningHoursBuilder {
 				}
 				$opening_hours[] = array(
 					'@type'     => 'OpeningHoursSpecification',
-					'dayOfWeek' => $day_of_week,
+					// 設定には PublicHoliday で保存しているが、schema.org の値は PublicHolidays である。
+					'dayOfWeek' => 'PublicHoliday' === $day_of_week ? 'PublicHolidays' : $day_of_week,
 					'opens'     => $range['opens'],
 					'closes'    => $range['closes'],
 				);

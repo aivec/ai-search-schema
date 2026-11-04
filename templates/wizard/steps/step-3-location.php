@@ -10,29 +10,16 @@ defined( 'ABSPATH' ) || exit;
 
 $options = get_option( 'avc_ais_options', array() );
 
-// Business type options.
-$business_types = array(
-	'LocalBusiness'       => __( 'General Local Business', 'aivec-ai-search-schema' ),
-	'Restaurant'          => __( 'Restaurant', 'aivec-ai-search-schema' ),
-	'Cafe'                => __( 'Cafe', 'aivec-ai-search-schema' ),
-	'BarOrPub'            => __( 'Bar or Pub', 'aivec-ai-search-schema' ),
-	'Bakery'              => __( 'Bakery', 'aivec-ai-search-schema' ),
-	'Store'               => __( 'Store / Retail', 'aivec-ai-search-schema' ),
-	'BeautySalon'         => __( 'Beauty Salon', 'aivec-ai-search-schema' ),
-	'HairSalon'           => __( 'Hair Salon', 'aivec-ai-search-schema' ),
-	'HealthAndBeautySpa'  => __( 'Spa', 'aivec-ai-search-schema' ),
-	'Dentist'             => __( 'Dentist', 'aivec-ai-search-schema' ),
-	'Physician'           => __( 'Doctor / Physician', 'aivec-ai-search-schema' ),
-	'Hospital'            => __( 'Hospital', 'aivec-ai-search-schema' ),
-	'Pharmacy'            => __( 'Pharmacy', 'aivec-ai-search-schema' ),
-	'LegalService'        => __( 'Legal Service', 'aivec-ai-search-schema' ),
-	'AccountingService'   => __( 'Accounting Service', 'aivec-ai-search-schema' ),
-	'RealEstateAgent'     => __( 'Real Estate Agent', 'aivec-ai-search-schema' ),
-	'AutoRepair'          => __( 'Auto Repair', 'aivec-ai-search-schema' ),
-	'Hotel'               => __( 'Hotel', 'aivec-ai-search-schema' ),
-	'FitnessCenter'       => __( 'Fitness Center / Gym', 'aivec-ai-search-schema' ),
-	'HomeAndConstruction' => __( 'Home & Construction Service', 'aivec-ai-search-schema' ),
+// sanitize_options() は local_business_type を保存しないので、出力に使う lb_subtype を先に見る。
+$selected_business_type = AVC_AIS_LocalBusinessTypes::to_selected_choice(
+	( $options['lb_subtype'] ?? '' ) ?: ( $options['local_business_type'] ?? '' )
 );
+
+// Business type options. 設定画面で選んだ他の型も残るよう、保存済みの型を選択肢に加える。
+$business_types = AVC_AIS_LocalBusinessTypes::common_choices();
+if ( ! isset( $business_types[ $selected_business_type ] ) ) {
+	$business_types[ $selected_business_type ] = $selected_business_type;
+}
 
 // Price range options.
 $price_ranges = array(
@@ -63,7 +50,7 @@ $price_ranges = array(
 				</label>
 				<select id="ais-wizard-business-type" name="local_business_type" class="ais-wizard-form__select" required>
 					<?php foreach ( $business_types as $type_key => $type_label ) : ?>
-						<option value="<?php echo esc_attr( $type_key ); ?>" <?php selected( $options['local_business_type'] ?? '', $type_key ); ?>>
+						<option value="<?php echo esc_attr( $type_key ); ?>" <?php selected( $selected_business_type, $type_key ); ?>>
 							<?php echo esc_html( $type_label ); ?>
 						</option>
 					<?php endforeach; ?>

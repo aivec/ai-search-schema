@@ -1,0 +1,1683 @@
+<?php
+/**
+ * llms.txt の配信時に公開していない投稿の行を隠す処理のテスト。
+ *
+ * @package Aivec\AiSearchSchema\Tests
+ */
+
+require_once __DIR__ . '/bootstrap.php';
+
+/**
+ * llms.txt の配信内容のテストクラス。
+ */
+class LlmsTxtServedContentTest extends WP_UnitTestCase {
+
+	/**
+	 * 管理者の ID。
+	 *
+	 * @var int
+	 */
+	private $admin_id;
+
+	/**
+	 * テスト前のセットアップ。
+	 *
+	 * @return void
+	 */
+	protected function setUp(): void {
+		parent::setUp();
+
+		$ref = new ReflectionProperty( AVC_AIS_Llms_Txt::class, 'instance' );
+		avc_ais_test_make_accessible( $ref );
+		$ref->setValue( null, null );
+
+		$this->admin_id = self::factory()->user->create( array( 'role' => 'administrator' ) );
+		wp_set_current_user( $this->admin_id );
+		$this->set_permalink_structure( '/%postname%/' );
+
+		// 投稿の更新などで動くフックを登録する。
+		AVC_AIS_Llms_Txt::init();
+
+		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED );
+	}
+
+	/**
+	 * テスト後の片付け。
+	 *
+	 * @return void
+	 */
+	protected function tearDown(): void {
+		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED );
+		$this->set_permalink_structure( '' );
+
+		parent::tearDown();
+	}
+
+	/**
+	 * 未ログインの訪問者への配信内容を返す。
+	 *
+	 * @return string 配信内容.
+	 */
+	private function served() {
+		$user_id = get_current_user_id();
+		wp_set_current_user( 0 );
+		$served = AVC_AIS_Llms_Txt::init()->get_served_content();
+		wp_set_current_user( $user_id );
+
+		return $served;
+	}
+
+	/**
+	 * 投稿を作成し、その行を保存する。
+	 *
+	 * @param array  $args  投稿の項目.
+	 * @param string $after 行のあとに続ける内容.
+	 * @return int 投稿 ID.
+	 */
+	private function create_post_with_entry( array $args = array(), $after = "\n# 見出し" ) {
+		$args    = array_merge(
+			array(
+				'post_title' => '対象の記事',
+				'post_name'  => 'target',
+			),
+			$args
+		);
+		$post_id = self::factory()->post->create( $args );
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_NAME,
+			'- [' . $args['post_title'] . '](' . get_permalink( $post_id ) . '): 手書きの説明' . $after
+		);
+
+		return $post_id;
+	}
+
+	/**
+	 * 投稿を隠す変更を返す。
+	 *
+	 * @return array<string,array<int,array>>
+	 */
+	public function provide_hiding_changes() {
+		return array(
+			'password' => array( array( 'post_password' => 'hunter2' ) ),
+			'private'  => array( array( 'post_status' => 'private' ) ),
+			'draft'    => array( array( 'post_status' => 'draft' ) ),
+			'pending'  => array( array( 'post_status' => 'pending' ) ),
+			'trash'    => array( array( 'post_status' => 'trash' ) ),
+		);
+	}
+
+	/**
+	 * 投稿を隠すと行は配信されないが、保存済みの内容には残ること。
+	 *
+	 * @dataProvider provide_hiding_changes
+	 *
+	 * @param array $change 投稿に加える変更.
+	 * @return void
+	 */
+	public function test_hiding_a_post_hides_entry_but_keeps_saved_text( array $change ) {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		wp_update_post( array_merge( array( 'ID' => $post_id ), $change ) );
+
+		$this->assertSame( '# 見出し', $this->served() );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertSame( array( '対象の記事' ), AVC_AIS_Llms_Txt::init()->get_hidden_entry_titles() );
+	}
+
+	/**
+	 * プラグインが追加した公開していないステータスの投稿も隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_custom_non_public_status_is_hidden() {
+		register_post_status( 'archived', array( 'public' => false ) );
+
+		$post_id = $this->create_post_with_entry();
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'archived',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * プラグインが追加した公開のステータスの投稿は隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_custom_public_status_is_served() {
+		register_post_status( 'featured', array( 'public' => true ) );
+
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'featured',
+			)
+		);
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * パーマリンクの設定にかかわらず、?p=ID の URL の行を判定できること。
+	 *
+	 * @return void
+	 */
+	public function test_query_form_url_is_matched_on_pretty_permalink_sites() {
+		$post_id = self::factory()->post->create( array( 'post_title' => '元のタイトル' ) );
+		$saved   = '- [表のタイトル](' . home_url( "/?p={$post_id}" ) . "): 秘密\n- [固定](" . home_url( "/?page_id={$post_id}" ) . '): 秘密2';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served(), '前提: 公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'draft',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 壊れた子ページの URL を親ページと取り違えないこと。
+	 *
+	 * 以前の保存処理で /news/あ/ は /news// になる。
+	 *
+	 * @return void
+	 */
+	public function test_broken_child_url_is_not_matched_to_parent() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'ニュース',
+				'post_name'  => 'news',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '非公開の子ページ',
+				'post_name'   => 'あ',
+				'post_parent' => $parent_id,
+				'post_status' => 'private',
+			)
+		);
+		$parent_line = '- [ニュース](' . get_permalink( $parent_id ) . '): 公開の抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [非公開の子ページ](' . home_url( '/news//' ) . "): 秘密\n{$parent_line}" );
+
+		$this->assertSame( $parent_line, $this->served() );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+		$this->assertStringContainsString( '- [非公開の子ページ](' . home_url( '/news//' ) . '): 秘密', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ), '親の変更で書き換えない' );
+	}
+
+	/**
+	 * 説明を省いた行や字下げした行も、投稿を隠せば配信しないこと。
+	 *
+	 * @dataProvider provide_list_forms
+	 *
+	 * @param string $format 行の書式（%s は URL）.
+	 * @return void
+	 */
+	public function test_other_list_forms_are_hidden( $format ) {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '元のタイトル',
+				'post_name'  => 'hidden',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, sprintf( $format, get_permalink( $post_id ) ) . "\n# 見出し" );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+		$this->assertSame( array( '表のタイトル' ), AVC_AIS_Llms_Txt::init()->get_hidden_entry_titles() );
+	}
+
+	/**
+	 * 一覧の行の書式を返す。
+	 *
+	 * @return array<string,array<int,string>>
+	 */
+	public function provide_list_forms() {
+		return array(
+			'no notes'      => array( '- [表のタイトル](%s)' ),
+			'indented'      => array( '  - [表のタイトル](%s): 説明' ),
+			'asterisk'      => array( '* [表のタイトル](%s): 説明' ),
+			'other notes'   => array( '- [表のタイトル](%s) の説明' ),
+			'japanese note' => array( '- [表のタイトル](%s)の説明' ),
+			'ordered'       => array( '1. [表のタイトル](%s): 説明' ),
+			'extra spaces'  => array( '-   [表のタイトル](%s): 説明' ),
+			'link title'    => array( '- [表のタイトル](%s "補足"): 説明' ),
+		);
+	}
+
+	/**
+	 * タイトルのない投稿の行も、投稿を隠せば配信しないこと。
+	 *
+	 * 自動生成では「- [](URL): 抜粋」になる。
+	 *
+	 * @return void
+	 */
+	public function test_untitled_post_entry_is_hidden() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '',
+				'post_name'  => 'untitled',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * タイトルのない行は、URL で見つからなければ隠さないこと。
+	 *
+	 * 空のタイトルで投稿を探すと条件が無視され、すべての投稿が対象になる。
+	 *
+	 * @return void
+	 */
+	public function test_untitled_entry_without_a_post_is_kept() {
+		self::factory()->post->create_many( AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1, array( 'post_status' => 'draft' ) );
+		$saved = '- [](' . home_url( '/blog/' ) . '): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 同じタイトルの公開中の投稿が多くても、投稿に対応しない行を隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_many_public_posts_with_same_title_do_not_hide_entry() {
+		self::factory()->post->create_many( AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1, array( 'post_title' => 'お知らせ' ) );
+		$saved = '- [お知らせ](' . home_url( '/category/news/' ) . '): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * スラッグが長い投稿をゴミ箱に入れても行を隠せること。
+	 *
+	 * WordPress はスラッグを 191 バイトに切り詰めてから __trashed を付ける。
+	 *
+	 * @return void
+	 */
+	public function test_trashed_post_with_long_slug_is_hidden() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '元のタイトル',
+				'post_name'  => str_repeat( 'あ', 22 ),
+			)
+		);
+		$this->assertGreaterThan( 191, strlen( get_post( $post_id )->post_name ), '前提: スラッグが長い' );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [表のタイトル](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+
+		wp_trash_post( $post_id );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * ドメインに日本語を含むサイトでも、自分のサイトの行として判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_non_ascii_domain_is_treated_as_this_site() {
+		$home = 'http://日本語.example';
+		add_filter(
+			'home_url',
+			static function ( $url ) use ( $home ) {
+				return str_replace( 'http://example.org', $home, $url );
+			}
+		);
+
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '元のタイトル',
+				'post_name'   => 'hidden',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [表のタイトル]({$home}/hidden/): 秘密\n# 見出し" );
+		$this->assertNotEmpty( $post_id, '前提: 投稿がある' );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 親ページのスラッグを変えると、子ページの行の URL も書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_child_entry_url() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => '親',
+				'post_name'  => 'parent',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '元のタイトル',
+				'post_name'   => 'child',
+				'post_parent' => $parent_id,
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [表のタイトル](' . get_permalink( $child_id ) . '): 秘密' );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$url = get_permalink( $child_id );
+		$this->assertStringContainsString( '/renamed/child', $url, '前提: 子ページの URL が変わる' );
+		$this->assertSame( "- [表のタイトル]({$url}): 秘密", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		wp_update_post(
+			array(
+				'ID'          => $child_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 大文字のパーセントエンコードや別のスキームで書いた子ページの行も書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_child_entry_with_different_url_form() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'あ',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_name'   => 'child',
+				'post_parent' => $parent_id,
+			)
+		);
+		$url       = preg_replace_callback(
+			'/%[0-9a-f]{2}/',
+			static function ( $byte ) {
+				return strtoupper( $byte[0] );
+			},
+			set_url_scheme( get_permalink( $child_id ), 'https' )
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [子]({$url}): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$this->assertSame( '- [子](' . get_permalink( $child_id ) . '): 説明', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 日本語のままで書いた子ページの行も、親ページのスラッグの変更で書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_decoded_child_entry() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'あ',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_name'   => 'い',
+				'post_parent' => $parent_id,
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [子](' . rawurldecode( get_permalink( $child_id ) ) . '): 説明' );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$this->assertSame( '- [子](' . get_permalink( $child_id ) . '): 説明', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 親ページのスラッグを変えても、子ページの URL の残りの部分の表記を変えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_keeps_rest_of_child_url() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'parent',
+			)
+		);
+		$old       = get_permalink( $parent_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [資料]({$old}Report.PDF?id=AbC%26x): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$new = get_permalink( $parent_id );
+		$this->assertSame( "- [資料]({$new}Report.PDF?id=AbC%26x): 説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 投稿タイプを変えて一覧から外れた投稿でも、判定結果を無効にすること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_post_type_clears_cache() {
+		register_post_type( 'ais_other' );
+
+		$post_id = self::factory()->post->create();
+		update_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION, 'before' );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_type' => 'ais_other',
+			)
+		);
+
+		$this->assertNotSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+	}
+
+	/**
+	 * 一覧に載らない投稿タイプの更新では、判定結果を無効にしないこと。
+	 *
+	 * @return void
+	 */
+	public function test_other_post_types_do_not_clear_cache() {
+		register_post_type( 'ais_other' );
+
+		$other = self::factory()->post->create( array( 'post_type' => 'ais_other' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION, 'before' );
+
+		wp_update_post(
+			array(
+				'ID'         => $other,
+				'post_title' => '更新',
+			)
+		);
+		$this->assertSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+
+		wp_delete_post( $other, true );
+		$this->assertSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+
+		$post_id = self::factory()->post->create();
+		$this->assertNotSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ), '前提: 投稿では無効にする' );
+		$this->assertNotEmpty( $post_id, '前提: 投稿がある' );
+	}
+
+	/**
+	 * 通常の投稿のスラッグを変えても、下の階層に見える別の行を書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_post_slug_keeps_entries_below_its_url() {
+		$post_id = self::factory()->post->create( array( 'post_name' => 'news' ) );
+		$other   = '- [過去の記事](' . trailingslashit( get_permalink( $post_id ) ) . 'archive/): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $other );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'media',
+			)
+		);
+
+		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * リンクのタイトルがある行も、スラッグを変えると URL を書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_updates_entry_with_link_title() {
+		$post_id = self::factory()->post->create( array( 'post_name' => 'before' ) );
+		$old     = get_permalink( $post_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [記事]({$old} \"補足\"): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'after',
+			)
+		);
+
+		$new = get_permalink( $post_id );
+		$this->assertSame( "- [記事]({$new} \"補足\"): 説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 判定の途中で投稿が変わると、そのあとに保存された古い結果を使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_stale_cache_written_after_a_change_is_not_used() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$this->assertSame( $saved, $this->served(), '前提: 判定して結果を保存する' );
+		$stale = get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		set_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE, $stale, MINUTE_IN_SECONDS );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * スラッグを変えても、説明のない行や字下げした行の書式を変えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_keeps_line_format() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '記事',
+				'post_name'  => 'before',
+			)
+		);
+		$old     = get_permalink( $post_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "  - [記事]({$old})\n* [記事]({$old}) の説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'after',
+			)
+		);
+
+		$new = get_permalink( $post_id );
+		$this->assertSame( "  - [記事]({$new})\n* [記事]({$new}) の説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 判定結果を再利用してクエリを減らし、投稿が変わったら判定し直すこと。
+	 *
+	 * @return void
+	 */
+	public function test_hidden_lines_are_cached_until_a_post_changes() {
+		global $wpdb;
+
+		$post_id = $this->create_post_with_entry( array(), "\n- [ブログ](" . home_url( '/blog/' ) . '): 一覧' );
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		$this->assertSame( $saved, $this->served(), '前提: 判定して結果を保存する' );
+
+		$before = $wpdb->num_queries;
+		$this->assertSame( $saved, $this->served() );
+		$this->assertLessThanOrEqual( 1, $wpdb->num_queries - $before, '二度目は投稿を取得しない' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertStringNotContainsString( '手書きの説明', $this->served(), '投稿が変わったら判定し直す' );
+	}
+
+	/**
+	 * パスワードの変更と削除でも判定し直し、内容が変わったら保存した結果を使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_hidden_lines_cache_follows_passwords_and_content() {
+		$post_id = $this->create_post_with_entry();
+		$this->assertStringContainsString( '手書きの説明', $this->served(), '前提: 公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'            => $post_id,
+				'post_password' => 'hunter2',
+			)
+		);
+		$this->assertSame( '# 見出し', $this->served() );
+
+		// 行の順序が変わると、保存した行番号は使えない。
+		$line = '- [対象の記事](' . home_url( '/target/' ) . '): 手書きの説明';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "# 見出し\n{$line}" );
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 投稿を公開し直すと、手書きの説明がそのまま配信に戻ること。
+	 *
+	 * @return void
+	 */
+	public function test_republishing_restores_hand_written_entry() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'draft',
+			)
+		);
+		$this->assertSame( '# 見出し', $this->served(), '前提: 下書きの間は隠れる' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'publish',
+			)
+		);
+
+		$this->assertSame( $saved, $this->served() );
+		$this->assertSame( array(), AVC_AIS_Llms_Txt::init()->get_hidden_entry_titles() );
+	}
+
+	/**
+	 * ゴミ箱に入れて戻しても行が残り、公開すれば配信に戻ること。
+	 *
+	 * @return void
+	 */
+	public function test_trash_and_restore_keeps_entry() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		wp_trash_post( $post_id );
+		$this->assertSame( '# 見出し', $this->served(), '前提: ゴミ箱の間は隠れる' );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ), 'スラッグの変更で書き換えない' );
+
+		wp_untrash_post( $post_id );
+		wp_publish_post( $post_id );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 削除した投稿の行は保存済みの内容からも取り除くこと。
+	 *
+	 * @dataProvider provide_deletions
+	 *
+	 * @param callable $delete 投稿を削除する処理.
+	 * @return void
+	 */
+	public function test_deleting_a_post_removes_entry( $delete ) {
+		$post_id = $this->create_post_with_entry();
+
+		$delete( $post_id );
+
+		$this->assertSame( '# 見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 投稿を削除する処理を返す。
+	 *
+	 * @return array<string,array<int,callable>>
+	 */
+	public function provide_deletions() {
+		return array(
+			'force delete'    => array(
+				static function ( $post_id ) {
+					wp_delete_post( $post_id, true );
+				},
+			),
+			'trash and empty' => array(
+				static function ( $post_id ) {
+					wp_trash_post( $post_id );
+					wp_delete_post( $post_id, true );
+				},
+			),
+			'draft and empty' => array(
+				static function ( $post_id ) {
+					wp_update_post(
+						array(
+							'ID'          => $post_id,
+							'post_status' => 'draft',
+						)
+					);
+					wp_delete_post( $post_id, true );
+				},
+			),
+		);
+	}
+
+	/**
+	 * 公開中の投稿と同じスラッグの下書きを削除しても、公開中の投稿の行は残ること。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_draft_with_same_slug_keeps_public_entry() {
+		$this->create_post_with_entry();
+		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$draft = self::factory()->post->create(
+			array(
+				'post_title'  => '別の下書き',
+				'post_name'   => 'target',
+				'post_status' => 'draft',
+			)
+		);
+		$this->assertSame( 'target', get_post( $draft )->post_name, '前提: 下書きはスラッグが重複しうる' );
+
+		wp_delete_post( $draft, true );
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 非公開の投稿と同じスラッグの下書きを削除しても、非公開の投稿の行は残ること。
+	 *
+	 * 公開し直したときに手書きの説明が失われないようにする。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_draft_with_same_slug_keeps_private_entry() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$draft = self::factory()->post->create(
+			array(
+				'post_title'  => '別の下書き',
+				'post_name'   => 'target',
+				'post_status' => 'draft',
+			)
+		);
+
+		wp_delete_post( $draft, true );
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 同じタイトルの投稿が上限を超えると判断できないので、古い形式の行を消さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_keeps_legacy_entries_at_query_limit() {
+		$ids = array();
+		for ( $i = 0; $i < AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1; $i++ ) {
+			$ids[] = self::factory()->post->create(
+				array(
+					'post_title' => '無題',
+					'post_name'  => '無題' . $i,
+				)
+			);
+		}
+		$saved = '- [無題](' . home_url( '/' ) . '/): 別の記事の抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_delete_post( $ids[0], true );
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 下書きを作成・編集しても、公開中の投稿とトップページの行は隠れないこと。
+	 *
+	 * スラッグが空の下書きの URL はトップページと、公開中の投稿と同じスラッグの下書きの URL は
+	 * その投稿と一致してしまう。
+	 *
+	 * @return void
+	 */
+	public function test_drafts_do_not_hide_public_entries() {
+		$published = self::factory()->post->create(
+			array(
+				'post_title' => 'Shared',
+				'post_name'  => 'shared-slug',
+			)
+		);
+		$saved     = '- [Home](' . home_url( '/' ) . "): HOMEEXCERPT\n- [Shared](" . get_permalink( $published ) . '): SHAREDEXCERPT';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$empty_slug = self::factory()->post->create(
+			array(
+				'post_title'  => 'Home',
+				'post_status' => 'draft',
+				'post_name'   => '',
+			)
+		);
+		$same_slug  = self::factory()->post->create(
+			array(
+				'post_title'  => 'Shared',
+				'post_status' => 'draft',
+				'post_name'   => 'shared-slug',
+			)
+		);
+		foreach ( array( $empty_slug, $same_slug ) as $draft ) {
+			wp_update_post(
+				array(
+					'ID'           => $draft,
+					'post_content' => 'Edited draft',
+				)
+			);
+		}
+
+		$this->assertSame( $saved, $this->served() );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 未ログインの訪問者への配信でも、公開時の URL で照合できること。
+	 *
+	 * 権限のないユーザーには get_permalink() が ?p=ID 形式を返す。
+	 *
+	 * @return void
+	 */
+	public function test_private_post_is_matched_by_pretty_url_for_anonymous_visitor() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '別のタイトル',
+				'post_name'   => 'hidden-entry',
+				'post_status' => 'private',
+			)
+		);
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_NAME,
+			'- [古いタイトル](' . home_url( '/hidden-entry/' ) . "): HIDDENEXCERPT\n- [Other](" . home_url( '/other/' ) . '): Other excerpt'
+		);
+
+		$served = $this->served();
+
+		$this->assertStringNotContainsString( 'HIDDENEXCERPT', $served );
+		$this->assertStringContainsString( 'Other excerpt', $served );
+	}
+
+	/**
+	 * パーマリンクが基本設定でも、ID の URL で照合できること。
+	 *
+	 * @return void
+	 */
+	public function test_plain_permalink_entries_are_matched_by_id() {
+		$this->set_permalink_structure( '' );
+
+		$post_id = self::factory()->post->create( array( 'post_title' => '基本設定の記事' ) );
+		$saved   = '- [古いタイトル](' . get_permalink( $post_id ) . '): 秘密';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served(), '前提: 公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'            => $post_id,
+				'post_password' => 'hunter2',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * URL の表記の違いがあっても照合できること。
+	 *
+	 * @dataProvider provide_url_variants
+	 *
+	 * @param callable $variant 投稿の URL を変える処理.
+	 * @return void
+	 */
+	public function test_entry_url_variants_are_matched( $variant ) {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '元のタイトル',
+				'post_name'   => 'あい',
+				'post_status' => 'publish',
+			)
+		);
+		$url     = get_permalink( $post_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [表のタイトル](' . $variant( $url ) . '): 秘密' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * URL の表記を変える処理を返す。
+	 *
+	 * @return array<string,array<int,callable>>
+	 */
+	public function provide_url_variants() {
+		return array(
+			'upper case percent bytes' => array(
+				static function ( $url ) {
+					return preg_replace_callback(
+						'/%[0-9a-f]{2}/',
+						static function ( $byte ) {
+							return strtoupper( $byte[0] );
+						},
+						$url
+					);
+				},
+			),
+			'no trailing slash'        => array( 'untrailingslashit' ),
+			'decoded'                  => array( 'rawurldecode' ),
+			'other scheme'             => array(
+				static function ( $url ) {
+					return set_url_scheme( $url, 'https' );
+				},
+			),
+		);
+	}
+
+	/**
+	 * 別の行の抜粋に同じ URL のリンクがあっても、その行は隠れないこと。
+	 *
+	 * @return void
+	 */
+	public function test_link_in_excerpt_of_other_entry_does_not_hide_it() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '隠す記事',
+				'post_name'  => 'hidden',
+			)
+		);
+		$other   = self::factory()->post->create(
+			array(
+				'post_title' => '残す記事',
+				'post_name'  => 'kept',
+			)
+		);
+		$url     = get_permalink( $post_id );
+		$kept    = '- [残す記事](' . get_permalink( $other ) . "): 詳しくは [こちら]({$url}): を参照";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [隠す記事]({$url}): 秘密\n{$kept}\n本文の [リンク]({$url}): はそのまま" );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( "{$kept}\n本文の [リンク]({$url}): はそのまま", $this->served() );
+	}
+
+	/**
+	 * 外部サイトへのリンクとメールアドレスの行は、同じタイトルの投稿を隠しても残ること。
+	 *
+	 * @return void
+	 */
+	public function test_external_entries_are_never_hidden() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '同じタイトル',
+				'post_status' => 'private',
+			)
+		);
+		$saved = "- [同じタイトル](https://other.example/docs/): 外部\n- [同じタイトル](mailto:a@example.com): メール";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 投稿に対応しないサイト内の URL は、同じタイトルの隠した投稿がなければ残ること。
+	 *
+	 * @return void
+	 */
+	public function test_site_entries_without_a_post_are_kept() {
+		self::factory()->post->create(
+			array(
+				'post_title'  => '関係ない記事',
+				'post_status' => 'private',
+			)
+		);
+		$saved = '- [ブログ](' . home_url( '/blog/' ) . '): 記事の一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * スラッグを変えると行の URL も新しくなり、そのあと隠しても行が隠れること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_updates_entry_url() {
+		$post_id = $this->create_post_with_entry();
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$url = get_permalink( $post_id );
+		$this->assertStringContainsString( 'renamed', $url, '前提: URL が変わる' );
+		$this->assertSame( "- [対象の記事]({$url}): 手書きの説明\n# 見出し", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 下書きに戻している間にスラッグとタイトルを変えても、行が隠れて新しい URL になること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_while_unpublished_updates_entry_url() {
+		$post_id = $this->create_post_with_entry();
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'draft',
+			)
+		);
+		wp_update_post(
+			array(
+				'ID'         => $post_id,
+				'post_title' => '新しいタイトル',
+				'post_name'  => 'renamed',
+			)
+		);
+		$this->assertSame( '# 見出し', $this->served(), '下書きの間は隠れる' );
+
+		wp_publish_post( $post_id );
+
+		$url = get_permalink( $post_id );
+		$this->assertStringContainsString( 'renamed', $url, '前提: URL が変わる' );
+		$this->assertSame( "- [対象の記事]({$url}): 手書きの説明\n# 見出し", $this->served() );
+	}
+
+	/**
+	 * 下書きのスラッグを変えても、同じ URL の公開中の投稿の行を書き換えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_draft_slug_keeps_public_entry() {
+		$this->create_post_with_entry();
+		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$draft = self::factory()->post->create(
+			array(
+				'post_title'  => '下書き',
+				'post_name'   => 'target',
+				'post_status' => 'draft',
+			)
+		);
+
+		wp_update_post(
+			array(
+				'ID'        => $draft,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * パーマリンクの設定を変えて URL が古くなった行も、タイトルで隠せること。
+	 *
+	 * @return void
+	 */
+	public function test_entry_with_stale_url_is_hidden_by_title() {
+		$post_id = $this->create_post_with_entry();
+
+		$this->set_permalink_structure( '/%year%/%postname%/' );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$this->set_permalink_structure( '/articles/%post_id%/' );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 無効にしている間に隠した投稿の行も隠れること。
+	 *
+	 * @return void
+	 */
+	public function test_post_hidden_while_deactivated_is_hidden() {
+		global $wpdb;
+
+		$post_id = $this->create_post_with_entry();
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		// 無効の間はフックが動かないので、データベースを直接更新する。
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( $wpdb->posts, array( 'post_status' => 'draft' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 無効の間に隠した投稿の行が、再有効化の直後に保存した判定結果で配信されないこと。
+	 *
+	 * @return void
+	 */
+	public function test_activation_ignores_cached_result_from_before_deactivation() {
+		global $wpdb;
+
+		$post_id = $this->create_post_with_entry();
+		$this->assertStringContainsString( '手書きの説明', $this->served(), '前提: 判定して結果を保存する' );
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		// 無効の間はフックが動かないので、データベースを直接更新する。
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+
+		AVC_AIS_Llms_Txt::activate();
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 配信は保存済みの内容を変更せず、隠した投稿の数に関係なく行数分の処理で済むこと。
+	 *
+	 * @return void
+	 */
+	public function test_serving_is_read_only_and_does_not_walk_hidden_posts() {
+		global $wpdb;
+
+		self::factory()->post->create_many(
+			210,
+			array(
+				'post_status'   => 'publish',
+				'post_password' => 'hunter2',
+			)
+		);
+		$post_id = $this->create_post_with_entry();
+		$this->assertStringContainsString( '手書きの説明', $this->served(), '前提: 公開中は配信する' );
+		wp_update_post(
+			array(
+				'ID'            => $post_id,
+				'post_password' => 'hunter2',
+			)
+		);
+		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		$before = $wpdb->num_queries;
+		$served = $this->served();
+		$count  = $wpdb->num_queries - $before;
+
+		$this->assertSame( '# 見出し', $served );
+		$this->assertLessThan( 10, $count, '隠した投稿を全件たどらない' );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED ), '配信では修復しない' );
+	}
+
+	/**
+	 * 保存していなければ自動生成の内容を配信すること。
+	 *
+	 * @return void
+	 */
+	public function test_generated_content_is_served_when_nothing_is_saved() {
+		self::factory()->post->create( array( 'post_title' => '公開の記事' ) );
+		$llms = AVC_AIS_Llms_Txt::init();
+
+		$this->assertStringContainsString( '公開の記事', $this->served() );
+		$this->assertSame( $llms->generate_default_content(), $this->served() );
+		$this->assertSame( array(), $llms->get_hidden_entry_titles() );
+	}
+
+	/**
+	 * 以前の保存処理で URL が壊れた行も、隠した投稿のタイトルで隠せること。
+	 *
+	 * 壊れた形が同じ公開中の投稿の行は巻き込まない。
+	 *
+	 * @return void
+	 */
+	public function test_legacy_entry_is_hidden_by_title_and_keeps_other_entries() {
+		$protected_id = self::factory()->post->create(
+			array(
+				'post_title'    => 'apple',
+				'post_name'     => 'あ',
+				'post_password' => 'hunter2',
+			)
+		);
+		$public_id    = self::factory()->post->create(
+			array(
+				'post_title' => 'Apple',
+				'post_name'  => 'い',
+			)
+		);
+		$broken       = sanitize_textarea_field( get_permalink( $protected_id ) );
+		$this->assertSame( $broken, sanitize_textarea_field( get_permalink( $public_id ) ), '前提: 壊れた URL が衝突する' );
+
+		$public_line = "- [Apple]({$broken}): 公開の抜粋";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [apple]({$broken}): 秘密\n{$public_line}" );
+
+		$this->assertSame( $public_line, $this->served() );
+	}
+
+	/**
+	 * 同じタイトルの公開中と隠した投稿が壊れた形でも衝突すると、どちらの抜粋か判断できないので隠すこと。
+	 *
+	 * 以前は隠した投稿の行を消すと公開中の投稿の行も消えていた。消さずに隠すので、修復もしない。
+	 *
+	 * @return void
+	 */
+	public function test_ambiguous_legacy_entries_are_hidden_but_not_repaired_or_removed() {
+		$protected_id = self::factory()->post->create(
+			array(
+				'post_title'    => 'お知らせ',
+				'post_name'     => 'あ',
+				'post_password' => 'hunter2',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_title' => 'お知らせ',
+				'post_name'  => 'い',
+			)
+		);
+		$saved = '- [お知らせ](' . sanitize_textarea_field( get_permalink( $protected_id ) ) . '): 抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+
+		$this->assertSame( '', $this->served() );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * URL の修復は隠した投稿の行も正しい URL へ直し、配信はしないこと。
+	 *
+	 * 公開すれば正しいリンクとして配信に戻る。
+	 *
+	 * @return void
+	 */
+	public function test_repair_fixes_hidden_entry_without_serving_it() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '下書きの記事',
+				'post_name'   => 'あい',
+				'post_status' => 'draft',
+			)
+		);
+		$llms    = AVC_AIS_Llms_Txt::init();
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_NAME,
+			'- [下書きの記事](' . home_url( '/' ) . "/): 秘密の本文\n# 見出し"
+		);
+
+		$llms->maybe_repair_saved_urls();
+		$this->assertSame( '# 見出し', $this->served() );
+
+		wp_publish_post( $post_id );
+		$url = get_permalink( $post_id );
+		$this->assertStringContainsString( '%e3%81%82', $url, '前提: 日本語スラッグの URL' );
+		$this->assertSame( "- [下書きの記事]({$url}): 秘密の本文\n# 見出し", $this->served() );
+	}
+
+	/**
+	 * 連続するスペースのあるタイトルの保護された投稿も、修復のあとは隠れること。
+	 *
+	 * 以前の保存処理は連続するスペースをまとめていたので、配信時のタイトルの照合では見つからない。
+	 *
+	 * @return void
+	 */
+	public function test_repair_finds_legacy_entry_whose_title_has_double_spaces() {
+		$protected_id = self::factory()->post->create(
+			array(
+				'post_title'    => 'Members  only',
+				'post_name'     => 'あ',
+				'post_password' => 'hunter2',
+			)
+		);
+		$legacy       = sanitize_textarea_field( '- [Members  only](' . get_permalink( $protected_id ) . "): secret\n# 見出し" );
+		$this->assertStringContainsString( '- [Members only]', $legacy, '前提: スペースがまとめられる' );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $legacy );
+
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * タイトルの & が &amp; で保存された投稿も、照合と修復ができること。
+	 *
+	 * @return void
+	 */
+	public function test_titles_with_entities_are_matched() {
+		global $wpdb;
+
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => 'Q and A',
+				'post_name'  => 'あい',
+			)
+		);
+		// 権限のないユーザーの投稿は kses で &amp; に変わる。
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( $wpdb->posts, array( 'post_title' => 'Q &amp; A' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+
+		$url    = get_permalink( $post_id );
+		$broken = sanitize_textarea_field( $url );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [Q & A]({$broken}): 抜粋" );
+
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+		$this->assertSame( "- [Q & A]({$url}): 抜粋", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [Q & A]({$broken}): 秘密" );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * URL の修復が途中で失敗しても、繰り返さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_failed_repair_is_not_retried() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [記事](' . home_url( '/' ) . '/): 抜粋' );
+
+		$fail = static function ( $query ) {
+			if ( $query->get( 'title' ) ) {
+				throw new RuntimeException( 'time limit' );
+			}
+		};
+		add_action( 'pre_get_posts', $fail );
+
+		try {
+			AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+			$this->fail( '前提: 修復が途中で止まる' );
+		} catch ( RuntimeException $e ) {
+			$this->assertSame( 'time limit', $e->getMessage() );
+		}
+
+		$this->assertNotEmpty( get_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED ) );
+
+		// 二度目は処理しないので失敗しない。
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+		remove_action( 'pre_get_posts', $fail );
+	}
+
+	/**
+	 * v1.3.2 の掃除の記録は修復のときに消すこと。
+	 *
+	 * @return void
+	 */
+	public function test_repair_removes_old_scrub_flag() {
+		update_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED, true );
+
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED ) );
+		$this->assertNotEmpty( get_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED ) );
+	}
+
+	/**
+	 * 権限のないリクエストでは、一度きりの処理を実行しないこと。
+	 *
+	 * admin_init は admin-ajax.php への未ログインのリクエストでも動く。
+	 *
+	 * @dataProvider provide_users_without_permission
+	 *
+	 * @param string $role 権限グループ（空なら未ログイン）.
+	 * @return void
+	 */
+	public function test_one_time_tasks_need_permission( $role ) {
+		$broken = '- [記事](' . home_url( '/' ) . '/): 抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $broken );
+		wp_set_current_user( $role ? self::factory()->user->create( array( 'role' => $role ) ) : 0 );
+
+		$llms = AVC_AIS_Llms_Txt::init();
+		$llms->restore_missing_rewrite_rule();
+		$llms->maybe_repair_saved_urls();
+
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED ) );
+		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED ) );
+
+		wp_set_current_user( $this->admin_id );
+		$llms->restore_missing_rewrite_rule();
+		$llms->maybe_repair_saved_urls();
+
+		$this->assertNotEmpty( get_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED ) );
+		$this->assertNotEmpty( get_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED ) );
+	}
+
+	/**
+	 * 一度きりの処理の権限がないユーザーを返す。
+	 *
+	 * @return array<string,array<int,string>>
+	 */
+	public function provide_users_without_permission() {
+		return array(
+			'anonymous' => array( '' ),
+			'editor'    => array( 'editor' ),
+		);
+	}
+
+	/**
+	 * 改行の種類によって保存される内容が変わらないこと。
+	 *
+	 * sanitize_textarea_field() は行末の < の扱いが改行コードで変わる。
+	 *
+	 * @return void
+	 */
+	public function test_sanitize_content_does_not_depend_on_newline_style() {
+		$lf = "x <\ny\nz";
+
+		$this->assertSame(
+			AVC_AIS_Llms_Txt::sanitize_content( $lf ),
+			AVC_AIS_Llms_Txt::sanitize_content( str_replace( "\n", "\r\n", $lf ) )
+		);
+		$this->assertStringNotContainsString( "\r", AVC_AIS_Llms_Txt::sanitize_content( "a\r\nb\rc" ) );
+	}
+
+	/**
+	 * ネットワーク全体の無効化で他のサイトのルールも消え、再有効化で戻ること。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_and_activation_update_all_sites() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$other    = array( 'other/?$' => 'index.php?other=1' );
+		$llms     = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id  = self::factory()->blog->create();
+		$disabled = self::factory()->blog->create();
+		foreach ( array( $site_id, $disabled ) as $id ) {
+			switch_to_blog( $id );
+			update_option( 'rewrite_rules', $llms + $other );
+			restore_current_blog();
+		}
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $other, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+
+		switch_to_blog( $disabled );
+		update_option( AVC_AIS_Llms_Txt::OPTION_ENABLED, '0' );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::activate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $llms + $other, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+
+		switch_to_blog( $disabled );
+		$this->assertSame( $other, get_option( 'rewrite_rules' ), 'llms.txt を無効にしたサイトには追加しない' );
+		restore_current_blog();
+	}
+
+	/**
+	 * サイト単位で有効にしているサイトは、ネットワーク全体の無効化でもルールを残すこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_sites_with_plugin_active() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$rules   = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id = self::factory()->blog->create();
+		switch_to_blog( $site_id );
+		update_option( 'rewrite_rules', $rules );
+		update_option( 'active_plugins', array( plugin_basename( AVC_AIS_FILE ) ) );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+	}
+
+	/**
+	 * 現在のサイトでサイト単位で有効なら、ネットワーク全体の無効化でルールを残すこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_current_site_with_plugin_active() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		AVC_AIS_Llms_Txt::activate();
+		update_option( 'active_plugins', array( plugin_basename( AVC_AIS_FILE ) ) );
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		$this->assertArrayHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ) );
+	}
+
+	/**
+	 * 別のネットワークのサイトのルールに触れないこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_other_networks() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$rules   = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id = self::factory()->blog->create( array( 'network_id' => 999 ) );
+		switch_to_blog( $site_id );
+		update_option( 'rewrite_rules', $rules );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+	}
+
+	/**
+	 * 通常の無効化では他のサイトのルールに触れないこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_single_site_deactivation_keeps_other_sites() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$rules   = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id = self::factory()->blog->create();
+		switch_to_blog( $site_id );
+		update_option( 'rewrite_rules', $rules );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+	}
+}

@@ -129,16 +129,17 @@ class Plugin {
 	/**
 	 * 現在のサイトに保存した処理のための一時的なデータを削除する
 	 *
-	 * 一度きりの処理の記録も消して再インストール後にやり直す。プラグインがない間は投稿の変更を
-	 * 追えないので、残した llms.txt の内容はもう一度掃除する必要がある。
-	 * /llms.txt の rewrite ルールも消す。ネットワーク全体の無効化では現在のサイトのルールしか
-	 * 消えず、残るとトップページを返してしまう。
+	 * 一度きりの処理の記録も消して再インストール後にやり直す。
+	 * /llms.txt の rewrite ルールも消す。残るとトップページを返してしまう。
 	 * ハッシュ付きの一時データ（avc_ais_diag_* / avc_ais_geocode_*）は短時間で失効し、
 	 * WordPress の定期処理で消えるため対象にしない。
 	 */
 	private static function delete_temporary_site_data(): void {
 		$options = array(
 			\AVC_AIS_Llms_Txt::OPTION_SCRUBBED,
+			\AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED,
+			\AVC_AIS_Llms_Txt::OPTION_DELETED_URLS,
+			\AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION,
 			\AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED,
 			Wizard::OPTION_API_KEY_PURGED,
 		);
@@ -146,13 +147,10 @@ class Plugin {
 			\delete_option( $option );
 		}
 
-		$rules = \get_option( 'rewrite_rules' );
-		if ( \is_array( $rules ) && isset( $rules[ \AVC_AIS_Llms_Txt::REWRITE_REGEX ] ) ) {
-			unset( $rules[ \AVC_AIS_Llms_Txt::REWRITE_REGEX ] );
-			\update_option( 'rewrite_rules', $rules );
-		}
+		\AVC_AIS_Llms_Txt::remove_rewrite_rule();
 
 		\delete_transient( 'avc_ais_wizard_redirect' );
 		\delete_transient( 'avc_ais_last_validation_errors' );
+		\delete_transient( \AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
 	}
 }

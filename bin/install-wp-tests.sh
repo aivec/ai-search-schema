@@ -25,9 +25,9 @@ download() {
     local url="$1"
 
     if command -v curl >/dev/null 2>&1; then
-        curl -sSL "$url"
+        curl -fsSL --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 600 "$url"
     elif command -v wget >/dev/null 2>&1; then
-        wget -q -O - "$url"
+        wget -q -O - --tries=3 --timeout=60 "$url"
     else
         echo "Error: curl or wget is required to download files." >&2
         exit 1
@@ -38,18 +38,27 @@ php_escape() {
     php -r "echo addcslashes(\$argv[1], \"'\\\\\");" "$1"
 }
 
-# trunk のテストファイルは開発版に合わせて変わり、最新の安定版では動かないことがある。
-# 本体とテストファイルを同じバージョンに揃えるため、latest を実際のバージョン番号に置き換える。
-resolve_wp_version() {
-    if [ "$WP_VERSION" != "latest" ]; then
-        return
+# 本体とテストファイルは同じバージョンに揃える。バージョンが違うと、テストファイルが読み込む
+# ファイルが本体になく、PHPUnit が起動できないことがある（trunk が先へ進んだときに起きた）。
+# 本体がすでにあればそのバージョンに合わせ、なければ latest を実際のバージョン番号に置き換える。
+determine_wp_version() {
+    if [ -f "${WP_CORE_DIR}/wp-includes/version.php" ]; then
+        local installed
+        installed="$(sed -n "s/^\$wp_version = '\(.*\)';.*/\1/p" "${WP_CORE_DIR}/wp-includes/version.php")"
+        if [ "$WP_VERSION" != "latest" ] && [ "$WP_VERSION" != "$installed" ]; then
+            echo "WordPress ${installed} exists at ${WP_CORE_DIR}, but ${WP_VERSION} was requested. Remove the directory or set WP_CORE_DIR." >&2
+            exit 1
+        fi
+        WP_VERSION="$installed"
+    elif [ "$WP_VERSION" = "latest" ]; then
+        WP_VERSION="$(download "https://api.wordpress.org/core/version-check/1.7/" \
+            | php -d display_errors=stderr -d display_startup_errors=0 \
+                -r '$data = json_decode( stream_get_contents( STDIN ), true ); echo $data["offers"][0]["version"] ?? "";')" || WP_VERSION=""
     fi
 
-    WP_VERSION="$(download "https://api.wordpress.org/core/version-check/1.7/" \
-        | php -r '$data = json_decode( stream_get_contents( STDIN ), true ); echo $data["offers"][0]["version"] ?? "";')"
-
+    # 開発版にはテストファイルのタグがない。
     if ! [[ "$WP_VERSION" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
-        echo "Could not determine the latest WordPress version." >&2
+        echo "Could not determine a released WordPress version (got '${WP_VERSION}'). Remove ${WP_CORE_DIR} or set WP_CORE_DIR." >&2
         exit 1
     fi
 }
@@ -62,7 +71,6 @@ install_wp() {
 
     mkdir -p "$WP_CORE_DIR"
 
-    resolve_wp_version
     local archive_url="https://wordpress.org/wordpress-${WP_VERSION}.tar.gz"
 
     echo "Downloading WordPress (${WP_VERSION})..."
@@ -71,18 +79,15 @@ install_wp() {
 }
 
 install_test_suite() {
-    if [ -f "${WP_TESTS_DIR}/includes/functions.php" ]; then
-        echo "WordPress test suite already exists at ${WP_TESTS_DIR}; skipping download."
+    local version_file="${WP_TESTS_DIR}/.wp-version"
+    if [ -f "${WP_TESTS_DIR}/includes/functions.php" ] && [ "$(cat "$version_file" 2>/dev/null)" = "$WP_VERSION" ]; then
+        echo "WordPress test suite ${WP_VERSION} already exists at ${WP_TESTS_DIR}; skipping download."
         return
     fi
-
-    rm -rf "$WP_TESTS_DIR"
-    mkdir -p "$WP_TESTS_DIR"
 
     local tmpdir
     tmpdir="$(mktemp -d)"
     local checkout_dir="${tmpdir}/wp-tests"
-    resolve_wp_version
     local tests_tag="tags/${WP_VERSION}"
 
     local use_github=false
@@ -123,7 +128,11 @@ install_test_suite() {
         exit 1
     fi
 
+    # 取得に失敗しても手元のファイルが残るよう、取得できてから置き換える。
+    rm -rf "$WP_TESTS_DIR"
+    mkdir -p "$WP_TESTS_DIR"
     cp -R "${checkout_dir}/." "$WP_TESTS_DIR"
+    printf '%s' "$WP_VERSION" > "$version_file"
     rm -rf "$tmpdir"
 }
 
@@ -202,6 +211,7 @@ PHP
     echo "Created wp-tests-config.php at ${config_path}"
 }
 
+determine_wp_version
 install_wp
 install_test_suite
 create_db

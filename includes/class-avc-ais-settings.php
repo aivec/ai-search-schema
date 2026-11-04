@@ -53,9 +53,17 @@ class AVC_AIS_Settings {
 	 * @return mixed Filtered value with nulls removed.
 	 */
 	public function filter_option_on_get( $value ) {
-		if ( is_array( $value ) ) {
-			return $this->filter_null_values( $value );
+		if ( ! is_array( $value ) ) {
+			return $value;
 		}
+
+		$value = $this->filter_null_values( $value );
+		foreach ( array( 'lb_subtype', 'business_type', 'local_business_type' ) as $key ) {
+			if ( isset( $value[ $key ] ) ) {
+				$value[ $key ] = AVC_AIS_LocalBusinessTypes::rename( $value[ $key ] );
+			}
+		}
+
 		return $value;
 	}
 
@@ -315,9 +323,13 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $content,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $content ),
-				'message' => __( 'llms.txt content has been regenerated from site data.', 'aivec-ai-search-schema' ),
+				'content'       => $content,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $content ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __(
+					'llms.txt content has been regenerated from site data.',
+					'aivec-ai-search-schema'
+				),
 			)
 		);
 	}
@@ -359,9 +371,10 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $current,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $current ),
-				'message' => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
+				'content'       => $current,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $current ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -667,17 +680,10 @@ class AVC_AIS_Settings {
 	 * @return array サニタイズされたオプション
 	 */
 	public function sanitize_options( $input ) {
-		$llms_txt_content = null;
-		if ( ! is_array( $input ) ) {
-			$input = array();
-		} else {
-			// Filter null values before wp_unslash to prevent PHP 8 deprecation warnings.
-			$input = $this->filter_null_values( $input );
-			// options.php がスラッシュを取り除いたあとの値。もう一度取り除くと本文の \ が消え、
-			// 表示したときの内容と一致しなくなる。
-			$llms_txt_content = $input['llms_txt_content'] ?? null;
-			$input            = wp_unslash( $input );
-		}
+		// options.php はスラッシュを取り除いてから update_option() を呼び、ウィザードなど他の
+		// 呼び出し元の値にもスラッシュはない。ここで取り除くと入力した \ が消える。
+		$input            = is_array( $input ) ? $this->filter_null_values( $input ) : array();
+		$llms_txt_content = $input['llms_txt_content'] ?? null;
 
 		$output = $this->get_options();
 
@@ -744,8 +750,7 @@ class AVC_AIS_Settings {
 			: 'Organization';
 
 		$lb_subtype_raw          = $input['lb_subtype'] ?? $input['business_type'] ?? 'LocalBusiness';
-		$lb_subtype              = sanitize_text_field( $lb_subtype_raw );
-		$lb_subtype              = $lb_subtype ? $lb_subtype : 'LocalBusiness';
+		$lb_subtype              = AVC_AIS_LocalBusinessTypes::to_saved_value( sanitize_text_field( $lb_subtype_raw ) );
 		$output['lb_subtype']    = $lb_subtype;
 		$output['business_type'] = $lb_subtype;
 

@@ -29,7 +29,7 @@ class LlmsTxtTest extends WP_UnitTestCase {
 		// Reset singleton for clean tests.
 		$reflection = new ReflectionClass( 'AVC_AIS_Llms_Txt' );
 		$instance   = $reflection->getProperty( 'instance' );
-		$instance->setAccessible( true );
+		avc_ais_test_make_accessible( $instance );
 		$instance->setValue( null, null );
 
 		$this->llms = AVC_AIS_Llms_Txt::init();

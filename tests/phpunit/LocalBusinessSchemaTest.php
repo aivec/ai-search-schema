@@ -53,7 +53,7 @@ class AVC_AIS_LocalBusiness_Test extends WP_UnitTestCase {
         );
 
         $ref = new ReflectionProperty(AVC_AIS_Schema::class, 'instance');
-        $ref->setAccessible(true);
+        avc_ais_test_make_accessible( $ref );
         $ref->setValue(null, null);
 
         $this->go_to( get_permalink( $this->page_id ) );

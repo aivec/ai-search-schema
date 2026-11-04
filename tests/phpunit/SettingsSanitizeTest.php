@@ -65,4 +65,18 @@ class AVC_AIS_Settings_Sanitize_Test extends WP_UnitTestCase {
 
         $this->assertFalse($result['has_map_enabled']);
     }
+
+    /**
+     * 設定フォームの欄で入力したバックスラッシュを保存のたびに失わないこと。
+     */
+    public function test_backslashes_survive_repeated_saves() {
+        $settings = new AVC_AIS_Settings();
+        $input    = array( 'company_name' => 'A\\B \\\\ C' );
+
+        $first  = $settings->sanitize_options( $input );
+        $second = $settings->sanitize_options( $first );
+
+        $this->assertSame( $input['company_name'], $first['company_name'] );
+        $this->assertSame( $input['company_name'], $second['company_name'] );
+    }
 }

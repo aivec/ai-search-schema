@@ -241,7 +241,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_basics_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'site_name'        => '<b>Site Name</b>',
@@ -264,7 +264,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_type_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'entity_type'   => 'LocalBusiness',
@@ -283,7 +283,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_location_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'local_business_name' => 'Test Business',
@@ -320,7 +320,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_hours_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// UI sends hours_{day}_opens/closes format.
 		$input = array(
@@ -349,7 +349,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_hours_filters_invalid_days() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'opening_hours' => array(
@@ -378,7 +378,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_api_key_step() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'gmaps_api_key' => '  AIzaSyTest<script>Key  ',
@@ -397,7 +397,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_basics() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'company_name'     => 'Test Company',
@@ -421,7 +421,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_type() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'entity_type'   => 'LocalBusiness',
@@ -443,7 +443,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_type_organization() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'entity_type' => 'Organization',
@@ -463,7 +463,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_location() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'local_business_name' => 'Test Business',
@@ -512,7 +512,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_hours() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'opening_hours'        => array(
@@ -542,7 +542,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_save_to_settings_api_key_saves_to_separate_option() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$data = array(
 			'gmaps_api_key' => 'AIzaSyTestKey',
@@ -610,7 +610,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_handles_empty_data() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$result = $method->invoke( $this->wizard, 'basics', array() );
 
@@ -626,7 +626,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_sanitize_unknown_step_uses_default() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'field1' => '  value1  ',
@@ -675,7 +675,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_xss_prevention() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$malicious_input = array(
 			'site_name'        => '<script>alert("XSS")</script>Site Name',
@@ -696,7 +696,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_opening_hours_includes_holiday() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'opening_hours' => array(
@@ -720,7 +720,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_location_coordinates_as_float() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'geo_latitude'  => '35.6762',
@@ -741,7 +741,7 @@ class WizardAjaxTest extends WP_UnitTestCase {
 	public function test_invalid_coordinates_become_zero() {
 		$reflection = new ReflectionClass( $this->wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'geo_latitude'  => 'not_a_number',
