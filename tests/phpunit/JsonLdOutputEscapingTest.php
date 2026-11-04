@@ -131,7 +131,6 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'word after tag'    => array( 'if a<i and c>d' ),
 			'html word in text' => array( 'if a<b default c>d' ),
 			'more html words'   => array( 'a<b open late>d' ),
-			'equals in text'    => array( 'if a<b then c=d>e' ),
 		);
 	}
 
@@ -178,6 +177,11 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'single quotes'  => array( "<a href='x' title='y z'>Foo</a>", 'Foo' ),
 			'bracket in attr' => array( '<a title="1>0">Foo</a>', 'Foo' ),
 			'no quotes'      => array( '<a href=x>Foo</a>', 'Foo' ),
+			'mixed bare attr' => array( '<span class="x" data-foo>Foo</span>', 'Foo' ),
+			'unknown bare'   => array( '<a href="x" download>Foo</a>', 'Foo' ),
+			'url value'      => array( '<a href=http://x.example/?a=1>Foo</a>', 'Foo' ),
+			'no space attrs' => array( '<a href="x"class="y">Foo</a>', 'Foo' ),
+			'event handler'  => array( "<img src=x onerror=alert('1')>Foo", 'Foo' ),
 		);
 	}
 

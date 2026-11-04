@@ -238,11 +238,33 @@ class AVC_AIS_LocalBusinessTypes {
 	/**
 	 * 選択できる型かを判定する。
 	 *
-	 * @param mixed $type 型.
+	 * @param mixed $type 型。配列なら選択できる型が 1 つでもあれば true.
 	 * @return bool 選択できれば true.
 	 */
 	public static function is_valid( $type ) {
+		if ( is_array( $type ) ) {
+			return ! empty( array_filter( array_map( array( self::class, 'find' ), $type ) ) );
+		}
+
 		return null !== self::find( $type );
+	}
+
+	/**
+	 * 設定に保存する値を返す。
+	 *
+	 * 対応する型があれば直す。ないときは入力を残し、出力の直前に LocalBusiness へ置き換える。
+	 * ここで置き換えると、実在する LocalBusiness 以外の型（VeterinaryCare など）を選んでいた
+	 * サイトの値が、関係のない設定の保存で黙って失われる。
+	 *
+	 * @param string $type 無害化した入力.
+	 * @return string 保存する値.
+	 */
+	public static function to_saved_value( $type ) {
+		if ( '' === $type ) {
+			return self::DEFAULT_TYPE;
+		}
+
+		return self::find( $type ) ?? $type;
 	}
 
 	/**
@@ -291,12 +313,17 @@ class AVC_AIS_LocalBusinessTypes {
 			return null;
 		}
 
-		$key = static function ( $value ) {
+		$types = self::all();
+		if ( in_array( $type, $types, true ) ) {
+			return $type;
+		}
+
+		$key     = static function ( $value ) {
 			return strtolower( (string) preg_replace( '/\s+/', '', $value ) );
 		};
+		$renamed = array_combine( array_map( $key, array_keys( self::RENAMED ) ), self::RENAMED );
+		$wanted  = $renamed[ $key( $type ) ] ?? $type;
 
-		$types = self::all();
-
-		return array_combine( array_map( $key, $types ), $types )[ $key( self::rename( $type ) ) ] ?? null;
+		return array_combine( array_map( $key, $types ), $types )[ $key( $wanted ) ] ?? null;
 	}
 }

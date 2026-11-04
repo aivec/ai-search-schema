@@ -750,7 +750,7 @@ class AVC_AIS_Settings {
 			: 'Organization';
 
 		$lb_subtype_raw          = $input['lb_subtype'] ?? $input['business_type'] ?? 'LocalBusiness';
-		$lb_subtype              = AVC_AIS_LocalBusinessTypes::to_schema_type( sanitize_text_field( $lb_subtype_raw ) );
+		$lb_subtype              = AVC_AIS_LocalBusinessTypes::to_saved_value( sanitize_text_field( $lb_subtype_raw ) );
 		$output['lb_subtype']    = $lb_subtype;
 		$output['business_type'] = $lb_subtype;
 

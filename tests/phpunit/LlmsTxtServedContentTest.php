@@ -461,6 +461,84 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 日本語のままで書いた子ページの行も、親ページのスラッグの変更で書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_decoded_child_entry() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'あ',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_name'   => 'い',
+				'post_parent' => $parent_id,
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [子](' . rawurldecode( get_permalink( $child_id ) ) . '): 説明' );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$this->assertSame( '- [子](' . get_permalink( $child_id ) . '): 説明', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 親ページのスラッグを変えても、子ページの URL の残りの部分の表記を変えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_keeps_rest_of_child_url() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'parent',
+			)
+		);
+		$old       = get_permalink( $parent_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [資料]({$old}Report.PDF?id=AbC%26x): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$new = get_permalink( $parent_id );
+		$this->assertSame( "- [資料]({$new}Report.PDF?id=AbC%26x): 説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 投稿タイプを変えて一覧から外れた投稿でも、判定結果を無効にすること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_post_type_clears_cache() {
+		register_post_type( 'ais_other' );
+
+		$post_id = self::factory()->post->create();
+		update_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION, 'before' );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_type' => 'ais_other',
+			)
+		);
+
+		$this->assertNotSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+	}
+
+	/**
 	 * 一覧に載らない投稿タイプの更新では、判定結果を無効にしないこと。
 	 *
 	 * @return void

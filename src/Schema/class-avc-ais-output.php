@@ -7,14 +7,14 @@ class AVC_AIS_Output {
 	/**
 	 * HTML タグとみなす形。
 	 *
-	 * 「a<b then c>d」のような文を残すため、属性が「名前=値」か値のない HTML の属性だけのものを
-	 * タグとして扱う。
+	 * 「a<b then c>d」のような文を残すため、= を含むものと、値のない HTML の属性だけのものを
+	 * タグとして扱う。属性の値の中の > でタグが終わったとみなさないよう、引用符の中は読み飛ばす。
 	 */
-	private const HTML_TAG_PATTERN = '/<\/?[a-zA-Z][a-zA-Z0-9:-]*(?:\s+(?:[a-zA-Z_:][-a-zA-Z0-9_:.]*\s*=\s*'
-		. '(?:"[^"]*"|\'[^\']*\'|[^\s"\'<>=]+)|'
+	private const HTML_TAG_PATTERN = '/<\/?[a-zA-Z][a-zA-Z0-9:-]*'
+		. '(?:\s(?=[^<>]*=)(?:[^<>"\']|"[^"]*"|\'[^\']*\')*|(?:\s+(?:'
 		. 'allowfullscreen|async|autofocus|autoplay|checked|controls|default|defer|disabled|hidden|inert|ismap|'
 		. 'itemscope|loop|multiple|muted|nomodule|novalidate|open|playsinline|readonly|required|reversed|selected'
-		. '))*\s*\/?>/i';
+		. '))+)?\s*\/?>/i';
 
 	/**
 	 * @var AVC_AIS_Validator|null

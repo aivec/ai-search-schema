@@ -107,6 +107,8 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 			'old gym'          => array( 'FitnessCenter', 'ExerciseGym' ),
 			'old spa'          => array( 'HealthAndBeautySpa', 'DaySpa' ),
 			'old construction' => array( 'HomeAndConstruction', 'HomeAndConstructionBusiness' ),
+			'old lower case'   => array( 'cafe', 'CafeOrCoffeeShop' ),
+			'old with spaces'  => array( 'Fitness Center', 'ExerciseGym' ),
 			'unchanged'        => array( 'Restaurant', 'Restaurant' ),
 			'lower case'       => array( 'hairsalon', 'HairSalon' ),
 			'spaces'           => array( ' Hair Salon ', 'HairSalon' ),
@@ -172,6 +174,18 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 		);
 
 		$this->assertSame( 'LocalBusiness', $node['@type'] );
+	}
+
+	/**
+	 * 配列は選択できる型があれば有効とすること。
+	 *
+	 * @return void
+	 */
+	public function test_is_valid_accepts_lists_with_a_valid_type() {
+		$this->assertTrue( AVC_AIS_LocalBusinessTypes::is_valid( array( 'Restaurant', 'BarOrPub' ) ) );
+		$this->assertTrue( AVC_AIS_LocalBusinessTypes::is_valid( array( 'NotARealType', 'Bakery' ) ) );
+		$this->assertFalse( AVC_AIS_LocalBusinessTypes::is_valid( array( 'NotARealType' ) ) );
+		$this->assertFalse( AVC_AIS_LocalBusinessTypes::is_valid( array() ) );
 	}
 
 	/**
@@ -287,7 +301,9 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 		return array(
 			'valid'   => array( 'Dentist', 'Dentist' ),
 			'old'     => array( 'FitnessCenter', 'ExerciseGym' ),
-			'invalid' => array( 'NotARealType', 'LocalBusiness' ),
+			'case'    => array( 'hairsalon', 'HairSalon' ),
+			'invalid' => array( 'NotARealType', 'NotARealType' ),
+			'other'   => array( 'VeterinaryCare', 'VeterinaryCare' ),
 			'empty'   => array( '', 'LocalBusiness' ),
 		);
 	}

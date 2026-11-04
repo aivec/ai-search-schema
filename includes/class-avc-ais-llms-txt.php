@@ -322,15 +322,15 @@ class AVC_AIS_Llms_Txt {
 	 *
 	 * 自動保存や他の投稿タイプの更新で無効にすると、結果を保存している意味がなくなる。
 	 *
-	 * @param mixed ...$args フックの引数（いずれかが投稿）.
+	 * 投稿タイプを変えた更新では、更新前の投稿も確かめる。
+	 *
+	 * @param mixed ...$args フックの引数（投稿を含む）.
 	 * @return void
 	 */
 	public static function clear_cache_for_changed_post( ...$args ) {
 		foreach ( $args as $arg ) {
-			if ( $arg instanceof WP_Post ) {
-				if ( in_array( $arg->post_type, self::LISTED_POST_TYPES, true ) ) {
-					self::clear_hidden_lines_cache();
-				}
+			if ( $arg instanceof WP_Post && in_array( $arg->post_type, self::LISTED_POST_TYPES, true ) ) {
+				self::clear_hidden_lines_cache();
 				return;
 			}
 		}
@@ -547,13 +547,13 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * URL から http と https の違いを取り除く。
+	 * 子ページの URL か比べるために、スキーム、エンコード、大文字小文字の違いを取り除く。
 	 *
 	 * @param string $url URL.
-	 * @return string スキームのない URL.
+	 * @return string 比較用の URL.
 	 */
-	private static function without_scheme( $url ) {
-		return (string) preg_replace( '#^https?:#i', '', $url );
+	private static function child_url_form( $url ) {
+		return strtolower( rawurldecode( (string) preg_replace( '#^https?:#i', '', $url ) ) );
 	}
 
 	/**
@@ -886,7 +886,7 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		$old_key    = self::url_key( $old_url );
-		$old_parent = is_post_type_hierarchical( $post_after->post_type ) ? self::without_scheme( trailingslashit( $old_url ) ) : '';
+		$old_parent = is_post_type_hierarchical( $post_after->post_type ) ? self::child_url_form( trailingslashit( $old_url ) ) : '';
 		$lines      = explode( "\n", $saved );
 		foreach ( $lines as $index => $line ) {
 			$entry = self::parse_entry( $line );
@@ -899,10 +899,18 @@ class AVC_AIS_Llms_Txt {
 			}
 			// 親ページの URL が変わると子ページの URL も変わるが、子ページの更新は発生しない。
 			// 以前の保存処理で壊れた /親// は子ページと判別できないので書き換えない。
-			$entry_url = self::without_scheme( $entry['url'] );
-			$is_child  = '' !== $old_parent && 0 === stripos( $entry_url, $old_parent );
-			$child     = $is_child ? substr( $entry_url, strlen( $old_parent ) ) : '';
+			$is_child = '' !== $old_parent && 0 === strpos( self::child_url_form( $entry['url'] ), $old_parent );
+			// 親より下の部分は元の表記のまま残す。比較用の形は大文字小文字もエンコードも変えている。
+			$segments = $is_child ? explode( '/', $entry['url'], substr_count( $old_parent, '/' ) + 1 ) : array();
+			$child    = $is_child ? (string) end( $segments ) : '';
 			if ( '' !== $child && '/' !== $child[0] ) {
+				$child           = (string) preg_replace_callback(
+					'/[^\x21-\x7e]/',
+					static function ( $byte ) {
+						return strtolower( rawurlencode( $byte[0] ) );
+					},
+					$child
+				);
 				$lines[ $index ] = self::replace_entry_url( $line, $entry, trailingslashit( $new_url ) . $child );
 			}
 		}
