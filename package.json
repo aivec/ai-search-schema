@@ -1,6 +1,6 @@
 {
   "name": "aivec-ai-search-schema",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "private": true,
   "scripts": {
     "clean": "node -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
