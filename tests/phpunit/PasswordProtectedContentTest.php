@@ -58,7 +58,7 @@ class PasswordProtectedContentTest extends WP_UnitTestCase {
 	private function reset_singletons() {
 		foreach ( array( AVC_AIS_Settings::class, AVC_AIS_Schema::class ) as $class ) {
 			$ref = new ReflectionProperty( $class, 'instance' );
-			$ref->setAccessible( true );
+			avc_ais_test_make_accessible( $ref );
 			$ref->setValue( null, null );
 		}
 	}

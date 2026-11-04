@@ -33,7 +33,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
 
 		$ref = new ReflectionProperty( AVC_AIS_Llms_Txt::class, 'instance' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$ref->setValue( null, null );
 
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
@@ -88,7 +88,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 			'wizard step'                => array(
 				static function () {
 					$method = new ReflectionMethod( Wizard::class, 'save_to_settings' );
-					$method->setAccessible( true );
+					avc_ais_test_make_accessible( $method );
 					$method->invoke( new Wizard(), 'basics', array( 'company_name' => 'Aivec' ) );
 				},
 			),
@@ -102,7 +102,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 					delete_option( 'avc_ais_gmaps_api_key' );
 					update_option( 'avc_ais_options', array( 'gmaps_api_key' => 'legacy-key' ) );
 					$method = new ReflectionMethod( AVC_AIS_Settings::class, 'get_google_maps_api_key' );
-					$method->setAccessible( true );
+					avc_ais_test_make_accessible( $method );
 					$method->invoke( AVC_AIS_Settings::init() );
 				},
 			),
