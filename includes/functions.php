@@ -17,6 +17,30 @@ function avc_ais_get_option( $key, $default_value = '' ) {
 }
 
 /**
+ * LocalBusiness のサブタイプを schema.org の型名へ直す。
+ *
+ * 以前のウィザードの選択肢には schema.org に存在しない型があった。保存済みの値を入れ直さなくて
+ * 済むよう、設定を読み出すときに読み替える。
+ *
+ * @param mixed $subtype サブタイプ.
+ * @return mixed schema.org の型名。文字列でなければそのまま返す.
+ */
+function avc_ais_normalize_business_type( $subtype ) {
+	if ( ! is_string( $subtype ) ) {
+		return $subtype;
+	}
+
+	$renamed = array(
+		'Cafe'                => 'CafeOrCoffeeShop',
+		'FitnessCenter'       => 'ExerciseGym',
+		'HealthAndBeautySpa'  => 'DaySpa',
+		'HomeAndConstruction' => 'HomeAndConstructionBusiness',
+	);
+
+	return $renamed[ $subtype ] ?? $subtype;
+}
+
+/**
  * プラグインのオプションを保存する関数
  *
  * @param string $key オプションのキー

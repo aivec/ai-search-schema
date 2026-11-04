@@ -1165,7 +1165,9 @@ class Wizard {
 	 * @return array LocalBusiness schema.
 	 */
 	private function build_preview_local_business( array $options, array $ids, $site_url ) {
-		$type = ! empty( $options['local_business_type'] ) ? $options['local_business_type'] : 'LocalBusiness';
+		// sanitize_options() は local_business_type を保存しないので、出力に使う lb_subtype を先に見る。
+		$type = ( $options['lb_subtype'] ?? '' ) ?: ( $options['local_business_type'] ?? '' );
+		$type = $type ?: 'LocalBusiness';
 		$name = ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' );
 
 		if ( empty( $name ) ) {

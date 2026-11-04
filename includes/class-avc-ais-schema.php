@@ -1025,13 +1025,11 @@ class AVC_AIS_Schema {
 	 * @return array
 	 */
 	private function determine_webpage_types( array $context ) {
+		// schema.org に HomePage という型はないので、トップページも WebPage のままにする。
 		$types = array( 'WebPage' );
 		$type  = isset( $context['type'] ) ? $context['type'] : '';
 
 		switch ( $type ) {
-			case 'front_page':
-				$types[] = 'HomePage';
-				break;
 			case 'blog_home':
 			case 'category':
 			case 'tag':

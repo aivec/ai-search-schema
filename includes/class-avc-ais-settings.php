@@ -53,9 +53,17 @@ class AVC_AIS_Settings {
 	 * @return mixed Filtered value with nulls removed.
 	 */
 	public function filter_option_on_get( $value ) {
-		if ( is_array( $value ) ) {
-			return $this->filter_null_values( $value );
+		if ( ! is_array( $value ) ) {
+			return $value;
 		}
+
+		$value = $this->filter_null_values( $value );
+		foreach ( array( 'lb_subtype', 'business_type', 'local_business_type' ) as $key ) {
+			if ( isset( $value[ $key ] ) ) {
+				$value[ $key ] = avc_ais_normalize_business_type( $value[ $key ] );
+			}
+		}
+
 		return $value;
 	}
 
