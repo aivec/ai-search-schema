@@ -25,9 +25,14 @@ class AVC_AIS_Llms_Txt {
 	const OPTION_ENABLED = 'avc_ais_llms_txt_enabled';
 
 	/**
-	 * Option name recording that saved content was scrubbed.
+	 * v1.3.2 が一度きりの掃除の記録に使っていた option 名。今は残っていれば消すだけ。
 	 */
 	const OPTION_SCRUBBED = 'avc_ais_llms_txt_scrubbed';
+
+	/**
+	 * Option name recording that broken URLs in saved content were repaired.
+	 */
+	const OPTION_URLS_REPAIRED = 'avc_ais_llms_txt_urls_repaired';
 
 	/**
 	 * Option name recording that the rewrite rule was checked after updating.
@@ -43,6 +48,21 @@ class AVC_AIS_Llms_Txt {
 	 * 自動生成の一覧に載せる投稿タイプ。
 	 */
 	const LISTED_POST_TYPES = array( 'post', 'page' );
+
+	/**
+	 * 一覧の行（- [タイトル](URL): 抜粋）の形。文中のリンクと区別するため行頭から照合する。
+	 */
+	const ENTRY_PATTERN = '/^- \[(.+?)\]\((\S*?)\):/u';
+
+	/**
+	 * 公開していない投稿のステータス。
+	 */
+	const HIDDEN_STATUSES = array( 'future', 'draft', 'pending', 'private', 'trash' );
+
+	/**
+	 * タイトルで投稿を探すときの取得数の上限。
+	 */
+	const TITLE_QUERY_LIMIT = 20;
 
 	/**
 	 * Singleton instance.
@@ -69,10 +89,11 @@ class AVC_AIS_Llms_Txt {
 	private function __construct() {
 		add_action( 'init', array( $this, 'add_rewrite_rules' ) );
 		add_action( 'admin_init', array( $this, 'restore_missing_rewrite_rule' ) );
+		add_action( 'admin_init', array( $this, 'maybe_repair_saved_urls' ) );
 		add_action( 'template_redirect', array( $this, 'serve_llms_txt' ) );
 		add_filter( 'query_vars', array( $this, 'add_query_vars' ) );
 		add_filter( 'redirect_canonical', array( $this, 'disable_canonical_redirect' ) );
-		add_action( 'post_updated', array( $this, 'remove_entry_of_hidden_post' ), 10, 3 );
+		add_action( 'post_updated', array( $this, 'update_entry_of_moved_post' ), 10, 3 );
 		add_action( 'before_delete_post', array( $this, 'remove_entry_of_deleted_post' ), 10, 2 );
 	}
 
@@ -119,11 +140,12 @@ class AVC_AIS_Llms_Txt {
 	 * プラグインの更新では有効化の処理が走らないので、管理画面へのアクセス時に直す。
 	 * 他のプラグインがルールを書き換えるサイトでは再生成してもルールが残らないことがあるので、
 	 * 管理画面を開くたびに再生成しないよう一度だけにする。
+	 * admin_init は admin-ajax.php への未ログインのリクエストでも動くので、権限を確かめる。
 	 *
 	 * @return void
 	 */
 	public function restore_missing_rewrite_rule() {
-		if ( get_option( self::OPTION_RULE_RESTORED ) ) {
+		if ( get_option( self::OPTION_RULE_RESTORED ) || ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
 		update_option( self::OPTION_RULE_RESTORED, true );
@@ -174,7 +196,7 @@ class AVC_AIS_Llms_Txt {
 		//   - 手動入力は save_content() の sanitize_content() で無害化済み
 		//   - 自動生成分は制御文字を除去する sanitize_output() を通す
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		echo $this->sanitize_output( $this->get_content() );
+		echo $this->sanitize_output( $this->get_served_content() );
 		exit;
 	}
 
@@ -217,11 +239,12 @@ class AVC_AIS_Llms_Txt {
 	/**
 	 * Get llms.txt content.
 	 *
+	 * 設定画面に表示する内容を返す。公開していない投稿の行も含むので、配信には
+	 * get_served_content() を使う。
+	 *
 	 * @return string
 	 */
 	public function get_content() {
-		$this->maybe_scrub_saved_content();
-
 		$content = get_option( self::OPTION_NAME, '' );
 		if ( empty( $content ) ) {
 			$content = $this->generate_default_content();
@@ -230,129 +253,352 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 保存済みの内容から公開されていない投稿の行を取り除き、壊れた URL を直す。
+	 * /llms.txt で配信する内容を返す。
 	 *
-	 * 更新のあとと、無効化やアンインストールから戻ったあとに一度だけ実行する。
+	 * 保存済みの内容から行を消すと、投稿を公開し直したときに手書きの説明が失われる。投稿の変更を
+	 * 追えない間（無効化中、古い画面からの保存）の分も取りこぼさないよう、配信のたびに投稿の
+	 * 現在の状態で判定する。
 	 *
-	 * 以前のバージョンでは設定画面を保存すると自動生成の内容が DB に固定され、保護された
-	 * 投稿の抜粋も含まれていた。保存時に URL のパーセントエンコードも除去されていた。
-	 * 投稿が多いサイトでは重い処理になるため、一般ページのリクエストでは実行せず、
-	 * 内容を読み出す直前（/llms.txt と設定画面）にだけ実行する。
-	 * 行の削除が途中で失敗しても完了扱いにしないので、掃除前の内容を配信することはない。
-	 * URL の修復は行数分のクエリが走るので、失敗しても繰り返さないよう完了扱いにしてから行う。
-	 *
-	 * @return void
+	 * @return string
 	 */
-	public function maybe_scrub_saved_content() {
-		if ( get_option( self::OPTION_SCRUBBED ) ) {
-			return;
+	public function get_served_content() {
+		$saved = get_option( self::OPTION_NAME, '' );
+		if ( empty( $saved ) ) {
+			return $this->generate_default_content();
 		}
 
-		$this->remove_entries_of_hidden_posts();
+		$lines = explode( "\n", (string) $saved );
 
-		update_option( self::OPTION_SCRUBBED, true );
-
-		$this->repair_saved_urls();
+		return implode( "\n", array_diff_key( $lines, $this->find_hidden_entries( $lines ) ) );
 	}
 
 	/**
-	 * 以前の保存処理で壊れた URL を、同じタイトルの公開中の投稿の URL へ戻す。
+	 * 保存済みの内容のうち、投稿が公開されていないため配信しない行のタイトルを返す。
 	 *
-	 * 日本語スラッグの URL は /%e3%81%82/ が // になるように壊れており、別の投稿の URL と
-	 * 同じ形になりうる。タイトルと壊れた形がともに一致し、候補が 1 件に絞れる行だけを直す。
-	 * URL が壊れていない投稿も候補に数えるので、正しい行を別の投稿の URL へ書き換えない。
-	 * 取得数の上限に達したときは、他にも候補がありうるので直さない。
-	 *
-	 * @return void
+	 * @return string[] タイトル.
 	 */
-	private function repair_saved_urls() {
-		$limit = 20;
-		$saved = (string) get_option( self::OPTION_NAME, '' );
-		$lines = explode( "\n", $saved );
+	public function get_hidden_entry_titles() {
+		$saved = get_option( self::OPTION_NAME, '' );
+		if ( empty( $saved ) ) {
+			return array();
+		}
 
+		return array_values( $this->find_hidden_entries( explode( "\n", (string) $saved ) ) );
+	}
+
+	/**
+	 * 投稿が公開されていない行を探す。
+	 *
+	 * 対象は一覧の形式でこのサイトを指す行だけで、外部サイトへのリンクと文中のリンクは残す。
+	 *
+	 * @param string[] $lines 内容の各行.
+	 * @return array<int,string> 行番号をキーとするタイトル.
+	 */
+	private function find_hidden_entries( array $lines ) {
+		$entries = array();
 		foreach ( $lines as $index => $line ) {
-			if ( ! preg_match( '/^- \[(.+?)\]\(([^)\s]*)\):/u', $line, $match ) ) {
+			$entry = self::parse_entry( $line );
+			if ( null !== $entry && self::is_site_url( $entry['url'] ) ) {
+				$entries[ $index ] = $entry;
+			}
+		}
+		if ( empty( $entries ) ) {
+			return array();
+		}
+
+		$posts_by_url = self::find_posts_by_url( array_column( $entries, 'url' ) );
+
+		$hidden = array();
+		foreach ( $entries as $index => $entry ) {
+			if ( self::is_entry_hidden( $entry, $posts_by_url ) ) {
+				$hidden[ $index ] = $entry['title'];
+			}
+		}
+
+		return $hidden;
+	}
+
+	/**
+	 * 行の投稿が公開されていないかを判定する。
+	 *
+	 * 下書きのスラッグは公開中の投稿と重複しうるので、URL が公開中の投稿のものなら配信する。
+	 * URL で見つからない行は、スラッグやパーマリンクの変更、以前の保存処理で URL が壊れた行の
+	 * 可能性がある。同じタイトルの公開していない投稿があれば、抜粋を出さないよう隠す。
+	 * 消すわけではないので、誤って隠しても投稿を公開するか行を直せば配信に戻る。
+	 * トップページは投稿の状態にかかわらず公開されているので、タイトルでは判定しない。
+	 *
+	 * @param array $entry        parse_entry() の結果.
+	 * @param array $posts_by_url find_posts_by_url() の結果.
+	 * @return bool 隠すなら true.
+	 */
+	private static function is_entry_hidden( array $entry, array $posts_by_url ) {
+		$posts = $posts_by_url[ self::url_key( $entry['url'] ) ] ?? array();
+		if ( ! empty( $posts ) ) {
+			return empty( array_filter( $posts, array( self::class, 'is_public_post' ) ) );
+		}
+
+		if ( self::is_home_url( $entry['url'] ) ) {
+			return false;
+		}
+
+		$titled = self::find_posts_titled( $entry['title'] );
+		if ( null === $titled ) {
+			return true;
+		}
+
+		return count( array_filter( $titled, array( self::class, 'is_public_post' ) ) ) !== count( $titled );
+	}
+
+	/**
+	 * 投稿が公開されているかを判定する。
+	 *
+	 * @param WP_Post $post 投稿.
+	 * @return bool 公開されていれば true.
+	 */
+	private static function is_public_post( $post ) {
+		return 'publish' === $post->post_status && '' === $post->post_password;
+	}
+
+	/**
+	 * 一覧の形式の行を分解する。
+	 *
+	 * @param string $line 行.
+	 * @return array{prefix:string,title:string,url:string}|null 一覧の形式でなければ null.
+	 */
+	private static function parse_entry( $line ) {
+		if ( ! preg_match( self::ENTRY_PATTERN, $line, $match ) ) {
+			return null;
+		}
+
+		return array(
+			'prefix' => $match[0],
+			'title'  => $match[1],
+			'url'    => $match[2],
+		);
+	}
+
+	/**
+	 * 行の URL を分解する。
+	 *
+	 * ブラウザからコピーした URL は日本語がそのままのことがある。parse_url() はロケールによって
+	 * マルチバイト文字の一部のバイトを制御文字とみなして _ に置き換えるので、先にエンコードする。
+	 *
+	 * @param string $url URL.
+	 * @return array|false 分解した URL。形が崩れていれば false.
+	 */
+	private static function parse_entry_url( $url ) {
+		$encoded = preg_replace_callback(
+			'/[^\x21-\x7e]/',
+			static function ( $byte ) {
+				return rawurlencode( $byte[0] );
+			},
+			(string) $url
+		);
+
+		return wp_parse_url( (string) $encoded );
+	}
+
+	/**
+	 * URL がこのサイトを指すかを判定する。
+	 *
+	 * 以前の保存処理で壊れた URL は形が崩れていることがあるので、判定できなければこのサイトとする。
+	 *
+	 * @param string $url URL.
+	 * @return bool このサイトなら true.
+	 */
+	private static function is_site_url( $url ) {
+		$parts = self::parse_entry_url( $url );
+		if ( ! is_array( $parts ) ) {
+			return true;
+		}
+		$scheme = strtolower( $parts['scheme'] ?? 'http' );
+		if ( ! in_array( $scheme, array( 'http', 'https' ), true ) ) {
+			return false;
+		}
+		if ( empty( $parts['host'] ) ) {
+			return true;
+		}
+
+		$normalize = static function ( $host ) {
+			return preg_replace( '/^www\./', '', strtolower( (string) $host ) );
+		};
+
+		return $normalize( $parts['host'] ) === $normalize( wp_parse_url( home_url(), PHP_URL_HOST ) );
+	}
+
+	/**
+	 * URL がサイトのトップページを指すかを判定する。
+	 *
+	 * 以前の保存処理で壊れた // はトップページではないので、スラッシュを 1 つだけ許す。
+	 *
+	 * @param string $url URL.
+	 * @return bool トップページなら true.
+	 */
+	private static function is_home_url( $url ) {
+		$parts = self::parse_entry_url( $url );
+		if ( ! is_array( $parts ) || isset( $parts['query'] ) ) {
+			return false;
+		}
+
+		$home = untrailingslashit( (string) wp_parse_url( home_url(), PHP_URL_PATH ) );
+
+		return in_array( $parts['path'] ?? '', array( $home, $home . '/' ), true );
+	}
+
+	/**
+	 * URL を比較するためのキーを返す。
+	 *
+	 * パーセントエンコードの大文字小文字、末尾のスラッシュ、http と https の違いは同じ URL とする。
+	 *
+	 * @param string $url URL.
+	 * @return string キー.
+	 */
+	private static function url_key( $url ) {
+		$parts = self::parse_entry_url( $url );
+		if ( ! is_array( $parts ) ) {
+			return strtolower( rawurldecode( $url ) );
+		}
+
+		$key = untrailingslashit( rawurldecode( $parts['path'] ?? '' ) );
+		if ( isset( $parts['query'] ) ) {
+			$key .= '?' . rawurldecode( $parts['query'] );
+		}
+
+		return strtolower( $key );
+	}
+
+	/**
+	 * 一覧に載る投稿タイプの投稿を、公開状態を問わず取得する。
+	 *
+	 * @param array $args 取得条件.
+	 * @return WP_Post[] 投稿.
+	 */
+	private static function query_listed_posts( array $args ) {
+		return get_posts(
+			array_merge(
+				array(
+					'post_type'              => self::LISTED_POST_TYPES,
+					'post_status'            => array_merge( array( 'publish' ), self::HIDDEN_STATUSES ),
+					'numberposts'            => -1,
+					'update_post_meta_cache' => false,
+				),
+				$args
+			)
+		);
+	}
+
+	/**
+	 * URL に対応する投稿を探す。
+	 *
+	 * url_to_postid() は権限のないユーザーには公開していない投稿を返さず、配信の判定に使えない。
+	 * URL からスラッグと ID を取り出して投稿を取得し、公開したときの URL と比較して確かめる。
+	 *
+	 * @param string[] $urls URL.
+	 * @return array<string,WP_Post[]> url_key() をキーとする投稿.
+	 */
+	private static function find_posts_by_url( array $urls ) {
+		$slugs = array();
+		$ids   = array();
+		foreach ( $urls as $url ) {
+			$parts = self::parse_entry_url( $url );
+			if ( ! is_array( $parts ) ) {
 				continue;
 			}
 
-			$posts = get_posts(
-				array(
-					'post_type'     => self::LISTED_POST_TYPES,
-					'title'         => $match[1],
-					'numberposts'   => $limit,
-					'has_password'  => false,
-					'cache_results' => false,
-				)
-			);
-
-			$urls = array();
-			foreach ( $posts as $post ) {
-				// データベースの照合順序では「はな」と「ばな」も一致するので、完全一致を確かめる。
-				$url = get_permalink( $post );
-				if ( self::legacy_entry_prefix( $post, $url ) === $match[0] ) {
-					$urls[] = $url;
+			parse_str( $parts['query'] ?? '', $query );
+			foreach ( array( 'p', 'page_id' ) as $key ) {
+				if ( isset( $query[ $key ] ) && is_string( $query[ $key ] ) ) {
+					$ids[] = absint( $query[ $key ] );
 				}
 			}
 
-			if ( 1 === count( $urls ) && count( $posts ) < $limit ) {
-				$lines[ $index ] = '- [' . $match[1] . '](' . $urls[0] . '):' . substr( $line, strlen( $match[0] ) );
+			$segments = array_values( array_filter( explode( '/', $parts['path'] ?? '' ), 'strlen' ) );
+			if ( empty( $segments ) ) {
+				continue;
+			}
+
+			$last = rawurldecode( end( $segments ) );
+			if ( ctype_digit( $last ) ) {
+				$ids[] = absint( $last );
+			}
+
+			// /%postname%.html のようなパーマリンクでは拡張子がスラッグに含まれない。
+			$slug = sanitize_title( preg_replace( '/\.[a-z0-9]+$/i', '', $last ) );
+			if ( '' !== $slug ) {
+				$slugs[] = $slug;
+				$slugs[] = $slug . '__trashed';
 			}
 		}
 
-		$updated = implode( "\n", $lines );
-		if ( $updated !== $saved ) {
-			update_option( self::OPTION_NAME, $updated );
+		// 空の配列を渡すと条件が無視されて全件を取得してしまう。
+		$posts = array();
+		if ( ! empty( $slugs ) ) {
+			$posts = self::query_listed_posts( array( 'post_name__in' => array_values( array_unique( $slugs ) ) ) );
 		}
+		$ids = array_filter( $ids );
+		if ( ! empty( $ids ) ) {
+			$by_id = self::query_listed_posts( array( 'post__in' => array_values( array_unique( $ids ) ) ) );
+			$posts = array_merge( $posts, $by_id );
+		}
+
+		$posts_by_url = array();
+		foreach ( $posts as $post ) {
+			$posts_by_url[ self::url_key( self::published_permalink( $post ) ) ][ $post->ID ] = $post;
+		}
+
+		return $posts_by_url;
 	}
 
 	/**
-	 * 非公開とパスワード保護の投稿の行を、保存済みの内容から取り除く。
+	 * タイトルが一致する投稿を探す。
 	 *
-	 * @return void
+	 * データベースの照合順序では「はな」と「ばな」も一致するので、完全一致を確かめる。
+	 * 投稿タイトルの & は &amp; で保存されていることがあるので、どちらの形でも探す。
+	 *
+	 * @param string $title 行のタイトル.
+	 * @return WP_Post[]|null 投稿。上限に達して判断できないときは null.
 	 */
-	private function remove_entries_of_hidden_posts() {
-		if ( '' === (string) get_option( self::OPTION_NAME, '' ) ) {
-			return;
-		}
-
-		$this->remove_entries_of_posts_matching(
-			array(
-				'post_status'  => 'publish',
-				'has_password' => true,
-			)
-		);
-		$this->remove_entries_of_posts_matching( array( 'post_status' => 'private' ) );
-	}
-
-	/**
-	 * 条件に合う投稿の行を、保存済みの内容から少しずつ取り除く。
-	 *
-	 * 対象の投稿が多いサイトでもメモリを使い切らないよう、分割して処理する。
-	 *
-	 * @param array $query 投稿の取得条件.
-	 * @return void
-	 */
-	private function remove_entries_of_posts_matching( array $query ) {
-		$batch_size = 200;
-		$paged      = 1;
-		do {
-			$posts = get_posts(
-				array_merge(
-					array(
-						'post_type'     => self::LISTED_POST_TYPES,
-						'numberposts'   => $batch_size,
-						'paged'         => $paged,
-						'orderby'       => 'ID',
-						'order'         => 'ASC',
-						'cache_results' => false,
-					),
-					$query
+	private static function find_posts_titled( $title ) {
+		$posts = array();
+		foreach ( array_unique( array( $title, str_replace( '&', '&amp;', $title ) ) ) as $stored ) {
+			$found = self::query_listed_posts(
+				array(
+					'title'       => $stored,
+					'numberposts' => self::TITLE_QUERY_LIMIT,
 				)
 			);
-			$this->remove_saved_entries( $posts );
-			$fetched = count( $posts );
-			++$paged;
-		} while ( $fetched === $batch_size );
+			if ( count( $found ) >= self::TITLE_QUERY_LIMIT ) {
+				return null;
+			}
+			$posts = array_merge( $posts, $found );
+		}
+
+		return array_filter(
+			$posts,
+			static function ( $post ) use ( $title ) {
+				return self::to_plain_text( $post->post_title ) === $title;
+			}
+		);
+	}
+
+	/**
+	 * 投稿を公開したときの URL を返す。
+	 *
+	 * 公開していない投稿は権限のないユーザーには ?p=ID 形式の URL が返り、ゴミ箱の投稿は
+	 * スラッグに __trashed が付くので、公開中だったときの URL を求める。
+	 *
+	 * @param WP_Post $post 投稿.
+	 * @return string URL.
+	 */
+	private static function published_permalink( $post ) {
+		$published              = clone $post;
+		$published->post_status = 'publish';
+		if ( 'trash' === $post->post_status ) {
+			$desired              = (string) get_post_meta( $post->ID, '_wp_desired_post_slug', true );
+			$published->post_name = '' !== $desired ? $desired : preg_replace( '/__trashed$/', '', $post->post_name );
+		}
+
+		return (string) get_permalink( $published );
 	}
 
 	/**
@@ -370,29 +616,164 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 投稿を非公開にしたときに、保存済みの内容からその行を取り除く。
+	 * 更新後に一度だけ、以前の保存処理で壊れた URL を直す。
 	 *
-	 * 一覧に載るのは公開中の投稿だけなので、公開中だった投稿が非公開になったときだけ
-	 * 処理する。下書きはスラッグが空だったり公開済みの投稿と重複したりして、別の投稿の
-	 * URL と一致してしまう。ゴミ箱への移動ではスラッグが変わるため更新前の投稿で照合する。
+	 * 行数分のクエリが走るので、未ログインのリクエストでは動かさない。直すまでの間も、公開して
+	 * いない投稿の行は is_entry_hidden() がタイトルで隠す。
+	 * 失敗しても繰り返さないよう、完了扱いにしてから行う。
+	 *
+	 * @return void
+	 */
+	public function maybe_repair_saved_urls() {
+		if ( get_option( self::OPTION_URLS_REPAIRED ) || ! current_user_can( 'manage_options' ) ) {
+			return;
+		}
+
+		update_option( self::OPTION_URLS_REPAIRED, true );
+		delete_option( self::OPTION_SCRUBBED );
+
+		$this->repair_saved_urls();
+	}
+
+	/**
+	 * 以前の保存処理で壊れた URL を、同じタイトルの公開中の投稿の URL へ戻す。
+	 *
+	 * 日本語スラッグの URL は /%e3%81%82/ が // になるように壊れており、別の投稿の URL と
+	 * 同じ形になりうる。タイトルと壊れた形がともに一致し、候補が 1 件に絞れる行だけを直す。
+	 * 公開していない投稿も候補に数えるので、その抜粋を公開中の投稿の URL で配信しない。候補が
+	 * 公開していない投稿だけなら正しい URL へ直す。配信時に隠され、公開すれば正しいリンクになる。
+	 * URL が壊れていない投稿も候補に数えるので、正しい行を別の投稿の URL へ書き換えない。
+	 * 取得数の上限に達したときは、他にも候補がありうるので直さない。
+	 *
+	 * @return void
+	 */
+	private function repair_saved_urls() {
+		$saved = (string) get_option( self::OPTION_NAME, '' );
+		$lines = explode( "\n", $saved );
+
+		foreach ( $lines as $index => $line ) {
+			$entry = self::parse_entry( $line );
+			$posts = null === $entry ? null : self::find_posts_for_repair( $entry['title'] );
+			if ( null === $posts ) {
+				continue;
+			}
+
+			$candidates = array();
+			foreach ( $posts as $post ) {
+				$url = self::published_permalink( $post );
+				if ( self::legacy_entry_prefix( $post, $url ) === $entry['prefix'] ) {
+					$candidates[ $post->ID ] = $url;
+				}
+			}
+
+			if ( 1 === count( $candidates ) ) {
+				$lines[ $index ] = self::replace_entry_url( $line, $entry, reset( $candidates ) );
+			}
+		}
+
+		$updated = implode( "\n", $lines );
+		if ( $updated !== $saved ) {
+			update_option( self::OPTION_NAME, $updated );
+		}
+	}
+
+	/**
+	 * URL の修復の候補を、行のタイトルから探す。
+	 *
+	 * 以前の保存処理は連続するスペースをまとめていたので、タイトルが完全一致しない投稿もある。
+	 * 全文検索は重いので、完全一致で見つからなかったときの一度きりの修復でだけ行う。
+	 *
+	 * @param string $title 行のタイトル.
+	 * @return WP_Post[]|null 投稿。上限に達して判断できないときは null.
+	 */
+	private static function find_posts_for_repair( $title ) {
+		$posts = self::find_posts_titled( $title );
+		if ( array() !== $posts || false === strpos( $title, ' ' ) ) {
+			return $posts;
+		}
+
+		$found = self::query_listed_posts(
+			array(
+				's'              => $title,
+				'search_columns' => array( 'post_title' ),
+				'numberposts'    => self::TITLE_QUERY_LIMIT,
+			)
+		);
+		if ( count( $found ) >= self::TITLE_QUERY_LIMIT ) {
+			return null;
+		}
+
+		return array_filter(
+			$found,
+			static function ( $post ) use ( $title ) {
+				return preg_replace( '/ +/', ' ', self::to_plain_text( $post->post_title ) ) === $title;
+			}
+		);
+	}
+
+	/**
+	 * 行の URL を置き換える。
+	 *
+	 * @param string $line  行.
+	 * @param array  $entry parse_entry() の結果.
+	 * @param string $url   新しい URL.
+	 * @return string 置き換えた行.
+	 */
+	private static function replace_entry_url( $line, array $entry, $url ) {
+		return '- [' . $entry['title'] . '](' . $url . '):' . substr( $line, strlen( $entry['prefix'] ) );
+	}
+
+	/**
+	 * 投稿の URL が変わったときに、保存済みの内容の行を新しい URL へ書き換える。
+	 *
+	 * 書き換えないと行のリンクが古いままになり、投稿を隠すときの判定も URL で行えなくなる。
+	 * ゴミ箱への移動ではスラッグに __trashed が付くので対象にしない。下書きはスラッグが公開中の
+	 * 投稿と重複しうるので、公開中だった投稿だけを対象にする。
 	 *
 	 * @param int     $post_id     投稿 ID.
 	 * @param WP_Post $post_after  更新後の投稿.
 	 * @param WP_Post $post_before 更新前の投稿.
 	 * @return void
 	 */
-	public function remove_entry_of_hidden_post( $post_id, $post_after, $post_before ) {
+	public function update_entry_of_moved_post( $post_id, $post_after, $post_before ) {
 		unset( $post_id );
 
-		$was_listed = 'publish' === $post_before->post_status && '' === $post_before->post_password;
-		$is_hidden  = 'publish' !== $post_after->post_status || '' !== $post_after->post_password;
-		if ( $was_listed && $is_hidden && in_array( $post_after->post_type, self::LISTED_POST_TYPES, true ) ) {
-			$this->remove_saved_entries( array( $post_before ) );
+		$is_listed_type = in_array( $post_after->post_type, self::LISTED_POST_TYPES, true );
+		$can_track      = 'publish' === $post_before->post_status && 'trash' !== $post_after->post_status;
+		if ( ! $is_listed_type || ! $can_track || '' === $post_after->post_name ) {
+			return;
+		}
+
+		$old_url = self::published_permalink( $post_before );
+		$new_url = self::published_permalink( $post_after );
+		$saved   = (string) get_option( self::OPTION_NAME, '' );
+		if ( $old_url === $new_url || '' === $saved ) {
+			return;
+		}
+
+		$old_key = self::url_key( $old_url );
+		$lines   = explode( "\n", $saved );
+		foreach ( $lines as $index => $line ) {
+			$entry = self::parse_entry( $line );
+			if ( null === $entry || ! self::is_site_url( $entry['url'] ) ) {
+				continue;
+			}
+			if ( self::url_key( $entry['url'] ) === $old_key ) {
+				$lines[ $index ] = self::replace_entry_url( $line, $entry, $new_url );
+			}
+		}
+
+		$updated = implode( "\n", $lines );
+		if ( $updated !== $saved ) {
+			update_option( self::OPTION_NAME, $updated );
 		}
 	}
 
 	/**
 	 * 投稿を完全に削除するときに、保存済みの内容からその行を取り除く。
+	 *
+	 * 公開し直すことがないので、隠さずに取り除く。削除すると投稿の状態で判定できなくなる。
+	 * 同じ URL や同じ壊れた形の公開中の投稿があれば、その投稿の行なので残す。
 	 *
 	 * @param int     $post_id 投稿 ID.
 	 * @param WP_Post $post    削除する投稿.
@@ -401,63 +782,38 @@ class AVC_AIS_Llms_Txt {
 	public function remove_entry_of_deleted_post( $post_id, $post ) {
 		unset( $post_id );
 
-		if ( 'publish' === $post->post_status && in_array( $post->post_type, self::LISTED_POST_TYPES, true ) ) {
-			$this->remove_saved_entries( array( $post ) );
-		}
-	}
-
-	/**
-	 * 保存済みの内容から指定した投稿の行を取り除いて保存し直す。
-	 *
-	 * 対象は自動生成の形式の行（- [タイトル](URL): 抜粋）だけとし、管理者が文中に書いた
-	 * リンクは巻き込まない。
-	 *
-	 * @param WP_Post[] $posts 取り除く投稿.
-	 * @return void
-	 */
-	private function remove_saved_entries( array $posts ) {
-		$saved = (string) get_option( self::OPTION_NAME, '' );
-		if ( '' === $saved || empty( $posts ) ) {
+		$saved          = (string) get_option( self::OPTION_NAME, '' );
+		$is_listed_type = in_array( $post->post_type, self::LISTED_POST_TYPES, true );
+		if ( '' === $saved || '' === $post->post_name || ! $is_listed_type ) {
 			return;
 		}
 
-		$url_needles    = array();
-		$legacy_needles = array();
-		foreach ( $posts as $post ) {
-			if ( '' === $post->post_name ) {
-				continue;
+		$url = self::published_permalink( $post );
+		$key = self::url_key( $url );
+		foreach ( self::find_posts_by_url( array( $url ) )[ $key ] ?? array() as $owner ) {
+			if ( $owner->ID !== $post->ID && self::is_public_post( $owner ) ) {
+				return;
 			}
+		}
 
-			// 非公開の投稿は権限のないユーザーには ?p=ID 形式の URL が返るため、
-			// 公開されていたときの URL を求めて照合する。
-			$published              = clone $post;
-			$published->post_status = 'publish';
-			$url                    = get_permalink( $published );
-			$url_needles[]          = '](' . $url . '):';
-			// 以前の保存処理はパーセントエンコードを除去していたため、日本語スラッグの URL は
-			// 別の文字列で残っていることがある。除去後の URL は他の投稿と衝突しうるので、
-			// タイトルと組み合わせて照合する。
-			$legacy_needles[] = self::legacy_entry_prefix( $post, $url );
+		$legacy = self::legacy_entry_prefix( $post, $url );
+		$posts  = self::find_posts_titled( self::to_plain_text( $post->post_title ) );
+		foreach ( null === $posts ? array() : $posts as $other ) {
+			if ( $other->ID !== $post->ID && self::is_public_post( $other )
+				&& self::legacy_entry_prefix( $other, self::published_permalink( $other ) ) === $legacy ) {
+				$legacy = null;
+				break;
+			}
 		}
 
 		$lines = array_filter(
 			explode( "\n", $saved ),
-			static function ( $line ) use ( $url_needles, $legacy_needles ) {
-				if ( 0 !== strpos( $line, '- [' ) ) {
+			static function ( $line ) use ( $key, $legacy ) {
+				$entry = self::parse_entry( $line );
+				if ( null === $entry || ! self::is_site_url( $entry['url'] ) ) {
 					return true;
 				}
-				foreach ( $url_needles as $needle ) {
-					// ブラウザからコピーした URL はパーセントエンコードが大文字のことがある。
-					if ( false !== stripos( $line, $needle ) ) {
-						return false;
-					}
-				}
-				foreach ( $legacy_needles as $needle ) {
-					if ( 0 === strpos( $line, $needle ) ) {
-						return false;
-					}
-				}
-				return true;
+				return self::url_key( $entry['url'] ) !== $key && $entry['prefix'] !== $legacy;
 			}
 		);
 
@@ -571,8 +927,9 @@ class AVC_AIS_Llms_Txt {
 	 * 画面から送信された内容を保存する。
 	 *
 	 * 画面を開いている間に投稿が変わると送信された内容は古くなっているので、そのまま書き込むと
-	 * 自動生成の内容が固定されたり、非公開にした投稿の行が戻ったりする。編集されていなければ
-	 * 送信された内容を使わず、編集されていれば非公開にした投稿の行を取り除く。
+	 * 自動生成の内容が固定されたり、削除した投稿の行が戻ったりする。編集されていなければ
+	 * 送信された内容を使わず、編集されていれば削除した投稿の行を取り除く。
+	 * 公開していない投稿の行は配信時に隠すので、ここでは取り除かない。
 	 *
 	 * @param mixed $content        送信された内容（無害化する前の値）.
 	 * @param mixed $displayed_hash 画面に表示した内容の content_hash().
@@ -585,8 +942,11 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		if ( self::content_hash( $content ) !== $displayed_hash ) {
+			$current = $this->get_content();
+			if ( self::content_hash( $current ) !== $displayed_hash ) {
+				$content = self::remove_added_entries_without_post( $content, $current );
+			}
 			$this->save_content( $content );
-			$this->remove_entries_of_hidden_posts();
 			return;
 		}
 
@@ -598,20 +958,51 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 画面に表示した内容が編集されたかを判定するためのハッシュを返す。
+	 * 古い画面から戻ってきた行のうち、投稿がもうない行を取り除く。
 	 *
-	 * ブラウザは textarea の改行を CRLF で送信するので、改行を統一して計算する。
-	 * sanitize_textarea_field() は行末の < の扱いが改行コードで変わるので、無害化の前に統一する。
+	 * 削除した投稿の行は投稿の状態で判定できない。今の内容にない行で、このサイトの URL なのに
+	 * URL でもタイトルでも投稿が見つからなければ、画面を開いたあとに削除された投稿の行とみなす。
+	 *
+	 * @param string $content 送信された内容.
+	 * @param string $current 今の内容.
+	 * @return string 取り除いた内容.
+	 */
+	private static function remove_added_entries_without_post( $content, $current ) {
+		$known = array_flip( explode( "\n", self::normalize_newlines( $current ) ) );
+		$lines = explode( "\n", self::normalize_newlines( $content ) );
+
+		$entries = array();
+		foreach ( $lines as $index => $line ) {
+			$entry = isset( $known[ $line ] ) ? null : self::parse_entry( $line );
+			if ( null !== $entry && self::is_site_url( $entry['url'] ) ) {
+				$entries[ $index ] = $entry;
+			}
+		}
+		if ( empty( $entries ) ) {
+			return $content;
+		}
+
+		$posts_by_url = self::find_posts_by_url( array_column( $entries, 'url' ) );
+		foreach ( $entries as $index => $entry ) {
+			if ( isset( $posts_by_url[ self::url_key( $entry['url'] ) ] ) ) {
+				continue;
+			}
+			if ( array() === self::find_posts_titled( $entry['title'] ) ) {
+				unset( $lines[ $index ] );
+			}
+		}
+
+		return implode( "\n", $lines );
+	}
+
+	/**
+	 * 画面に表示した内容が編集されたかを判定するためのハッシュを返す。
 	 *
 	 * @param mixed $content 内容（無害化する前の値）.
 	 * @return string ハッシュ.
 	 */
 	public static function content_hash( $content ) {
-		if ( is_array( $content ) || is_object( $content ) ) {
-			$content = '';
-		}
-
-		return hash( 'sha256', self::sanitize_content( self::normalize_newlines( $content ) ) );
+		return hash( 'sha256', self::sanitize_content( $content ) );
 	}
 
 	/**
@@ -620,6 +1011,8 @@ class AVC_AIS_Llms_Txt {
 	 * sanitize_textarea_field() はパーセントエンコードも除去するため、日本語スラッグの
 	 * URL が壊れてしまう。タグの除去などはそのまま使い、% だけを除去から守る。
 	 * llms.txt は text/plain で配信してデコードもしないので、% が残っても安全である。
+	 * sanitize_textarea_field() は行末の < の扱いが改行コードで変わり、ブラウザは textarea の改行を
+	 * CRLF で送信するので、無害化の前に改行を統一する。
 	 *
 	 * @param string $content 無害化する内容.
 	 * @return string 無害化した内容.
@@ -634,7 +1027,7 @@ class AVC_AIS_Llms_Txt {
 		return str_replace(
 			$placeholder,
 			'%',
-			sanitize_textarea_field( str_replace( '%', $placeholder, (string) $content ) )
+			sanitize_textarea_field( str_replace( '%', $placeholder, self::normalize_newlines( $content ) ) )
 		);
 	}
 
@@ -682,15 +1075,53 @@ class AVC_AIS_Llms_Txt {
 	 * Flush rewrite rules on deactivation.
 	 *
 	 * このリクエストの init で登録したルールを外してから再生成する。外さないと /llms.txt の
-	 * ルールが残り、プラグインを削除したあともトップページを返してしまう。
-	 * 無効の間は投稿の変更を追えないので、次に読み出すときに非公開とパスワード保護の投稿の行を
-	 * 取り除き直す。下書きやゴミ箱へ移した投稿、削除した投稿の行は判別できないので残る。
+	 * ルールが残り、プラグインを削除する前からトップページを返してしまう。
+	 * ネットワーク全体の無効化では他のサイトのルールも外す。次に有効化されたとき他のサイトでは
+	 * 有効化の処理が走らないので、管理画面を開いたときにルールを戻せるよう記録も消す。
+	 *
+	 * @param bool $network_wide ネットワーク全体の無効化なら true.
 	 */
-	public static function deactivate() {
+	public static function deactivate( $network_wide = false ) {
 		global $wp_rewrite;
 
 		unset( $wp_rewrite->extra_rules_top[ self::REWRITE_REGEX ] );
 		flush_rewrite_rules();
-		delete_option( self::OPTION_SCRUBBED );
+
+		if ( ! $network_wide || ! is_multisite() ) {
+			return;
+		}
+
+		$current_site_id = get_current_blog_id();
+		$site_ids        = get_sites(
+			array(
+				'fields' => 'ids',
+				'number' => 0,
+			)
+		);
+		foreach ( $site_ids as $site_id ) {
+			if ( (int) $site_id === $current_site_id ) {
+				continue;
+			}
+			switch_to_blog( $site_id );
+			self::remove_rewrite_rule();
+			delete_option( self::OPTION_RULE_RESTORED );
+			restore_current_blog();
+		}
+	}
+
+	/**
+	 * 現在のサイトに保存された rewrite ルールから /llms.txt の行だけを消す。
+	 *
+	 * 他のサイトのルールを再生成すると、そのサイトで有効なプラグインのルールが読み込まれて
+	 * いないため失われる。
+	 *
+	 * @return void
+	 */
+	public static function remove_rewrite_rule() {
+		$rules = get_option( 'rewrite_rules' );
+		if ( is_array( $rules ) && isset( $rules[ self::REWRITE_REGEX ] ) ) {
+			unset( $rules[ self::REWRITE_REGEX ] );
+			update_option( 'rewrite_rules', $rules );
+		}
 	}
 }

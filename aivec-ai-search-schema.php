@@ -158,9 +158,9 @@ register_activation_hook(
 // Deactivation hook - flush rewrite rules.
 register_deactivation_hook(
 	__FILE__,
-	static function () {
+	static function ( $network_wide = false ) {
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		AVC_AIS_Llms_Txt::deactivate();
+		AVC_AIS_Llms_Txt::deactivate( $network_wide );
 	}
 );
 

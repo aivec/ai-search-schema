@@ -1006,6 +1006,17 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<p class="ais-field__description">
 							<?php esc_html_e( 'Edit the llms.txt content. Leave empty to auto-generate from site data.', 'aivec-ai-search-schema' ); ?>
 						</p>
+						<?php $llms_txt_hidden_titles = $llms_txt_instance->get_hidden_entry_titles(); ?>
+						<?php if ( ! empty( $llms_txt_hidden_titles ) ) : ?>
+							<div class="notice notice-info inline" id="ais-llms-txt-hidden-entries">
+								<p><?php esc_html_e( 'These lines are kept here but are not served at /llms.txt because their posts are not public. They are served again when the posts are published.', 'aivec-ai-search-schema' ); ?></p>
+								<ul>
+									<?php foreach ( $llms_txt_hidden_titles as $llms_txt_hidden_title ) : ?>
+										<li><?php echo esc_html( $llms_txt_hidden_title ); ?></li>
+									<?php endforeach; ?>
+								</ul>
+							</div>
+						<?php endif; ?>
 					</div>
 
 					<p class="ais-button-row">

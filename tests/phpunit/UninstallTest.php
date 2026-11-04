@@ -21,6 +21,7 @@ class UninstallTest extends WP_UnitTestCase {
 	public function test_uninstall_removes_temporary_data() {
 		$options = array(
 			'avc_ais_llms_txt_scrubbed',
+			'avc_ais_llms_txt_urls_repaired',
 			'avc_ais_llms_txt_rule_restored',
 			Wizard::OPTION_API_KEY_PURGED,
 		);
@@ -99,14 +100,14 @@ class UninstallTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * プラグインがない間に非公開にした投稿の行が、再インストール後の読み出しで取り除かれること。
+	 * プラグインがない間に非公開にした投稿の行が、再インストール後の配信で隠されること。
 	 */
-	public function test_kept_llms_txt_content_is_scrubbed_again() {
+	public function test_kept_llms_txt_content_hides_post_hidden_while_uninstalled() {
 		global $wpdb;
 
 		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
-		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
-		update_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED, true );
+		$saved   = '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し";
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
 
 		Plugin::uninstall();
 
@@ -115,7 +116,8 @@ class UninstallTest extends WP_UnitTestCase {
 		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
 		clean_post_cache( $post_id );
 
-		$this->assertSame( '# 見出し', AVC_AIS_Llms_Txt::init()->get_content() );
+		$this->assertSame( '# 見出し', AVC_AIS_Llms_Txt::init()->get_served_content() );
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ), '保存済みの行は残す' );
 	}
 
 	/**
