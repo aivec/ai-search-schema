@@ -38,6 +38,22 @@ php_escape() {
     php -r "echo addcslashes(\$argv[1], \"'\\\\\");" "$1"
 }
 
+# trunk のテストファイルは開発版に合わせて変わり、最新の安定版では動かないことがある。
+# 本体とテストファイルを同じバージョンに揃えるため、latest を実際のバージョン番号に置き換える。
+resolve_wp_version() {
+    if [ "$WP_VERSION" != "latest" ]; then
+        return
+    fi
+
+    WP_VERSION="$(download "https://api.wordpress.org/core/version-check/1.7/" \
+        | php -r '$data = json_decode( stream_get_contents( STDIN ), true ); echo $data["offers"][0]["version"] ?? "";')"
+
+    if ! [[ "$WP_VERSION" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+        echo "Could not determine the latest WordPress version." >&2
+        exit 1
+    fi
+}
+
 install_wp() {
     if [ -f "${WP_CORE_DIR}/wp-load.php" ]; then
         echo "WordPress already exists at ${WP_CORE_DIR}; skipping download."
@@ -46,10 +62,8 @@ install_wp() {
 
     mkdir -p "$WP_CORE_DIR"
 
-    local archive_url="https://wordpress.org/latest.tar.gz"
-    if [ "$WP_VERSION" != "latest" ]; then
-        archive_url="https://wordpress.org/wordpress-${WP_VERSION}.tar.gz"
-    fi
+    resolve_wp_version
+    local archive_url="https://wordpress.org/wordpress-${WP_VERSION}.tar.gz"
 
     echo "Downloading WordPress (${WP_VERSION})..."
     download "$archive_url" | tar --strip-components=1 -xz -C "$WP_CORE_DIR"
@@ -68,10 +82,8 @@ install_test_suite() {
     local tmpdir
     tmpdir="$(mktemp -d)"
     local checkout_dir="${tmpdir}/wp-tests"
-    local tests_tag="trunk"
-    if [ "$WP_VERSION" != "latest" ]; then
-        tests_tag="tags/${WP_VERSION}"
-    fi
+    resolve_wp_version
+    local tests_tag="tags/${WP_VERSION}"
 
     local use_github=false
     if command -v svn >/dev/null 2>&1; then
@@ -86,12 +98,13 @@ install_test_suite() {
     fi
 
     if [ "$use_github" = true ]; then
-        local ref="heads/trunk"
-        if [ "$tests_tag" != "trunk" ]; then
-            ref="tags/${WP_VERSION}"
+        # GitHub のタグは常に 3 桁なので、7.2 のようなバージョンは 7.2.0 で取得する。
+        local github_tag="$tests_tag"
+        if [[ "$WP_VERSION" =~ ^[0-9]+\.[0-9]+$ ]]; then
+            github_tag="${tests_tag}.0"
         fi
 
-        local archive_url="https://github.com/WordPress/wordpress-develop/archive/refs/${ref}.tar.gz"
+        local archive_url="https://github.com/WordPress/wordpress-develop/archive/refs/${github_tag}.tar.gz"
 
         download "$archive_url" | tar -xz -C "$tmpdir"
 

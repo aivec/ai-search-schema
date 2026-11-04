@@ -8,8 +8,10 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$gmaps_api_key = get_option( 'avc_ais_gmaps_api_key', '' );
-$has_api_key   = ! empty( $gmaps_api_key );
+// 保存済みのキーはブラウザへ出さない。空の password 欄にはブラウザが管理者のログイン
+// パスワードを自動入力することがあり、キーの上書きと外部 API への送信につながるため、
+// キーの保存後は入力欄を無効化する（変更は設定画面で行う）。
+$has_api_key = ! empty( get_option( 'avc_ais_gmaps_api_key', '' ) );
 ?>
 <div class="ais-wizard-step ais-wizard-step--api-key">
 	<div class="ais-wizard-step__header">
@@ -48,7 +50,7 @@ $has_api_key   = ! empty( $gmaps_api_key );
 				<label for="ais-wizard-gmaps-api-key" class="ais-wizard-form__label">
 					<?php esc_html_e( 'Google Maps API Key', 'aivec-ai-search-schema' ); ?>
 				</label>
-				<input type="password" id="ais-wizard-gmaps-api-key" name="gmaps_api_key" class="ais-wizard-form__input" value="<?php echo esc_attr( $gmaps_api_key ); ?>" placeholder="<?php esc_attr_e( 'e.g., AIzaSyB...', 'aivec-ai-search-schema' ); ?>" autocomplete="off">
+				<input type="password" id="ais-wizard-gmaps-api-key" name="gmaps_api_key" class="ais-wizard-form__input" value="" placeholder="<?php echo esc_attr( $has_api_key ? __( 'Stored API key', 'aivec-ai-search-schema' ) : __( 'e.g., AIzaSyB...', 'aivec-ai-search-schema' ) ); ?>" autocomplete="new-password" <?php disabled( $has_api_key ); ?>>
 				<?php if ( $has_api_key ) : ?>
 					<p class="ais-wizard-form__hint ais-wizard-form__hint--success">
 						<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">

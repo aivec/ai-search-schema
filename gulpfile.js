@@ -1,6 +1,5 @@
 /* eslint-env node */
 const gulp = require('gulp');
-const sourcemaps = require('gulp-sourcemaps');
 const plumber = require('gulp-plumber');
 const { Transform } = require('stream');
 const { spawnSync } = require('node:child_process');

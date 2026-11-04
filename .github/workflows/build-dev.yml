@@ -21,6 +21,10 @@ on:
     # head_branch チェックは if 条件で行う
   workflow_dispatch:  # 手動実行も可能
 
+# GITHUB_TOKEN の権限は必要最小限に限定する。
+permissions:
+  contents: read
+
 env:
   PLUGIN_SLUG: aivec-ai-search-schema
   PHP_VERSION: '8.2'
@@ -29,8 +33,10 @@ env:
 jobs:
   build-and-upload:
     runs-on: ubuntu-latest
-    # CI が成功し、dev ブランチの場合、または手動実行時のみ実行
-    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'dev') || github.event_name == 'workflow_dispatch' }}
+    # CI が成功し、dev ブランチの場合、または手動実行時のみ実行。
+    # workflow_run はシークレットを使える環境で動くため、fork の PR（ブランチ名は自由に
+    # 付けられる）を確実に除外する。push イベントかつ同一リポジトリの実行のみ許可する。
+    if: ${{ (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push' && github.event.workflow_run.head_repository.full_name == github.repository && github.event.workflow_run.head_branch == 'dev') || github.event_name == 'workflow_dispatch' }}
 
     steps:
       # -----------------------------------------------------------------------
@@ -42,6 +48,7 @@ jobs:
           # head_sha を使用して CI がトリガーされた正確なコミットをチェックアウト
           # head_branch だとブランチの最新 HEAD が取得されず、古いコミットになる場合がある
           ref: ${{ github.event.workflow_run.head_sha || github.sha }}
+          persist-credentials: false
 
       # -----------------------------------------------------------------------
       # 2. PHP セットアップ

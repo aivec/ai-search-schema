@@ -968,6 +968,7 @@
     const $spinner = $button.parent().find('.spinner');
     const $status = $button.parent().find('.ais-llms-txt-status');
     const $textarea = $('#ais-llms-txt-content');
+    const $hash = $('#ais-llms-txt-content-hash');
 
     if (!$button.length || !$textarea.length) {
       return;
@@ -978,6 +979,7 @@
 
       const originalText = $button.text();
       $button.prop('disabled', true).text(avcAisSettings.i18nLlmsTxtSaving || 'Saving...');
+      $textarea.prop('readonly', true);
       $spinner.addClass('is-active');
       $status.text('');
 
@@ -987,10 +989,13 @@
         data: {
           action: 'avc_ais_save_llms_txt',
           nonce: avcAisSettings.llmsTxtSaveNonce,
-          content: $textarea.val()
+          content: $textarea.val(),
+          content_hash: $hash.val()
         },
         success: function (response) {
           if (response.success) {
+            $textarea.val(response.data.content);
+            $hash.val(response.data.hash);
             $status.text(avcAisSettings.i18nLlmsTxtSaved || 'Saved!').css('color', '#46b450');
             setTimeout(function () {
               $status.fadeOut(function () {
@@ -1006,6 +1011,7 @@
         },
         complete: function () {
           $button.prop('disabled', false).text(avcAisSettings.i18nLlmsTxtSave || originalText);
+          $textarea.prop('readonly', false);
           $spinner.removeClass('is-active');
         }
       });
@@ -1018,6 +1024,7 @@
     const $spinner = $button.parent().find('.spinner');
     const $status = $button.parent().find('.ais-llms-txt-status');
     const $textarea = $('#ais-llms-txt-content');
+    const $hash = $('#ais-llms-txt-content-hash');
 
     if (!$button.length || !$textarea.length) {
       return;
@@ -1041,6 +1048,7 @@
         success: function (response) {
           if (response.success && response.data && response.data.content) {
             $textarea.val(response.data.content);
+            $hash.val(response.data.hash);
             $status.text(response.data.message || 'Regenerated!').css('color', '#46b450');
             setTimeout(function () {
               $status.fadeOut(function () {

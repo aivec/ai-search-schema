@@ -4,9 +4,8 @@
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 0.9.x   | :white_check_mark: |
-| 0.2.x   | :white_check_mark: |
-| < 0.2   | :x:                |
+| 1.3.x   | :white_check_mark: |
+| < 1.3   | :x:                |
 
 ## Reporting a Vulnerability
 
@@ -38,5 +37,5 @@ This plugin follows WordPress security best practices:
 - User inputs are sanitized using WordPress sanitization functions
 - All outputs are escaped using WordPress escaping functions
 - Nonces are used for all AJAX requests and form submissions
-- API keys are stored securely and never exposed in HTML/JS output
+- API keys are stored server-side only and never exposed in HTML/JS output
 - Direct file access is prevented with `ABSPATH` checks

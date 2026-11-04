@@ -2,14 +2,14 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Aivec AI Search Schema 1.3.1\n"
+"Project-Id-Version: Aivec AI Search Schema 1.3.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aivec-ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-08-04T03:58:00+00:00\n"
+"POT-Creation-Date: 2026-11-02T20:03:23+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: aivec-ai-search-schema\n"
@@ -110,11 +110,11 @@ msgstr ""
 #: dist/includes/class-avc-ais-metabox.php:51
 #: dist/includes/class-avc-ais-metabox.php:80
 #: dist/includes/class-avc-ais-settings.php:69
-#: dist/src/Wizard/Wizard.php:249
+#: dist/src/Wizard/Wizard.php:266
 #: includes/class-avc-ais-metabox.php:51
 #: includes/class-avc-ais-metabox.php:80
 #: includes/class-avc-ais-settings.php:69
-#: src/Wizard/Wizard.php:258
+#: src/Wizard/Wizard.php:266
 msgid "AI Search Schema"
 msgstr ""
 
@@ -228,31 +228,31 @@ msgstr ""
 msgid "Search results"
 msgstr ""
 
-#: dist/includes/class-avc-ais-schema.php:2262
-#: dist/includes/class-avc-ais-schema.php:2303
-#: includes/class-avc-ais-schema.php:2262
-#: includes/class-avc-ais-schema.php:2303
+#: dist/includes/class-avc-ais-schema.php:2232
+#: dist/includes/class-avc-ais-schema.php:2273
+#: includes/class-avc-ais-schema.php:2232
+#: includes/class-avc-ais-schema.php:2273
 msgid "AI Search Schema – Development Mode Warning"
 msgstr ""
 
-#: dist/includes/class-avc-ais-schema.php:2266
-#: dist/includes/class-avc-ais-schema.php:2306
-#: includes/class-avc-ais-schema.php:2266
-#: includes/class-avc-ais-schema.php:2306
+#: dist/includes/class-avc-ais-schema.php:2236
+#: dist/includes/class-avc-ais-schema.php:2276
+#: includes/class-avc-ais-schema.php:2236
+#: includes/class-avc-ais-schema.php:2276
 msgid "The following validation errors were detected:"
 msgstr ""
 
-#: dist/includes/class-avc-ais-schema.php:2276
-#: dist/includes/class-avc-ais-schema.php:2315
-#: includes/class-avc-ais-schema.php:2276
-#: includes/class-avc-ais-schema.php:2315
+#: dist/includes/class-avc-ais-schema.php:2246
+#: dist/includes/class-avc-ais-schema.php:2285
+#: includes/class-avc-ais-schema.php:2246
+#: includes/class-avc-ais-schema.php:2285
 msgid "Warnings:"
 msgstr ""
 
-#: dist/includes/class-avc-ais-schema.php:2285
-#: dist/includes/class-avc-ais-schema.php:2324
-#: includes/class-avc-ais-schema.php:2285
-#: includes/class-avc-ais-schema.php:2324
+#: dist/includes/class-avc-ais-schema.php:2255
+#: dist/includes/class-avc-ais-schema.php:2294
+#: includes/class-avc-ais-schema.php:2255
+#: includes/class-avc-ais-schema.php:2294
 msgid "This warning only appears while WP_DEBUG is true."
 msgstr ""
 
@@ -289,9 +289,9 @@ msgid "Fetch coordinates from address"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:169
-#: dist/src/Wizard/Wizard.php:319
+#: dist/src/Wizard/Wizard.php:336
 #: includes/class-avc-ais-settings.php:169
-#: src/Wizard/Wizard.php:328
+#: src/Wizard/Wizard.php:336
 msgid "Fetching..."
 msgstr ""
 
@@ -344,9 +344,9 @@ msgid "Regenerate from site data"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:192
-#: dist/src/Wizard/Wizard.php:305
+#: dist/src/Wizard/Wizard.php:322
 #: includes/class-avc-ais-settings.php:192
-#: src/Wizard/Wizard.php:314
+#: src/Wizard/Wizard.php:322
 msgid "Saving..."
 msgstr ""
 
@@ -542,64 +542,64 @@ msgid "Thai"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1344
-#: dist/src/Wizard/Wizard.php:327
+#: dist/src/Wizard/Wizard.php:344
 #: dist/templates/wizard/steps/step-4-hours.php:15
 #: includes/class-avc-ais-settings.php:1344
-#: src/Wizard/Wizard.php:336
+#: src/Wizard/Wizard.php:344
 #: templates/wizard/steps/step-4-hours.php:15
 msgid "Monday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1345
-#: dist/src/Wizard/Wizard.php:328
+#: dist/src/Wizard/Wizard.php:345
 #: dist/templates/wizard/steps/step-4-hours.php:16
 #: includes/class-avc-ais-settings.php:1345
-#: src/Wizard/Wizard.php:337
+#: src/Wizard/Wizard.php:345
 #: templates/wizard/steps/step-4-hours.php:16
 msgid "Tuesday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1346
-#: dist/src/Wizard/Wizard.php:329
+#: dist/src/Wizard/Wizard.php:346
 #: dist/templates/wizard/steps/step-4-hours.php:17
 #: includes/class-avc-ais-settings.php:1346
-#: src/Wizard/Wizard.php:338
+#: src/Wizard/Wizard.php:346
 #: templates/wizard/steps/step-4-hours.php:17
 msgid "Wednesday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1347
-#: dist/src/Wizard/Wizard.php:330
+#: dist/src/Wizard/Wizard.php:347
 #: dist/templates/wizard/steps/step-4-hours.php:18
 #: includes/class-avc-ais-settings.php:1347
-#: src/Wizard/Wizard.php:339
+#: src/Wizard/Wizard.php:347
 #: templates/wizard/steps/step-4-hours.php:18
 msgid "Thursday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1348
-#: dist/src/Wizard/Wizard.php:331
+#: dist/src/Wizard/Wizard.php:348
 #: dist/templates/wizard/steps/step-4-hours.php:19
 #: includes/class-avc-ais-settings.php:1348
-#: src/Wizard/Wizard.php:340
+#: src/Wizard/Wizard.php:348
 #: templates/wizard/steps/step-4-hours.php:19
 msgid "Friday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1349
-#: dist/src/Wizard/Wizard.php:332
+#: dist/src/Wizard/Wizard.php:349
 #: dist/templates/wizard/steps/step-4-hours.php:20
 #: includes/class-avc-ais-settings.php:1349
-#: src/Wizard/Wizard.php:341
+#: src/Wizard/Wizard.php:349
 #: templates/wizard/steps/step-4-hours.php:20
 msgid "Saturday"
 msgstr ""
 
 #: dist/includes/class-avc-ais-settings.php:1350
-#: dist/src/Wizard/Wizard.php:333
+#: dist/src/Wizard/Wizard.php:350
 #: dist/templates/wizard/steps/step-4-hours.php:21
 #: includes/class-avc-ais-settings.php:1350
-#: src/Wizard/Wizard.php:342
+#: src/Wizard/Wizard.php:350
 #: templates/wizard/steps/step-4-hours.php:21
 msgid "Sunday"
 msgstr ""
@@ -1020,281 +1020,281 @@ msgstr ""
 msgid "Help"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:87
-#: src/Wizard/Wizard.php:87
+#: dist/src/Wizard/Wizard.php:95
+#: src/Wizard/Wizard.php:95
 msgid "Welcome"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:92
+#: dist/src/Wizard/Wizard.php:100
 #: dist/templates/wizard/steps/step-1-basics.php:19
-#: src/Wizard/Wizard.php:92
+#: src/Wizard/Wizard.php:100
 #: templates/wizard/steps/step-1-basics.php:19
 msgid "Basic Information"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:97
+#: dist/src/Wizard/Wizard.php:105
 #: dist/templates/wizard/components/progress-bar.php:19
 #: dist/templates/wizard/steps/step-5-complete.php:50
-#: src/Wizard/Wizard.php:97
+#: src/Wizard/Wizard.php:105
 #: templates/wizard/components/progress-bar.php:19
 #: templates/wizard/steps/step-5-complete.php:50
 msgid "Site Type"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:102
-#: src/Wizard/Wizard.php:102
+#: dist/src/Wizard/Wizard.php:110
+#: src/Wizard/Wizard.php:110
 msgid "API Key"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:107
+#: dist/src/Wizard/Wizard.php:115
 #: dist/templates/wizard/components/progress-bar.php:20
-#: src/Wizard/Wizard.php:107
+#: src/Wizard/Wizard.php:115
 #: templates/wizard/components/progress-bar.php:20
 msgid "Location"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:112
+#: dist/src/Wizard/Wizard.php:120
 #: dist/templates/wizard/steps/step-4-hours.php:36
-#: src/Wizard/Wizard.php:112
+#: src/Wizard/Wizard.php:120
 #: templates/wizard/steps/step-4-hours.php:36
 msgid "Business Hours"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:117
+#: dist/src/Wizard/Wizard.php:125
 #: dist/templates/wizard/components/progress-bar.php:22
-#: src/Wizard/Wizard.php:117
+#: src/Wizard/Wizard.php:125
 #: templates/wizard/components/progress-bar.php:22
 msgid "Complete"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:132
-#: dist/src/Wizard/Wizard.php:150
+#: dist/src/Wizard/Wizard.php:140
+#: dist/src/Wizard/Wizard.php:158
 #: dist/templates/wizard/wizard-page.php:24
-#: src/Wizard/Wizard.php:132
-#: src/Wizard/Wizard.php:150
+#: src/Wizard/Wizard.php:140
+#: src/Wizard/Wizard.php:158
 #: templates/wizard/wizard-page.php:24
 msgid "AI Search Schema Setup"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:133
-#: src/Wizard/Wizard.php:133
+#: dist/src/Wizard/Wizard.php:141
+#: src/Wizard/Wizard.php:141
 msgid "Setup Wizard"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:250
-#: src/Wizard/Wizard.php:259
+#: dist/src/Wizard/Wizard.php:267
+#: src/Wizard/Wizard.php:267
 msgid "Complete the setup wizard to optimize your site for Google search."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:252
-#: src/Wizard/Wizard.php:261
+#: dist/src/Wizard/Wizard.php:269
+#: src/Wizard/Wizard.php:269
 msgid "Start Setup"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:306
-#: src/Wizard/Wizard.php:315
+#: dist/src/Wizard/Wizard.php:323
+#: src/Wizard/Wizard.php:323
 msgid "Saved"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:307
-#: src/Wizard/Wizard.php:316
+#: dist/src/Wizard/Wizard.php:324
+#: src/Wizard/Wizard.php:324
 msgid "An error occurred"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:308
-#: src/Wizard/Wizard.php:317
+#: dist/src/Wizard/Wizard.php:325
+#: src/Wizard/Wizard.php:325
 msgid "Error saving. Please try again."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:309
-#: src/Wizard/Wizard.php:318
+#: dist/src/Wizard/Wizard.php:326
+#: src/Wizard/Wizard.php:326
 msgid "This field is required"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:310
-#: src/Wizard/Wizard.php:319
+#: dist/src/Wizard/Wizard.php:327
+#: src/Wizard/Wizard.php:327
 msgid "Please enter a valid URL"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:311
-#: src/Wizard/Wizard.php:320
+#: dist/src/Wizard/Wizard.php:328
+#: src/Wizard/Wizard.php:328
 msgid "Select Logo"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:312
-#: src/Wizard/Wizard.php:321
+#: dist/src/Wizard/Wizard.php:329
+#: src/Wizard/Wizard.php:329
 msgid "Use this logo"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:313
+#: dist/src/Wizard/Wizard.php:330
 #: dist/templates/wizard/steps/step-1-basics.php:65
-#: src/Wizard/Wizard.php:322
+#: src/Wizard/Wizard.php:330
 #: templates/wizard/steps/step-1-basics.php:65
 msgid "No logo selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:314
+#: dist/src/Wizard/Wizard.php:331
 #: dist/templates/wizard/steps/welcome.php:154
-#: src/Wizard/Wizard.php:323
+#: src/Wizard/Wizard.php:331
 #: templates/wizard/steps/welcome.php:154
 msgid "Import"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:315
-#: src/Wizard/Wizard.php:324
+#: dist/src/Wizard/Wizard.php:332
+#: src/Wizard/Wizard.php:332
 msgid "Importing..."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:316
-#: src/Wizard/Wizard.php:325
+#: dist/src/Wizard/Wizard.php:333
+#: src/Wizard/Wizard.php:333
 msgid "Imported!"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:317
-#: src/Wizard/Wizard.php:326
+#: dist/src/Wizard/Wizard.php:334
+#: src/Wizard/Wizard.php:334
 msgid "Import failed. Please try again."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:318
-#: src/Wizard/Wizard.php:327
+#: dist/src/Wizard/Wizard.php:335
+#: src/Wizard/Wizard.php:335
 msgid "Please enter an address first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:320
+#: dist/src/Wizard/Wizard.php:337
 #: dist/templates/wizard/steps/step-3-location.php:147
-#: src/Wizard/Wizard.php:329
+#: src/Wizard/Wizard.php:337
 #: templates/wizard/steps/step-3-location.php:147
 msgid "Get Coordinates"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:321
-#: src/Wizard/Wizard.php:330
+#: dist/src/Wizard/Wizard.php:338
+#: src/Wizard/Wizard.php:338
 msgid "Could not fetch coordinates."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:322
+#: dist/src/Wizard/Wizard.php:339
 #: dist/templates/wizard/steps/step-5-complete.php:112
-#: src/Wizard/Wizard.php:331
+#: src/Wizard/Wizard.php:339
 #: templates/wizard/steps/step-5-complete.php:112
 msgid "View JSON-LD Schema"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:323
-#: src/Wizard/Wizard.php:332
+#: dist/src/Wizard/Wizard.php:340
+#: src/Wizard/Wizard.php:340
 msgid "Hide JSON-LD Schema"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:324
-#: src/Wizard/Wizard.php:333
+#: dist/src/Wizard/Wizard.php:341
+#: src/Wizard/Wizard.php:341
 msgid "No schema generated yet."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:325
-#: src/Wizard/Wizard.php:334
+#: dist/src/Wizard/Wizard.php:342
+#: src/Wizard/Wizard.php:342
 msgid "Could not load schema."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:326
+#: dist/src/Wizard/Wizard.php:343
 #: dist/templates/wizard/steps/step-4-hours.php:141
-#: src/Wizard/Wizard.php:335
+#: src/Wizard/Wizard.php:343
 #: templates/wizard/steps/step-4-hours.php:141
 msgid "Set your business hours above to see a preview."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:334
-#: src/Wizard/Wizard.php:343
+#: dist/src/Wizard/Wizard.php:351
+#: src/Wizard/Wizard.php:351
 msgid "Local Business Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:335
-#: src/Wizard/Wizard.php:344
+#: dist/src/Wizard/Wizard.php:352
+#: src/Wizard/Wizard.php:352
 msgid "You will be able to enter your business address, hours, and contact information."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:336
-#: src/Wizard/Wizard.php:345
+#: dist/src/Wizard/Wizard.php:353
+#: src/Wizard/Wizard.php:353
 msgid "Organization Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:337
-#: src/Wizard/Wizard.php:346
+#: dist/src/Wizard/Wizard.php:354
+#: src/Wizard/Wizard.php:354
 msgid "Perfect for companies, non-profits, and institutions."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:338
-#: src/Wizard/Wizard.php:347
+#: dist/src/Wizard/Wizard.php:355
+#: src/Wizard/Wizard.php:355
 msgid "Personal Site Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:339
-#: src/Wizard/Wizard.php:348
+#: dist/src/Wizard/Wizard.php:356
+#: src/Wizard/Wizard.php:356
 msgid "Great for blogs, portfolios, and freelancer websites."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:340
-#: src/Wizard/Wizard.php:349
+#: dist/src/Wizard/Wizard.php:357
+#: src/Wizard/Wizard.php:357
 msgid "Online Service Selected"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:341
-#: src/Wizard/Wizard.php:350
+#: dist/src/Wizard/Wizard.php:358
+#: src/Wizard/Wizard.php:358
 msgid "Ideal for news sites, web apps, and online tools."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:448
-#: dist/src/Wizard/Wizard.php:495
-#: dist/src/Wizard/Wizard.php:525
-#: dist/src/Wizard/Wizard.php:545
-#: dist/src/Wizard/Wizard.php:567
-#: dist/src/Wizard/Wizard.php:943
-#: src/Wizard/Wizard.php:457
-#: src/Wizard/Wizard.php:504
-#: src/Wizard/Wizard.php:534
-#: src/Wizard/Wizard.php:554
-#: src/Wizard/Wizard.php:576
-#: src/Wizard/Wizard.php:952
+#: dist/src/Wizard/Wizard.php:511
+#: dist/src/Wizard/Wizard.php:559
+#: dist/src/Wizard/Wizard.php:589
+#: dist/src/Wizard/Wizard.php:609
+#: dist/src/Wizard/Wizard.php:631
+#: dist/src/Wizard/Wizard.php:1007
+#: src/Wizard/Wizard.php:513
+#: src/Wizard/Wizard.php:561
+#: src/Wizard/Wizard.php:591
+#: src/Wizard/Wizard.php:611
+#: src/Wizard/Wizard.php:633
+#: src/Wizard/Wizard.php:1009
 msgid "Permission denied"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:455
-#: dist/src/Wizard/Wizard.php:501
-#: src/Wizard/Wizard.php:464
-#: src/Wizard/Wizard.php:510
+#: dist/src/Wizard/Wizard.php:518
+#: dist/src/Wizard/Wizard.php:565
+#: src/Wizard/Wizard.php:520
+#: src/Wizard/Wizard.php:567
 msgid "Invalid step"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:482
-#: src/Wizard/Wizard.php:491
+#: dist/src/Wizard/Wizard.php:546
+#: src/Wizard/Wizard.php:548
 msgid "Step saved"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:512
-#: src/Wizard/Wizard.php:521
+#: dist/src/Wizard/Wizard.php:576
+#: src/Wizard/Wizard.php:578
 msgid "Step skipped"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:532
-#: src/Wizard/Wizard.php:541
+#: dist/src/Wizard/Wizard.php:596
+#: src/Wizard/Wizard.php:598
 msgid "Setup completed!"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:554
-#: src/Wizard/Wizard.php:563
+#: dist/src/Wizard/Wizard.php:618
+#: src/Wizard/Wizard.php:620
 msgid "Wizard reset"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:593
-#: src/Wizard/Wizard.php:602
+#: dist/src/Wizard/Wizard.php:657
+#: src/Wizard/Wizard.php:659
 msgid "Settings imported successfully"
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:965
-#: src/Wizard/Wizard.php:974
+#: dist/src/Wizard/Wizard.php:1029
+#: src/Wizard/Wizard.php:1031
 msgid "No schema generated yet. Please complete the wizard steps first."
 msgstr ""
 
-#: dist/src/Wizard/Wizard.php:974
-#: src/Wizard/Wizard.php:983
+#: dist/src/Wizard/Wizard.php:1038
+#: src/Wizard/Wizard.php:1040
 msgid "Error generating schema."
 msgstr ""
 
@@ -2044,16 +2044,18 @@ msgid "ON: Adds acceptsReservations property to LocalBusiness schema. Enable for
 msgstr ""
 
 #: dist/templates/admin-settings.php:698
-#: dist/templates/wizard/steps/step-api-key.php:17
-#: dist/templates/wizard/steps/step-api-key.php:49
+#: dist/templates/wizard/steps/step-api-key.php:19
+#: dist/templates/wizard/steps/step-api-key.php:51
 #: templates/admin-settings.php:698
-#: templates/wizard/steps/step-api-key.php:17
-#: templates/wizard/steps/step-api-key.php:49
+#: templates/wizard/steps/step-api-key.php:19
+#: templates/wizard/steps/step-api-key.php:51
 msgid "Google Maps API Key"
 msgstr ""
 
 #: dist/templates/admin-settings.php:705
+#: dist/templates/wizard/steps/step-api-key.php:53
 #: templates/admin-settings.php:705
+#: templates/wizard/steps/step-api-key.php:53
 msgid "Stored API key"
 msgstr ""
 
@@ -2468,12 +2470,12 @@ msgstr ""
 #: dist/templates/wizard/steps/step-2-type.php:92
 #: dist/templates/wizard/steps/step-3-location.php:198
 #: dist/templates/wizard/steps/step-4-hours.php:152
-#: dist/templates/wizard/steps/step-api-key.php:92
+#: dist/templates/wizard/steps/step-api-key.php:94
 #: templates/wizard/steps/step-1-basics.php:94
 #: templates/wizard/steps/step-2-type.php:92
 #: templates/wizard/steps/step-3-location.php:198
 #: templates/wizard/steps/step-4-hours.php:152
-#: templates/wizard/steps/step-api-key.php:92
+#: templates/wizard/steps/step-api-key.php:94
 msgid "Back"
 msgstr ""
 
@@ -2481,12 +2483,12 @@ msgstr ""
 #: dist/templates/wizard/steps/step-2-type.php:95
 #: dist/templates/wizard/steps/step-3-location.php:201
 #: dist/templates/wizard/steps/step-4-hours.php:155
-#: dist/templates/wizard/steps/step-api-key.php:99
+#: dist/templates/wizard/steps/step-api-key.php:101
 #: templates/wizard/steps/step-1-basics.php:97
 #: templates/wizard/steps/step-2-type.php:95
 #: templates/wizard/steps/step-3-location.php:201
 #: templates/wizard/steps/step-4-hours.php:155
-#: templates/wizard/steps/step-api-key.php:99
+#: templates/wizard/steps/step-api-key.php:101
 msgid "Continue"
 msgstr ""
 
@@ -2902,73 +2904,73 @@ msgstr ""
 msgid "View Site"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:20
-#: templates/wizard/steps/step-api-key.php:20
+#: dist/templates/wizard/steps/step-api-key.php:22
+#: templates/wizard/steps/step-api-key.php:22
 msgid "Optional: Enter your Google Maps API key to enable automatic coordinate lookup for your business address."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:34
-#: templates/wizard/steps/step-api-key.php:34
+#: dist/templates/wizard/steps/step-api-key.php:36
+#: templates/wizard/steps/step-api-key.php:36
 msgid "Why do I need this?"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:37
-#: templates/wizard/steps/step-api-key.php:37
+#: dist/templates/wizard/steps/step-api-key.php:39
+#: templates/wizard/steps/step-api-key.php:39
 msgid "The Google Maps API key enables the \"Get Coordinates\" feature in the next step. This automatically converts your business address into latitude and longitude coordinates, which improves your local SEO and helps Google Maps show your location accurately."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:40
-#: templates/wizard/steps/step-api-key.php:40
+#: dist/templates/wizard/steps/step-api-key.php:42
+#: templates/wizard/steps/step-api-key.php:42
 msgid "You can skip this step and enter coordinates manually, or add the API key later from the settings page."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:51
-#: templates/wizard/steps/step-api-key.php:51
+#: dist/templates/wizard/steps/step-api-key.php:53
+#: templates/wizard/steps/step-api-key.php:53
 msgid "e.g., AIzaSyB..."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:57
-#: templates/wizard/steps/step-api-key.php:57
+#: dist/templates/wizard/steps/step-api-key.php:59
+#: templates/wizard/steps/step-api-key.php:59
 msgid "API key is already configured."
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:68
-#: templates/wizard/steps/step-api-key.php:68
+#: dist/templates/wizard/steps/step-api-key.php:70
+#: templates/wizard/steps/step-api-key.php:70
 msgid "How to get an API key"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:71
-#: templates/wizard/steps/step-api-key.php:71
-msgid "Go to the Google Cloud Console"
-msgstr ""
-
-#: dist/templates/wizard/steps/step-api-key.php:72
-#: templates/wizard/steps/step-api-key.php:72
-msgid "Create a new project or select an existing one"
 msgstr ""
 
 #: dist/templates/wizard/steps/step-api-key.php:73
 #: templates/wizard/steps/step-api-key.php:73
-msgid "Enable the \"Geocoding API\""
+msgid "Go to the Google Cloud Console"
 msgstr ""
 
 #: dist/templates/wizard/steps/step-api-key.php:74
 #: templates/wizard/steps/step-api-key.php:74
-msgid "Go to \"Credentials\" and create an API key"
+msgid "Create a new project or select an existing one"
 msgstr ""
 
 #: dist/templates/wizard/steps/step-api-key.php:75
 #: templates/wizard/steps/step-api-key.php:75
+msgid "Enable the \"Geocoding API\""
+msgstr ""
+
+#: dist/templates/wizard/steps/step-api-key.php:76
+#: templates/wizard/steps/step-api-key.php:76
+msgid "Go to \"Credentials\" and create an API key"
+msgstr ""
+
+#: dist/templates/wizard/steps/step-api-key.php:77
+#: templates/wizard/steps/step-api-key.php:77
 msgid "Copy the API key and paste it above"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:81
-#: templates/wizard/steps/step-api-key.php:81
+#: dist/templates/wizard/steps/step-api-key.php:83
+#: templates/wizard/steps/step-api-key.php:83
 msgid "Open Google Cloud Console"
 msgstr ""
 
-#: dist/templates/wizard/steps/step-api-key.php:96
-#: templates/wizard/steps/step-api-key.php:96
+#: dist/templates/wizard/steps/step-api-key.php:98
+#: templates/wizard/steps/step-api-key.php:98
 msgid "Skip"
 msgstr ""
 

@@ -199,6 +199,12 @@ class AVC_AIS_GraphBuilder {
 			$graph[] = $item_list;
 		}
 
+		// パスワード保護中はページにも本文が表示されない。post_content やカスタムフィールド
+		// に由来するコンテンツ固有のスキーマは、型を問わずここで出力を止める。
+		if ( ! empty( $context['post_id'] ) && post_password_required( $context['post_id'] ) ) {
+			return $graph;
+		}
+
 		$schema_type = $this->determine_content_schema_type( $options, $context );
 		$content     = $this->build_content_schema(
 			$schema_type,
@@ -602,7 +608,8 @@ class AVC_AIS_GraphBuilder {
 	}
 
 	private function get_featured_image_object( $post_id ) {
-		if ( ! $post_id || ! has_post_thumbnail( $post_id ) ) {
+		// パスワード入力前はテーマもアイキャッチ画像を表示しないため、URL を出さない。
+		if ( ! $post_id || post_password_required( $post_id ) || ! has_post_thumbnail( $post_id ) ) {
 			return array();
 		}
 

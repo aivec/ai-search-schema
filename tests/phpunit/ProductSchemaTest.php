@@ -30,7 +30,8 @@ if ( ! class_exists( 'WC_Product' ) ) {
 
 if ( ! function_exists( 'wc_get_product' ) ) {
 	function wc_get_product( $post_id ) {
-		return new WC_Product( $post_id );
+		// 本物の WooCommerce と同じく、商品以外の投稿には false を返す。
+		return 'product' === get_post_type( $post_id ) ? new WC_Product( $post_id ) : false;
 	}
 }
 
