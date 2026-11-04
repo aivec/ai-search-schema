@@ -140,8 +140,7 @@ class AVC_AIS_Schema {
 			$this->clear_validation_errors();
 			$clean_schema = $this->remove_null_values( $validation['schema'] );
 			if ( ! empty( $clean_schema ) ) {
-				$output = new AVC_AIS_Output( $validator );
-				$output->print( $clean_schema, true );
+				$this->print_json_ld( $clean_schema );
 			}
 			return;
 		}
@@ -2145,8 +2144,7 @@ class AVC_AIS_Schema {
 	 * @param array $schema
 	 */
 	private function print_json_ld( array $schema ) {
-		$output = new AVC_AIS_Output( new AVC_AIS_Validator() );
-		$output->print( $schema, true );
+		( new AVC_AIS_Output() )->print( $schema, true );
 	}
 
 	/**

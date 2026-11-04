@@ -128,6 +128,7 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'number after <'    => array( 'price<100 and >50' ),
 			'heart'             => array( 'love it <3' ),
 			'looks like a tag'  => array( 'if a<b then c>d' ),
+			'word after tag'    => array( 'if a<i and c>d' ),
 		);
 	}
 
@@ -167,6 +168,10 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'line break'     => array( 'First<br>Second<br />Third', 'FirstSecondThird' ),
 			'with attribute' => array( 'See <a href="https://example.com/?a=1" title="x">link</a>', 'See link' ),
 			'script tags'    => array( '</script><script>alert(1)</script>', 'alert(1)' ),
+			'bare attribute' => array( '<span hidden>Foo</span>', 'Foo' ),
+			'bare attrs'     => array( '<input disabled checked>Foo', 'Foo' ),
+			'mixed attrs'    => array( '<details open class="x">Foo</details>', 'Foo' ),
+			'nested'         => array( '<<b>i>Foo', 'Foo' ),
 		);
 	}
 
