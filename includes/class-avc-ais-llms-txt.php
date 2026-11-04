@@ -57,9 +57,10 @@ class AVC_AIS_Llms_Txt {
 	/**
 	 * 一覧の行の形。文中のリンクと区別するため、リストの項目の先頭にあるリンクだけを対象にする。
 	 *
-	 * llms.txt の仕様では「- [タイトル](URL): 説明」の説明は省略でき、字下げや他の記号も書ける。
+	 * llms.txt の仕様では「- [タイトル](URL): 説明」の説明は省略でき、字下げや番号付きのリスト、
+	 * リンクのタイトルも書ける。タイトルのない投稿は自動生成で「- [](URL): 抜粋」になる。
 	 */
-	const ENTRY_PATTERN = '/^\s*[-*+] \[(.+?)\]\((\S*?)\):?/u';
+	const ENTRY_PATTERN = '/^\s*(?:[-*+]|\d+[.)])\s+\[(.*?)\]\((\S*?)(?:\s+"[^"]*")?\):?/u';
 
 	/**
 	 * 削除した投稿の URL を覚えておく秒数。
@@ -82,6 +83,11 @@ class AVC_AIS_Llms_Txt {
 	 * 配信しない行の判定結果を保存する transient の名前。
 	 */
 	const HIDDEN_LINES_CACHE = 'avc_ais_llms_txt_hidden_lines';
+
+	/**
+	 * 投稿が変わるたびに更新する、判定結果の世代の option 名。
+	 */
+	const OPTION_CACHE_GENERATION = 'avc_ais_llms_txt_cache_generation';
 
 	/**
 	 * Singleton instance.
@@ -280,7 +286,8 @@ class AVC_AIS_Llms_Txt {
 	 * 保存済みの内容から行を消すと、投稿を公開し直したときに手書きの説明が失われる。投稿の変更を
 	 * 追えない間（無効化中、古い画面からの保存）の分も取りこぼさないよう、投稿の現在の状態で
 	 * 判定する。判定には行数分のクエリが走り、/llms.txt は未ログインで何度でも呼べるので、
-	 * 結果を短時間だけ保存する。投稿が変わったら保存した結果を消す。
+	 * 結果を短時間だけ保存する。判定中に投稿が変わると古い結果を保存してしまうので、消すのでは
+	 * なく、判定の前に読んだ世代を一緒に保存して、投稿が変わったら世代を進める。
 	 *
 	 * @return string
 	 */
@@ -291,7 +298,7 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		$lines  = explode( "\n", (string) $saved );
-		$key    = md5( (string) $saved );
+		$key    = md5( get_option( self::OPTION_CACHE_GENERATION, '' ) . (string) $saved );
 		$cached = get_transient( self::HIDDEN_LINES_CACHE );
 		if ( is_array( $cached ) && ( $cached['key'] ?? '' ) === $key && is_array( $cached['lines'] ?? null ) ) {
 			$hidden = array_flip( $cached['lines'] );
@@ -311,12 +318,12 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 配信しない行の判定結果を消す。
+	 * 配信しない行の判定結果を無効にする。
 	 *
 	 * @return void
 	 */
 	public static function clear_hidden_lines_cache() {
-		delete_transient( self::HIDDEN_LINES_CACHE );
+		update_option( self::OPTION_CACHE_GENERATION, uniqid( '', true ), false );
 	}
 
 	/**
@@ -388,12 +395,36 @@ class AVC_AIS_Llms_Txt {
 			return false;
 		}
 
-		$titled = self::find_posts_titled( $entry['title'] );
-		if ( null === $titled ) {
-			return true;
+		return self::has_hidden_post_titled( $entry['title'] );
+	}
+
+	/**
+	 * タイトルが一致する公開していない投稿があるかを判定する。
+	 *
+	 * 公開中の投稿は取得しないので、同じタイトルの公開中の投稿が多くても上限に達しない。
+	 * 上限に達したら判断できないので、抜粋を出さない側に倒す。
+	 *
+	 * @param string $title 行のタイトル.
+	 * @return bool あれば true.
+	 */
+	private static function has_hidden_post_titled( $title ) {
+		$hidden_statuses = array_diff( get_post_stati( array( 'public' => false ) ), array( 'auto-draft', 'inherit' ) );
+
+		$conditions = array(
+			array( 'post_status' => $hidden_statuses ),
+			array(
+				'post_status'  => get_post_stati( array( 'public' => true ) ),
+				'has_password' => true,
+			),
+		);
+		foreach ( $conditions as $condition ) {
+			$posts = self::find_posts_titled( $title, $condition );
+			if ( null === $posts || ! empty( $posts ) ) {
+				return true;
+			}
 		}
 
-		return count( array_filter( $titled, array( self::class, 'is_public_post' ) ) ) !== count( $titled );
+		return false;
 	}
 
 	/**
@@ -472,7 +503,9 @@ class AVC_AIS_Llms_Txt {
 			return preg_replace( '/^www\./', '', strtolower( (string) $host ) );
 		};
 
-		return $normalize( $parts['host'] ) === $normalize( wp_parse_url( home_url(), PHP_URL_HOST ) );
+		$home = self::parse_entry_url( home_url() );
+
+		return is_array( $home ) && $normalize( $parts['host'] ) === $normalize( $home['host'] ?? '' );
 	}
 
 	/**
@@ -579,8 +612,9 @@ class AVC_AIS_Llms_Txt {
 			// /%postname%.html のようなパーマリンクでは拡張子がスラッグに含まれない。
 			$slug = sanitize_title( preg_replace( '/\.[a-z0-9]+$/i', '', $last ) );
 			if ( '' !== $slug ) {
+				// ゴミ箱のスラッグは、WordPress が 191 バイトに切り詰めてから __trashed を付ける。
 				$slugs[] = $slug;
-				$slugs[] = $slug . '__trashed';
+				$slugs[] = _truncate_post_slug( $slug, 191 ) . '__trashed';
 			}
 		}
 
@@ -614,15 +648,24 @@ class AVC_AIS_Llms_Txt {
 	 * 投稿タイトルの & は &amp; で保存されていることがあるので、どちらの形でも探す。
 	 *
 	 * @param string $title 行のタイトル.
+	 * @param array  $args  追加の取得条件.
 	 * @return WP_Post[]|null 投稿。上限に達して判断できないときは null.
 	 */
-	private static function find_posts_titled( $title ) {
+	private static function find_posts_titled( $title, array $args = array() ) {
+		// 空のタイトルを渡すと条件が無視され、すべての投稿が対象になる。
+		if ( '' === $title ) {
+			return array();
+		}
+
 		$posts = array();
 		foreach ( array_unique( array( $title, str_replace( '&', '&amp;', $title ) ) ) as $stored ) {
 			$found = self::query_listed_posts(
-				array(
-					'title'       => $stored,
-					'numberposts' => self::TITLE_QUERY_LIMIT,
+				array_merge(
+					array(
+						'title'       => $stored,
+						'numberposts' => self::TITLE_QUERY_LIMIT,
+					),
+					$args
 				)
 			);
 			if ( count( $found ) >= self::TITLE_QUERY_LIMIT ) {
@@ -813,8 +856,9 @@ class AVC_AIS_Llms_Txt {
 			return;
 		}
 
-		$old_key = self::url_key( $old_url );
-		$lines   = explode( "\n", $saved );
+		$old_key    = self::url_key( $old_url );
+		$old_parent = trailingslashit( $old_url );
+		$lines      = explode( "\n", $saved );
 		foreach ( $lines as $index => $line ) {
 			$entry = self::parse_entry( $line );
 			if ( null === $entry || ! self::is_site_url( $entry['url'] ) ) {
@@ -822,6 +866,13 @@ class AVC_AIS_Llms_Txt {
 			}
 			if ( self::url_key( $entry['url'] ) === $old_key ) {
 				$lines[ $index ] = self::replace_entry_url( $line, $entry, $new_url );
+				continue;
+			}
+			// 親ページの URL が変わると子ページの URL も変わるが、子ページの更新は発生しない。
+			// 以前の保存処理で壊れた /親// は子ページと判別できないので書き換えない。
+			$child = 0 === strpos( $entry['url'], $old_parent ) ? substr( $entry['url'], strlen( $old_parent ) ) : '';
+			if ( '' !== $child && '/' !== $child[0] ) {
+				$lines[ $index ] = self::replace_entry_url( $line, $entry, trailingslashit( $new_url ) . $child );
 			}
 		}
 
@@ -1248,8 +1299,9 @@ class AVC_AIS_Llms_Txt {
 		$current_site_id = get_current_blog_id();
 		$site_ids        = get_sites(
 			array(
-				'fields' => 'ids',
-				'number' => 0,
+				'fields'     => 'ids',
+				'number'     => 0,
+				'network_id' => get_current_network_id(),
 			)
 		);
 		foreach ( $site_ids as $site_id ) {

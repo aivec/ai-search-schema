@@ -269,7 +269,179 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 			'asterisk'      => array( '* [表のタイトル](%s): 説明' ),
 			'other notes'   => array( '- [表のタイトル](%s) の説明' ),
 			'japanese note' => array( '- [表のタイトル](%s)の説明' ),
+			'ordered'       => array( '1. [表のタイトル](%s): 説明' ),
+			'extra spaces'  => array( '-   [表のタイトル](%s): 説明' ),
+			'link title'    => array( '- [表のタイトル](%s "補足"): 説明' ),
 		);
+	}
+
+	/**
+	 * タイトルのない投稿の行も、投稿を隠せば配信しないこと。
+	 *
+	 * 自動生成では「- [](URL): 抜粋」になる。
+	 *
+	 * @return void
+	 */
+	public function test_untitled_post_entry_is_hidden() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '',
+				'post_name'  => 'untitled',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * タイトルのない行は、URL で見つからなければ隠さないこと。
+	 *
+	 * 空のタイトルで投稿を探すと条件が無視され、すべての投稿が対象になる。
+	 *
+	 * @return void
+	 */
+	public function test_untitled_entry_without_a_post_is_kept() {
+		self::factory()->post->create_many( AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1, array( 'post_status' => 'draft' ) );
+		$saved = '- [](' . home_url( '/blog/' ) . '): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * 同じタイトルの公開中の投稿が多くても、投稿に対応しない行を隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_many_public_posts_with_same_title_do_not_hide_entry() {
+		self::factory()->post->create_many( AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1, array( 'post_title' => 'お知らせ' ) );
+		$saved = '- [お知らせ](' . home_url( '/category/news/' ) . '): 一覧';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * スラッグが長い投稿をゴミ箱に入れても行を隠せること。
+	 *
+	 * WordPress はスラッグを 191 バイトに切り詰めてから __trashed を付ける。
+	 *
+	 * @return void
+	 */
+	public function test_trashed_post_with_long_slug_is_hidden() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '元のタイトル',
+				'post_name'  => str_repeat( 'あ', 22 ),
+			)
+		);
+		$this->assertGreaterThan( 191, strlen( get_post( $post_id )->post_name ), '前提: スラッグが長い' );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [表のタイトル](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+
+		wp_trash_post( $post_id );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * ドメインに日本語を含むサイトでも、自分のサイトの行として判定すること。
+	 *
+	 * @return void
+	 */
+	public function test_non_ascii_domain_is_treated_as_this_site() {
+		$home = 'http://日本語.example';
+		add_filter(
+			'home_url',
+			static function ( $url ) use ( $home ) {
+				return str_replace( 'http://example.org', $home, $url );
+			}
+		);
+
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '元のタイトル',
+				'post_name'   => 'hidden',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [表のタイトル]({$home}/hidden/): 秘密\n# 見出し" );
+		$this->assertNotEmpty( $post_id, '前提: 投稿がある' );
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 親ページのスラッグを変えると、子ページの行の URL も書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_child_entry_url() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => '親',
+				'post_name'  => 'parent',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '元のタイトル',
+				'post_name'   => 'child',
+				'post_parent' => $parent_id,
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [表のタイトル](' . get_permalink( $child_id ) . '): 秘密' );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$url = get_permalink( $child_id );
+		$this->assertStringContainsString( '/renamed/child', $url, '前提: 子ページの URL が変わる' );
+		$this->assertSame( "- [表のタイトル]({$url}): 秘密", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+
+		wp_update_post(
+			array(
+				'ID'          => $child_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 判定の途中で投稿が変わると、そのあとに保存された古い結果を使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_stale_cache_written_after_a_change_is_not_used() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$this->assertSame( $saved, $this->served(), '前提: 判定して結果を保存する' );
+		$stale = get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		set_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE, $stale, MINUTE_IN_SECONDS );
+
+		$this->assertSame( '# 見出し', $this->served() );
 	}
 
 	/**
@@ -1250,6 +1422,31 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		AVC_AIS_Llms_Txt::deactivate( true );
 
 		$this->assertArrayHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ) );
+	}
+
+	/**
+	 * 別のネットワークのサイトのルールに触れないこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_other_networks() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$rules   = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id = self::factory()->blog->create( array( 'network_id' => 999 ) );
+		switch_to_blog( $site_id );
+		update_option( 'rewrite_rules', $rules );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
 	}
 
 	/**
