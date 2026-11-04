@@ -150,5 +150,6 @@ class Plugin {
 
 		\delete_transient( 'avc_ais_wizard_redirect' );
 		\delete_transient( 'avc_ais_last_validation_errors' );
+		\delete_transient( \AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
 	}
 }

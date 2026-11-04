@@ -55,9 +55,11 @@ class AVC_AIS_Llms_Txt {
 	const LISTED_POST_TYPES = array( 'post', 'page' );
 
 	/**
-	 * 一覧の行（- [タイトル](URL): 抜粋）の形。文中のリンクと区別するため行頭から照合する。
+	 * 一覧の行の形。文中のリンクと区別するため、リストの項目の先頭にあるリンクだけを対象にする。
+	 *
+	 * llms.txt の仕様では「- [タイトル](URL): 説明」の説明は省略でき、字下げや他の記号も書ける。
 	 */
-	const ENTRY_PATTERN = '/^- \[(.+?)\]\((\S*?)\):/u';
+	const ENTRY_PATTERN = '/^\s*[-*+] \[(.+?)\]\((\S*?)\):?/u';
 
 	/**
 	 * 削除した投稿の URL を覚えておく秒数。
@@ -75,6 +77,11 @@ class AVC_AIS_Llms_Txt {
 	 * タイトルで投稿を探すときの取得数の上限。
 	 */
 	const TITLE_QUERY_LIMIT = 20;
+
+	/**
+	 * 配信しない行の判定結果を保存する transient の名前。
+	 */
+	const HIDDEN_LINES_CACHE = 'avc_ais_llms_txt_hidden_lines';
 
 	/**
 	 * Singleton instance.
@@ -107,6 +114,9 @@ class AVC_AIS_Llms_Txt {
 		add_filter( 'redirect_canonical', array( $this, 'disable_canonical_redirect' ) );
 		add_action( 'post_updated', array( $this, 'update_entry_of_moved_post' ), 10, 3 );
 		add_action( 'before_delete_post', array( $this, 'remove_entry_of_deleted_post' ), 10, 2 );
+		foreach ( array( 'post_updated', 'transition_post_status', 'deleted_post' ) as $hook ) {
+			add_action( $hook, array( self::class, 'clear_hidden_lines_cache' ) );
+		}
 	}
 
 	/**
@@ -268,8 +278,9 @@ class AVC_AIS_Llms_Txt {
 	 * /llms.txt で配信する内容を返す。
 	 *
 	 * 保存済みの内容から行を消すと、投稿を公開し直したときに手書きの説明が失われる。投稿の変更を
-	 * 追えない間（無効化中、古い画面からの保存）の分も取りこぼさないよう、配信のたびに投稿の
-	 * 現在の状態で判定する。
+	 * 追えない間（無効化中、古い画面からの保存）の分も取りこぼさないよう、投稿の現在の状態で
+	 * 判定する。判定には行数分のクエリが走り、/llms.txt は未ログインで何度でも呼べるので、
+	 * 結果を短時間だけ保存する。投稿が変わったら保存した結果を消す。
 	 *
 	 * @return string
 	 */
@@ -279,9 +290,33 @@ class AVC_AIS_Llms_Txt {
 			return $this->generate_default_content();
 		}
 
-		$lines = explode( "\n", (string) $saved );
+		$lines  = explode( "\n", (string) $saved );
+		$key    = md5( (string) $saved );
+		$cached = get_transient( self::HIDDEN_LINES_CACHE );
+		if ( is_array( $cached ) && ( $cached['key'] ?? '' ) === $key && is_array( $cached['lines'] ?? null ) ) {
+			$hidden = array_flip( $cached['lines'] );
+		} else {
+			$hidden = $this->find_hidden_entries( $lines );
+			set_transient(
+				self::HIDDEN_LINES_CACHE,
+				array(
+					'key'   => $key,
+					'lines' => array_keys( $hidden ),
+				),
+				5 * MINUTE_IN_SECONDS
+			);
+		}
 
-		return implode( "\n", array_diff_key( $lines, $this->find_hidden_entries( $lines ) ) );
+		return implode( "\n", array_diff_key( $lines, $hidden ) );
+	}
+
+	/**
+	 * 配信しない行の判定結果を消す。
+	 *
+	 * @return void
+	 */
+	public static function clear_hidden_lines_cache() {
+		delete_transient( self::HIDDEN_LINES_CACHE );
 	}
 
 	/**
@@ -743,7 +778,9 @@ class AVC_AIS_Llms_Txt {
 	 * @return string 置き換えた行.
 	 */
 	private static function replace_entry_url( $line, array $entry, $url ) {
-		return '- [' . $entry['title'] . '](' . $url . '):' . substr( $line, strlen( $entry['prefix'] ) );
+		$prefix = str_replace( '](' . $entry['url'] . ')', '](' . $url . ')', $entry['prefix'] );
+
+		return $prefix . substr( $line, strlen( $entry['prefix'] ) );
 	}
 
 	/**
@@ -840,6 +877,9 @@ class AVC_AIS_Llms_Txt {
 		$key    = self::url_key( $url );
 		$legacy = self::legacy_entry_prefix( $post, $url );
 		$posts  = self::find_posts_titled( self::to_plain_text( $post->post_title ) );
+		if ( null === $posts ) {
+			$legacy = null;
+		}
 		foreach ( null === $posts ? array() : $posts as $other ) {
 			$other_prefix = self::legacy_entry_prefix( $other, self::published_permalink( $other ) );
 			if ( $other->ID !== $post->ID && $other_prefix === $legacy ) {
@@ -1171,17 +1211,23 @@ class AVC_AIS_Llms_Txt {
 	public static function deactivate( $network_wide = false ) {
 		global $wp_rewrite;
 
-		unset( $wp_rewrite->extra_rules_top[ self::REWRITE_REGEX ] );
-		flush_rewrite_rules();
+		$plugin    = plugin_basename( AVC_AIS_FILE );
+		$is_active = static function () use ( $plugin ) {
+			return in_array( $plugin, (array) get_option( 'active_plugins', array() ), true );
+		};
+
+		if ( ! $network_wide || ! $is_active() ) {
+			unset( $wp_rewrite->extra_rules_top[ self::REWRITE_REGEX ] );
+			flush_rewrite_rules();
+		}
 
 		if ( ! $network_wide ) {
 			return;
 		}
 
-		$plugin = plugin_basename( AVC_AIS_FILE );
 		self::for_each_other_site(
-			static function () use ( $plugin ) {
-				if ( ! in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) ) {
+			static function () use ( $is_active ) {
+				if ( ! $is_active() ) {
 					self::remove_rewrite_rule();
 				}
 			}

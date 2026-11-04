@@ -176,11 +176,12 @@ function copyLanguagesDir() {
 }
 
 /**
- * バージョンを数値として比較する。a が新しければ正の値を返す。
+ * バージョンを数値として比較する。a が新しければ正の値を返す。-dev などの接尾辞は無視する。
  */
 function compareVersions(a, b) {
-  const left = a.split('.').map(Number);
-  const right = b.split('.').map(Number);
+  const toNumbers = (version) => version.split('.').map((part) => Number.parseInt(part, 10) || 0);
+  const left = toNumbers(a);
+  const right = toNumbers(b);
   for (let i = 0; i < Math.max(left.length, right.length); i += 1) {
     const diff = (left[i] || 0) - (right[i] || 0);
     if (diff !== 0) return diff;
@@ -215,8 +216,11 @@ function resolveGitVersionInfo() {
 
   // リリース前はタグより先に package.json のバージョンを上げるので、タグの方が古ければ
   // package.json を使う。タグを使うと、上げたバージョンをソースへ書き戻してしまう。
-  if (tag && compareVersions(tag.replace(/^v/, ''), packageVersion) >= 0) {
-    baseVersion = tag.replace(/^v/, '');
+  // 同じバージョンの -dev タグは正式版より古いものとして扱う。
+  const tagVersion = tag.replace(/^v/, '');
+  const tagOrder = tag ? compareVersions(tagVersion, packageVersion) : -1;
+  if (tagOrder > 0 || (tagOrder === 0 && !tagVersion.includes('-'))) {
+    baseVersion = tagVersion;
     const tagCommitResult = spawnSync('git', ['rev-list', '-n', '1', tag], { encoding: 'utf8' });
     const tagCommit = tagCommitResult.status === 0 ? tagCommitResult.stdout.trim() : '';
     if (tagCommit && headFull && tagCommit !== headFull && headShort) {

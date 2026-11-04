@@ -230,6 +230,125 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 説明を省いた行や字下げした行も、投稿を隠せば配信しないこと。
+	 *
+	 * @dataProvider provide_list_forms
+	 *
+	 * @param string $format 行の書式（%s は URL）.
+	 * @return void
+	 */
+	public function test_other_list_forms_are_hidden( $format ) {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '元のタイトル',
+				'post_name'  => 'hidden',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, sprintf( $format, get_permalink( $post_id ) ) . "\n# 見出し" );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+		$this->assertSame( array( '表のタイトル' ), AVC_AIS_Llms_Txt::init()->get_hidden_entry_titles() );
+	}
+
+	/**
+	 * 一覧の行の書式を返す。
+	 *
+	 * @return array<string,array<int,string>>
+	 */
+	public function provide_list_forms() {
+		return array(
+			'no notes'      => array( '- [表のタイトル](%s)' ),
+			'indented'      => array( '  - [表のタイトル](%s): 説明' ),
+			'asterisk'      => array( '* [表のタイトル](%s): 説明' ),
+			'other notes'   => array( '- [表のタイトル](%s) の説明' ),
+			'japanese note' => array( '- [表のタイトル](%s)の説明' ),
+		);
+	}
+
+	/**
+	 * スラッグを変えても、説明のない行や字下げした行の書式を変えないこと。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_keeps_line_format() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '記事',
+				'post_name'  => 'before',
+			)
+		);
+		$old     = get_permalink( $post_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "  - [記事]({$old})\n* [記事]({$old}) の説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $post_id,
+				'post_name' => 'after',
+			)
+		);
+
+		$new = get_permalink( $post_id );
+		$this->assertSame( "  - [記事]({$new})\n* [記事]({$new}) の説明", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 判定結果を再利用してクエリを減らし、投稿が変わったら判定し直すこと。
+	 *
+	 * @return void
+	 */
+	public function test_hidden_lines_are_cached_until_a_post_changes() {
+		global $wpdb;
+
+		$post_id = $this->create_post_with_entry( array(), "\n- [ブログ](" . home_url( '/blog/' ) . '): 一覧' );
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+
+		$this->assertSame( $saved, $this->served(), '前提: 判定して結果を保存する' );
+
+		$before = $wpdb->num_queries;
+		$this->assertSame( $saved, $this->served() );
+		$this->assertLessThanOrEqual( 1, $wpdb->num_queries - $before, '二度目は投稿を取得しない' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+
+		$this->assertStringNotContainsString( '手書きの説明', $this->served(), '投稿が変わったら判定し直す' );
+	}
+
+	/**
+	 * パスワードの変更と削除でも判定し直し、内容が変わったら保存した結果を使わないこと。
+	 *
+	 * @return void
+	 */
+	public function test_hidden_lines_cache_follows_passwords_and_content() {
+		$post_id = $this->create_post_with_entry();
+		$this->assertStringContainsString( '手書きの説明', $this->served(), '前提: 公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'            => $post_id,
+				'post_password' => 'hunter2',
+			)
+		);
+		$this->assertSame( '# 見出し', $this->served() );
+
+		// 行の順序が変わると、保存した行番号は使えない。
+		$line = '- [対象の記事](' . home_url( '/target/' ) . '): 手書きの説明';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "# 見出し\n{$line}" );
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
 	 * 投稿を公開し直すと、手書きの説明がそのまま配信に戻ること。
 	 *
 	 * @return void
@@ -371,6 +490,29 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		);
 
 		wp_delete_post( $draft, true );
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 同じタイトルの投稿が上限を超えると判断できないので、古い形式の行を消さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_keeps_legacy_entries_at_query_limit() {
+		$ids = array();
+		for ( $i = 0; $i < AVC_AIS_Llms_Txt::TITLE_QUERY_LIMIT + 1; $i++ ) {
+			$ids[] = self::factory()->post->create(
+				array(
+					'post_title' => '無題',
+					'post_name'  => '無題' . $i,
+				)
+			);
+		}
+		$saved = '- [無題](' . home_url( '/' ) . '/): 別の記事の抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+
+		wp_delete_post( $ids[0], true );
 
 		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
 	}
@@ -1088,6 +1230,26 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		switch_to_blog( $site_id );
 		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
 		restore_current_blog();
+	}
+
+	/**
+	 * 現在のサイトでサイト単位で有効なら、ネットワーク全体の無効化でルールを残すこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_current_site_with_plugin_active() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		AVC_AIS_Llms_Txt::activate();
+		update_option( 'active_plugins', array( plugin_basename( AVC_AIS_FILE ) ) );
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		$this->assertArrayHasKey( AVC_AIS_Llms_Txt::REWRITE_REGEX, get_option( 'rewrite_rules' ) );
 	}
 
 	/**

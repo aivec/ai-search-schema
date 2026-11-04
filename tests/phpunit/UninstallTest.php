@@ -31,6 +31,7 @@ class UninstallTest extends WP_UnitTestCase {
 		}
 		set_transient( 'avc_ais_wizard_redirect', true, 30 );
 		set_transient( 'avc_ais_last_validation_errors', array( 'error' ), 30 );
+		set_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE, array( 'lines' => array() ), 30 );
 
 		$user_id = self::factory()->user->create();
 		update_user_meta( $user_id, Wizard::META_PROGRESS, array( 'data' => array() ) );
@@ -42,6 +43,7 @@ class UninstallTest extends WP_UnitTestCase {
 		}
 		$this->assertFalse( get_transient( 'avc_ais_wizard_redirect' ) );
 		$this->assertFalse( get_transient( 'avc_ais_last_validation_errors' ) );
+		$this->assertFalse( get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
 		$this->assertSame( '', get_user_meta( $user_id, Wizard::META_PROGRESS, true ) );
 	}
 

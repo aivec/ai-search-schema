@@ -315,9 +315,13 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $content,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $content ),
-				'message' => __( 'llms.txt content has been regenerated from site data.', 'aivec-ai-search-schema' ),
+				'content'       => $content,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $content ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __(
+					'llms.txt content has been regenerated from site data.',
+					'aivec-ai-search-schema'
+				),
 			)
 		);
 	}
@@ -359,9 +363,10 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $current,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $current ),
-				'message' => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
+				'content'       => $current,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $current ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
