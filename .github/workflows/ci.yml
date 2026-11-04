@@ -135,13 +135,18 @@ jobs:
           wp plugin check aivec-ai-search-schema --skip-themes --path=/tmp/wordpress
 
   test:
-    name: PHPUnit (PHP ${{ matrix.php-version }})
+    name: PHPUnit (PHP ${{ matrix.php-version }}${{ matrix.multisite == '1' && ', マルチサイト' || '' }})
     runs-on: ubuntu-latest
     needs: lint
     strategy:
       fail-fast: false
       matrix:
         php-version: ['8.0', '8.1', '8.2', '8.3', '8.4', '8.5']
+        multisite: ['0']
+        # マルチサイトでのみ動くテストがあるので、1 つの PHP のバージョンで実行する。
+        include:
+          - php-version: '8.2'
+            multisite: '1'
     services:
       mysql:
         image: mysql:8.0
@@ -179,6 +184,7 @@ jobs:
       - name: PHPUnit を実行
         env:
           WP_PHP_BINARY: php
+          WP_MULTISITE: ${{ matrix.multisite }}
         run: composer test
 
   coverage:
