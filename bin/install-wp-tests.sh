@@ -43,15 +43,22 @@ php_escape() {
 # 本体がすでにあればそのバージョンに合わせ、なければ latest を実際のバージョン番号に置き換える。
 determine_wp_version() {
     if [ -f "${WP_CORE_DIR}/wp-includes/version.php" ]; then
-        WP_VERSION="$(sed -n "s/^\$wp_version = '\(.*\)';.*/\1/p" "${WP_CORE_DIR}/wp-includes/version.php")"
+        local installed
+        installed="$(sed -n "s/^\$wp_version = '\(.*\)';.*/\1/p" "${WP_CORE_DIR}/wp-includes/version.php")"
+        if [ "$WP_VERSION" != "latest" ] && [ "$WP_VERSION" != "$installed" ]; then
+            echo "WordPress ${installed} exists at ${WP_CORE_DIR}, but ${WP_VERSION} was requested. Remove the directory or set WP_CORE_DIR." >&2
+            exit 1
+        fi
+        WP_VERSION="$installed"
     elif [ "$WP_VERSION" = "latest" ]; then
         WP_VERSION="$(download "https://api.wordpress.org/core/version-check/1.7/" \
             | php -d display_errors=stderr -d display_startup_errors=0 \
                 -r '$data = json_decode( stream_get_contents( STDIN ), true ); echo $data["offers"][0]["version"] ?? "";')" || WP_VERSION=""
     fi
 
-    if [ -z "$WP_VERSION" ]; then
-        echo "Could not determine the WordPress version." >&2
+    # 開発版にはテストファイルのタグがない。
+    if ! [[ "$WP_VERSION" =~ ^[0-9]+\.[0-9]+(\.[0-9]+)?$ ]]; then
+        echo "Could not determine a released WordPress version (got '${WP_VERSION}'). Remove ${WP_CORE_DIR} or set WP_CORE_DIR." >&2
         exit 1
     fi
 }

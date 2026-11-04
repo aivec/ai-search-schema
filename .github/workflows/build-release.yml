@@ -170,22 +170,28 @@ jobs:
           REPOSITORY: ${{ github.repository }}
         run: |
           # 近い時間に 2 回マージすると実行の順序が入れ替わることがある。古いコミットの ZIP で
-          # 同じバージョンや latest を上書きしないよう、main の先頭のコミットかを確かめる。
-          MAIN_SHA="$(git ls-remote "https://github.com/${REPOSITORY}" refs/heads/main | cut -f1)"
-
-          if [ "$BUILD_SHA" != "$MAIN_SHA" ] && [ "$EVENT_NAME" = "workflow_run" ]; then
-            echo "::notice::main の先頭ではないのでアップロードしません（${BUILD_SHA} / ${MAIN_SHA}）"
-            exit 0
+          # 新しい ZIP を上書きしないよう、main の先頭のコミットかを確かめる。
+          MAIN_SHA="$(git ls-remote "https://github.com/${REPOSITORY}" refs/heads/main)"
+          MAIN_SHA="${MAIN_SHA%%[[:space:]]*}"
+          if [ -z "$MAIN_SHA" ]; then
+            echo "::error::main の先頭のコミットを取得できませんでした"
+            exit 1
           fi
 
-          aws s3 cp \
-            dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
-            s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip
+          ZIP_NAME="${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip"
+          S3_DIR="s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release"
+
+          # 新しいコミットの CI が失敗するとその ZIP は作られないので、先頭でなくても同じバージョンの
+          # ZIP がまだなければアップロードする。タグの実行は必ずアップロードする。
+          if [ "$BUILD_SHA" = "$MAIN_SHA" ] || [ "$EVENT_NAME" != "workflow_run" ] \
+            || ! aws s3 ls "${S3_DIR}/${ZIP_NAME}" >/dev/null 2>&1; then
+            aws s3 cp "dist/${ZIP_NAME}" "${S3_DIR}/${ZIP_NAME}"
+          else
+            echo "::notice::main の先頭ではなく同じバージョンの ZIP があるのでアップロードしません"
+          fi
 
           if [ "$BUILD_SHA" = "$MAIN_SHA" ]; then
-            aws s3 cp \
-              dist/${{ env.PLUGIN_SLUG }}-v${{ steps.version.outputs.version }}.zip \
-              s3://${{ secrets.AWS_S3_BUCKET }}/aivec/plugins/${{ env.PLUGIN_SLUG }}/release/${{ env.PLUGIN_SLUG }}-latest.zip
+            aws s3 cp "dist/${ZIP_NAME}" "${S3_DIR}/${{ env.PLUGIN_SLUG }}-latest.zip"
           fi
 
       # -----------------------------------------------------------------------

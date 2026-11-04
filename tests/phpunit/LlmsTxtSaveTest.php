@@ -1087,18 +1087,92 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * 画面が古くなければ、投稿に対応しないサイト内の行を追記してもそのまま保存すること。
+	 * 古い画面でも、投稿に対応しないサイト内の行を追記すればそのまま保存すること。
+	 *
+	 * 一覧ページやトップページへの手書きの行を、削除した投稿の行と取り違えない。
 	 *
 	 * @return void
 	 */
-	public function test_edited_form_keeps_added_site_entry_when_screen_is_current() {
-		$fields                      = $this->open_settings_screen();
-		$line                        = '- [ブログ](' . home_url( '/blog/' ) . '): 記事の一覧';
-		$fields['llms_txt_content'] .= "\r\n" . $line;
+	public function test_edited_form_keeps_added_site_entries_when_screen_is_stale() {
+		$fields  = $this->open_settings_screen();
+		$lines   = array(
+			'- [ブログ](' . home_url( '/blog/' ) . '): 記事の一覧',
+			'- [ホーム](' . home_url( '/' ) . '): トップページ',
+		);
+		$post_id = self::factory()->post->create( array( 'post_title' => '開いている間の記事' ) );
+		$this->assertNotEmpty( $post_id, '前提: 画面が古くなる' );
 
+		$fields['llms_txt_content'] .= "\r\n" . implode( "\r\n", $lines );
 		$this->submit_settings_form( $fields );
 
-		$this->assertStringEndsWith( $line, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertStringEndsWith( implode( "\n", $lines ), get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 削除した投稿と同じ URL の投稿を作り直したら、古い画面の行を取り除かないこと。
+	 *
+	 * @return void
+	 */
+	public function test_edited_form_keeps_entry_of_recreated_post() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title' => '作り直す記事',
+				'post_name'  => 'recreated',
+			)
+		);
+		$url     = get_permalink( $post_id );
+		$fields  = $this->open_settings_screen();
+
+		wp_delete_post( $post_id, true );
+		$new_id = self::factory()->post->create(
+			array(
+				'post_title' => '作り直した記事',
+				'post_name'  => 'recreated',
+			)
+		);
+		$this->assertSame( $url, get_permalink( $new_id ), '前提: 同じ URL になる' );
+
+		$fields['llms_txt_content'] .= "\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$this->assertStringContainsString( "- [作り直す記事]({$url}):", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 削除した投稿の URL は期限を過ぎると忘れ、件数にも上限があること。
+	 *
+	 * @return void
+	 */
+	public function test_deleted_urls_are_pruned() {
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_DELETED_URLS,
+			array(
+				'/expired' => time() - AVC_AIS_Llms_Txt::DELETED_URL_TTL - 60,
+				'/recent'  => time() - 60,
+			),
+			false
+		);
+
+		$post_id = self::factory()->post->create( array( 'post_name' => 'just-deleted' ) );
+		wp_delete_post( $post_id, true );
+
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
+		$this->assertArrayNotHasKey( '/expired', $deleted );
+		$this->assertArrayHasKey( '/recent', $deleted );
+		$this->assertArrayHasKey( '/just-deleted', $deleted );
+
+		$many = array();
+		for ( $i = 0; $i < AVC_AIS_Llms_Txt::DELETED_URL_LIMIT + 5; $i++ ) {
+			$many[ "/old-{$i}" ] = time();
+		}
+		update_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS, $many, false );
+
+		$post_id = self::factory()->post->create( array( 'post_name' => 'over-limit' ) );
+		wp_delete_post( $post_id, true );
+
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
+		$this->assertCount( AVC_AIS_Llms_Txt::DELETED_URL_LIMIT, $deleted );
+		$this->assertArrayHasKey( '/over-limit', $deleted );
 	}
 
 	/**

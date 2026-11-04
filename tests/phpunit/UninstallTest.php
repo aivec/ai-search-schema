@@ -22,6 +22,7 @@ class UninstallTest extends WP_UnitTestCase {
 		$options = array(
 			'avc_ais_llms_txt_scrubbed',
 			'avc_ais_llms_txt_urls_repaired',
+			'avc_ais_llms_txt_deleted_urls',
 			'avc_ais_llms_txt_rule_restored',
 			Wizard::OPTION_API_KEY_PURGED,
 		);

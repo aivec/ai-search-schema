@@ -35,6 +35,11 @@ class AVC_AIS_Llms_Txt {
 	const OPTION_URLS_REPAIRED = 'avc_ais_llms_txt_urls_repaired';
 
 	/**
+	 * Option name for URLs of recently deleted posts.
+	 */
+	const OPTION_DELETED_URLS = 'avc_ais_llms_txt_deleted_urls';
+
+	/**
 	 * Option name recording that the rewrite rule was checked after updating.
 	 */
 	const OPTION_RULE_RESTORED = 'avc_ais_llms_txt_rule_restored';
@@ -55,9 +60,16 @@ class AVC_AIS_Llms_Txt {
 	const ENTRY_PATTERN = '/^- \[(.+?)\]\((\S*?)\):/u';
 
 	/**
-	 * 公開していない投稿のステータス。
+	 * 削除した投稿の URL を覚えておく秒数。
+	 *
+	 * 設定画面の nonce は長くても 24 時間で失効するので、それより古い画面からは保存できない。
 	 */
-	const HIDDEN_STATUSES = array( 'future', 'draft', 'pending', 'private', 'trash' );
+	const DELETED_URL_TTL = 2 * DAY_IN_SECONDS;
+
+	/**
+	 * 削除した投稿の URL を覚えておく件数の上限。
+	 */
+	const DELETED_URL_LIMIT = 200;
 
 	/**
 	 * タイトルで投稿を探すときの取得数の上限。
@@ -356,7 +368,9 @@ class AVC_AIS_Llms_Txt {
 	 * @return bool 公開されていれば true.
 	 */
 	private static function is_public_post( $post ) {
-		return 'publish' === $post->post_status && '' === $post->post_password;
+		$status = get_post_status_object( $post->post_status );
+
+		return null !== $status && $status->public && '' === $post->post_password;
 	}
 
 	/**
@@ -459,7 +473,8 @@ class AVC_AIS_Llms_Txt {
 			return strtolower( rawurldecode( $url ) );
 		}
 
-		$key = untrailingslashit( rawurldecode( $parts['path'] ?? '' ) );
+		// 末尾のスラッシュは 1 つだけ除く。以前の保存処理で壊れた /news// を親の /news/ と区別する。
+		$key = preg_replace( '#/$#', '', rawurldecode( $parts['path'] ?? '' ) );
 		if ( isset( $parts['query'] ) ) {
 			$key .= '?' . rawurldecode( $parts['query'] );
 		}
@@ -478,7 +493,8 @@ class AVC_AIS_Llms_Txt {
 			array_merge(
 				array(
 					'post_type'              => self::LISTED_POST_TYPES,
-					'post_status'            => array_merge( array( 'publish' ), self::HIDDEN_STATUSES ),
+					// プラグインが追加したステータスも判定できるよう、すべて取得する。
+					'post_status'            => array_diff( get_post_stati(), array( 'auto-draft', 'inherit' ) ),
 					'numberposts'            => -1,
 					'update_post_meta_cache' => false,
 				),
@@ -497,8 +513,9 @@ class AVC_AIS_Llms_Txt {
 	 * @return array<string,WP_Post[]> url_key() をキーとする投稿.
 	 */
 	private static function find_posts_by_url( array $urls ) {
-		$slugs = array();
-		$ids   = array();
+		$slugs      = array();
+		$ids        = array();
+		$query_urls = array();
 		foreach ( $urls as $url ) {
 			$parts = self::parse_entry_url( $url );
 			if ( ! is_array( $parts ) ) {
@@ -508,7 +525,9 @@ class AVC_AIS_Llms_Txt {
 			parse_str( $parts['query'] ?? '', $query );
 			foreach ( array( 'p', 'page_id' ) as $key ) {
 				if ( isset( $query[ $key ] ) && is_string( $query[ $key ] ) ) {
-					$ids[] = absint( $query[ $key ] );
+					$id                  = absint( $query[ $key ] );
+					$ids[]               = $id;
+					$query_urls[ $id ][] = self::url_key( $url );
 				}
 			}
 
@@ -544,6 +563,10 @@ class AVC_AIS_Llms_Txt {
 		$posts_by_url = array();
 		foreach ( $posts as $post ) {
 			$posts_by_url[ self::url_key( self::published_permalink( $post ) ) ][ $post->ID ] = $post;
+			// パーマリンクの設定にかかわらず ?p=ID の URL は投稿へ届く。
+			foreach ( $query_urls[ $post->ID ] ?? array() as $key ) {
+				$posts_by_url[ $key ][ $post->ID ] = $post;
+			}
 		}
 
 		return $posts_by_url;
@@ -727,8 +750,8 @@ class AVC_AIS_Llms_Txt {
 	 * 投稿の URL が変わったときに、保存済みの内容の行を新しい URL へ書き換える。
 	 *
 	 * 書き換えないと行のリンクが古いままになり、投稿を隠すときの判定も URL で行えなくなる。
-	 * ゴミ箱への移動ではスラッグに __trashed が付くので対象にしない。下書きはスラッグが公開中の
-	 * 投稿と重複しうるので、公開中だった投稿だけを対象にする。
+	 * ゴミ箱への出し入れではスラッグに __trashed が付くので対象にしない。公開していない投稿は
+	 * スラッグが他の投稿と重複しうるので、他に同じ URL の投稿があれば書き換えない。
 	 *
 	 * @param int     $post_id     投稿 ID.
 	 * @param WP_Post $post_after  更新後の投稿.
@@ -736,11 +759,10 @@ class AVC_AIS_Llms_Txt {
 	 * @return void
 	 */
 	public function update_entry_of_moved_post( $post_id, $post_after, $post_before ) {
-		unset( $post_id );
-
 		$is_listed_type = in_array( $post_after->post_type, self::LISTED_POST_TYPES, true );
-		$can_track      = 'publish' === $post_before->post_status && 'trash' !== $post_after->post_status;
-		if ( ! $is_listed_type || ! $can_track || '' === $post_after->post_name ) {
+		$has_slugs      = '' !== $post_before->post_name && '' !== $post_after->post_name;
+		$in_trash       = 'trash' === $post_before->post_status || 'trash' === $post_after->post_status;
+		if ( ! $is_listed_type || ! $has_slugs || $in_trash ) {
 			return;
 		}
 
@@ -748,6 +770,9 @@ class AVC_AIS_Llms_Txt {
 		$new_url = self::published_permalink( $post_after );
 		$saved   = (string) get_option( self::OPTION_NAME, '' );
 		if ( $old_url === $new_url || '' === $saved ) {
+			return;
+		}
+		if ( 'publish' !== $post_before->post_status && self::has_other_post_at_url( $old_url, $post_id ) ) {
 			return;
 		}
 
@@ -770,37 +795,54 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
+	 * URL が同じ別の投稿があるかを判定する。
+	 *
+	 * @param string $url     URL.
+	 * @param int    $post_id 対象の投稿 ID.
+	 * @return bool あれば true.
+	 */
+	private static function has_other_post_at_url( $url, $post_id ) {
+		$posts = self::find_posts_by_url( array( $url ) )[ self::url_key( $url ) ] ?? array();
+		unset( $posts[ $post_id ] );
+
+		return ! empty( $posts );
+	}
+
+	/**
 	 * 投稿を完全に削除するときに、保存済みの内容からその行を取り除く。
 	 *
 	 * 公開し直すことがないので、隠さずに取り除く。削除すると投稿の状態で判定できなくなる。
-	 * 同じ URL や同じ壊れた形の公開中の投稿があれば、その投稿の行なので残す。
+	 * 同じ URL や同じ壊れた形の別の投稿があれば、その投稿の行かもしれないので残す。
+	 * 開いている画面の内容には残っているので、URL を覚えておいて編集保存のときに取り除く。
 	 *
 	 * @param int     $post_id 投稿 ID.
 	 * @param WP_Post $post    削除する投稿.
 	 * @return void
 	 */
 	public function remove_entry_of_deleted_post( $post_id, $post ) {
-		unset( $post_id );
-
-		$saved          = (string) get_option( self::OPTION_NAME, '' );
 		$is_listed_type = in_array( $post->post_type, self::LISTED_POST_TYPES, true );
-		if ( '' === $saved || '' === $post->post_name || ! $is_listed_type ) {
+		if ( ! $is_listed_type || '' === $post->post_name ) {
 			return;
 		}
 
 		$url = self::published_permalink( $post );
-		$key = self::url_key( $url );
-		foreach ( self::find_posts_by_url( array( $url ) )[ $key ] ?? array() as $owner ) {
-			if ( $owner->ID !== $post->ID && self::is_public_post( $owner ) ) {
-				return;
-			}
+		if ( self::has_other_post_at_url( $url, $post_id ) ) {
+			return;
 		}
 
+		self::remember_deleted_url( $url );
+
+		$saved = (string) get_option( self::OPTION_NAME, '' );
+		if ( '' === $saved ) {
+			return;
+		}
+
+		$key    = self::url_key( $url );
 		$legacy = self::legacy_entry_prefix( $post, $url );
 		$posts  = self::find_posts_titled( self::to_plain_text( $post->post_title ) );
 		foreach ( null === $posts ? array() : $posts as $other ) {
-			if ( $other->ID !== $post->ID && self::is_public_post( $other )
-				&& self::legacy_entry_prefix( $other, self::published_permalink( $other ) ) === $legacy ) {
+			$other_prefix = self::legacy_entry_prefix( $other, self::published_permalink( $other ) );
+			if ( $other->ID !== $post->ID && $other_prefix === $legacy ) {
 				$legacy = null;
 				break;
 			}
@@ -821,6 +863,43 @@ class AVC_AIS_Llms_Txt {
 		if ( $updated !== $saved ) {
 			update_option( self::OPTION_NAME, $updated );
 		}
+	}
+
+	/**
+	 * 最近削除した投稿の URL を返す。
+	 *
+	 * @return array<string,int> url_key() をキーとする削除した時刻.
+	 */
+	private static function recently_deleted_urls() {
+		$deleted = get_option( self::OPTION_DELETED_URLS, array() );
+		if ( ! is_array( $deleted ) ) {
+			return array();
+		}
+
+		$cutoff = time() - self::DELETED_URL_TTL;
+
+		return array_filter(
+			$deleted,
+			static function ( $deleted_at ) use ( $cutoff ) {
+				return $deleted_at >= $cutoff;
+			}
+		);
+	}
+
+	/**
+	 * 削除した投稿の URL を覚えておく。
+	 *
+	 * @param string $url URL.
+	 * @return void
+	 */
+	private static function remember_deleted_url( $url ) {
+		$deleted = self::recently_deleted_urls();
+
+		$deleted[ self::url_key( $url ) ] = time();
+
+		$deleted = array_slice( $deleted, -self::DELETED_URL_LIMIT, null, true );
+
+		update_option( self::OPTION_DELETED_URLS, $deleted, false );
 	}
 
 	/**
@@ -942,9 +1021,8 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		if ( self::content_hash( $content ) !== $displayed_hash ) {
-			$current = $this->get_content();
-			if ( self::content_hash( $current ) !== $displayed_hash ) {
-				$content = self::remove_added_entries_without_post( $content, $current );
+			if ( self::content_hash( $this->get_content() ) !== $displayed_hash ) {
+				$content = self::remove_entries_of_deleted_posts( $content );
 			}
 			$this->save_content( $content );
 			return;
@@ -958,36 +1036,29 @@ class AVC_AIS_Llms_Txt {
 	}
 
 	/**
-	 * 古い画面から戻ってきた行のうち、投稿がもうない行を取り除く。
+	 * 古い画面から戻ってきた、削除した投稿の行を取り除く。
 	 *
-	 * 削除した投稿の行は投稿の状態で判定できない。今の内容にない行で、このサイトの URL なのに
-	 * URL でもタイトルでも投稿が見つからなければ、画面を開いたあとに削除された投稿の行とみなす。
+	 * 削除した投稿は状態で判定できないので、削除したときに覚えた URL で判定する。投稿のない
+	 * URL の行をすべて取り除くと、一覧ページなどへの手書きの行まで失われる。
 	 *
 	 * @param string $content 送信された内容.
-	 * @param string $current 今の内容.
 	 * @return string 取り除いた内容.
 	 */
-	private static function remove_added_entries_without_post( $content, $current ) {
-		$known = array_flip( explode( "\n", self::normalize_newlines( $current ) ) );
-		$lines = explode( "\n", self::normalize_newlines( $content ) );
-
-		$entries = array();
-		foreach ( $lines as $index => $line ) {
-			$entry = isset( $known[ $line ] ) ? null : self::parse_entry( $line );
-			if ( null !== $entry && self::is_site_url( $entry['url'] ) ) {
-				$entries[ $index ] = $entry;
-			}
-		}
-		if ( empty( $entries ) ) {
+	private static function remove_entries_of_deleted_posts( $content ) {
+		$deleted = self::recently_deleted_urls();
+		if ( empty( $deleted ) ) {
 			return $content;
 		}
 
-		$posts_by_url = self::find_posts_by_url( array_column( $entries, 'url' ) );
-		foreach ( $entries as $index => $entry ) {
-			if ( isset( $posts_by_url[ self::url_key( $entry['url'] ) ] ) ) {
+		$lines = explode( "\n", self::normalize_newlines( $content ) );
+		foreach ( $lines as $index => $line ) {
+			$entry = self::parse_entry( $line );
+			if ( null === $entry || ! self::is_site_url( $entry['url'] ) ) {
 				continue;
 			}
-			if ( array() === self::find_posts_titled( $entry['title'] ) ) {
+			// 同じ URL の投稿を作り直していれば、その投稿の行として残す。
+			$is_deleted = isset( $deleted[ self::url_key( $entry['url'] ) ] );
+			if ( $is_deleted && ! self::has_other_post_at_url( $entry['url'], 0 ) ) {
 				unset( $lines[ $index ] );
 			}
 		}
@@ -1064,11 +1135,28 @@ class AVC_AIS_Llms_Txt {
 	/**
 	 * Flush rewrite rules.
 	 * Called on plugin activation.
+	 *
+	 * ネットワーク全体の有効化では他のサイトの有効化の処理が走らないので、ルールも追加する。
+	 *
+	 * @param bool $network_wide ネットワーク全体の有効化なら true.
 	 */
-	public static function activate() {
+	public static function activate( $network_wide = false ) {
 		$instance = self::init();
 		$instance->add_rewrite_rules();
 		flush_rewrite_rules();
+
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		self::for_each_other_site(
+			static function () use ( $instance ) {
+				$rules = get_option( 'rewrite_rules' );
+				if ( $instance->is_enabled() && is_array( $rules ) && ! isset( $rules[ self::REWRITE_REGEX ] ) ) {
+					update_option( 'rewrite_rules', array( self::REWRITE_REGEX => 'index.php?llms_txt=1' ) + $rules );
+				}
+			}
+		);
 	}
 
 	/**
@@ -1076,8 +1164,7 @@ class AVC_AIS_Llms_Txt {
 	 *
 	 * このリクエストの init で登録したルールを外してから再生成する。外さないと /llms.txt の
 	 * ルールが残り、プラグインを削除する前からトップページを返してしまう。
-	 * ネットワーク全体の無効化では他のサイトのルールも外す。次に有効化されたとき他のサイトでは
-	 * 有効化の処理が走らないので、管理画面を開いたときにルールを戻せるよう記録も消す。
+	 * ネットワーク全体の無効化では、サイト単位で有効にしているサイトを除いて他のサイトのルールも外す。
 	 *
 	 * @param bool $network_wide ネットワーク全体の無効化なら true.
 	 */
@@ -1087,7 +1174,28 @@ class AVC_AIS_Llms_Txt {
 		unset( $wp_rewrite->extra_rules_top[ self::REWRITE_REGEX ] );
 		flush_rewrite_rules();
 
-		if ( ! $network_wide || ! is_multisite() ) {
+		if ( ! $network_wide ) {
+			return;
+		}
+
+		$plugin = plugin_basename( AVC_AIS_FILE );
+		self::for_each_other_site(
+			static function () use ( $plugin ) {
+				if ( ! in_array( $plugin, (array) get_option( 'active_plugins', array() ), true ) ) {
+					self::remove_rewrite_rule();
+				}
+			}
+		);
+	}
+
+	/**
+	 * マルチサイトの現在のサイト以外で処理を実行する。
+	 *
+	 * @param callable $callback サイトごとの処理.
+	 * @return void
+	 */
+	private static function for_each_other_site( callable $callback ) {
+		if ( ! is_multisite() ) {
 			return;
 		}
 
@@ -1099,13 +1207,11 @@ class AVC_AIS_Llms_Txt {
 			)
 		);
 		foreach ( $site_ids as $site_id ) {
-			if ( (int) $site_id === $current_site_id ) {
-				continue;
+			if ( (int) $site_id !== $current_site_id ) {
+				switch_to_blog( $site_id );
+				$callback();
+				restore_current_blog();
 			}
-			switch_to_blog( $site_id );
-			self::remove_rewrite_rule();
-			delete_option( self::OPTION_RULE_RESTORED );
-			restore_current_blog();
 		}
 	}
 

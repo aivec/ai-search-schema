@@ -138,6 +138,7 @@ class Plugin {
 		$options = array(
 			\AVC_AIS_Llms_Txt::OPTION_SCRUBBED,
 			\AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED,
+			\AVC_AIS_Llms_Txt::OPTION_DELETED_URLS,
 			\AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED,
 			Wizard::OPTION_API_KEY_PURGED,
 		);

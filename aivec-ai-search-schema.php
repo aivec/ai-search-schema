@@ -143,7 +143,7 @@ add_action(
 // Activation hook - set redirect transient for wizard and flush rewrite rules.
 register_activation_hook(
 	__FILE__,
-	static function () {
+	static function ( $network_wide = false ) {
 		// Only set redirect if wizard hasn't been completed.
 		if ( ! get_option( 'avc_ais_wizard_completed', false ) ) {
 			set_transient( 'avc_ais_wizard_redirect', true, 30 );
@@ -151,7 +151,7 @@ register_activation_hook(
 
 		// Flush rewrite rules for llms.txt.
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		AVC_AIS_Llms_Txt::activate();
+		AVC_AIS_Llms_Txt::activate( $network_wide );
 	}
 );
 

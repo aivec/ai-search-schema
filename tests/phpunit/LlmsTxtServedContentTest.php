@@ -132,6 +132,104 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * プラグインが追加した公開していないステータスの投稿も隠すこと。
+	 *
+	 * @return void
+	 */
+	public function test_custom_non_public_status_is_hidden() {
+		register_post_status( 'archived', array( 'public' => false ) );
+
+		$post_id = $this->create_post_with_entry();
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'archived',
+			)
+		);
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * プラグインが追加した公開のステータスの投稿は隠さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_custom_public_status_is_served() {
+		register_post_status( 'featured', array( 'public' => true ) );
+
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'featured',
+			)
+		);
+
+		$this->assertSame( $saved, $this->served() );
+	}
+
+	/**
+	 * パーマリンクの設定にかかわらず、?p=ID の URL の行を判定できること。
+	 *
+	 * @return void
+	 */
+	public function test_query_form_url_is_matched_on_pretty_permalink_sites() {
+		$post_id = self::factory()->post->create( array( 'post_title' => '元のタイトル' ) );
+		$saved   = '- [表のタイトル](' . home_url( "/?p={$post_id}" ) . "): 秘密\n- [固定](" . home_url( "/?page_id={$post_id}" ) . '): 秘密2';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
+		$this->assertSame( $saved, $this->served(), '前提: 公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'draft',
+			)
+		);
+
+		$this->assertSame( '', $this->served() );
+	}
+
+	/**
+	 * 壊れた子ページの URL を親ページと取り違えないこと。
+	 *
+	 * 以前の保存処理で /news/あ/ は /news// になる。
+	 *
+	 * @return void
+	 */
+	public function test_broken_child_url_is_not_matched_to_parent() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type'  => 'page',
+				'post_title' => 'ニュース',
+				'post_name'  => 'news',
+			)
+		);
+		self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => '非公開の子ページ',
+				'post_name'   => 'あ',
+				'post_parent' => $parent_id,
+				'post_status' => 'private',
+			)
+		);
+		$parent_line = '- [ニュース](' . get_permalink( $parent_id ) . '): 公開の抜粋';
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [非公開の子ページ](' . home_url( '/news//' ) . "): 秘密\n{$parent_line}" );
+
+		$this->assertSame( $parent_line, $this->served() );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+		$this->assertStringContainsString( '- [非公開の子ページ](' . home_url( '/news//' ) . '): 秘密', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ), '親の変更で書き換えない' );
+	}
+
+	/**
 	 * 投稿を公開し直すと、手書きの説明がそのまま配信に戻ること。
 	 *
 	 * @return void
@@ -242,6 +340,35 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 			)
 		);
 		$this->assertSame( 'target', get_post( $draft )->post_name, '前提: 下書きはスラッグが重複しうる' );
+
+		wp_delete_post( $draft, true );
+
+		$this->assertSame( $saved, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 非公開の投稿と同じスラッグの下書きを削除しても、非公開の投稿の行は残ること。
+	 *
+	 * 公開し直したときに手書きの説明が失われないようにする。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_draft_with_same_slug_keeps_private_entry() {
+		$post_id = $this->create_post_with_entry();
+		$saved   = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'private',
+			)
+		);
+		$draft = self::factory()->post->create(
+			array(
+				'post_title'  => '別の下書き',
+				'post_name'   => 'target',
+				'post_status' => 'draft',
+			)
+		);
 
 		wp_delete_post( $draft, true );
 
@@ -494,6 +621,36 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		);
 
 		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
+	 * 下書きに戻している間にスラッグとタイトルを変えても、行が隠れて新しい URL になること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_slug_while_unpublished_updates_entry_url() {
+		$post_id = $this->create_post_with_entry();
+
+		wp_update_post(
+			array(
+				'ID'          => $post_id,
+				'post_status' => 'draft',
+			)
+		);
+		wp_update_post(
+			array(
+				'ID'         => $post_id,
+				'post_title' => '新しいタイトル',
+				'post_name'  => 'renamed',
+			)
+		);
+		$this->assertSame( '# 見出し', $this->served(), '下書きの間は隠れる' );
+
+		wp_publish_post( $post_id );
+
+		$url = get_permalink( $post_id );
+		$this->assertStringContainsString( 'renamed', $url, '前提: URL が変わる' );
+		$this->assertSame( "- [対象の記事]({$url}): 手書きの説明\n# 見出し", $this->served() );
 	}
 
 	/**
@@ -865,32 +1022,71 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * ネットワーク全体の無効化で他のサイトのルールも消え、再有効化で戻せること。
+	 * ネットワーク全体の無効化で他のサイトのルールも消え、再有効化で戻ること。
 	 *
 	 * @group ms-required
 	 *
 	 * @return void
 	 */
-	public function test_network_deactivation_updates_all_sites() {
+	public function test_network_deactivation_and_activation_update_all_sites() {
 		if ( ! is_multisite() ) {
 			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
 		}
 
-		$rules   = array(
-			AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1',
-			'other/?$'                      => 'index.php?other=1',
-		);
+		$other    = array( 'other/?$' => 'index.php?other=1' );
+		$llms     = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
+		$site_id  = self::factory()->blog->create();
+		$disabled = self::factory()->blog->create();
+		foreach ( array( $site_id, $disabled ) as $id ) {
+			switch_to_blog( $id );
+			update_option( 'rewrite_rules', $llms + $other );
+			restore_current_blog();
+		}
+
+		AVC_AIS_Llms_Txt::deactivate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $other, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+
+		switch_to_blog( $disabled );
+		update_option( AVC_AIS_Llms_Txt::OPTION_ENABLED, '0' );
+		restore_current_blog();
+
+		AVC_AIS_Llms_Txt::activate( true );
+
+		switch_to_blog( $site_id );
+		$this->assertSame( $llms + $other, get_option( 'rewrite_rules' ) );
+		restore_current_blog();
+
+		switch_to_blog( $disabled );
+		$this->assertSame( $other, get_option( 'rewrite_rules' ), 'llms.txt を無効にしたサイトには追加しない' );
+		restore_current_blog();
+	}
+
+	/**
+	 * サイト単位で有効にしているサイトは、ネットワーク全体の無効化でもルールを残すこと。
+	 *
+	 * @group ms-required
+	 *
+	 * @return void
+	 */
+	public function test_network_deactivation_keeps_sites_with_plugin_active() {
+		if ( ! is_multisite() ) {
+			$this->markTestSkipped( 'マルチサイト環境でのみ実行する。' );
+		}
+
+		$rules   = array( AVC_AIS_Llms_Txt::REWRITE_REGEX => 'index.php?llms_txt=1' );
 		$site_id = self::factory()->blog->create();
 		switch_to_blog( $site_id );
 		update_option( 'rewrite_rules', $rules );
-		update_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED, true );
+		update_option( 'active_plugins', array( plugin_basename( AVC_AIS_FILE ) ) );
 		restore_current_blog();
 
 		AVC_AIS_Llms_Txt::deactivate( true );
 
 		switch_to_blog( $site_id );
-		$this->assertSame( array( 'other/?$' => 'index.php?other=1' ), get_option( 'rewrite_rules' ) );
-		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_RULE_RESTORED ), '再有効化のあとルールを戻せる' );
+		$this->assertSame( $rules, get_option( 'rewrite_rules' ) );
 		restore_current_blog();
 	}
 
