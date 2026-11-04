@@ -37,7 +37,7 @@ class AVC_AIS_Type_LocalBusiness {
 		}
 
 		$local_business = array(
-			'@type' => $lb_type,
+			'@type' => AVC_AIS_LocalBusinessTypes::to_schema_type( $lb_type ),
 			'@id'   => $ids['local_business'],
 			'name'  => $name,
 			'url'   => $site_url,

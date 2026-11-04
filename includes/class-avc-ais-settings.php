@@ -60,7 +60,7 @@ class AVC_AIS_Settings {
 		$value = $this->filter_null_values( $value );
 		foreach ( array( 'lb_subtype', 'business_type', 'local_business_type' ) as $key ) {
 			if ( isset( $value[ $key ] ) ) {
-				$value[ $key ] = avc_ais_normalize_business_type( $value[ $key ] );
+				$value[ $key ] = AVC_AIS_LocalBusinessTypes::rename( $value[ $key ] );
 			}
 		}
 
@@ -750,8 +750,7 @@ class AVC_AIS_Settings {
 			: 'Organization';
 
 		$lb_subtype_raw          = $input['lb_subtype'] ?? $input['business_type'] ?? 'LocalBusiness';
-		$lb_subtype              = sanitize_text_field( $lb_subtype_raw );
-		$lb_subtype              = $lb_subtype ? $lb_subtype : 'LocalBusiness';
+		$lb_subtype              = AVC_AIS_LocalBusinessTypes::to_schema_type( sanitize_text_field( $lb_subtype_raw ) );
 		$output['lb_subtype']    = $lb_subtype;
 		$output['business_type'] = $lb_subtype;
 

@@ -426,7 +426,33 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 						<div class="ais-field">
 							<label for="ais-business-type"><?php esc_html_e( 'LocalBusiness subtype', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService', 'aivec-ai-search-schema' ) ); ?></label>
-							<input id="ais-business-type" type="text" name="<?php echo esc_attr( $option_name ); ?>[lb_subtype]" value="<?php echo esc_attr( $options['lb_subtype'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Store, Restaurant', 'aivec-ai-search-schema' ); ?>" />
+							<?php
+							$lb_common_types  = AVC_AIS_LocalBusinessTypes::common_choices();
+							$lb_selected_type = AVC_AIS_LocalBusinessTypes::to_selected_choice( $options['lb_subtype'] );
+							?>
+							<select id="ais-business-type" name="<?php echo esc_attr( $option_name ); ?>[lb_subtype]">
+								<optgroup label="<?php esc_attr_e( 'Common types', 'aivec-ai-search-schema' ); ?>">
+									<?php foreach ( $lb_common_types as $lb_type_value => $lb_type_label ) : ?>
+										<option value="<?php echo esc_attr( $lb_type_value ); ?>" <?php selected( $lb_selected_type, $lb_type_value ); ?>><?php echo esc_html( $lb_type_label ); ?></option>
+									<?php endforeach; ?>
+								</optgroup>
+								<optgroup label="<?php esc_attr_e( 'All schema.org types', 'aivec-ai-search-schema' ); ?>">
+									<?php foreach ( array_diff( AVC_AIS_LocalBusinessTypes::all(), array_keys( $lb_common_types ) ) as $lb_type_value ) : ?>
+										<option value="<?php echo esc_attr( $lb_type_value ); ?>" <?php selected( $lb_selected_type, $lb_type_value ); ?>><?php echo esc_html( $lb_type_value ); ?></option>
+									<?php endforeach; ?>
+								</optgroup>
+							</select>
+							<?php if ( ! AVC_AIS_LocalBusinessTypes::is_valid( $options['lb_subtype'] ) ) : ?>
+								<p class="ais-field__description" id="ais-business-type-invalid">
+									<?php
+									printf(
+										/* translators: %s: saved business type */
+										esc_html__( '"%s" is not a LocalBusiness type on schema.org, so "LocalBusiness" is output. Select a type and save.', 'aivec-ai-search-schema' ),
+										esc_html( is_string( $options['lb_subtype'] ) ? $options['lb_subtype'] : '' )
+									);
+									?>
+								</p>
+							<?php endif; ?>
 						</div>
 						<div class="ais-field">
 							<label for="ais-lb-label"><?php esc_html_e( 'Location label', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Appends after the Organization name to clarify each location.', 'aivec-ai-search-schema' ) ); ?></label>

@@ -84,32 +84,94 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * 保存済みの古いサブタイプを schema.org の型名へ読み替えること。
+	 * 出力する型は schema.org の LocalBusiness のサブタイプになること。
 	 *
-	 * @dataProvider provide_renamed_business_types
+	 * @dataProvider provide_business_types
 	 *
-	 * @param string $saved    保存済みの値.
-	 * @param string $expected schema.org の型名.
+	 * @param mixed $saved    保存済みの値.
+	 * @param mixed $expected 出力する型.
 	 * @return void
 	 */
-	public function test_saved_business_type_is_renamed( $saved, $expected ) {
-		$this->assertSame( $expected, avc_ais_normalize_business_type( $saved ) );
+	public function test_output_type_is_a_local_business_type( $saved, $expected ) {
+		$this->assertSame( $expected, AVC_AIS_LocalBusinessTypes::to_schema_type( $saved ) );
 	}
 
 	/**
-	 * 読み替えるサブタイプを返す。
+	 * 保存済みの値と出力する型を返す。
 	 *
-	 * @return array<string,array<int,string>>
+	 * @return array<string,array<int,mixed>>
 	 */
-	public function provide_renamed_business_types() {
+	public function provide_business_types() {
 		return array(
-			'cafe'         => array( 'Cafe', 'CafeOrCoffeeShop' ),
-			'gym'          => array( 'FitnessCenter', 'ExerciseGym' ),
-			'spa'          => array( 'HealthAndBeautySpa', 'DaySpa' ),
-			'construction' => array( 'HomeAndConstruction', 'HomeAndConstructionBusiness' ),
-			'unchanged'    => array( 'Restaurant', 'Restaurant' ),
-			'free text'    => array( 'Museum', 'Museum' ),
+			'old cafe'         => array( 'Cafe', 'CafeOrCoffeeShop' ),
+			'old gym'          => array( 'FitnessCenter', 'ExerciseGym' ),
+			'old spa'          => array( 'HealthAndBeautySpa', 'DaySpa' ),
+			'old construction' => array( 'HomeAndConstruction', 'HomeAndConstructionBusiness' ),
+			'unchanged'        => array( 'Restaurant', 'Restaurant' ),
+			'lower case'       => array( 'hairsalon', 'HairSalon' ),
+			'spaces'           => array( ' Hair Salon ', 'HairSalon' ),
+			'not schema.org'   => array( 'NotARealType', 'LocalBusiness' ),
+			'other schema.org' => array( 'Museum', 'LocalBusiness' ),
+			'empty'            => array( '', 'LocalBusiness' ),
+			'null'             => array( null, 'LocalBusiness' ),
+			'number'           => array( 123, 'LocalBusiness' ),
+			'list'             => array( array( 'Restaurant', 'BarOrPub' ), array( 'Restaurant', 'BarOrPub' ) ),
+			'list one valid'   => array( array( 'Cafe', 'NotARealType' ), 'CafeOrCoffeeShop' ),
+			'list none valid'  => array( array( 'NotARealType' ), 'LocalBusiness' ),
 		);
+	}
+
+	/**
+	 * フィルターで選択できる型を追加できること。
+	 *
+	 * @return void
+	 */
+	public function test_types_can_be_added_by_filter() {
+		$this->assertFalse( AVC_AIS_LocalBusinessTypes::is_valid( 'Museum' ), '前提: 既定では選択できない' );
+
+		add_filter(
+			'avc_ais_local_business_types',
+			static function ( $types ) {
+				$types[] = 'Museum';
+				return $types;
+			}
+		);
+
+		$this->assertTrue( AVC_AIS_LocalBusinessTypes::is_valid( 'Museum' ) );
+		$this->assertSame( 'Museum', AVC_AIS_LocalBusinessTypes::to_schema_type( 'Museum' ) );
+	}
+
+	/**
+	 * 無効な保存済みの値は読み出しでは変えず、JSON-LD には LocalBusiness を出力すること。
+	 *
+	 * 設定画面で無効な値だと知らせるために、読み出しでは変えない。
+	 *
+	 * @return void
+	 */
+	public function test_invalid_saved_type_is_kept_but_not_output() {
+		AVC_AIS_Settings::init();
+		update_option( 'avc_ais_options', array( 'lb_subtype' => 'NotARealType' ) );
+
+		$options = get_option( 'avc_ais_options' );
+		$this->assertSame( 'NotARealType', $options['lb_subtype'] );
+
+		$node = AVC_AIS_Type_LocalBusiness::build(
+			$options,
+			array(
+				'local_business' => 'https://example.com/#lb',
+				'organization'   => 'https://example.com/#org',
+			),
+			'https://example.com/',
+			'サンプル',
+			array(),
+			array(),
+			array(),
+			array(),
+			'',
+			true
+		);
+
+		$this->assertSame( 'LocalBusiness', $node['@type'] );
 	}
 
 	/**
@@ -117,10 +179,10 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 	 *
 	 * @return void
 	 */
-	public function test_non_string_business_type_is_returned_as_is() {
+	public function test_rename_keeps_non_strings() {
 		$types = array( 'Restaurant', 'BarOrPub' );
 
-		$this->assertSame( $types, avc_ais_normalize_business_type( $types ) );
+		$this->assertSame( $types, AVC_AIS_LocalBusinessTypes::rename( $types ) );
 	}
 
 	/**
@@ -195,20 +257,53 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 		return array(
 			'current value' => array( 'Restaurant', 'Restaurant' ),
 			'old value'     => array( 'FitnessCenter', 'ExerciseGym' ),
+			'lower case'    => array( 'hairsalon', 'HairSalon' ),
 		);
 	}
 
 	/**
-	 * ウィザードの業種の選択肢に、読み替えの対象の古い値がないこと。
+	 * 設定を保存すると、値が選択できる型に変わること。
+	 *
+	 * @dataProvider provide_saved_settings
+	 *
+	 * @param string $input    入力.
+	 * @param string $expected 保存する値.
+	 * @return void
+	 */
+	public function test_saving_settings_stores_a_valid_type( $input, $expected ) {
+		$settings = new AVC_AIS_Settings();
+		$output   = $settings->sanitize_options( array( 'lb_subtype' => $input ) );
+
+		$this->assertSame( $expected, $output['lb_subtype'] );
+		$this->assertSame( $expected, $output['business_type'] );
+	}
+
+	/**
+	 * 設定の入力と保存する値を返す。
+	 *
+	 * @return array<string,array<int,string>>
+	 */
+	public function provide_saved_settings() {
+		return array(
+			'valid'   => array( 'Dentist', 'Dentist' ),
+			'old'     => array( 'FitnessCenter', 'ExerciseGym' ),
+			'invalid' => array( 'NotARealType', 'LocalBusiness' ),
+			'empty'   => array( '', 'LocalBusiness' ),
+		);
+	}
+
+	/**
+	 * ウィザードの選択肢と読み替え先が、すべて選択できる型であること。
 	 *
 	 * @return void
 	 */
-	public function test_wizard_choices_do_not_use_renamed_values() {
-		$template = (string) file_get_contents( AVC_AIS_DIR . 'templates/wizard/steps/step-3-location.php' );
+	public function test_choices_are_valid_types() {
+		$types = AVC_AIS_LocalBusinessTypes::all();
 
-		foreach ( array( 'Cafe', 'FitnessCenter', 'HealthAndBeautySpa', 'HomeAndConstruction' ) as $old ) {
-			$this->assertSame( 0, preg_match( "/'{$old}'\\s*=>/", $template ), $old );
-		}
+		$this->assertContains( 'LocalBusiness', $types );
+		$this->assertSame( array(), array_values( array_diff( array_keys( AVC_AIS_LocalBusinessTypes::common_choices() ), $types ) ) );
+		$this->assertSame( array(), array_values( array_diff( AVC_AIS_LocalBusinessTypes::RENAMED, $types ) ) );
+		$this->assertSame( array(), array_values( array_intersect( array_keys( AVC_AIS_LocalBusinessTypes::RENAMED ), $types ) ) );
 	}
 
 	/**
