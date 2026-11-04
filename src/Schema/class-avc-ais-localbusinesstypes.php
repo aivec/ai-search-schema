@@ -199,7 +199,7 @@ class AVC_AIS_LocalBusinessTypes {
 	 * @return array<string,string> 型をキーとする名前.
 	 */
 	public static function common_choices() {
-		return array(
+		$choices = array(
 			'LocalBusiness'               => __( 'General Local Business', 'aivec-ai-search-schema' ),
 			'Restaurant'                  => __( 'Restaurant', 'aivec-ai-search-schema' ),
 			'CafeOrCoffeeShop'            => __( 'Cafe', 'aivec-ai-search-schema' ),
@@ -221,6 +221,8 @@ class AVC_AIS_LocalBusinessTypes {
 			'ExerciseGym'                 => __( 'Fitness Center / Gym', 'aivec-ai-search-schema' ),
 			'HomeAndConstructionBusiness' => __( 'Home & Construction Service', 'aivec-ai-search-schema' ),
 		);
+
+		return array_intersect_key( $choices, array_flip( self::all() ) );
 	}
 
 	/**

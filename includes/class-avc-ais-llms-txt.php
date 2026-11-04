@@ -121,7 +121,7 @@ class AVC_AIS_Llms_Txt {
 		add_action( 'post_updated', array( $this, 'update_entry_of_moved_post' ), 10, 3 );
 		add_action( 'before_delete_post', array( $this, 'remove_entry_of_deleted_post' ), 10, 2 );
 		foreach ( array( 'post_updated', 'transition_post_status', 'deleted_post' ) as $hook ) {
-			add_action( $hook, array( self::class, 'clear_hidden_lines_cache' ) );
+			add_action( $hook, array( self::class, 'clear_cache_for_changed_post' ), 10, 3 );
 		}
 	}
 
@@ -315,6 +315,25 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		return implode( "\n", array_diff_key( $lines, $hidden ) );
+	}
+
+	/**
+	 * 一覧に載る投稿タイプの投稿が変わったら、配信しない行の判定結果を無効にする。
+	 *
+	 * 自動保存や他の投稿タイプの更新で無効にすると、結果を保存している意味がなくなる。
+	 *
+	 * @param mixed ...$args フックの引数（いずれかが投稿）.
+	 * @return void
+	 */
+	public static function clear_cache_for_changed_post( ...$args ) {
+		foreach ( $args as $arg ) {
+			if ( $arg instanceof WP_Post ) {
+				if ( in_array( $arg->post_type, self::LISTED_POST_TYPES, true ) ) {
+					self::clear_hidden_lines_cache();
+				}
+				return;
+			}
+		}
 	}
 
 	/**
@@ -525,6 +544,16 @@ class AVC_AIS_Llms_Txt {
 		$home = untrailingslashit( (string) wp_parse_url( home_url(), PHP_URL_PATH ) );
 
 		return in_array( $parts['path'] ?? '', array( $home, $home . '/' ), true );
+	}
+
+	/**
+	 * URL から http と https の違いを取り除く。
+	 *
+	 * @param string $url URL.
+	 * @return string スキームのない URL.
+	 */
+	private static function without_scheme( $url ) {
+		return (string) preg_replace( '#^https?:#i', '', $url );
 	}
 
 	/**
@@ -857,7 +886,7 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		$old_key    = self::url_key( $old_url );
-		$old_parent = is_post_type_hierarchical( $post_after->post_type ) ? trailingslashit( $old_url ) : '';
+		$old_parent = is_post_type_hierarchical( $post_after->post_type ) ? self::without_scheme( trailingslashit( $old_url ) ) : '';
 		$lines      = explode( "\n", $saved );
 		foreach ( $lines as $index => $line ) {
 			$entry = self::parse_entry( $line );
@@ -870,8 +899,9 @@ class AVC_AIS_Llms_Txt {
 			}
 			// 親ページの URL が変わると子ページの URL も変わるが、子ページの更新は発生しない。
 			// 以前の保存処理で壊れた /親// は子ページと判別できないので書き換えない。
-			$is_child = '' !== $old_parent && 0 === strpos( $entry['url'], $old_parent );
-			$child    = $is_child ? substr( $entry['url'], strlen( $old_parent ) ) : '';
+			$entry_url = self::without_scheme( $entry['url'] );
+			$is_child  = '' !== $old_parent && 0 === stripos( $entry_url, $old_parent );
+			$child     = $is_child ? substr( $entry_url, strlen( $old_parent ) ) : '';
 			if ( '' !== $child && '/' !== $child[0] ) {
 				$lines[ $index ] = self::replace_entry_url( $line, $entry, trailingslashit( $new_url ) . $child );
 			}

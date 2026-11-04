@@ -293,6 +293,64 @@ class SchemaOrgValuesTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * ウィザードのプレビューが LocalBusiness の型を schema.org の型で出力すること。
+	 *
+	 * @return void
+	 */
+	public function test_wizard_preview_outputs_valid_type() {
+		$method = new ReflectionMethod( \Aivec\AiSearchSchema\Wizard\Wizard::class, 'build_preview_local_business' );
+		avc_ais_test_make_accessible( $method );
+
+		$node = $method->invoke(
+			new \Aivec\AiSearchSchema\Wizard\Wizard(),
+			array(
+				'company_name' => 'サンプル',
+				'lb_subtype'   => 'FitnessCenter',
+			),
+			array(
+				'local_business' => 'https://example.com/#lb',
+				'organization'   => 'https://example.com/#org',
+			),
+			'https://example.com/'
+		);
+
+		$this->assertSame( 'ExerciseGym', $node['@type'] );
+	}
+
+	/**
+	 * 設定画面で選んだ、ウィザードの選択肢にない型も選択済みになること。
+	 *
+	 * @return void
+	 */
+	public function test_wizard_keeps_type_chosen_in_settings() {
+		AVC_AIS_Settings::init()->register_settings();
+		update_option( 'avc_ais_options', array( 'lb_subtype' => 'Winery' ) );
+
+		ob_start();
+		require AVC_AIS_DIR . 'templates/wizard/steps/step-3-location.php';
+		$html = (string) ob_get_clean();
+
+		$this->assertMatchesRegularExpression( '/<option value="Winery"\s+selected/', $html );
+	}
+
+	/**
+	 * フィルターで外した型は、よく使う型の選択肢にも出ないこと。
+	 *
+	 * @return void
+	 */
+	public function test_common_choices_follow_filter() {
+		add_filter(
+			'avc_ais_local_business_types',
+			static function ( $types ) {
+				return array_values( array_diff( $types, array( 'Restaurant' ) ) );
+			}
+		);
+
+		$this->assertArrayNotHasKey( 'Restaurant', AVC_AIS_LocalBusinessTypes::common_choices() );
+		$this->assertArrayHasKey( 'Bakery', AVC_AIS_LocalBusinessTypes::common_choices() );
+	}
+
+	/**
 	 * ウィザードの選択肢と読み替え先が、すべて選択できる型であること。
 	 *
 	 * @return void

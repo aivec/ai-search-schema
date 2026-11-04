@@ -1167,7 +1167,7 @@ class Wizard {
 	private function build_preview_local_business( array $options, array $ids, $site_url ) {
 		// sanitize_options() は local_business_type を保存しないので、出力に使う lb_subtype を先に見る。
 		$type = ( $options['lb_subtype'] ?? '' ) ?: ( $options['local_business_type'] ?? '' );
-		$type = AVC_AIS_LocalBusinessTypes::to_schema_type( $type );
+		$type = \AVC_AIS_LocalBusinessTypes::to_schema_type( $type );
 		$name = ! empty( $options['company_name'] ) ? $options['company_name'] : get_bloginfo( 'name' );
 
 		if ( empty( $name ) ) {

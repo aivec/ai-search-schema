@@ -129,6 +129,9 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'heart'             => array( 'love it <3' ),
 			'looks like a tag'  => array( 'if a<b then c>d' ),
 			'word after tag'    => array( 'if a<i and c>d' ),
+			'html word in text' => array( 'if a<b default c>d' ),
+			'more html words'   => array( 'a<b open late>d' ),
+			'equals in text'    => array( 'if a<b then c=d>e' ),
 		);
 	}
 
@@ -172,6 +175,9 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'bare attrs'     => array( '<input disabled checked>Foo', 'Foo' ),
 			'mixed attrs'    => array( '<details open class="x">Foo</details>', 'Foo' ),
 			'nested'         => array( '<<b>i>Foo', 'Foo' ),
+			'single quotes'  => array( "<a href='x' title='y z'>Foo</a>", 'Foo' ),
+			'bracket in attr' => array( '<a title="1>0">Foo</a>', 'Foo' ),
+			'no quotes'      => array( '<a href=x>Foo</a>', 'Foo' ),
 		);
 	}
 

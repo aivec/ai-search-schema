@@ -15,8 +15,11 @@ $selected_business_type = AVC_AIS_LocalBusinessTypes::to_selected_choice(
 	( $options['lb_subtype'] ?? '' ) ?: ( $options['local_business_type'] ?? '' )
 );
 
-// Business type options.
+// Business type options. 設定画面で選んだ他の型も残るよう、保存済みの型を選択肢に加える。
 $business_types = AVC_AIS_LocalBusinessTypes::common_choices();
+if ( ! isset( $business_types[ $selected_business_type ] ) ) {
+	$business_types[ $selected_business_type ] = $selected_business_type;
+}
 
 // Price range options.
 $price_ranges = array(

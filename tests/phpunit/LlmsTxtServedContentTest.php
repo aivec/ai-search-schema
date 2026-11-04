@@ -423,6 +423,71 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 大文字のパーセントエンコードや別のスキームで書いた子ページの行も書き換えること。
+	 *
+	 * @return void
+	 */
+	public function test_changing_parent_slug_updates_child_entry_with_different_url_form() {
+		$parent_id = self::factory()->post->create(
+			array(
+				'post_type' => 'page',
+				'post_name' => 'あ',
+			)
+		);
+		$child_id  = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_name'   => 'child',
+				'post_parent' => $parent_id,
+			)
+		);
+		$url       = preg_replace_callback(
+			'/%[0-9a-f]{2}/',
+			static function ( $byte ) {
+				return strtoupper( $byte[0] );
+			},
+			set_url_scheme( get_permalink( $child_id ), 'https' )
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [子]({$url}): 説明" );
+
+		wp_update_post(
+			array(
+				'ID'        => $parent_id,
+				'post_name' => 'renamed',
+			)
+		);
+
+		$this->assertSame( '- [子](' . get_permalink( $child_id ) . '): 説明', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 一覧に載らない投稿タイプの更新では、判定結果を無効にしないこと。
+	 *
+	 * @return void
+	 */
+	public function test_other_post_types_do_not_clear_cache() {
+		register_post_type( 'ais_other' );
+
+		$other = self::factory()->post->create( array( 'post_type' => 'ais_other' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION, 'before' );
+
+		wp_update_post(
+			array(
+				'ID'         => $other,
+				'post_title' => '更新',
+			)
+		);
+		$this->assertSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+
+		wp_delete_post( $other, true );
+		$this->assertSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ) );
+
+		$post_id = self::factory()->post->create();
+		$this->assertNotSame( 'before', get_option( AVC_AIS_Llms_Txt::OPTION_CACHE_GENERATION ), '前提: 投稿では無効にする' );
+		$this->assertNotEmpty( $post_id, '前提: 投稿がある' );
+	}
+
+	/**
 	 * 通常の投稿のスラッグを変えても、下の階層に見える別の行を書き換えないこと。
 	 *
 	 * @return void
