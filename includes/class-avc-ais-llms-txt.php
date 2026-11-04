@@ -1229,6 +1229,7 @@ class AVC_AIS_Llms_Txt {
 	 * Called on plugin activation.
 	 *
 	 * ネットワーク全体の有効化では他のサイトの有効化の処理が走らないので、ルールも追加する。
+	 * 無効の間は投稿の変更を追えないので、保存した判定結果は使わない。
 	 *
 	 * @param bool $network_wide ネットワーク全体の有効化なら true.
 	 */
@@ -1236,6 +1237,7 @@ class AVC_AIS_Llms_Txt {
 		$instance = self::init();
 		$instance->add_rewrite_rules();
 		flush_rewrite_rules();
+		self::clear_hidden_lines_cache();
 
 		if ( ! $network_wide ) {
 			return;
@@ -1243,6 +1245,8 @@ class AVC_AIS_Llms_Txt {
 
 		self::for_each_other_site(
 			static function () use ( $instance ) {
+				self::clear_hidden_lines_cache();
+
 				$rules = get_option( 'rewrite_rules' );
 				if ( $instance->is_enabled() && is_array( $rules ) && ! isset( $rules[ self::REWRITE_REGEX ] ) ) {
 					update_option( 'rewrite_rules', array( self::REWRITE_REGEX => 'index.php?llms_txt=1' ) + $rules );

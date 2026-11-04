@@ -1075,6 +1075,29 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 無効の間に隠した投稿の行が、再有効化の直後に保存した判定結果で配信されないこと。
+	 *
+	 * @return void
+	 */
+	public function test_activation_ignores_cached_result_from_before_deactivation() {
+		global $wpdb;
+
+		$post_id = $this->create_post_with_entry();
+		$this->assertStringContainsString( '手書きの説明', $this->served(), '前提: 判定して結果を保存する' );
+
+		AVC_AIS_Llms_Txt::deactivate();
+
+		// 無効の間はフックが動かないので、データベースを直接更新する。
+		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
+		clean_post_cache( $post_id );
+
+		AVC_AIS_Llms_Txt::activate();
+
+		$this->assertSame( '# 見出し', $this->served() );
+	}
+
+	/**
 	 * 配信は保存済みの内容を変更せず、隠した投稿の数に関係なく行数分の処理で済むこと。
 	 *
 	 * @return void
