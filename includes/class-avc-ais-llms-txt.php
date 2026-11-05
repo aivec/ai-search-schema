@@ -334,9 +334,11 @@ class AVC_AIS_Llms_Txt {
 	/**
 	 * 判定結果を保存するキーを home_url() から作る。
 	 *
-	 * ホストとポートが判定に影響するのは、その行があるときだけ。WP_HOME を Host ヘッダーから作る
-	 * サイトで、未ログインのリクエストが Host を変えて判定をやり直させ続けられないよう、行にない
-	 * ホストとポートはキーに含めない。http と https では判定が変わらないのでスキームも含めない。
+	 * ホストが判定に影響するのは、その行があるときだけ。ホストが同じ行はポートが違っても投稿の状態で
+	 * 判定するので、ポートを問わず探す。ポートは範囲の判定にだけ影響し、行にないポートはどれも結果が
+	 * 同じなので 1 つにまとめる。WP_HOME を Host ヘッダーから作るサイトで、未ログインのリクエストが
+	 * Host を変えて判定をやり直させ続けられないよう、行にないホストとポートはキーに含めない。
+	 * http と https では判定が変わらないのでスキームも含めない。
 	 *
 	 * @param string $saved 保存済みの内容.
 	 * @return string キー.
@@ -345,9 +347,11 @@ class AVC_AIS_Llms_Txt {
 		$parts = (array) self::parse_entry_url( home_url() );
 		$host  = self::normalized_host( $parts );
 		$port  = self::normalized_port( $parts );
-		$after = $port ? ':' . $port : '(:\d+)?';
-		$regex = '~//(www\.)?' . preg_quote( $host, '~' ) . $after . '[/)?#\s]~i';
-		$found = '' !== $host && 1 === preg_match( $regex, $saved );
+		$regex = '~//(?:www\.)?' . preg_quote( $host, '~' ) . '(?::(\d+))?[/)?#\s]~i';
+		$found = '' !== $host && 0 < preg_match_all( $regex, $saved, $matches );
+		if ( $found && $port && ! in_array( (string) $port, $matches[1], true ) ) {
+			$port = 'other';
+		}
 
 		return md5( ( $found ? $host . ':' . $port : '' ) . self::url_key( home_url( '/' ) ) );
 	}

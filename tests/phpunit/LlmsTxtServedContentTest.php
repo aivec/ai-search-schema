@@ -1584,6 +1584,73 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * home のポートが行にないときも、行のホストの結果を別のドメインと分けること。
+	 * ホストが同じなら投稿の状態で判定するので、別のドメインの結果を使うと隠すはずの行が配信される。
+	 *
+	 * @return void
+	 */
+	public function test_hosts_in_the_content_are_found_when_the_home_port_differs() {
+		self::factory()->post->create(
+			array(
+				'post_name'   => 'secret-on-port',
+				'post_status' => 'private',
+			)
+		);
+		$served_on = function ( $host ) {
+			$map_domain = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $map_domain, 10, 2 );
+			$body = $this->served();
+			remove_filter( 'home_url', $map_domain, 10 );
+			return $body;
+		};
+
+		foreach ( array( 'https://en.example/', 'https://en.example:9000/' ) as $base ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別の題]({$base}secret-on-port/): 秘密の抜粋" );
+			delete_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+
+			$this->assertStringContainsString( '秘密の抜粋', $served_on( 'ja.example:8443' ), $base );
+			$this->assertStringNotContainsString( '秘密の抜粋', $served_on( 'en.example:8443' ), $base );
+		}
+	}
+
+	/**
+	 * 行にあるホストでも、行にないポートは、ポートを変えても判定し直さないこと。
+	 *
+	 * @return void
+	 */
+	public function test_ports_not_in_the_content_share_the_cached_result() {
+		global $wpdb;
+
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_NAME,
+			'- [タイトル](http://' . WP_TESTS_DOMAIN . '/docs/): 説明' . "\n" . '- [別](http://' . WP_TESTS_DOMAIN . ':8443/docs/): 説明'
+		);
+		$served_on = function ( $host ) {
+			$from_host = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $from_host, 10, 2 );
+			$this->served();
+			remove_filter( 'home_url', $from_host, 10 );
+		};
+
+		$served_on( WP_TESTS_DOMAIN . ':1' );
+		$before = $wpdb->num_queries;
+		$served_on( WP_TESTS_DOMAIN . ':2' );
+		$served_on( WP_TESTS_DOMAIN . ':3' );
+		$this->assertSame( $before, $wpdb->num_queries );
+		$this->assertCount( 1, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+
+		// 行にあるポートと標準のポートは、範囲の判定が変わるので分ける。
+		$served_on( WP_TESTS_DOMAIN . ':8443' );
+		$this->assertCount( 2, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+		$served_on( WP_TESTS_DOMAIN );
+		$this->assertCount( 3, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
 	 * 行にないホストは、Host を変えても判定し直さないこと。
 	 *
 	 * @return void
