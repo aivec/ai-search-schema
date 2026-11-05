@@ -5,16 +5,29 @@
 defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Output {
 	/**
-	 * HTML タグとみなす形。属性は = を含むものだけをタグとして扱う。
+	 * HTML タグとみなす形。
+	 *
+	 * 「a<b then c>d」のような文を残すため、= を含むものと、値のない HTML の属性だけのものを
+	 * タグとして扱う。属性の値の中の > でタグが終わったとみなさないよう、引用符の中は読み飛ばす。
+	 * 引用符が閉じていないものは読み飛ばせないので、次の > までをタグとする。
 	 */
-	private const HTML_TAG_PATTERN = '/<\/?[a-zA-Z][a-zA-Z0-9:-]*(?:\s+[^<>]*=[^<>]*)?\s*\/?>/';
+	private const HTML_TAG_PATTERN = '/<\/?[a-zA-Z][a-zA-Z0-9:-]*'
+		. '(?:\s(?=[^<>]*=)(?:[^<>"\']|"[^"]*"|\'[^\']*\')*|\s[^<>=]*=[^<>]*|(?:\s+(?:'
+		. 'allowfullscreen|async|autofocus|autoplay|checked|controls|default|defer|disabled|hidden|inert|ismap|'
+		. 'itemscope|loop|multiple|muted|nomodule|novalidate|open|playsinline|readonly|required|reversed|selected'
+		. '))+)?\s*\/?>/i';
 
 	/**
-	 * @var AVC_AIS_Validator
+	 * @var AVC_AIS_Validator|null
 	 */
 	private $validator;
 
-	public function __construct( AVC_AIS_Validator $validator ) {
+	/**
+	 * コンストラクタ
+	 *
+	 * @param AVC_AIS_Validator|null $validator 検証済みのスキーマだけを出力するなら不要.
+	 */
+	public function __construct( ?AVC_AIS_Validator $validator = null ) {
 		$this->validator = $validator;
 	}
 
@@ -31,7 +44,8 @@ class AVC_AIS_Output {
 		}
 
 		if ( ! $validated ) {
-			$validation = $this->validator->validate( $schema );
+			$validator  = $this->validator ?? new AVC_AIS_Validator();
+			$validation = $validator->validate( $schema );
 			if ( ! $validation['is_valid'] ) {
 				return;
 			}
@@ -70,6 +84,7 @@ class AVC_AIS_Output {
 	 * strip_tags() 系は「x<y です」のような文を以降すべて切り捨てるため使わず、
 	 * タグの形をしたものだけを除く（安全性は JSON_HEX_TAG で担保している）。
 	 * 「a<b then c>d」は文として残す。
+	 * 取り除いた結果「<<b>i>」が新しいタグの形になることがあるので、変わらなくなるまで繰り返す。
 	 *
 	 * @param array $schema スキーマ.
 	 * @return array タグを除いたスキーマ.
@@ -79,7 +94,10 @@ class AVC_AIS_Output {
 			$schema,
 			static function ( &$value ) {
 				if ( is_string( $value ) ) {
-					$value = preg_replace( self::HTML_TAG_PATTERN, '', $value ) ?? $value;
+					do {
+						$previous = $value;
+						$value    = preg_replace( self::HTML_TAG_PATTERN, '', $value ) ?? $previous;
+					} while ( $value !== $previous );
 				}
 			}
 		);

@@ -33,7 +33,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
 
 		$ref = new ReflectionProperty( AVC_AIS_Llms_Txt::class, 'instance' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$ref->setValue( null, null );
 
 		wp_set_current_user( self::factory()->user->create( array( 'role' => 'administrator' ) ) );
@@ -46,7 +46,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
 		delete_option( AVC_AIS_Llms_Txt::OPTION_ENABLED );
 		delete_option( 'avc_ais_llms_txt_rule_restored' );
-		update_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED, true );
+		update_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED, true );
 	}
 
 	/**
@@ -58,7 +58,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		delete_option( 'avc_ais_options' );
 		delete_option( AVC_AIS_Llms_Txt::OPTION_NAME );
 		delete_option( AVC_AIS_Llms_Txt::OPTION_ENABLED );
-		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED );
 		delete_option( 'avc_ais_llms_txt_rule_restored' );
 		$_POST    = array();
 		$_REQUEST = array();
@@ -88,7 +88,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 			'wizard step'                => array(
 				static function () {
 					$method = new ReflectionMethod( Wizard::class, 'save_to_settings' );
-					$method->setAccessible( true );
+					avc_ais_test_make_accessible( $method );
 					$method->invoke( new Wizard(), 'basics', array( 'company_name' => 'Aivec' ) );
 				},
 			),
@@ -102,7 +102,7 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 					delete_option( 'avc_ais_gmaps_api_key' );
 					update_option( 'avc_ais_options', array( 'gmaps_api_key' => 'legacy-key' ) );
 					$method = new ReflectionMethod( AVC_AIS_Settings::class, 'get_google_maps_api_key' );
-					$method->setAccessible( true );
+					avc_ais_test_make_accessible( $method );
 					$method->invoke( AVC_AIS_Settings::init() );
 				},
 			),
@@ -515,27 +515,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * 開いている間に取り除かれたカスタム内容の行が、編集せずに保存しても戻らないこと。
-	 *
-	 * @return void
-	 */
-	public function test_unedited_form_does_not_restore_entry_removed_meanwhile() {
-		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
-		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
-		$fields = $this->open_settings_screen();
-
-		wp_update_post(
-			array(
-				'ID'          => $post_id,
-				'post_status' => 'private',
-			)
-		);
-		$this->submit_settings_form( $fields );
-
-		$this->assertSame( '# 見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
 	 * 別の画面で保存した内容を、編集していない古い画面の保存で上書きしないこと。
 	 *
 	 * @return void
@@ -579,40 +558,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		$this->submit_settings_form( $fields );
 
 		$this->assertStringEndsWith( '# 追記', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
-	 * 編集して保存しても、開いている間に非公開にした投稿の行が残らないこと。
-	 *
-	 * @dataProvider provide_hidden_post_changes
-	 *
-	 * @param array $change 投稿に加える変更.
-	 * @return void
-	 */
-	public function test_edited_form_does_not_keep_entry_of_post_hidden_meanwhile( array $change ) {
-		$post_id = self::factory()->post->create( array( 'post_content' => 'TOPSECRETEXCERPT' ) );
-		$fields  = $this->open_settings_screen();
-		$this->assertStringContainsString( 'TOPSECRETEXCERPT', $fields['llms_txt_content'], '前提: 開いたときは載っている' );
-
-		wp_update_post( array_merge( array( 'ID' => $post_id ), $change ) );
-		$fields['llms_txt_content'] .= "\r\n# 追記";
-		$this->submit_settings_form( $fields );
-
-		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
-		$this->assertStringNotContainsString( 'TOPSECRETEXCERPT', $saved );
-		$this->assertStringEndsWith( '# 追記', $saved );
-	}
-
-	/**
-	 * 編集して保存したときに行を取り除く変更。
-	 *
-	 * @return array[]
-	 */
-	public function provide_hidden_post_changes() {
-		return array(
-			'private'            => array( array( 'post_status' => 'private' ) ),
-			'password protected' => array( array( 'post_password' => 'hunter2' ) ),
-		);
 	}
 
 	/**
@@ -740,33 +685,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * 保存ボタンは、送信された内容ではなく配信する内容を返すこと。
-	 *
-	 * @return void
-	 */
-	public function test_save_button_returns_content_actually_stored() {
-		$post_id = self::factory()->post->create(
-			array(
-				'post_title'  => '非公開の記事',
-				'post_status' => 'private',
-			)
-		);
-		$published = clone get_post( $post_id );
-
-		$published->post_status = 'publish';
-
-		$response = $this->post_llms_txt_ajax(
-			'avc_ais_save_llms_txt',
-			'handle_save_llms_txt',
-			array( 'content' => '- [非公開の記事](' . get_permalink( $published ) . "): 秘密\n<b>太字</b>の見出し" )
-		);
-
-		$this->assertSame( '太字の見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-		$this->assertSame( '太字の見出し', $response['content'] );
-		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( '太字の見出し' ), $response['hash'] );
-	}
-
-	/**
 	 * 保存ボタンのあとは、保存した内容を基準に編集の有無を判定すること。
 	 *
 	 * 保存後に開いたときの内容へ手で戻したら、編集として保存する。
@@ -845,27 +763,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * 無効にしている間に非公開にした投稿の行が、有効化後の読み出しで取り除かれること。
-	 *
-	 * @return void
-	 */
-	public function test_content_is_scrubbed_again_after_deactivation() {
-		global $wpdb;
-
-		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
-		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
-
-		AVC_AIS_Llms_Txt::deactivate();
-
-		// 無効の間はフックが動かないので、データベースを直接更新する。
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$wpdb->update( $wpdb->posts, array( 'post_status' => 'private' ), array( 'ID' => $post_id ) );
-		clean_post_cache( $post_id );
-
-		$this->assertSame( '# 見出し', AVC_AIS_Llms_Txt::init()->get_content() );
-	}
-
-	/**
 	 * 配列を送られても警告を出さず、空として扱うこと。
 	 *
 	 * @return void
@@ -893,126 +790,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 		$llms->save_content( $llms->get_content() );
 
 		$this->assertFalse( get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
-	 * URL を保ったまま保存した行も、投稿を非公開にすれば取り除かれること。
-	 *
-	 * @return void
-	 */
-	public function test_hiding_a_post_removes_entry_saved_with_encoded_url() {
-		$post_id = self::factory()->post->create(
-			array(
-				'post_title' => '日本語の記事',
-				'post_name'  => 'あい',
-			)
-		);
-		$llms    = AVC_AIS_Llms_Txt::init();
-		$llms->save_content( '- [日本語の記事](' . get_permalink( $post_id ) . "): 抜粋\n# 手書きの見出し" );
-
-		wp_update_post(
-			array(
-				'ID'          => $post_id,
-				'post_status' => 'private',
-			)
-		);
-
-		$this->assertSame( '# 手書きの見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
-	 * 大文字のパーセントエンコードで書かれた行も、投稿を非公開にすれば取り除かれること。
-	 *
-	 * get_permalink() は小文字を返すが、ブラウザからコピーした URL は大文字のことがある。
-	 *
-	 * @return void
-	 */
-	public function test_hiding_a_post_removes_entry_with_upper_case_percent_bytes() {
-		$post_id = self::factory()->post->create(
-			array(
-				'post_title' => '日本語の記事',
-				'post_name'  => 'あい',
-			)
-		);
-		$url     = get_permalink( $post_id );
-		$upper   = preg_replace_callback(
-			'/%[0-9a-f]{2}/',
-			static function ( $byte ) {
-				return strtoupper( $byte[0] );
-			},
-			$url
-		);
-		$this->assertNotSame( $url, $upper, '前提: 大文字と小文字で URL が異なる' );
-
-		AVC_AIS_Llms_Txt::init()->save_content( "- [日本語の記事]({$upper}): 抜粋\n# 手書きの見出し" );
-		wp_update_post(
-			array(
-				'ID'          => $post_id,
-				'post_status' => 'private',
-			)
-		);
-
-		$this->assertSame( '# 手書きの見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
-	 * 投稿を非公開にしても、大文字と小文字だけが違うタイトルの公開中の行は残ること。
-	 *
-	 * 壊れた URL は投稿どうしで衝突するので、タイトルで区別している。
-	 *
-	 * @return void
-	 */
-	public function test_hiding_a_post_keeps_entry_whose_title_differs_only_by_case() {
-		$hidden_id = self::factory()->post->create(
-			array(
-				'post_title' => 'apple',
-				'post_name'  => 'あ',
-			)
-		);
-		$public_id = self::factory()->post->create(
-			array(
-				'post_title' => 'Apple',
-				'post_name'  => 'い',
-			)
-		);
-		$broken    = sanitize_textarea_field( get_permalink( $hidden_id ) );
-		$this->assertSame( $broken, sanitize_textarea_field( get_permalink( $public_id ) ), '前提: 壊れた URL が衝突する' );
-
-		$public_line = "- [Apple]({$broken}): 公開の抜粋";
-		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [apple]({$broken}): 隠す抜粋\n{$public_line}" );
-
-		wp_update_post(
-			array(
-				'ID'          => $hidden_id,
-				'post_status' => 'private',
-			)
-		);
-
-		$this->assertSame( $public_line, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
-	 * タイトルに連続するスペースがある保護された投稿の行も取り除かれること。
-	 *
-	 * 以前の保存処理は、パーセントエンコードを除去した文書の連続するスペースをまとめていた。
-	 *
-	 * @return void
-	 */
-	public function test_scrub_removes_legacy_entry_whose_title_has_double_spaces() {
-		$protected_id = self::factory()->post->create(
-			array(
-				'post_title'    => 'Members  only',
-				'post_name'     => 'あ',
-				'post_password' => 'hunter2',
-			)
-		);
-
-		$legacy = sanitize_textarea_field(
-			'- [Members  only](' . get_permalink( $protected_id ) . "): secret\n# 見出し"
-		);
-		$this->assertStringContainsString( '- [Members only]', $legacy, '前提: スペースがまとめられる' );
-
-		$this->assertSame( '# 見出し', $this->run_once_over_legacy_content( $legacy ) );
 	}
 
 	/**
@@ -1051,47 +828,6 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * URL の修復が途中で失敗しても、繰り返さないこと。
-	 *
-	 * 秘密を取り除く処理は完了しているので、/llms.txt が失敗し続ける理由がない。
-	 *
-	 * @return void
-	 */
-	public function test_failed_repair_is_not_retried() {
-		$protected_id = self::factory()->post->create(
-			array(
-				'post_title'    => '保護された記事',
-				'post_name'     => 'あ',
-				'post_password' => 'hunter2',
-			)
-		);
-		update_option(
-			AVC_AIS_Llms_Txt::OPTION_NAME,
-			'- [保護された記事](' . sanitize_textarea_field( get_permalink( $protected_id ) ) . "): 秘密\n- [別の記事](https://example.com/): 抜粋"
-		);
-		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
-
-		add_action(
-			'pre_get_posts',
-			static function ( $query ) {
-				if ( $query->get( 'title' ) ) {
-					throw new RuntimeException( 'time limit' );
-				}
-			}
-		);
-
-		try {
-			AVC_AIS_Llms_Txt::init()->get_content();
-			$this->fail( '前提: 修復が途中で止まる' );
-		} catch ( RuntimeException $e ) {
-			$this->assertSame( 'time limit', $e->getMessage() );
-		}
-
-		$this->assertNotEmpty( get_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED ) );
-		$this->assertStringNotContainsString( '秘密', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
-	}
-
-	/**
 	 * 以前のバージョンが保存した内容を用意して、一度きりの処理を走らせる。
 	 *
 	 * @param string $saved 保存済みの内容.
@@ -1099,9 +835,11 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	 */
 	private function run_once_over_legacy_content( $saved ) {
 		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, $saved );
-		delete_option( AVC_AIS_Llms_Txt::OPTION_SCRUBBED );
+		delete_option( AVC_AIS_Llms_Txt::OPTION_URLS_REPAIRED );
 
-		return AVC_AIS_Llms_Txt::init()->get_content();
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+
+		return get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
 	}
 
 	/**
@@ -1142,7 +880,8 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 
 		// 二度目は走らないので、管理者が同じ形で書き直した内容には触れない。
 		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [最初の記事]({$broken}): 書き直し" );
-		$this->assertSame( "- [最初の記事]({$broken}): 書き直し", AVC_AIS_Llms_Txt::init()->get_content() );
+		AVC_AIS_Llms_Txt::init()->maybe_repair_saved_urls();
+		$this->assertSame( "- [最初の記事]({$broken}): 書き直し", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
 	}
 
 	/**
@@ -1254,47 +993,214 @@ class LlmsTxtSaveTest extends WP_UnitTestCase {
 	}
 
 	/**
-	 * URL の修復で公開されていない投稿へのリンクを作らないこと。
+	 * 開いている間に隠した投稿の行が、編集せずに保存しても配信されないこと。
 	 *
 	 * @return void
 	 */
-	public function test_repair_never_links_to_hidden_posts() {
-		$draft_id = self::factory()->post->create(
+	public function test_unedited_form_does_not_serve_entry_of_post_hidden_meanwhile() {
+		$post_id = self::factory()->post->create( array( 'post_title' => '隠す記事' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [隠す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+		$fields = $this->open_settings_screen();
+
+		wp_update_post(
 			array(
-				'post_title'  => '下書きの記事',
-				'post_name'   => 'あい',
-				'post_status' => 'draft',
+				'ID'          => $post_id,
+				'post_status' => 'private',
 			)
 		);
-		$draft    = get_post( $draft_id );
+		$this->submit_settings_form( $fields );
 
-		$published              = clone $draft;
-		$published->post_status = 'publish';
-		$broken                 = sanitize_textarea_field( get_permalink( $published ) );
-
-		$saved = "- [下書きの記事]({$broken}): 抜粋";
-
-		$this->assertSame( $saved, $this->run_once_over_legacy_content( $saved ) );
+		$this->assertSame( '# 見出し', AVC_AIS_Llms_Txt::init()->get_served_content() );
 	}
 
 	/**
-	 * 保護された投稿の行は修復されず、取り除かれること。
+	 * 開いている間に削除した投稿の行が、編集せずに保存しても戻らないこと。
 	 *
 	 * @return void
 	 */
-	public function test_repair_removes_rather_than_repairs_protected_posts() {
-		$protected_id = self::factory()->post->create(
+	public function test_unedited_form_does_not_restore_entry_of_post_deleted_meanwhile() {
+		$post_id = self::factory()->post->create( array( 'post_title' => '消す記事' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [消す記事](' . get_permalink( $post_id ) . "): 秘密\n# 見出し" );
+		$fields = $this->open_settings_screen();
+
+		wp_delete_post( $post_id, true );
+		$this->submit_settings_form( $fields );
+
+		$this->assertSame( '# 見出し', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 編集して保存しても、開いている間に隠した投稿の行が配信されないこと。
+	 *
+	 * @dataProvider provide_hidden_post_changes
+	 *
+	 * @param array $change 投稿に加える変更.
+	 * @return void
+	 */
+	public function test_edited_form_does_not_serve_entry_of_post_hidden_meanwhile( array $change ) {
+		$post_id = self::factory()->post->create( array( 'post_content' => 'TOPSECRETEXCERPT' ) );
+		$fields  = $this->open_settings_screen();
+		$this->assertStringContainsString( 'TOPSECRETEXCERPT', $fields['llms_txt_content'], '前提: 開いたときは載っている' );
+
+		wp_update_post( array_merge( array( 'ID' => $post_id ), $change ) );
+		$fields['llms_txt_content'] .= "\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$served = AVC_AIS_Llms_Txt::init()->get_served_content();
+		$this->assertStringNotContainsString( 'TOPSECRETEXCERPT', $served );
+		$this->assertStringEndsWith( '# 追記', $served );
+	}
+
+	/**
+	 * 開いている間に投稿を隠す変更を返す。
+	 *
+	 * @return array[]
+	 */
+	public function provide_hidden_post_changes() {
+		return array(
+			'private'            => array( array( 'post_status' => 'private' ) ),
+			'password protected' => array( array( 'post_password' => 'hunter2' ) ),
+			'draft'              => array( array( 'post_status' => 'draft' ) ),
+			'trash'              => array( array( 'post_status' => 'trash' ) ),
+		);
+	}
+
+	/**
+	 * 編集して保存しても、開いている間に削除した投稿の行が戻らないこと。
+	 *
+	 * 同じ保存で追記した内容と、外部サイトへの行は残す。
+	 *
+	 * @return void
+	 */
+	public function test_edited_form_does_not_restore_entry_of_post_deleted_meanwhile() {
+		$post_id = self::factory()->post->create( array( 'post_content' => 'TOPSECRETEXCERPT' ) );
+		$fields  = $this->open_settings_screen();
+		$this->assertStringContainsString( 'TOPSECRETEXCERPT', $fields['llms_txt_content'], '前提: 開いたときは載っている' );
+
+		wp_delete_post( $post_id, true );
+		$fields['llms_txt_content'] .= "\r\n- [外部](https://other.example/): 説明\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+		$this->assertStringNotContainsString( 'TOPSECRETEXCERPT', $saved );
+		$this->assertStringEndsWith( "- [外部](https://other.example/): 説明\n# 追記", $saved );
+	}
+
+	/**
+	 * 古い画面でも、投稿に対応しないサイト内の行を追記すればそのまま保存すること。
+	 *
+	 * 一覧ページやトップページへの手書きの行を、削除した投稿の行と取り違えない。
+	 *
+	 * @return void
+	 */
+	public function test_edited_form_keeps_added_site_entries_when_screen_is_stale() {
+		$fields  = $this->open_settings_screen();
+		$lines   = array(
+			'- [ブログ](' . home_url( '/blog/' ) . '): 記事の一覧',
+			'- [ホーム](' . home_url( '/' ) . '): トップページ',
+		);
+		$post_id = self::factory()->post->create( array( 'post_title' => '開いている間の記事' ) );
+		$this->assertNotEmpty( $post_id, '前提: 画面が古くなる' );
+
+		$fields['llms_txt_content'] .= "\r\n" . implode( "\r\n", $lines );
+		$this->submit_settings_form( $fields );
+
+		$this->assertStringEndsWith( implode( "\n", $lines ), get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 削除した投稿と同じ URL の投稿を作り直したら、古い画面の行を取り除かないこと。
+	 *
+	 * @return void
+	 */
+	public function test_edited_form_keeps_entry_of_recreated_post() {
+		$post_id = self::factory()->post->create(
 			array(
-				'post_title'    => '保護された記事',
-				'post_name'     => 'あい',
-				'post_password' => 'hunter2',
+				'post_title' => '作り直す記事',
+				'post_name'  => 'recreated',
 			)
 		);
+		$url     = get_permalink( $post_id );
+		$fields  = $this->open_settings_screen();
 
-		$content = $this->run_once_over_legacy_content(
-			'- [保護された記事](' . sanitize_textarea_field( get_permalink( $protected_id ) ) . "): 秘密の本文\n# 見出し"
+		wp_delete_post( $post_id, true );
+		$new_id = self::factory()->post->create(
+			array(
+				'post_title' => '作り直した記事',
+				'post_name'  => 'recreated',
+			)
+		);
+		$this->assertSame( $url, get_permalink( $new_id ), '前提: 同じ URL になる' );
+
+		$fields['llms_txt_content'] .= "\r\n# 追記";
+		$this->submit_settings_form( $fields );
+
+		$this->assertStringContainsString( "- [作り直す記事]({$url}):", get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * 削除した投稿の URL は期限を過ぎると忘れ、件数にも上限があること。
+	 *
+	 * @return void
+	 */
+	public function test_deleted_urls_are_pruned() {
+		update_option(
+			AVC_AIS_Llms_Txt::OPTION_DELETED_URLS,
+			array(
+				'/expired' => time() - AVC_AIS_Llms_Txt::DELETED_URL_TTL - 60,
+				'/recent'  => time() - 60,
+			),
+			false
 		);
 
-		$this->assertSame( '# 見出し', $content );
+		$post_id = self::factory()->post->create( array( 'post_name' => 'just-deleted' ) );
+		wp_delete_post( $post_id, true );
+
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
+		$this->assertArrayNotHasKey( '/expired', $deleted );
+		$this->assertArrayHasKey( '/recent', $deleted );
+		$this->assertArrayHasKey( WP_TESTS_DOMAIN . ':0/just-deleted', $deleted );
+
+		$many = array();
+		for ( $i = 0; $i < AVC_AIS_Llms_Txt::DELETED_URL_LIMIT + 5; $i++ ) {
+			$many[ "/old-{$i}" ] = time();
+		}
+		update_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS, $many, false );
+
+		$post_id = self::factory()->post->create( array( 'post_name' => 'over-limit' ) );
+		wp_delete_post( $post_id, true );
+
+		$deleted = get_option( AVC_AIS_Llms_Txt::OPTION_DELETED_URLS );
+		$this->assertCount( AVC_AIS_Llms_Txt::DELETED_URL_LIMIT, $deleted );
+		$this->assertArrayHasKey( WP_TESTS_DOMAIN . ':0/over-limit', $deleted );
+	}
+
+	/**
+	 * 保存ボタンは実際に保存した内容を返し、隠した投稿の行も画面に残すこと。
+	 *
+	 * @return void
+	 */
+	public function test_save_button_returns_content_actually_stored() {
+		$post_id = self::factory()->post->create(
+			array(
+				'post_title'  => '非公開の記事',
+				'post_status' => 'private',
+				'post_name'   => 'hidden',
+			)
+		);
+		$url     = home_url( '/hidden/' );
+		$this->assertNotEmpty( $post_id, '前提: 投稿がある' );
+
+		$response = $this->post_llms_txt_ajax(
+			'avc_ais_save_llms_txt',
+			'handle_save_llms_txt',
+			array( 'content' => "- [非公開の記事]({$url}): 秘密\n<b>太字</b>の見出し" )
+		);
+
+		$expected = "- [非公開の記事]({$url}): 秘密\n太字の見出し";
+		$this->assertSame( $expected, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+		$this->assertSame( $expected, $response['content'] );
+		$this->assertSame( AVC_AIS_Llms_Txt::content_hash( $expected ), $response['hash'] );
+		$this->assertSame( '太字の見出し', AVC_AIS_Llms_Txt::init()->get_served_content() );
 	}
 }

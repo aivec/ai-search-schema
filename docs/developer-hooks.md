@@ -47,6 +47,25 @@ add_filter( 'avc_ais_competing_schema_patterns', function( $patterns ) {
 
 ---
 
+### `avc_ais_local_business_types`
+
+Filter the LocalBusiness types that can be selected and output. Values that are not in this list are output as `LocalBusiness`.
+
+選択と出力ができる LocalBusiness の型を絞り込みます。この一覧にない値は `LocalBusiness` として出力します。
+
+**Parameters / パラメータ:**
+- `$types` (string[]) - Types / 型
+
+**Example / 例:**
+```php
+add_filter( 'avc_ais_local_business_types', function( $types ) {
+    $types[] = 'Museum';
+    return $types;
+} );
+```
+
+---
+
 ## Breadcrumb Filters / パンくずフィルター
 
 ### `avc_ais_show_breadcrumbs`

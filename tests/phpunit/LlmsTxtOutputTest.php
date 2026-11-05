@@ -27,7 +27,7 @@ class AVC_AIS_LlmsTxtOutput_Test extends WP_UnitTestCase {
 		// シングルトンをリセットして毎テストをクリーンな状態にする.
 		$reflection = new ReflectionClass( 'AVC_AIS_Llms_Txt' );
 		$instance   = $reflection->getProperty( 'instance' );
-		$instance->setAccessible( true );
+		avc_ais_test_make_accessible( $instance );
 		$instance->setValue( null, null );
 
 		$this->llms = AVC_AIS_Llms_Txt::init();
@@ -50,7 +50,7 @@ class AVC_AIS_LlmsTxtOutput_Test extends WP_UnitTestCase {
 	 */
 	private function sanitize_output( $content ) {
 		$method = new ReflectionMethod( 'AVC_AIS_Llms_Txt', 'sanitize_output' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 		return $method->invoke( $this->llms, $content );
 	}
 

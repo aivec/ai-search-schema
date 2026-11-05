@@ -30,12 +30,12 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 
 		// AVC_AIS_Settings シングルトンをリセット.
 		$settings_ref = new ReflectionProperty( AVC_AIS_Settings::class, 'instance' );
-		$settings_ref->setAccessible( true );
+		avc_ais_test_make_accessible( $settings_ref );
 		$settings_ref->setValue( null, null );
 
 		// AVC_AIS_Schema シングルトンをリセット.
 		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'instance' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$ref->setValue( null, null );
 
 		// フィルターをリセット.
@@ -105,7 +105,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 
 		// suppressing_external_schema フラグが false であることを確認.
 		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'suppressing_external_schema' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$is_suppressing = $ref->getValue( $this->schema );
 
 		$this->assertFalse( $is_suppressing, 'Should NOT be suppressing when priority is external' );
@@ -129,7 +129,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 
 		// external_schema_filters プロパティを確認.
 		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'external_schema_filters' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$filters = $ref->getValue( $this->schema );
 
 		$this->assertIsArray( $filters );
@@ -162,7 +162,7 @@ class CompetingSchemaSuppressTest extends WP_UnitTestCase {
 
 		// suppressing_external_schema フラグを確認.
 		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'suppressing_external_schema' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$is_suppressing = $ref->getValue( $this->schema );
 
 		$this->assertTrue( $is_suppressing, 'Suppression flag should be set after first call' );

@@ -44,7 +44,7 @@ class OpeningHoursTest extends WP_UnitTestCase {
 
 		// シングルトンをリセット.
 		$ref = new ReflectionProperty( AVC_AIS_Schema::class, 'instance' );
-		$ref->setAccessible( true );
+		avc_ais_test_make_accessible( $ref );
 		$ref->setValue( null, null );
 	}
 

@@ -103,7 +103,7 @@ class BreadcrumbsTest extends WP_UnitTestCase {
 		// シングルトンインスタンスをリセット.
 		$reflection = new ReflectionClass( 'AVC_AIS_Breadcrumbs' );
 		$property   = $reflection->getProperty( 'instance' );
-		$property->setAccessible( true );
+		avc_ais_test_make_accessible( $property );
 		$property->setValue( null, null );
 	}
 

@@ -163,7 +163,7 @@ class WizardTest extends WP_UnitTestCase {
 		// リフレクションを使ってプライベートメソッドにアクセス.
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// Test with UI input names.
 		$input = array(
@@ -189,7 +189,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'company_name' => '  Test Company  ',
@@ -212,7 +212,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// UI sends entity_type directly.
 		$input = array(
@@ -234,7 +234,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array( 'entity_type' => 'Person' );
 		$result = $method->invoke( $wizard, 'type', $input );
@@ -253,7 +253,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array( 'site_type' => 'local_business' );
 		$result = $method->invoke( $wizard, 'type', $input );
@@ -268,7 +268,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// UI input names.
 		$input = array(
@@ -316,7 +316,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// Legacy input names.
 		$input = array(
@@ -348,7 +348,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// UI sends hours_{day}_opens/closes format.
 		$input = array(
@@ -379,7 +379,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'opening_hours' => array(
@@ -410,7 +410,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$input = array(
 			'geo_latitude'  => 'not a number',
@@ -431,7 +431,7 @@ class WizardTest extends WP_UnitTestCase {
 
 		$reflection = new ReflectionClass( $wizard );
 		$method     = $reflection->getMethod( 'sanitize_step_data' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$valid_days = array( 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'holiday' );
 		$hours      = array();

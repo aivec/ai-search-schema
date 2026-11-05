@@ -213,7 +213,7 @@ class PluginTest extends WP_UnitTestCase {
 	public function test_load_dependencies_loads_specified_files() {
 		$reflection = new ReflectionClass( $this->plugin );
 		$method     = $reflection->getMethod( 'load_dependencies' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// メソッドを呼び出し.
 		$method->invoke( $this->plugin );
@@ -230,7 +230,7 @@ class PluginTest extends WP_UnitTestCase {
 		// 存在しないファイルがあってもエラーにならないはず.
 		$reflection = new ReflectionClass( $this->plugin );
 		$method     = $reflection->getMethod( 'load_dependencies' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		// エラーなく実行できることを確認.
 		$method->invoke( $this->plugin );

@@ -68,7 +68,7 @@ $options = get_option( 'avc_ais_options', array() );
 							</div>
 							<div class="ais-wizard-summary__item">
 								<dt><?php esc_html_e( 'Business Type', 'aivec-ai-search-schema' ); ?></dt>
-								<dd><?php echo esc_html( $options['local_business_type'] ?? '-' ); ?></dd>
+								<dd><?php echo esc_html( ( $options['lb_subtype'] ?? '' ) ?: ( ( $options['local_business_type'] ?? '' ) ?: '-' ) ); ?></dd>
 							</div>
 							<?php
 							// Build address display from normalized array.

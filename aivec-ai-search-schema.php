@@ -3,7 +3,7 @@
  * Plugin Name: Aivec AI Search Schema
  * Plugin URI: https://aivec.co.jp/apps
  * Description: Schema markup for AI search optimization, local SEO, breadcrumbs, and FAQ.
- * Version:           1.3.2
+ * Version:           1.3.3
  * Requires at least: 6.5
  * Requires PHP:      8.0
  * Author:            Aivec LLC
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Plugin constants.
-define( 'AVC_AIS_VERSION', '1.3.2' );
+define( 'AVC_AIS_VERSION', '1.3.3' );
 define( 'AVC_AIS_DIR', plugin_dir_path( __FILE__ ) );
 define( 'AVC_AIS_URL', plugin_dir_url( __FILE__ ) );
 define( 'AVC_AIS_FILE', __FILE__ );
@@ -143,7 +143,7 @@ add_action(
 // Activation hook - set redirect transient for wizard and flush rewrite rules.
 register_activation_hook(
 	__FILE__,
-	static function () {
+	static function ( $network_wide = false ) {
 		// Only set redirect if wizard hasn't been completed.
 		if ( ! get_option( 'avc_ais_wizard_completed', false ) ) {
 			set_transient( 'avc_ais_wizard_redirect', true, 30 );
@@ -151,16 +151,16 @@ register_activation_hook(
 
 		// Flush rewrite rules for llms.txt.
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		AVC_AIS_Llms_Txt::activate();
+		AVC_AIS_Llms_Txt::activate( $network_wide );
 	}
 );
 
 // Deactivation hook - flush rewrite rules.
 register_deactivation_hook(
 	__FILE__,
-	static function () {
+	static function ( $network_wide = false ) {
 		require_once AVC_AIS_DIR . 'includes/class-avc-ais-llms-txt.php';
-		AVC_AIS_Llms_Txt::deactivate();
+		AVC_AIS_Llms_Txt::deactivate( $network_wide );
 	}
 );
 

@@ -962,6 +962,17 @@
     }
   }
 
+  // 配信されない行の一覧を、保存後の内容に合わせて更新する。
+  function updateLlmsTxtHiddenEntries(titles) {
+    const $notice = $('#ais-llms-txt-hidden-entries');
+    const list = Array.isArray(titles) ? titles : [];
+
+    $notice.find('ul').empty().append(list.map(function (title) {
+      return $('<li>').text(title);
+    }));
+    $notice.toggle(list.length > 0);
+  }
+
   // llms.txt save button handler
   function initLlmsTxtSave() {
     const $button = $('#ais-save-llms-txt');
@@ -996,6 +1007,7 @@
           if (response.success) {
             $textarea.val(response.data.content);
             $hash.val(response.data.hash);
+            updateLlmsTxtHiddenEntries(response.data.hidden_titles);
             $status.text(avcAisSettings.i18nLlmsTxtSaved || 'Saved!').css('color', '#46b450');
             setTimeout(function () {
               $status.fadeOut(function () {
@@ -1049,6 +1061,7 @@
           if (response.success && response.data && response.data.content) {
             $textarea.val(response.data.content);
             $hash.val(response.data.hash);
+            updateLlmsTxtHiddenEntries(response.data.hidden_titles);
             $status.text(response.data.message || 'Regenerated!').css('color', '#46b450');
             setTimeout(function () {
               $status.fadeOut(function () {

@@ -7,6 +7,26 @@
  */
 defined( 'ABSPATH' ) || exit;
 class AVC_AIS_Settings {
+	/**
+	 * 管理画面のメニューのアイコン（AIVEC のシンボル）。元の SVG は docs/images/menu-icon.svg。
+	 *
+	 * WordPress が fill を管理画面の配色へ塗り替えるので、1 色で Base64 の data URI にする。
+	 */
+	const MENU_ICON = 'data:image/svg+xml;base64,'
+		. 'PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgLTguNSA4MiA4MiI+PHBhdGggZmls'
+		. 'bD0iI2E3YWFhZCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMC4wIDAuMDAxKSIgZD0iTTM5LjUxNCwyMi44NTlTMjcuODkyLDYu'
+		. 'NTg4LDI1LjQzOSwzLjIzMXMtOC4xMzUtNS4xNjUtMTEuNzUxLDBTMCwyMi44NTksMCwyMi44NTlsNS42ODEsOC4zOTRoMjAu'
+		. 'NzlsLTUuODU4LTguMzk0SDEwLjg0N0wxOS43NTcsMTAuODUsMzMuNywzMS4yNTNaIi8+PHBhdGggZmlsbD0iI2E3YWFhZCIg'
+		. 'dHJhbnNmb3JtPSJ0cmFuc2xhdGUoLTAuMDc5IDAuMDAxKSIgZD0iTTc2LDMzLjQ3NGwtMTMuOTQ2LDIwLjRMNTMuMTQxLDQx'
+		. 'Ljg2OGwtNi4zODItOS4yMzIsMS0xLjM4M2guMDVsLjgwOC0xLjE4MnYwTDYxLjc2LDEwLjg1bDguOTExLDEyLjAwOSw1LjE2'
+		. 'NSw4LjM5NCw1LjY4MS04LjM5NFM3MS40NDUsOC40LDY3LjgzLDMuMjMxcy05LjMtMy4zNTctMTEuNzUxLDBDNTMuOSw2LjIx'
+		. 'Niw0MC4xMzcsMjYuMDI3LDM3LjEwOCwzMC4zOUgzNy4wOEwyMC4xMDgsNTMuODc3LDExLjIsNDEuODY4aDkuNzY3bDUuODU4'
+		. 'LTguMzk0SDYuMDMyTC4zNSw0MS44NjhTMTAuNDIzLDU2LjMzMSwxNC4wMzgsNjEuNXM5LjMsMy4zNTcsMTEuNzUxLDBjMS40'
+		. 'NjEtMiw5LjI3OC0xMi43NiwxNS4zNjQtMjEuMTQsMS44NjUsMi42NTcsMTEuNTY3LDE2LjQ3OSwxNC44MywyMS4xNCwzLjYx'
+		. 'Niw1LjE2NSw5LjMsMy4zNTcsMTEuNzUxLDBTODEuODA5LDQxLjg2OCw4MS44MDksNDEuODY4WiIvPjxwYXRoIGZpbGw9IiNh'
+		. 'N2FhYWQiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0xNS44MjcgLTcuNTExKSIgZD0iTTg0LjUyMiw0MC40NjlhNi45LDYuOSww'
+		. 'LDEsMS02Ljg5NS02Ljg5NSw2Ljg5NSw2Ljg5NSwwLDAsMSw2Ljg5NSw2Ljg5NSIvPjwvc3ZnPg==';
+
 	private const OPTION_NAME                = 'avc_ais_options';
 	private const OPTION_GMAPS_KEY           = 'avc_ais_gmaps_api_key';
 	private const GEOCODE_RATE_LIMIT_SECONDS = 10;
@@ -38,6 +58,7 @@ class AVC_AIS_Settings {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_menu_label_style' ) );
 		add_action( 'wp_ajax_avc_ais_geocode', array( $this, 'handle_geocode_request' ) );
 		add_action( 'wp_ajax_avc_ais_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
 		add_action( 'wp_ajax_avc_ais_save_llms_txt', array( $this, 'handle_save_llms_txt' ) );
@@ -53,9 +74,17 @@ class AVC_AIS_Settings {
 	 * @return mixed Filtered value with nulls removed.
 	 */
 	public function filter_option_on_get( $value ) {
-		if ( is_array( $value ) ) {
-			return $this->filter_null_values( $value );
+		if ( ! is_array( $value ) ) {
+			return $value;
 		}
+
+		$value = $this->filter_null_values( $value );
+		foreach ( array( 'lb_subtype', 'business_type', 'local_business_type' ) as $key ) {
+			if ( isset( $value[ $key ] ) ) {
+				$value[ $key ] = AVC_AIS_LocalBusinessTypes::rename( $value[ $key ] );
+			}
+		}
+
 		return $value;
 	}
 
@@ -66,11 +95,11 @@ class AVC_AIS_Settings {
 		// トップレベルメニューを追加.
 		add_menu_page(
 			__( 'AI Search Schema Settings', 'aivec-ai-search-schema' ),
-			__( 'AI Search Schema', 'aivec-ai-search-schema' ),
+			_x( 'AI Search Schema', 'admin menu label', 'aivec-ai-search-schema' ),
 			'manage_options',
 			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' ),
-			'dashicons-schema',
+			self::MENU_ICON,
 			81
 		);
 
@@ -82,6 +111,17 @@ class AVC_AIS_Settings {
 			'manage_options',
 			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' )
+		);
+	}
+
+	/**
+	 * メニュー名を 1 行に収める。標準の余白では幅が 2px ほど足りず、折り返される。
+	 * 文字の間隔も少し詰めて、選択中に右端へ出る矢印に文字が触れないようにする。
+	 */
+	public function add_menu_label_style() {
+		wp_add_inline_style(
+			'admin-menu',
+			'#adminmenu #toplevel_page_aivec-ai-search-schema .wp-menu-name{padding-inline-end:0;letter-spacing:-.2px}'
 		);
 	}
 
@@ -315,9 +355,13 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $content,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $content ),
-				'message' => __( 'llms.txt content has been regenerated from site data.', 'aivec-ai-search-schema' ),
+				'content'       => $content,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $content ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __(
+					'llms.txt content has been regenerated from site data.',
+					'aivec-ai-search-schema'
+				),
 			)
 		);
 	}
@@ -359,9 +403,10 @@ class AVC_AIS_Settings {
 		$this->respond_json(
 			true,
 			array(
-				'content' => $current,
-				'hash'    => AVC_AIS_Llms_Txt::content_hash( $current ),
-				'message' => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
+				'content'       => $current,
+				'hash'          => AVC_AIS_Llms_Txt::content_hash( $current ),
+				'hidden_titles' => $llms_txt->get_hidden_entry_titles(),
+				'message'       => __( 'llms.txt content has been saved.', 'aivec-ai-search-schema' ),
 			)
 		);
 	}
@@ -667,17 +712,10 @@ class AVC_AIS_Settings {
 	 * @return array サニタイズされたオプション
 	 */
 	public function sanitize_options( $input ) {
-		$llms_txt_content = null;
-		if ( ! is_array( $input ) ) {
-			$input = array();
-		} else {
-			// Filter null values before wp_unslash to prevent PHP 8 deprecation warnings.
-			$input = $this->filter_null_values( $input );
-			// options.php がスラッシュを取り除いたあとの値。もう一度取り除くと本文の \ が消え、
-			// 表示したときの内容と一致しなくなる。
-			$llms_txt_content = $input['llms_txt_content'] ?? null;
-			$input            = wp_unslash( $input );
-		}
+		// options.php はスラッシュを取り除いてから update_option() を呼び、ウィザードなど他の
+		// 呼び出し元の値にもスラッシュはない。ここで取り除くと入力した \ が消える。
+		$input            = is_array( $input ) ? $this->filter_null_values( $input ) : array();
+		$llms_txt_content = $input['llms_txt_content'] ?? null;
 
 		$output = $this->get_options();
 
@@ -744,8 +782,7 @@ class AVC_AIS_Settings {
 			: 'Organization';
 
 		$lb_subtype_raw          = $input['lb_subtype'] ?? $input['business_type'] ?? 'LocalBusiness';
-		$lb_subtype              = sanitize_text_field( $lb_subtype_raw );
-		$lb_subtype              = $lb_subtype ? $lb_subtype : 'LocalBusiness';
+		$lb_subtype              = AVC_AIS_LocalBusinessTypes::to_saved_value( sanitize_text_field( $lb_subtype_raw ) );
 		$output['lb_subtype']    = $lb_subtype;
 		$output['business_type'] = $lb_subtype;
 

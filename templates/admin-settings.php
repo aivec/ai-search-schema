@@ -426,7 +426,39 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						</div>
 						<div class="ais-field">
 							<label for="ais-business-type"><?php esc_html_e( 'LocalBusiness subtype', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Specify a more specific type. Examples: Restaurant, Dentist, HairSalon, AutoRepair, LegalService', 'aivec-ai-search-schema' ) ); ?></label>
-							<input id="ais-business-type" type="text" name="<?php echo esc_attr( $option_name ); ?>[lb_subtype]" value="<?php echo esc_attr( $options['lb_subtype'] ); ?>" placeholder="<?php esc_attr_e( 'Example: Store, Restaurant', 'aivec-ai-search-schema' ); ?>" />
+							<?php
+							$lb_common_types  = AVC_AIS_LocalBusinessTypes::common_choices();
+							$lb_type_is_valid = AVC_AIS_LocalBusinessTypes::is_valid( $options['lb_subtype'] );
+							$lb_invalid_type  = ! $lb_type_is_valid && is_string( $options['lb_subtype'] ) ? $options['lb_subtype'] : '';
+							$lb_selected_type = '' !== $lb_invalid_type ? $lb_invalid_type : AVC_AIS_LocalBusinessTypes::to_selected_choice( $options['lb_subtype'] );
+							?>
+							<select id="ais-business-type" name="<?php echo esc_attr( $option_name ); ?>[lb_subtype]">
+								<?php // 無効な値も残す。選択肢になければ、関係のない設定の保存で別の型に変わってしまう。 ?>
+								<?php if ( '' !== $lb_invalid_type ) : ?>
+									<option value="<?php echo esc_attr( $lb_invalid_type ); ?>" selected="selected"><?php echo esc_html( $lb_invalid_type ); ?></option>
+								<?php endif; ?>
+								<optgroup label="<?php esc_attr_e( 'Common types', 'aivec-ai-search-schema' ); ?>">
+									<?php foreach ( $lb_common_types as $lb_type_value => $lb_type_label ) : ?>
+										<option value="<?php echo esc_attr( $lb_type_value ); ?>" <?php selected( $lb_selected_type, $lb_type_value ); ?>><?php echo esc_html( $lb_type_label ); ?></option>
+									<?php endforeach; ?>
+								</optgroup>
+								<optgroup label="<?php esc_attr_e( 'All schema.org types', 'aivec-ai-search-schema' ); ?>">
+									<?php foreach ( array_diff( AVC_AIS_LocalBusinessTypes::all(), array_keys( $lb_common_types ) ) as $lb_type_value ) : ?>
+										<option value="<?php echo esc_attr( $lb_type_value ); ?>" <?php selected( $lb_selected_type, $lb_type_value ); ?>><?php echo esc_html( $lb_type_value ); ?></option>
+									<?php endforeach; ?>
+								</optgroup>
+							</select>
+							<?php if ( '' !== $lb_invalid_type ) : ?>
+								<p class="ais-field__description" id="ais-business-type-invalid">
+									<?php
+									printf(
+										/* translators: %s: saved business type */
+										esc_html__( '"%s" is not a LocalBusiness type on schema.org, so "LocalBusiness" is output. Select a type and save.', 'aivec-ai-search-schema' ),
+										esc_html( $lb_invalid_type )
+									);
+									?>
+								</p>
+							<?php endif; ?>
 						</div>
 						<div class="ais-field">
 							<label for="ais-lb-label"><?php esc_html_e( 'Location label', 'aivec-ai-search-schema' ); ?><?php avc_ais_tooltip( __( 'Appends after the Organization name to clarify each location.', 'aivec-ai-search-schema' ) ); ?></label>
@@ -1006,6 +1038,15 @@ $diag_has_issues    = $diag_error_count > 0 || $diag_warning_count > 0;
 						<p class="ais-field__description">
 							<?php esc_html_e( 'Edit the llms.txt content. Leave empty to auto-generate from site data.', 'aivec-ai-search-schema' ); ?>
 						</p>
+						<?php $llms_txt_hidden_titles = $llms_txt_instance->get_hidden_entry_titles(); ?>
+						<div class="notice notice-info inline" id="ais-llms-txt-hidden-entries"<?php echo empty( $llms_txt_hidden_titles ) ? ' style="display: none;"' : ''; ?>>
+							<p><?php esc_html_e( 'These lines are kept here but are not served at /llms.txt because their posts are not public. They are served again when the posts are published.', 'aivec-ai-search-schema' ); ?></p>
+							<ul>
+								<?php foreach ( $llms_txt_hidden_titles as $llms_txt_hidden_title ) : ?>
+									<li><?php echo esc_html( $llms_txt_hidden_title ); ?></li>
+								<?php endforeach; ?>
+							</ul>
+						</div>
 					</div>
 
 					<p class="ais-button-row">

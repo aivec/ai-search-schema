@@ -9,6 +9,20 @@ if (!defined('MINUTE_IN_SECONDS')) {
     define('MINUTE_IN_SECONDS', 60);
 }
 
+/**
+ * テストから非公開のプロパティとメソッドを使えるようにする。
+ *
+ * PHP 8.1 以降は常に使えるので呼び出しは不要で、PHP 8.5 では非推奨の警告が出る。
+ *
+ * @param ReflectionProperty|ReflectionMethod $reflector 対象.
+ * @return void
+ */
+function avc_ais_test_make_accessible( $reflector ) {
+    if ( PHP_VERSION_ID < 80100 ) {
+        $reflector->setAccessible( true );
+    }
+}
+
 class AVC_AIS_TEST_Env {
     public static $current_post_id = 0;
     public static $posts = [];

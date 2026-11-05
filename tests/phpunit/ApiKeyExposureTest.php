@@ -230,7 +230,7 @@ class ApiKeyExposureTest extends WP_UnitTestCase {
 		update_option( 'avc_ais_gmaps_api_key', self::API_KEY, false );
 
 		$method = new ReflectionMethod( Wizard::class, 'save_to_settings' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 		$method->invoke( $this->wizard, 'api-key', array( 'gmaps_api_key' => '' ) );
 
 		$this->assertSame( self::API_KEY, get_option( 'avc_ais_gmaps_api_key' ) );

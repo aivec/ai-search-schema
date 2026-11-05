@@ -157,7 +157,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_get_context_override_returns_defaults() {
 		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$options = [
 			'avc_ais_breadcrumbs_schema_enabled' => true,
@@ -178,7 +178,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_get_context_override_with_post_type_settings() {
 		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$options = [
 			'avc_ais_breadcrumbs_schema_enabled' => true,
@@ -202,7 +202,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_get_context_override_with_taxonomy_settings() {
 		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$options = [
 			'avc_ais_breadcrumbs_schema_enabled' => true,
@@ -226,7 +226,7 @@ class FAQPageSchemaTest extends WP_UnitTestCase {
 	public function test_get_context_override_with_enable_breadcrumbs_fallback() {
 		$reflection = new ReflectionClass( AVC_AIS_Type_FAQPage::class );
 		$method     = $reflection->getMethod( 'get_context_override' );
-		$method->setAccessible( true );
+		avc_ais_test_make_accessible( $method );
 
 		$options = [
 			'enable_breadcrumbs' => false,
