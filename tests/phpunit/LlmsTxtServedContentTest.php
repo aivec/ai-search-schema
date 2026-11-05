@@ -1555,6 +1555,35 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 別のポートで書かれた行のホストも、そのホストの行として別に保存すること。
+	 * 別の言語のドメインの結果を使うと、隠すはずの行が配信される。
+	 *
+	 * @return void
+	 */
+	public function test_hosts_with_a_port_in_the_content_are_found() {
+		self::factory()->post->create(
+			array(
+				'post_name'   => 'secret-on-port',
+				'post_status' => 'private',
+			)
+		);
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](https://en.example:8443/secret-on-port/): 秘密の抜粋' );
+		$served_on = function ( $host ) {
+			$map_domain = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $map_domain, 10, 2 );
+			$body = $this->served();
+			remove_filter( 'home_url', $map_domain, 10 );
+			return $body;
+		};
+
+		$this->assertStringContainsString( '秘密の抜粋', $served_on( 'ja.example' ) );
+		$this->assertStringNotContainsString( '秘密の抜粋', $served_on( 'en.example' ) );
+		$this->assertCount( 2, get_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE ) );
+	}
+
+	/**
 	 * 行にないホストは、Host を変えても判定し直さないこと。
 	 *
 	 * @return void
@@ -1819,6 +1848,20 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 		wp_delete_post( $post_id, true );
 
 		$this->assertSame( $other, get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
+	}
+
+	/**
+	 * ID が文字列でも、?p=ID の行を消すこと。WordPress 6.8 までの wp_delete_post() は、受け取った値のままフックへ渡す。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_by_a_string_id_removes_its_entry_with_a_query_id() {
+		$post_id = self::factory()->post->create( array( 'post_status' => 'private' ) );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](' . home_url( "/?p={$post_id}&utm=1" ) . '): 抜粋' );
+
+		AVC_AIS_Llms_Txt::init()->remove_entry_of_deleted_post( (string) $post_id, get_post( $post_id ) );
+
+		$this->assertSame( '', get_option( AVC_AIS_Llms_Txt::OPTION_NAME ) );
 	}
 
 	/**

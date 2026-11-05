@@ -345,7 +345,7 @@ class AVC_AIS_Llms_Txt {
 		$parts = (array) self::parse_entry_url( home_url() );
 		$host  = self::normalized_host( $parts );
 		$port  = self::normalized_port( $parts );
-		$after = $port ? ':' . $port : '(:(80|443))?';
+		$after = $port ? ':' . $port : '(:\d+)?';
 		$regex = '~//(www\.)?' . preg_quote( $host, '~' ) . $after . '[/)?#\s]~i';
 		$found = '' !== $host && 1 === preg_match( $regex, $saved );
 
@@ -1398,7 +1398,7 @@ class AVC_AIS_Llms_Txt {
 					return true;
 				}
 				$query_ids = self::url_query_post_ids( (array) self::parse_entry_url( $entry['url'] ) );
-				if ( in_array( $post_id, $query_ids, true ) && self::is_own_url( $entry['url'] ) ) {
+				if ( in_array( (int) $post_id, $query_ids, true ) && self::is_own_url( $entry['url'] ) ) {
 					return false;
 				}
 				return ! in_array( $key, self::location_keys( $entry['url'] ), true ) && $entry['prefix'] !== $legacy;
