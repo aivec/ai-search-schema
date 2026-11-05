@@ -177,6 +177,7 @@ class JsonLdOutputEscapingTest extends WP_UnitTestCase {
 			'single quotes'  => array( "<a href='x' title='y z'>Foo</a>", 'Foo' ),
 			'bracket in attr' => array( '<a title="1>0">Foo</a>', 'Foo' ),
 			'no quotes'      => array( '<a href=x>Foo</a>', 'Foo' ),
+			'unclosed quote' => array( "<a href=it's>Foo</a>", 'Foo' ),
 			'mixed bare attr' => array( '<span class="x" data-foo>Foo</span>', 'Foo' ),
 			'unknown bare'   => array( '<a href="x" download>Foo</a>', 'Foo' ),
 			'url value'      => array( '<a href=http://x.example/?a=1>Foo</a>', 'Foo' ),
