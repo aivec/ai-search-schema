@@ -58,6 +58,7 @@ class AVC_AIS_Settings {
 		add_action( 'admin_menu', array( $this, 'add_settings_page' ) );
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'add_menu_label_style' ) );
 		add_action( 'wp_ajax_avc_ais_geocode', array( $this, 'handle_geocode_request' ) );
 		add_action( 'wp_ajax_avc_ais_regenerate_llms_txt', array( $this, 'handle_regenerate_llms_txt' ) );
 		add_action( 'wp_ajax_avc_ais_save_llms_txt', array( $this, 'handle_save_llms_txt' ) );
@@ -94,7 +95,7 @@ class AVC_AIS_Settings {
 		// トップレベルメニューを追加.
 		add_menu_page(
 			__( 'AI Search Schema Settings', 'aivec-ai-search-schema' ),
-			__( 'AI Search Schema', 'aivec-ai-search-schema' ),
+			_x( 'AI Search Schema', 'admin menu label', 'aivec-ai-search-schema' ),
 			'manage_options',
 			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' ),
@@ -110,6 +111,17 @@ class AVC_AIS_Settings {
 			'manage_options',
 			'aivec-ai-search-schema',
 			array( $this, 'render_settings_page' )
+		);
+	}
+
+	/**
+	 * メニュー名を 1 行に収める。標準の余白では幅が 2px ほど足りず、折り返される。
+	 * 文字の間隔も少し詰めて、選択中に右端へ出る矢印に文字が触れないようにする。
+	 */
+	public function add_menu_label_style() {
+		wp_add_inline_style(
+			'admin-menu',
+			'#adminmenu #toplevel_page_aivec-ai-search-schema .wp-menu-name{padding-inline-end:0;letter-spacing:-.2px}'
 		);
 	}
 

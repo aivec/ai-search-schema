@@ -118,6 +118,11 @@ msgstr ""
 msgid "AI Search Schema"
 msgstr ""
 
+#: includes/class-avc-ais-settings.php:97
+msgctxt "admin menu label"
+msgid "AI Search Schema"
+msgstr ""
+
 #: dist/includes/class-avc-ais-metabox.php:83
 #: includes/class-avc-ais-metabox.php:83
 msgid "Page schema settings"

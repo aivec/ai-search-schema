@@ -186,6 +186,7 @@ Yes! This plugin automatically suppresses conflicting schema output from Yoast S
 * [Fixed] Fixed some HTML tags being left in JSON-LD text
 * [Fixed] Fixed network-wide activation and deactivation on multisite only updating `/llms.txt` on the current site
 * [Fixed] Fixed the admin menu having no icon. The menu now shows the AIVEC symbol in the colors of the admin color scheme
+* [Fixed] Fixed the admin menu label wrapping onto two lines. The Japanese label is now `AI Search Schema`, the same as the English one
 
 = 1.3.2 =
 * [Security] Excluded password-protected posts and pages from the generated llms.txt, and removed the entries of private and password-protected posts from previously saved llms.txt content
