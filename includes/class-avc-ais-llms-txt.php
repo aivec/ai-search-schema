@@ -306,7 +306,8 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		$lines  = explode( "\n", (string) $saved );
-		$key    = md5( get_option( self::OPTION_CACHE_GENERATION, '' ) . (string) $saved );
+		$front  = get_option( 'show_on_front' ) . ':' . get_option( 'page_on_front' );
+		$key    = md5( get_option( self::OPTION_CACHE_GENERATION, '' ) . $front . (string) $saved );
 		$home   = self::cache_key_of_home( $lines );
 		$cached = get_transient( self::HIDDEN_LINES_CACHE );
 		$cached = is_array( $cached ) ? $cached : array();

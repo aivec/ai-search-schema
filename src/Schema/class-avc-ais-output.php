@@ -12,7 +12,7 @@ class AVC_AIS_Output {
 	 * 引用符が閉じていないものは読み飛ばせないので、次の > までをタグとする。
 	 */
 	private const HTML_TAG_PATTERN = '/<\/?[a-zA-Z][a-zA-Z0-9:-]*'
-		. '(?:\s(?=[^<>]*=)(?:[^<>"\']|"[^"]*"|\'[^\']*\')*|\s+[^<>]*=[^<>]*|(?:\s+(?:'
+		. '(?:\s(?=[^<>]*=)(?:[^<>"\']|"[^"]*"|\'[^\']*\')*|\s[^<>=]*=[^<>]*|(?:\s+(?:'
 		. 'allowfullscreen|async|autofocus|autoplay|checked|controls|default|defer|disabled|hidden|inert|ismap|'
 		. 'itemscope|loop|multiple|muted|nomodule|novalidate|open|playsinline|readonly|required|reversed|selected'
 		. '))+)?\s*\/?>/i';

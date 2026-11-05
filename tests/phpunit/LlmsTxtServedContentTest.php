@@ -1689,7 +1689,6 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 
 		// 投稿一覧をトップページに戻すと、残っている設定のページはトップページではない。
 		update_option( 'show_on_front', 'posts' );
-		delete_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
 		$this->assertStringContainsString( '秘密の抜粋', $this->served(), '投稿一覧のトップページ' );
 	}
 
