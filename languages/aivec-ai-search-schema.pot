@@ -2,7 +2,7 @@
 # This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Aivec AI Search Schema 1.3.2\n"
+"Project-Id-Version: Aivec AI Search Schema 1.3.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/aivec-ai-search-schema\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,6 +115,11 @@ msgstr ""
 #: includes/class-avc-ais-metabox.php:80
 #: includes/class-avc-ais-settings.php:77
 #: src/Wizard/Wizard.php:266
+msgid "AI Search Schema"
+msgstr ""
+
+#: includes/class-avc-ais-settings.php:97
+msgctxt "admin menu label"
 msgid "AI Search Schema"
 msgstr ""
 
