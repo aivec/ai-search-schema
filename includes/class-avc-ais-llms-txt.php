@@ -307,7 +307,7 @@ class AVC_AIS_Llms_Txt {
 
 		$lines  = explode( "\n", (string) $saved );
 		$key    = md5( get_option( self::OPTION_CACHE_GENERATION, '' ) . (string) $saved );
-		$home   = self::cache_key_of_home( (string) $saved );
+		$home   = self::cache_key_of_home( $lines );
 		$cached = get_transient( self::HIDDEN_LINES_CACHE );
 		$cached = is_array( $cached ) ? $cached : array();
 		$result = $cached[ $home ] ?? array();
@@ -334,22 +334,29 @@ class AVC_AIS_Llms_Txt {
 	/**
 	 * 判定結果を保存するキーを home_url() から作る。
 	 *
-	 * ホストが判定に影響するのは、その行があるときだけ。ホストが同じ行はポートが違っても投稿の状態で
-	 * 判定するので、ポートを問わず探す。ポートは範囲の判定にだけ影響し、行にないポートはどれも結果が
-	 * 同じなので 1 つにまとめる。WP_HOME を Host ヘッダーから作るサイトで、未ログインのリクエストが
-	 * Host を変えて判定をやり直させ続けられないよう、行にないホストとポートはキーに含めない。
-	 * http と https では判定が変わらないのでスキームも含めない。
+	 * ホストが判定に影響するのは、その行があるときだけ。判定と食い違わないよう、判定と同じ解析で探す。
+	 * ホストが同じ行はポートが違っても投稿の状態で判定するので、ポートを問わず探す。ポートは範囲の判定に
+	 * だけ影響し、行にないポートはどれも結果が同じなので 1 つにまとめる。WP_HOME を Host ヘッダーから
+	 * 作るサイトで、未ログインのリクエストが Host を変えて判定をやり直させ続けられないよう、行にない
+	 * ホストとポートはキーに含めない。http と https では判定が変わらないのでスキームも含めない。
 	 *
-	 * @param string $saved 保存済みの内容.
+	 * @param string[] $lines 保存済みの内容の行.
 	 * @return string キー.
 	 */
-	private static function cache_key_of_home( $saved ) {
+	private static function cache_key_of_home( array $lines ) {
 		$parts = (array) self::parse_entry_url( home_url() );
 		$host  = self::normalized_host( $parts );
 		$port  = self::normalized_port( $parts );
-		$regex = '~//(?:www\.)?' . preg_quote( $host, '~' ) . '(?::(\d+))?[/)?#\s]~i';
-		$found = '' !== $host && 0 < preg_match_all( $regex, $saved, $matches );
-		if ( $found && $port && ! in_array( (string) $port, $matches[1], true ) ) {
+		$ports = array();
+		foreach ( $lines as $line ) {
+			$entry       = self::parse_entry( $line );
+			$entry_parts = null === $entry ? array() : (array) self::parse_entry_url( $entry['url'] );
+			if ( '' !== $host && self::normalized_host( $entry_parts ) === $host ) {
+				$ports[] = self::normalized_port( $entry_parts );
+			}
+		}
+		$found = ! empty( $ports );
+		if ( $found && $port && ! in_array( $port, $ports, true ) ) {
 			$port = 'other';
 		}
 
@@ -437,7 +444,8 @@ class AVC_AIS_Llms_Txt {
 	 *    重複しうるので、公開中の投稿の URL なら配信する。別のポートでも同じパスなら抜粋を出さない
 	 *    側に倒す。?p= は ID での照合なので、このサイトの URL でだけ行う。計測用のクエリが付いた
 	 *    URL も同じページなので、クエリを除いたパスで照合する。
-	 * 2. トップページは投稿の状態にかかわらず公開されているので、タイトルでは判定しない。
+	 * 2. トップページはタイトルでは判定しない。URL から投稿を探せないので、固定ページをトップページに
+	 *    したサイトだけ、そのページの状態で判定する。
 	 * 3. タイトルと、スラッグまたは ID がともに公開していない投稿と一致する行は、リンク先を問わず
 	 *    隠す。サイトを移転した前の URL は、別のサイトと区別できない。同じネットワークの別のサイトと
 	 *    分かる行だけは隠さない（同じひな形から作ったサイトでは、タイトルとスラッグが同じになる）。
@@ -466,7 +474,7 @@ class AVC_AIS_Llms_Txt {
 		}
 
 		if ( self::is_home_url( $url ) ) {
-			return false;
+			return self::is_front_page_hidden();
 		}
 
 		if ( self::has_hidden_post_matching_title_and_url( $entry, $posts ) ) {
@@ -476,6 +484,18 @@ class AVC_AIS_Llms_Txt {
 		return self::is_in_site_range( $url )
 			&& self::has_hidden_post_titled( $entry['title'] )
 			&& ! self::is_other_site_url( $url );
+	}
+
+	/**
+	 * トップページにした固定ページが公開されていないかを判定する。
+	 *
+	 * @return bool 公開されていなければ true.
+	 */
+	private static function is_front_page_hidden() {
+		$front_id = 'page' === get_option( 'show_on_front' ) ? (int) get_option( 'page_on_front' ) : 0;
+		$front    = $front_id ? get_post( $front_id ) : null;
+
+		return $front instanceof WP_Post && ! self::is_public_post( $front );
 	}
 
 	/**
@@ -1355,7 +1375,8 @@ class AVC_AIS_Llms_Txt {
 	 * 投稿を完全に削除するときに、保存済みの内容からその行を取り除く。
 	 *
 	 * 公開し直すことがないので、隠さずに取り除く。削除すると投稿の状態で判定できなくなる。
-	 * 同じ URL や同じ壊れた形の別の投稿があれば、その投稿の行かもしれないので残す。
+	 * 同じ URL や同じ壊れた形の別の投稿があれば、その投稿の行かもしれないので残す。?p= の行は
+	 * この投稿だけを指すので、スラッグがなくても、同じ URL の投稿があっても取り除く。
 	 * 開いている画面の内容には残っているので、URL を覚えておいて編集保存のときに取り除く。
 	 *
 	 * @param int     $post_id 投稿 ID.
@@ -1363,26 +1384,24 @@ class AVC_AIS_Llms_Txt {
 	 * @return void
 	 */
 	public function remove_entry_of_deleted_post( $post_id, $post ) {
-		$is_listed_type = in_array( $post->post_type, self::LISTED_POST_TYPES, true );
-		if ( ! $is_listed_type || '' === $post->post_name ) {
+		if ( ! in_array( $post->post_type, self::LISTED_POST_TYPES, true ) ) {
 			return;
 		}
 
-		$url = self::published_permalink( $post );
-		if ( self::has_other_post_at_url( $url, $post_id ) ) {
-			return;
+		$url      = self::published_permalink( $post );
+		$owns_url = '' !== $post->post_name && ! self::has_other_post_at_url( $url, $post_id );
+		if ( $owns_url ) {
+			self::remember_deleted_url( $url );
 		}
-
-		self::remember_deleted_url( $url );
 
 		$saved = (string) get_option( self::OPTION_NAME, '' );
 		if ( '' === $saved ) {
 			return;
 		}
 
-		$key    = self::location_key( $url );
-		$legacy = self::legacy_entry_prefix( $post, $url );
-		$posts  = self::find_posts_titled( self::to_plain_text( $post->post_title ) );
+		$key    = $owns_url ? self::location_key( $url ) : null;
+		$legacy = $owns_url ? self::legacy_entry_prefix( $post, $url ) : null;
+		$posts  = $owns_url ? self::find_posts_titled( self::to_plain_text( $post->post_title ) ) : array();
 		if ( null === $posts ) {
 			$legacy = null;
 		}

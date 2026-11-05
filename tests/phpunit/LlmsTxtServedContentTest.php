@@ -1616,6 +1616,124 @@ class LlmsTxtServedContentTest extends WP_UnitTestCase {
 	}
 
 	/**
+	 * 判定と同じ解析でホストを探すので、書き方が違う行も、そのホストの行として別に保存すること。
+	 *
+	 * @return void
+	 */
+	public function test_hosts_in_the_content_are_found_in_every_spelling() {
+		self::factory()->post->create(
+			array(
+				'post_name'   => 'secret-spelling',
+				'post_status' => 'private',
+			)
+		);
+		$served_on = function ( $host ) {
+			$map_domain = static function ( $url, $path ) use ( $host ) {
+				return "http://{$host}{$path}";
+			};
+			add_filter( 'home_url', $map_domain, 10, 2 );
+			$body = $this->served();
+			remove_filter( 'home_url', $map_domain, 10 );
+			return $body;
+		};
+
+		$spellings = array(
+			'日本語のドメイン' => array( 'https://例.example/secret-spelling/', '例.example' ),
+			'ユーザー名付き'   => array( 'https://user@en.example/secret-spelling/', 'en.example' ),
+		);
+		foreach ( $spellings as $name => list( $url, $host ) ) {
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "- [別の題]({$url}): 秘密の抜粋" );
+			delete_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+
+			$this->assertStringContainsString( '秘密の抜粋', $served_on( 'ja.example' ), $name );
+			$this->assertStringNotContainsString( '秘密の抜粋', $served_on( $host ), $name );
+		}
+	}
+
+	/**
+	 * 固定ページをトップページにしたサイトでは、トップページの行もそのページの状態で判定すること。
+	 * トップページの URL からは投稿を探せないので、設定から探す。
+	 *
+	 * @return void
+	 */
+	public function test_home_entry_follows_the_static_front_page() {
+		$front_id = self::factory()->post->create(
+			array(
+				'post_type'   => 'page',
+				'post_title'  => 'ようこそ',
+				'post_status' => 'publish',
+			)
+		);
+		update_option( 'show_on_front', 'page' );
+		update_option( 'page_on_front', $front_id );
+		update_option( AVC_AIS_Llms_Txt::OPTION_NAME, '- [別の題](' . home_url( '/' ) . '): 秘密の抜粋' );
+
+		$this->assertStringContainsString( '秘密の抜粋', $this->served(), '公開中は配信する' );
+
+		wp_update_post(
+			array(
+				'ID'          => $front_id,
+				'post_status' => 'private',
+			)
+		);
+		$this->assertStringNotContainsString( '秘密の抜粋', $this->served(), '非公開' );
+
+		wp_update_post(
+			array(
+				'ID'            => $front_id,
+				'post_status'   => 'publish',
+				'post_password' => 'secret',
+			)
+		);
+		$this->assertStringNotContainsString( '秘密の抜粋', $this->served(), 'パスワード付き' );
+
+		// 投稿一覧をトップページに戻すと、残っている設定のページはトップページではない。
+		update_option( 'show_on_front', 'posts' );
+		delete_transient( AVC_AIS_Llms_Txt::HIDDEN_LINES_CACHE );
+		$this->assertStringContainsString( '秘密の抜粋', $this->served(), '投稿一覧のトップページ' );
+	}
+
+	/**
+	 * URL で判定できない投稿を削除しても、?p= の行は取り除くこと。
+	 * ?p= はその投稿だけを指し、投稿がなくなると判定できず配信され続ける。
+	 *
+	 * @return void
+	 */
+	public function test_deleting_a_post_removes_its_query_entry_when_the_url_is_not_its_own() {
+		$cases = array(
+			'スラッグのない下書き' => self::factory()->post->create(
+				array(
+					'post_status' => 'draft',
+					'post_name'   => '',
+				)
+			),
+			'同じ URL の別の投稿'  => self::factory()->post->create(
+				array(
+					'post_status' => 'publish',
+					'post_name'   => 'shared-url',
+				)
+			),
+		);
+		self::factory()->post->create(
+			array(
+				'post_status' => 'draft',
+				'post_name'   => 'shared-url',
+			)
+		);
+
+		foreach ( $cases as $name => $post_id ) {
+			$line = '- [別の題](' . home_url( "/?p={$post_id}" ) . '): 秘密の抜粋';
+			update_option( AVC_AIS_Llms_Txt::OPTION_NAME, "{$line}\n- [他](" . home_url( '/docs/' ) . '): 説明' );
+
+			wp_delete_post( $post_id, true );
+
+			$saved = get_option( AVC_AIS_Llms_Txt::OPTION_NAME );
+			$this->assertStringNotContainsString( '秘密の抜粋', $saved, $name );
+			$this->assertStringContainsString( '- [他]', $saved, $name );
+		}
+	}
+
+	/**
 	 * 行にあるホストでも、行にないポートは、ポートを変えても判定し直さないこと。
 	 *
 	 * @return void
