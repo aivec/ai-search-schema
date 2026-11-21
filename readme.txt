@@ -11,8 +11,8 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 AI-focused structured data (JSON-LD) for LocalBusiness, breadcrumbs, FAQ extraction, and llms.txt.
 
 == Overview / 概要 ==
-WordPress plugin for generating structured data optimized for AI-powered search engines, including Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in **Settings → AI Search Schema** and the plugin will emit JSON-LD tailored to your organization or storefront.
-AI検索最適化・ローカルSEO対応のWordPressプラグインです。**設定 → AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
+WordPress plugin for generating structured data optimized for AI-powered search engines, including Local SEO, breadcrumbs, and FAQ extraction. Optimizes your site for AI-powered answer engines (sometimes called AEO: Answer Engine Optimization). Configure everything in the **AI Search Schema** admin menu and the plugin will emit JSON-LD tailored to your organization or storefront.
+AI検索最適化・ローカルSEO対応のWordPressプラグインです。管理画面のメニューの **AI Search Schema** で会社情報・LocalBusiness 情報・SNS・ジオコーディングなどを入力すると、検索エンジン向けの JSON-LD を一括生成できます。
 
 == Why Structured Data Matters Now / 今、構造化データが重要な理由 ==
 
@@ -56,7 +56,7 @@ Search is evolving from "10 blue links" to AI-powered answer engines (Google SGE
    - Google Cloud Console で新規プロジェクトを作成し、**Geocoding API** を有効化（他 API は不要）
    - 「認証情報」から API キーを発行し、HTTP リファラーまたは IP 制限を設定
    - 1 日あたりのクォータ上限を設定して不正利用を防止
-2. Enter the key in **Settings → AI Search Schema**. The key is saved only in WordPress options and never rendered in HTML/JS.
+2. Enter the key in the **AI Search Schema** admin menu. The key is saved only in WordPress options and never rendered in HTML/JS.
    キーは WordPress のオプションにのみ保存され、HTML/JS には出力されません。
 3. Click **Fetch coordinates** to geocode the current address. Requests are rate-limited (10 seconds) and cached. Re-fetching is required only when address fields change.  
    **住所から緯度・経度を取得** ボタンで geocode が発火します。10 秒のレート制御とキャッシュを実装しているため、住所を変更したタイミングのみ再取得してください。
@@ -77,8 +77,8 @@ This plugin follows WordPress security best practices:
    プラグイン一式を `wp-content/plugins/aivec-ai-search-schema` に配置
 2. Activate from WordPress admin
    管理画面で有効化
-3. Open **Settings → AI Search Schema** and complete the forms
-   **設定 → AI Search Schema** で各項目（ブランド情報／店舗情報／SNS／APIキー 等）を入力して保存
+3. Open the **AI Search Schema** admin menu and complete the forms
+   管理画面のメニューの **AI Search Schema** で各項目（ブランド情報／店舗情報／SNS／APIキー 等）を入力して保存
 
 == FAQ / よくある質問 ==
 
