@@ -91,7 +91,7 @@ foreach ( $sources as $source ) {
 		</div>
 
 		<div class="ais-wizard-welcome__skip">
-			<a href="<?php echo esc_url( admin_url( 'options-general.php?page=aivec-ai-search-schema' ) ); ?>">
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=aivec-ai-search-schema' ) ); ?>">
 				<?php esc_html_e( 'Set up later', 'aivec-ai-search-schema' ); ?> →
 			</a>
 		</div>

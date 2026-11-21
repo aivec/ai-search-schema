@@ -241,7 +241,7 @@ if ( file_exists( $test_spec_file ) ) {
 $plugin_version = defined( 'AVC_AIS_VERSION' ) ? AVC_AIS_VERSION : '0.1.0';
 
 // 設定ページURL
-$settings_url     = admin_url( 'options-general.php?page=aivec-ai-search-schema' );
+$settings_url     = admin_url( 'admin.php?page=aivec-ai-search-schema' );
 $rich_results_url = 'https://search.google.com/test/rich-results?url=' . rawurlencode( home_url() );
 $nonce_value      = wp_create_nonce( 'avc_ais_test_manager' );
 $test_spec_json   = wp_json_encode( $test_spec );
