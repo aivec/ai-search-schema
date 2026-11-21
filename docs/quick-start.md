@@ -27,8 +27,8 @@ ZIPを `/wp-content/plugins/avc-aeo-schema/` に展開し、プラグイン一�
 
 ## Step 2: Basic Configuration / 基本設定
 
-Navigate to **Settings → AI Search Schema** in your WordPress admin.
-WordPress管理画面で **設定 → AI Search Schema** に移動します。
+Open **AI Search Schema** in the WordPress admin menu.
+WordPress の管理画面のメニューで **AI Search Schema** を開きます。
 
 ### Required Fields / 必須項目
 
@@ -84,7 +84,7 @@ To automatically get coordinates from your address:
 1. Create a project in [Google Cloud Console](https://console.cloud.google.com/)
 2. Enable **Geocoding API**
 3. Create an API key with appropriate restrictions (HTTP referrer or IP)
-4. Paste the key in **Settings → AI Search Schema → Google Maps API key**
+4. Paste the key in **AI Search Schema → Google Maps API key** in the admin menu
 5. Click **Fetch coordinates** to get lat/lng from your address
 
 ### Using OpenStreetMap (Development Only)

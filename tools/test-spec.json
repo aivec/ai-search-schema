@@ -296,13 +296,13 @@
         {
           "id": "UI-001",
           "category": "基本表示",
-          "item": "設定メニューにAI Search Schemaが表示される",
-          "expected": "サイドバーに「設定 → AI Search Schema」が表示される",
+          "item": "管理画面のメニューにAI Search Schemaが表示される",
+          "expected": "サイドバーに「AI Search Schema」のメニューが表示される",
           "priority": "高",
           "steps": [
             "管理者権限のユーザーでWordPressにログインする。",
-            "管理画面のサイドバーから「設定 > AI Search Schema」を開く。",
-            "画面を保存または再読み込みし、サイドバーに「設定 → AI Search Schema」が表示されることを確認する。"
+            "管理画面のサイドバーから「AI Search Schema」を開く。",
+            "画面を保存または再読み込みし、サイドバーに「AI Search Schema」のメニューが表示されることを確認する。"
           ]
         },
         {
@@ -313,7 +313,7 @@
           "priority": "高",
           "steps": [
             "管理者権限のユーザーでWordPressにログインする。",
-            "「設定 > AI Search Schema」ページの読み込み完了まで待機する。",
+            "「AI Search Schema」の設定画面の読み込み完了まで待機する。",
             "画面を保存または再読み込みし、エラーなくページが読み込まれることを確認する。"
           ]
         },
@@ -829,7 +829,7 @@
           "priority": "高",
           "steps": [
             "管理者権限のユーザーでWordPressにログインする。",
-            "「設定 > AI Search Schema」ページを開く。",
+            "「AI Search Schema」の設定画面を開く。",
             "llms.txtセクションが表示されることを確認する。"
           ]
         },
@@ -877,7 +877,7 @@
           "priority": "高",
           "steps": [
             "管理者権限のユーザーでWordPressにログインする。",
-            "「設定 > AI Search Schema」ページを開く。",
+            "「AI Search Schema」の設定画面を開く。",
             "ライセンスカードセクションが表示されることを確認する。"
           ]
         },

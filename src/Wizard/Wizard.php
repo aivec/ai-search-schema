@@ -317,7 +317,7 @@ class Wizard {
 				'geocodeNonce' => wp_create_nonce( 'avc_ais_geocode' ),
 				'currentStep'  => $this->current_step,
 				'wizardUrl'    => admin_url( 'admin.php?page=' . self::PAGE_SLUG ),
-				'settingsUrl'  => admin_url( 'options-general.php?page=aivec-ai-search-schema' ),
+				'settingsUrl'  => admin_url( 'admin.php?page=aivec-ai-search-schema' ),
 				'strings'      => array(
 					'saving'             => __( 'Saving...', 'aivec-ai-search-schema' ),
 					'saved'              => __( 'Saved', 'aivec-ai-search-schema' ),
@@ -596,7 +596,7 @@ class Wizard {
 		wp_send_json_success(
 			array(
 				'message'     => __( 'Setup completed!', 'aivec-ai-search-schema' ),
-				'redirectUrl' => admin_url( 'options-general.php?page=aivec-ai-search-schema' ),
+				'redirectUrl' => admin_url( 'admin.php?page=aivec-ai-search-schema' ),
 			)
 		);
 	}
