@@ -474,6 +474,6 @@ JSON-LD 出力を検証するには以下のツールを使用してください
 - [Google Rich Results Test](https://search.google.com/test/rich-results)
 - [Schema.org Validator](https://validator.schema.org/)
 
-The plugin includes a built-in AEO/GEO diagnostic tool in **Settings → AI Search Schema** that checks for missing required properties.
+The plugin includes a built-in AEO/GEO diagnostic tool in the **AI Search Schema** admin menu that checks for missing required properties.
 
-プラグインには **設定 → AI Search Schema** に組み込みの AEO/GEO 診断ツールがあり、必須プロパティの欠落をチェックします。
+プラグインには、管理画面のメニューの **AI Search Schema** に組み込みの AEO/GEO 診断ツールがあり、必須プロパティの欠落をチェックします。

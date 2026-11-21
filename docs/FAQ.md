@@ -128,9 +128,9 @@ The plugin uses filter hooks to disable schema output from major SEO plugins. If
 ### I want to keep both schemas. Is that possible?
 ### 両方のスキーマを保持したいです。可能ですか？
 
-**English:** Yes. In **Settings → AI Search Schema → Schema priority**, select "Allow both (may cause conflicts)". Note that Google may show warnings for duplicate Organization/LocalBusiness schemas.
+**English:** Yes. In the **AI Search Schema** admin menu, under **Schema priority**, select "Allow both (may cause conflicts)". Note that Google may show warnings for duplicate Organization/LocalBusiness schemas.
 
-**日本語:** はい。**設定 → AI Search Schema → スキーマ優先度**で「両方許可（競合の可能性あり）」を選択してください。ただし、GoogleがOrganization/LocalBusinessスキーマの重複に対して警告を表示する場合があります。
+**日本語:** はい。管理画面のメニューの **AI Search Schema** の **スキーマ優先度** で「両方許可（競合の可能性あり）」を選択してください。ただし、GoogleがOrganization/LocalBusinessスキーマの重複に対して警告を表示する場合があります。
 
 ---
 
